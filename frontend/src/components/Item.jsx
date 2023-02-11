@@ -1,9 +1,12 @@
+import cookieImg from "../assets/img/item/Cookie.png"
+
 export default function Item() {
 	return (
 		<div className="w-1/5 4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center">
-			<div className="w-50 h-50 bg-Gold-Sand">
+			<div className="w-14 h-14">
 				<img
-					src=""
+					className="w-full h-full"
+					src={cookieImg}
 					alt="Item Icon"
 				/>
 			</div>
