@@ -14,6 +14,7 @@ module.exports = {
 			"Forest-Moss": "#52796F",
 			"Midnight-Gray": "#464865",
 			white: "#ffffff",
+			black: "#1B1B1E",
 		},
 		extend: {
 			backgroundImage: {
