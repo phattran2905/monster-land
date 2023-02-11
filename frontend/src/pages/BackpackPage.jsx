@@ -16,9 +16,14 @@ export default function BackpackPage() {
 					<span className="text-white font-bold text-sm">12/50</span>
 				</div>
 
-				<div className="m-12 w-full h-100">
-					<div className="h-full flex flex-row justify-between items-stretch border-Midnight-Gray border-t-2 border-b-2 border-l-2 rounded-sm">
-						<div className="flex flex-row flex-wrap gap-y-10 gap-x-28 bg-Amethyst-Purple">
+				<div className="m-12 w-full">
+					<div className="h-full flex flex-row  border-Midnight-Gray border-t-2 border-b-2 border-l-2 rounded-sm">
+						<div className="w-full m-4 p-8 flex flex-row flex-wrap content-start gap-y-10 gap-x-12 ">
+							<Item />
+							<Item />
+							<Item />
+							<Item />
+							<Item />
 							<Item />
 						</div>
 

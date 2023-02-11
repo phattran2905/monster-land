@@ -13,7 +13,7 @@ export default function MenuBar({ activeMenu }) {
 				<li>
 					<Link
 						to="/trainer"
-						className="w-100 h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
 					>
 						<img
 							src={userIcon}
@@ -24,7 +24,7 @@ export default function MenuBar({ activeMenu }) {
 				<li>
 					<Link
 						to="/pokemon-collection"
-						className="w-100 h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
 					>
 						<img
 							src={collectionIcon}
@@ -35,7 +35,7 @@ export default function MenuBar({ activeMenu }) {
 				<li>
 					<Link
 						to="/backpack"
-						className="w-100 h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
 					>
 						<img
 							src={backpackIcon}
@@ -46,7 +46,7 @@ export default function MenuBar({ activeMenu }) {
 				<li>
 					<Link
 						to="/world-map"
-						className="w-100 h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
+						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
 					>
 						<img
 							src={worldMapIcon}
@@ -57,7 +57,7 @@ export default function MenuBar({ activeMenu }) {
 				<li className="mt-auto">
 					<Link
 						to="/"
-						className="w-100 h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
+						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
 					>
 						<img
 							src={logoutIcon}
