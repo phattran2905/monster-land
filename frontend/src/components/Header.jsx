@@ -6,14 +6,13 @@ import logo from "../assets/img/logo-2x.png"
 export default function Header() {
 	return (
 		<header className="w-full h-24 bg-Indigo-Blue flex flex-row justify-between">
-			<div className="w-24 h-24 flex flex-row">
-				<img
-					src={logo}
-					alt="Pokemon Land logo"
-				/>
-			</div>
+        <img
+            className="w-24 h-24"
+            src={logo}
+            alt="Pokemon Land logo"
+        />
 
-			<div className="p-6 w-full flex flex-row justify-between items-center">
+			<div className="px-6 w-full flex flex-row justify-between items-center">
 				<div className="trainer-level flex flex-col items-center justify-center">
 					<span className="text-white capitalize font-bold text-2xl">Lv. 10</span>
 				</div>
