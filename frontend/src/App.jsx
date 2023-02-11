@@ -5,6 +5,7 @@ import PokemonCollectionPage from "./pages/PokemonCollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import WorldMap from "./pages/WorldMap"
 import Page404 from "./pages/Page404"
+import Page500 from "./pages/Page500"
 
 function App() {
 	return (
@@ -34,6 +35,10 @@ function App() {
 					path="/*"
 					element={<Page404 />}
 				/>
+				{/* <Route
+					path="/*"
+					element={<Page500 />}
+				/> */}
 			</Routes>
 		</BrowserRouter>
 	)
