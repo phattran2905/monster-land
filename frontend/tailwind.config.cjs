@@ -12,6 +12,7 @@ module.exports = {
 			"Forest-Green": "#2C8837",
 			"Fire-Engine-Red": "#DB0039",
 			"Forest-Moss": "#52796F",
+			"Midnight-Gray": "#464865",
 			white: "#ffffff",
 		},
 		extend: {

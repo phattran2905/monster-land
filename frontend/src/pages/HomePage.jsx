@@ -10,7 +10,6 @@ export default function HomePage() {
 			<div className="w-full h-full flex flex-row">
 				<MenuBar />
 
-				{/* <div className="w-full bg-background-img-4"></div> */}
 			</div>
 
 			<Footer />

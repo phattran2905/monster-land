@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import HomePage from "./pages/HomePage"
+import WorldMap from "./pages/WorldMap"
 import Page404 from "./pages/Page404"
 
 function App() {
@@ -14,6 +15,10 @@ function App() {
 				<Route
 					path="/home"
 					element={<HomePage />}
+				/>
+				<Route
+					path="/world-map"
+					element={<WorldMap />}
 				/>
 				<Route
 					path="/*"
