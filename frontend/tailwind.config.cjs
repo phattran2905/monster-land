@@ -3,14 +3,16 @@ module.exports = {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
         colors: {
-            'primary': '#393E7D',
-            'secondary': '#E5446D',
-            'diamond': '#D7B1FD',
-            'coins': '#ECD07C',
-            'stamina': '#D2FF89',
-            'success': '#2C8837',
-            'fail': '#DB0039',
-            'level': '#52796F'
+            'Indigo-Blue': '#393E7D',
+            'Royal-Blue': '#3F4589',
+            'Flamingo-Pink': '#E5446D',
+            'Amethyst-Purple': '#D7B1FD',
+            'Gold-Sand': '#ECD07C',
+            'Fresh-Green': '#D2FF89',
+            'Forest-Green': '#2C8837',
+            'Fire-Engine-Red': '#DB0039',
+            'Forest-Moss': '#52796F',
+            'white': "#ffffff"
         },
 		extend: {},
 	},
