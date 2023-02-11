@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
-import LandingPage from './pages/LandingPage';
-import HomePage from './pages/HomePage';
+import LandingPage from "./pages/LandingPage"
+import HomePage from "./pages/HomePage"
+import Page404 from "./pages/Page404"
 
 function App() {
 	return (
@@ -13,6 +14,10 @@ function App() {
 				<Route
 					path="/home"
 					element={<HomePage />}
+				/>
+				<Route
+					path="/*"
+					element={<Page404 />}
 				/>
 			</Routes>
 		</BrowserRouter>
