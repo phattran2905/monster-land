@@ -1,14 +1,16 @@
 import Footer from "../components/Footer"
 import Header from "../components/Header"
+import MenuBar from "../components/MenuBar"
 
 export default function HomePage() {
 	return (
-		<div className="container-xl flex flex-col bg-Flamingo-Pink h-screen justify-between">
+		<div className="container-xl flex flex-col h-screen justify-between bg-background-img-4 bg-no-repeat bg-cover">
 			<Header />
 
-			<div className="content h-full bg-Amethyst-Purple">
-				Content
-				<div className="menu-bar"></div>
+			<div className="w-full h-full flex flex-row">
+				<MenuBar />
+
+				{/* <div className="w-full bg-background-img-4"></div> */}
 			</div>
 
 			<Footer />
