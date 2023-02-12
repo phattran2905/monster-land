@@ -23,5 +23,5 @@
 		"eslint-plugin-import": "^2.25.2",
 		"nodemon": "^2.0.20"
 	},
-    "type": "module"
+	"type": "module"
 }

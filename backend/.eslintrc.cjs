@@ -15,5 +15,6 @@ module.exports = {
 		"no-tabs": ["error", { allowIndentationTabs: true }],
 		indent: ["error", "tab"],
 		"no-unused-vars": ["warn"],
+		"import/extensions": ["off"],
 	},
 }
