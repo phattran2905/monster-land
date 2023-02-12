@@ -3,7 +3,7 @@ import Express from "express"
 import morgan from "morgan"
 import cors from "cors"
 import apiRouter from "./routes/api.js"
-import connectDb from "./db.js"
+import { connectDb, dropDb } from "./db.js"
 import createMockupData from "./mockup-data/mockup.js"
 
 config()
@@ -17,7 +17,11 @@ app.get("/", (req, res) => {
 	res.send("Pokemon Land")
 })
 
-app.get("/create-mockup-data", () => createMockupData())
+app.get("/create-mockup-data", async (req, res) => {
+	await dropDb()
+	createMockupData()
+	res.sendStatus(201)
+})
 
 app.use("/api/v1", apiRouter)
 

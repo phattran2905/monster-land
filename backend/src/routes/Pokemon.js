@@ -1,5 +1,6 @@
 import { Router } from "express"
 import { v4 as uuidv4 } from "uuid"
+import PokemonModel from "../models/PokemonModel.js"
 import PokemonTypeModel from "../models/PokemonTypeModel.js"
 
 const router = Router()
@@ -21,8 +22,13 @@ router
 			console.error(error)
 		}
 	})
-	.get("/pokemon/:id", (req, res) => {
-		res.json(req.params.id)
+	.get("/pokemon/:id", async (req, res) => {
+		try {
+			const pokemon = await PokemonModel.findOne({ uid: req.params.id }).populate()
+			res.status(200).json(pokemon)
+		} catch (error) {
+			res.status(500).json({ message: error.message })
+		}
 	})
 
 export default router
