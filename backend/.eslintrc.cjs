@@ -16,5 +16,7 @@ module.exports = {
 		indent: ["error", "tab"],
 		"no-unused-vars": ["warn"],
 		"import/extensions": ["off"],
+		"comma-dangle": ["off"],
+		"import/no-extraneous-dependencies": ["off"],
 	},
 }
