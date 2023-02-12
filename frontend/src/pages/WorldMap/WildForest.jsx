@@ -81,10 +81,14 @@ export default function WildForest() {
 						</div>
 					</div>
 
-					<div className="bg-Flamingo-Pink">Capture button</div>
+					{/* Capture button */}
+					<div className="bg-Flamingo-Pink flex flex-row justify-end items-center py-6">
+						Capture button
+					</div>
 
-					<div className="bg-Amethyst-Purple">
-						<div className="w-96 bg-white rounded-lg border-2 border-Indigo-Blue m-4 px-4 py-6">
+					{/* Wild Pokemon */}
+					<div className="w-2/6 flex flex-col items-stretch bg-Flamingo-Pink justify-evenly">
+						<div className="w-96 bg-white rounded-lg border-2 border-Indigo-Blue px-4 py-6">
 							<div className="mx-1 mb-4">
 								<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
 									Level
@@ -95,7 +99,7 @@ export default function WildForest() {
 								<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
 									Type
 								</span>
-								<span className="bg-Gold-Sand text-Indigo-Blue px-2 py-1 font-bold text-md rounded-lg">
+								<span className="bg-Gold-Sand text-black px-2 py-1 font-bold text-md rounded-lg">
 									Electric
 								</span>
 							</div>
@@ -107,15 +111,21 @@ export default function WildForest() {
 									<span className="text-Flamingo-Pink font-bold">60%</span>
 								</div>
 								<div className="w-full h-4 bg-black rounded-full">
-                                    <div className="h-full w-3/5 bg-Forest-Green rounded-full"></div>
-                                </div>
+									<div className="h-full w-3/5 bg-Forest-Green rounded-full"></div>
+								</div>
 							</div>
 						</div>
-						<div className="bg-white">
-							<img
-								src={PikachuImg}
-								alt="Pokemon image"
-							/>
+						<div className="bg-black">
+							<div className="w-80 h-80 bg-white rounded-full flex flex-col justify-center items-center border-4 border-Indigo-Blue">
+								<img
+									className="mb-2"
+									src={PikachuImg}
+									alt="Pokemon image"
+								/>
+								<span className="text-Flamingo-Pink font-bold text-3xl capitalize">
+									Pikachu
+								</span>
+							</div>
 						</div>
 					</div>
 				</div>
