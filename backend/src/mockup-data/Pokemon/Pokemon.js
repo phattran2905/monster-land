@@ -154,6 +154,7 @@ const Pokemon = [
 		info_uid: findPkmInfoUID("Pikachu"),
 		level_up_exp: LEVEL_UP_DEFAULT_EXP,
 		power: 1000,
+		status: "owned",
 	},
 	{
 		uid: `Pkm-${nanoid()}`,

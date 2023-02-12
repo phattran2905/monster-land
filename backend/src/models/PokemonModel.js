@@ -37,8 +37,8 @@ const PokemonSchema = new Schema(
 		status: {
 			type: String,
 			lowercase: true,
-			enum: ["active", "inactive"],
-			default: "active",
+			enum: ["wild", "owned", "inactive"],
+			default: "wild",
 		},
 	},
 	{
