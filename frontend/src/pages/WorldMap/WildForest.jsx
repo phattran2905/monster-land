@@ -4,6 +4,7 @@ import Header from "../../components/Header"
 import MenuBar from "../../components/MenuBar"
 import CookieImg from "../../assets/img/item/Cookie.png"
 import PikachuImg from "../../assets/img/pokemon/025.png"
+import PokeballImg from "../../assets/img/Pokeball.png"
 
 export default function WildForest() {
 	return (
@@ -82,12 +83,19 @@ export default function WildForest() {
 					</div>
 
 					{/* Capture button */}
-					<div className="bg-Flamingo-Pink flex flex-row justify-end items-center py-6">
-						Capture button
+					<div className="flex flex-row justify-end items-end py-6">
+						<button className="opacity-80 px-10 py-6 rounded-full bg-white text-Flamingo-Pink font-bold uppercase text-xl hover:bg-Flamingo-Pink hover:text-white transition-colors duration-200 hover:shadow-lg hover:shadow-Gold-Sand hover:opacity-100">
+							<img
+								className="w-28 h-28 m-2"
+								src={PokeballImg}
+								alt="Pokeball"
+							/>
+							Capture
+						</button>
 					</div>
 
 					{/* Wild Pokemon */}
-					<div className="w-2/6 flex flex-col items-stretch bg-Flamingo-Pink justify-evenly">
+					<div className="w-2/6 flex flex-col items-stretch justify-evenly">
 						<div className="w-96 bg-white rounded-lg border-2 border-Indigo-Blue px-4 py-6">
 							<div className="mx-1 mb-4">
 								<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
@@ -115,7 +123,7 @@ export default function WildForest() {
 								</div>
 							</div>
 						</div>
-						<div className="bg-black">
+						<div>
 							<div className="w-80 h-80 bg-white rounded-full flex flex-col justify-center items-center border-4 border-Indigo-Blue">
 								<img
 									className="mb-2"
