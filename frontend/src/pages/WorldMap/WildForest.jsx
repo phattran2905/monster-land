@@ -3,6 +3,7 @@ import Footer from "../../components/Footer"
 import Header from "../../components/Header"
 import MenuBar from "../../components/MenuBar"
 import CookieImg from "../../assets/img/item/Cookie.png"
+import PikachuImg from "../../assets/img/pokemon/025.png"
 
 export default function WildForest() {
 	return (
@@ -82,9 +83,40 @@ export default function WildForest() {
 
 					<div className="bg-Flamingo-Pink">Capture button</div>
 
-					<div className="bg-white">
-						<div>Pokemon stats</div>
-						<div>Pokemon image</div>
+					<div className="bg-Amethyst-Purple">
+						<div className="w-96 bg-white rounded-lg border-2 border-Indigo-Blue m-4 px-4 py-6">
+							<div className="mx-1 mb-4">
+								<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
+									Level
+								</span>
+								<span className="font-bold text-Flamingo-Pink text-xl">14</span>
+							</div>
+							<div className="mx-1 mb-4">
+								<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
+									Type
+								</span>
+								<span className="bg-Gold-Sand text-Indigo-Blue px-2 py-1 font-bold text-md rounded-lg">
+									Electric
+								</span>
+							</div>
+							<div className="mx-1 mb-2">
+								<div className="mb-4 flex flex-row justify-between items-center">
+									<span className="text-Indigo-Blue font-bold text-lg underline capitalize">
+										Capture rate
+									</span>
+									<span className="text-Flamingo-Pink font-bold">60%</span>
+								</div>
+								<div className="w-full h-4 bg-black rounded-full">
+                                    <div className="h-full w-3/5 bg-Forest-Green rounded-full"></div>
+                                </div>
+							</div>
+						</div>
+						<div className="bg-white">
+							<img
+								src={PikachuImg}
+								alt="Pokemon image"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
