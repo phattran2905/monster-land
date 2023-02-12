@@ -10,6 +10,7 @@ const PokemonSchema = new Schema(
 		info_uid: {
 			type: String,
 			required: true,
+			ref: "PokemonInfo",
 		},
 		level: {
 			type: Number,
@@ -25,7 +26,7 @@ const PokemonSchema = new Schema(
 		},
 		power: {
 			type: Number,
-			default: 0,
+			required: true,
 		},
 		capture_rate: {
 			type: Number,
@@ -44,6 +45,13 @@ const PokemonSchema = new Schema(
 		timestamps: true,
 	}
 )
+
+PokemonSchema.virtual("info", {
+	ref: "PokemonInfo",
+	localField: "info_uid",
+	foreignField: "uid",
+	justOne: true,
+})
 
 const PokemonModel = model("Pokemon", PokemonSchema)
 
