@@ -4,9 +4,9 @@ import Header from "../../components/Header"
 import MenuBar from "../../components/MenuBar"
 import PikachuImg from "../../assets/img/pokemon/025.png"
 import StatusNewImg from "../../assets/img/status-new.png"
-import CheckIcon from "../../assets/img/icon/Icon awesome-check.png"
+import TimesIcon from "../../assets/img/icon/Icon ionic-md-close.png"
 
-export default function Success() {
+export default function Failure() {
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
 			<Header />
@@ -17,16 +17,8 @@ export default function Success() {
 				<div className="w-full h-full bg-background-img-5 bg-no-repeat bg-cover flex flex-row justify-center">
 					<div className="m-10 bg-white rounded-xl w-3/5 flex flex-row shadow-xl shadow-black">
 						{/* Left */}
-						<div className="w-1/3 bg-Royal-Blue flex flex-col items-center py-16 px-8 relative">
-							<div className="absolute top-2 right-6">
-								<img
-									className="w-32 h-32"
-									src={StatusNewImg}
-									alt="Status new image"
-								/>
-							</div>
-
-							<div className="w-72 h-72 mb-10 p-10 border-4 rounded-full border-Midnight-Gray bg-white flex flex-col justify-around items-center shadow-lg shadow-Gold-Sand">
+						<div className="w-1/3 bg-Midnight-Gray flex flex-col items-center py-16 px-8 relative">
+							<div className="w-72 h-72 mb-10 p-10 border-4 rounded-full border-Midnight-Gray bg-white flex flex-col justify-around items-center shadow-lg shadow-black">
 								<img
 									src={PikachuImg}
 									alt="Pokemon Img"
@@ -51,20 +43,31 @@ export default function Success() {
 										Electric
 									</span>
 								</div>
+								<div className="mx-1 mb-2">
+									<div className="mb-4 flex flex-row justify-between items-center">
+										<span className="text-Indigo-Blue font-bold text-lg underline capitalize">
+											Capture rate
+										</span>
+										<span className="text-Flamingo-Pink font-bold">60%</span>
+									</div>
+									<div className="w-full h-4 bg-black rounded-full">
+										<div className="h-full w-3/5 bg-Forest-Green rounded-full"></div>
+									</div>
+								</div>
 							</div>
 						</div>
 
 						{/* Right */}
 						<div className="w-2/3 bg-white rounded-tr-xl rounded-br-xl px-4 py-6 flex flex-col justify-center items-center">
-							<div className="w-60 h-60 bg-Forest-Green rounded-full flex flex-row justify-center items-center mb-6">
+							<div className="w-60 h-60 bg-Fire-Engine-Red rounded-full flex flex-row justify-center items-center mb-6">
 								<img
-									src={CheckIcon}
+									src={TimesIcon}
 									alt="Check Icon"
 								/>
 							</div>
 							<p className="w-3/4 text-Flamingo-Pink font-bold text-center text-4xl break-words">
-								<span className="block mb-1 capitalize">Congratulations! </span>
-								<span className="capitalize">You captured a wild Pokemon</span>
+								<span className="block mb-1 capitalize">Oh no! It ran away.</span>
+								<span className="capitalize">Be prepared next time.</span>
 							</p>
 
 							<div className="mt-32">

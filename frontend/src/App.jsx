@@ -6,6 +6,7 @@ import BackpackPage from "./pages/BackpackPage"
 import WorldMap from "./pages/WorldMap"
 import WildForest from "./pages/WildForest/WildForest"
 import WildForestSuccess from "./pages/WildForest/Success"
+import WildForestFailure from "./pages/WildForest/Failure"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 
@@ -39,10 +40,14 @@ function App() {
 							index={true}
 							element={<WildForest />}
 						/>
-						<Route
+						{/* <Route
 							path="result"
 							element={<WildForestSuccess />}
-						/>
+						/> */}
+						<Route
+							path="result"
+							element={<WildForestFailure />}
+						/>¬
 					</Route>
 				</Route>
 				<Route
