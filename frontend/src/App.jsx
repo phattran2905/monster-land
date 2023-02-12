@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage"
 import PokemonCollectionPage from "./pages/PokemonCollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import WorldMap from "./pages/WorldMap"
+import WildForest from "./pages/WorldMap/WildForest"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 
@@ -29,10 +30,19 @@ function App() {
 				/>
 				<Route
 					path="/world-map"
-					element={<WorldMap />}
-				/>
+					// element={<WorldMap />}
+				>
+					<Route
+						index={true}
+						element={<WorldMap />}
+					/>
+					<Route
+						path="wild-forest"
+						element={<WildForest />}
+					/>
+				</Route>
 				<Route
-					path="/*"
+					path="*"
 					element={<Page404 />}
 				/>
 				{/* <Route
