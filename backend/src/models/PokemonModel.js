@@ -7,7 +7,7 @@ const PokemonSchema = new Schema(
 			unique: true,
 			required: true,
 		},
-		info_id: {
+		info_uid: {
 			type: String,
 			required: true,
 		},
@@ -18,6 +18,10 @@ const PokemonSchema = new Schema(
 		exp: {
 			type: Number,
 			default: 0,
+		},
+		level_up_exp: {
+			type: Number,
+			required: true,
 		},
 		power: {
 			type: Number,

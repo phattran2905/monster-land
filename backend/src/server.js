@@ -4,6 +4,7 @@ import morgan from "morgan"
 import cors from "cors"
 import apiRouter from "./routes/api.js"
 import connectDb from "./db.js"
+import createMockupData from "./mockup-data/mockup.js"
 
 config()
 connectDb()
@@ -15,6 +16,8 @@ app.use(morgan("dev"))
 app.get("/", (req, res) => {
 	res.send("Pokemon Land")
 })
+
+app.get("/create-mockup-data", () => createMockupData())
 
 app.use("/api/v1", apiRouter)
 
