@@ -1,5 +1,6 @@
 import { Router } from "express"
 import PokemonRouter from "./Pokemon.js"
+import BackpackRouter from "./Backpack.js"
 
 const apiRouter = Router()
 apiRouter.get("/", (req, res) => {
@@ -7,5 +8,6 @@ apiRouter.get("/", (req, res) => {
 })
 
 apiRouter.use(PokemonRouter)
+apiRouter.use(BackpackRouter)
 
 export default apiRouter

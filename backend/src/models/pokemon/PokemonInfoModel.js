@@ -37,6 +37,12 @@ const PokemonInfoSchema = new Schema(
 	{ timestamps: true }
 )
 
+PokemonInfoSchema.virtual("pkmType", {
+	ref: "PokemonType",
+	localField: "type",
+	foreignField: "uid",
+})
+
 const PokemonInfoModel = model("PokemonInfo", PokemonInfoSchema)
 
 export default PokemonInfoModel
