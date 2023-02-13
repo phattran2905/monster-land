@@ -1,4 +1,6 @@
 import PokemonModel from "../models/pokemon/PokemonModel.js"
+import PokemonInfoModel from "../models/pokemon/PokemonInfoModel.js"
+import { getRandomElement, randomUID } from "../util/random.js"
 
 // Populate Pokemon data for frontend to render
 const populatePokemonData = (pokemonDoc) => ({
@@ -49,6 +51,34 @@ export const getAllPokemon = async (req, res) => {
 		const pokemonList = pokemonListDoc.map((pokemon) => populatePokemonData(pokemon))
 
 		return res.status(200).json(pokemonList)
+	} catch (error) {
+		return res.status(500).json({ message: error.message })
+	}
+}
+
+// Find wild Pokemon
+export const findWildPokemon = async (req, res) => {
+	try {
+		const pokemonList = await PokemonInfoModel.find({ status: "active" }).populate("pkmType")
+		const randomPokemon = getRandomElement(pokemonList)
+		const LEVEL_UP_DEFAULT_EXP = 1000
+
+		const wildPokemonDoc = await PokemonModel.create({
+			uid: randomUID(),
+			info_uid: randomPokemon.uid,
+			level_up_exp: LEVEL_UP_DEFAULT_EXP,
+			power: 1000,
+		})
+
+		const wildPokemon = {
+			...wildPokemonDoc.toObject(),
+			name: randomPokemon.name,
+			img_name: randomPokemon.img_name,
+			level_up_exp_rate: randomPokemon.level_up_exp_rate,
+			type: randomPokemon.pkmType.map((i) => i.name),
+		}
+
+		return res.status(200).json(wildPokemon)
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}
