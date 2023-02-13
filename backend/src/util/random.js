@@ -10,3 +10,5 @@ export const getRandomElement = (array) => {
 export const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
 
 export const randomUID = () => nanoid()
+
+export const determineSuccessByRate = (currentRate) => Math.random() * 100 <= currentRate

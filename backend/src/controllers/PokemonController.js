@@ -1,6 +1,6 @@
 import PokemonModel from "../models/pokemon/PokemonModel.js"
 import PokemonInfoModel from "../models/pokemon/PokemonInfoModel.js"
-import { getRandomElement, randomUID } from "../util/random.js"
+import { getRandomNumber, getRandomElement, randomUID } from "../util/random.js"
 
 // Populate Pokemon data for frontend to render
 const populatePokemonData = (pokemonDoc) => ({
@@ -64,7 +64,7 @@ export const findWildPokemon = async (req, res) => {
 		const LEVEL_UP_DEFAULT_EXP = 1000
 
 		const wildPokemonDoc = await PokemonModel.create({
-			uid: randomUID(),
+			uid: `Pkm-${randomUID()}`,
 			info_uid: randomPokemon.uid,
 			level_up_exp: LEVEL_UP_DEFAULT_EXP,
 			power: 1000,
@@ -79,6 +79,35 @@ export const findWildPokemon = async (req, res) => {
 		}
 
 		return res.status(200).json(wildPokemon)
+	} catch (error) {
+		return res.status(500).json({ message: error.message })
+	}
+}
+
+// Capture wild Pokemon
+export const captureWildPokemon = async (req, res) => {
+	try {
+		const wildPokemon = await PokemonModel.findOne({ uid: req.params.pokemon_uid })
+		if (!wildPokemon) {
+			return res.status(404).json({ message: "Not found" })
+		}
+
+		const randomRate = getRandomNumber(0, 100)
+		const isCaptured = wildPokemon.capture_rate >= randomRate
+
+		const pokemon = {
+			...wildPokemon.toObject(),
+			status: isCaptured ? "owned" : "wild",
+			capture_rate: 0,
+		}
+
+		await PokemonModel.findOneAndUpdate({ uid: wildPokemon.uid }, { ...pokemon })
+
+		if (isCaptured) {
+			return res.status(200).json({ message: "Succeeded", pokemon })
+		}
+
+		return res.status(200).json({ message: "Failed", pokemon })
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}
