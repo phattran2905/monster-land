@@ -1,4 +1,4 @@
-import PokemonModel from "../models/PokemonModel.js"
+import PokemonModel from "../models/pokemon/PokemonModel.js"
 
 // Populate Pokemon data for frontend to render
 const populatePokemonData = (pokemonDoc) => ({
