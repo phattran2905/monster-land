@@ -1,8 +1,8 @@
 import { Router } from "express"
-import { getItemsFromBackpack } from "../controllers/BackpackController.js"
+import { getItemsFromBackpack, useItemsOnPokemon } from "../controllers/BackpackController.js"
 
 const router = Router()
 
-router.get("/backpack", getItemsFromBackpack)
+router.get("/backpack", getItemsFromBackpack).put("/backpack/use", useItemsOnPokemon)
 
 export default router
