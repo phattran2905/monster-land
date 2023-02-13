@@ -75,10 +75,15 @@ export const useItemsOnPokemon = async (req, res) => {
 						}
 
 						// Update amount in backpack
-						backpack.item_list = backpack.item_list.map((i) => ({
-							...i,
-							amount: i.amount - usedAmount,
-						}))
+						backpack.item_list = backpack.item_list.map((i) => {
+							if (i.uid === item.item_uid) {
+								return {
+									...i,
+									amount: i.amount - usedAmount,
+								}
+							}
+							return i
+						})
 
 						return ownedItem
 					}
