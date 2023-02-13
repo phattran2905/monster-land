@@ -10,7 +10,7 @@ const BackpackSchema = new Schema(
 		user_uid: {
 			type: String,
 			required: true,
-			unique: true
+			unique: true,
 		},
 		item_list: {
 			type: [Object], // {item_uid, amount}
@@ -29,6 +29,13 @@ const BackpackSchema = new Schema(
 	},
 	{ timestamps: true }
 )
+
+// Populate to items to get data for storing items
+BackpackSchema.virtual("items", {
+	ref: "Item",
+	localField: "item_list.item_uid",
+	foreignField: "uid",
+})
 
 const BackpackModel = model("Backpack", BackpackSchema)
 

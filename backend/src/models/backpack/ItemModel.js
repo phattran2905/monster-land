@@ -41,6 +41,6 @@ const ItemSchema = new Schema(
 	{ timestamps: true }
 )
 
-const ItemModel = model("item", ItemSchema)
+const ItemModel = model("Item", ItemSchema)
 
 export default ItemModel
