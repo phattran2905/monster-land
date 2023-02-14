@@ -15,6 +15,17 @@ module.exports = {
 			"Midnight-Gray": "#464865",
 			white: "#ffffff",
 			black: "#1B1B1E",
+            
+            // Bg-color for pokemon's type
+            Grass: '#00ff00',
+            Poison: '#800080',
+            Fire: '#ff0000',
+            Flying: '#2C3D55',
+            Water: '#000080',
+            Bug: '#006400',
+            Normal: '#808080',
+            Electric: '#ffff00',
+              
 		},
 		extend: {
 			backgroundImage: {
