@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import LandingPage from "./pages/LandingPage"
 import HomePage from "./pages/HomePage"
-import PokemonCollectionPage from "./pages/PokemonCollectionPage"
+import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import WorldMap from "./pages/WorldMap"
 import WildForest from "./pages/WildForest/WildForest"
@@ -24,7 +24,7 @@ function App() {
 				/>
 				<Route
 					path="/pokemon-collection"
-					element={<PokemonCollectionPage />}
+					element={<CollectionPage />}
 				/>
 				<Route
 					path="/backpack"
