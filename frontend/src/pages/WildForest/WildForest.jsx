@@ -14,6 +14,7 @@ import {
 	useFindWildPokemonMutation,
 } from "../../redux/services/pokemon"
 import { useGetBackpackQuery, useUseItemsMutation } from "../../redux/services/backpack"
+import ProgressBar from "../../components/ProgressBar"
 
 export default function WildForest() {
 	const [findWildPokemon, { isLoading: findLoading }] = useFindWildPokemonMutation()
@@ -219,9 +220,7 @@ export default function WildForest() {
 												</span>
 												<span className="text-Flamingo-Pink font-bold">{`${wildPokemon?.capture_rate}%`}</span>
 											</div>
-											<div className="w-full h-4 bg-black rounded-full">
-												<div className="h-full w-3/5 bg-Forest-Green rounded-full"></div>
-											</div>
+											<ProgressBar percentage={wildPokemon?.capture_rate} />
 										</div>
 									</div>
 
