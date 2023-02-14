@@ -40,14 +40,14 @@ function App() {
 							index={true}
 							element={<WildForest />}
 						/>
-						{/* <Route
-							path="result"
-							element={<WildForestSuccess />}
-						/> */}
 						<Route
 							path="result"
+							element={<WildForestSuccess />}
+						/>
+						{/* <Route
+							path="result"
 							element={<WildForestFailure />}
-						/>¬
+						/>¬ */}
 					</Route>
 				</Route>
 				<Route

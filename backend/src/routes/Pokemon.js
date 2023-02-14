@@ -12,6 +12,6 @@ router
 	.get("/pokemon", getAllPokemon)
 	.get("/pokemon/:id", getPokemonById)
 	.post("/pokemon/find-wild", findWildPokemon)
-	.post("/pokemon/capture/:pokemon_uid", captureWildPokemon)
+	.put("/pokemon/capture/:pokemon_uid", captureWildPokemon)
 
 export default router

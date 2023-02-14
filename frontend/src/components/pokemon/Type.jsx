@@ -61,7 +61,7 @@ export default function Type({ name }) {
 	}, [name])
 
 	return (
-		<div className={`${bgColorClass} py-1 px-4 rounded-md mr-2 `}>
+		<div className={`${bgColorClass} py-1 px-4 rounded-md mr-2 shadow-lg`}>
 			<span className={`${textColorClass} capitalize font-bold text-sm`}>{name}</span>
 		</div>
 	)

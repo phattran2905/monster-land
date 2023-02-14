@@ -1,10 +1,5 @@
 import { useState } from "react"
 
-const activeInputClassName =
-	"w-full h-24 my-4 border-4 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
-const inactiveInputClassName =
-	"w-full h-24 my-4 border-2 border-Indigo-Blue rounded-xl flex flex-row justify-around items-center"
-
 export default function Item({
 	uid,
 	name,
@@ -38,7 +33,7 @@ export default function Item({
 
 	return (
 		<>
-			<div className="w-14 h-14">
+			<div className="w-14 h-14 ">
 				<img
 					className="w-full h-full"
 					src={`/img/item/${img_name}`}
@@ -57,13 +52,15 @@ export default function Item({
 				<div>
 					<input
 						onChange={(e) => handleUseAmountChange(e.target.value)}
-						className="w-14 border-black border-2 px-2 py-1 text-Indigo-Blue font-bold text-lg rounded-md"
+						className={`w-14 border-black border-2 px-2 py-1 text-Indigo-Blue font-bold text-lg rounded-md`}
 						type="number"
 						value={useAmount}
 						min={0}
+                        max={amount}
 						step={1}
+                        disabled={amount === 0}
 					/>
-					<span className="ml-2 text-black font-bold text-xl">/ 10</span>
+					<span className="ml-2 text-black font-bold text-xl">/ {amount}</span>
 				</div>
 			)}
 		</>
