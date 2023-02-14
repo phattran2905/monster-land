@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
 
 import backpackIcon from "../assets/img/icon/backpack-menu.png"
 import userIcon from "../assets/img/icon/Icon awesome-user.png"
@@ -6,64 +6,80 @@ import worldMapIcon from "../assets/img/icon/pay-per-click_1_.png"
 import collectionIcon from "../assets/img/icon/pokemon-menu.png"
 import logoutIcon from "../assets/img/icon/Icon open-account-logout.png"
 
-export default function MenuBar({ activeMenu }) {
+const activeClassName =
+	"w-full h-20 p-2 flex flex-row justify-center items-center bg-Flamingo-Pink transition-colors duration-500"
+
+const inactiveClassName =
+	"w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+
+export default function MenuBar() {
 	return (
 		<section className="w-24 bg-Indigo-Blue">
 			<ul className="w-24 h-full flex flex-col items-stretch">
 				<li>
-					<Link
+					<NavLink
 						to="/trainer"
-						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className={({ isActive }) =>
+							isActive ? activeClassName : inactiveClassName
+						}
 					>
 						<img
 							src={userIcon}
 							alt="User icon"
 						/>
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link
+					<NavLink
 						to="/pokemon-collection"
-						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className={({ isActive }) =>
+							isActive ? activeClassName : inactiveClassName
+						}
 					>
 						<img
 							src={collectionIcon}
 							alt="Pokemon Collection icon"
 						/>
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link
+					<NavLink
 						to="/backpack"
-						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
+						className={({ isActive }) =>
+							isActive ? activeClassName : inactiveClassName
+						}
 					>
 						<img
 							src={backpackIcon}
 							alt="Backpack icon"
 						/>
-					</Link>
+					</NavLink>
 				</li>
 				<li>
-					<Link
+					<NavLink
 						to="/world-map"
-						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
+						className={({ isActive }) =>
+							isActive ? activeClassName : inactiveClassName
+						}
 					>
 						<img
 							src={worldMapIcon}
 							alt="World map icon"
 						/>
-					</Link>
+					</NavLink>
 				</li>
 				<li className="mt-auto">
-					<Link
+					<NavLink
 						to="/"
-						className="w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink"
+						className={({ isActive }) =>
+							isActive ? activeClassName : inactiveClassName
+						}
 					>
 						<img
 							src={logoutIcon}
 							alt="Logout icon"
 						/>
-					</Link>
+					</NavLink>
 				</li>
 			</ul>
 		</section>
