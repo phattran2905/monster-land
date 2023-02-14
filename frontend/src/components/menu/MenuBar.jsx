@@ -16,7 +16,9 @@ export default function MenuBar() {
 				<li>
 					<NavLinkItem path={"/world-map"} />
 				</li>
-				<NavLinkItem path={"/logout"} />
+				<li className="mt-auto">
+					<NavLinkItem path={"/logout"} />
+				</li>
 			</ul>
 		</section>
 	)

@@ -10,4 +10,4 @@ export const backpackApi = createApi({
 	}),
 })
 
-export const { useGetBackpackQuery } = backpackApi
+export const { useGetBackpackQuery,  } = backpackApi

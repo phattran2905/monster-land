@@ -53,26 +53,34 @@ export default function BackpackPage() {
 								<div className="w-full m-4 p-8 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto">
 									{activeTab === "usable"
 										? usableItems.map((item) => (
-												<Item
+												<div
 													key={item.uid}
-													uid={item.uid}
-													name={item.name}
-													img_name={item.img_name}
-													effect_property={item.effect_property}
-													effect_value={item.effect_value}
-													amount={item.amount}
-												/>
+													className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
+												>
+													<Item
+														uid={item.uid}
+														name={item.name}
+														img_name={item.img_name}
+														effect_property={item.effect_property}
+														effect_value={item.effect_value}
+														amount={item.amount}
+													/>
+												</div>
 										  ))
 										: mysticItems.map((item) => (
-												<Item
+												<div
 													key={item.uid}
-													uid={item.uid}
-													name={item.name}
-													img_name={item.img_name}
-													effect_property={item.effect_property}
-													effect_value={item.effect_value}
-													amount={item.amount}
-												/>
+													className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
+												>
+													<Item
+														uid={item.uid}
+														name={item.name}
+														img_name={item.img_name}
+														effect_property={item.effect_property}
+														effect_value={item.effect_value}
+														amount={item.amount}
+													/>
+												</div>
 										  ))}
 								</div>
 
