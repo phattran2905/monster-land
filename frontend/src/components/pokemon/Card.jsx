@@ -1,25 +1,26 @@
-import pokemonImg from "../assets/img/pokemon/025.png"
-import energyIcon from "../assets/img/icon/Icon metro-power.png"
+import pokemonImg from "../../assets/img/pokemon/025.png"
+import energyIcon from "../../assets/img/icon/Icon metro-power.png"
+import Type from "./Type"
+import Image from "./Image"
 
-export default function PokemonCard() {
+export default function PokemonCard({ uid, name, type, level, img_name, power, exp }) {
 	return (
 		<div className="p-4">
 			<div className="border-2 border-Midnight-Gray relative rounded-tl-xl rounded-tr-xl p-4">
-				<div className="absolute bg-Gold-Sand py-1 px-4 rounded-md flex flex-row justify-center items-center -left-4 -top-4">
-					<span className="text-black capitalize font-bold text-sm">Electric</span>
+				<div className="absolute flex flex-row justify-start items-center w-full -top-2 -left-4">
+					{type.map((name) => (
+						<Type
+							key={name}
+							name={name}
+						/>
+					))}
 				</div>
 
-				<div className="pokemon-img w-52 h-52">
-					<img
-						className="w-full h-full"
-						src={pokemonImg}
-						alt="Pokemon Image"
-					/>
-				</div>
+				<Image img_name={img_name} />
 
 				<div className="flex flex-row justify-center items-center my-3">
 					<span className="text-white capitalize bg-Forest-Moss px-6 py-1 text-sm rounded-xl">
-						Lv. 5
+						{`Lv. ${level}`}
 					</span>
 				</div>
 
@@ -30,11 +31,13 @@ export default function PokemonCard() {
 						alt="Power icon"
 					/>{" "}
 					<span className="text-Indigo-Blue ml-1 font-bold text-xl">Power:</span>
-					<span className="text-black text-xl font-bold px-2">10,000</span>
+					<span className="text-black text-xl font-bold px-2">
+						{power.toLocaleString("en-US")}
+					</span>
 				</div>
 			</div>
 			<div className="bg-Royal-Blue px-6 py-3 text-center rounded-bl-xl rounded-br-xl">
-				<span className="text-white font-bold text-xl">Pikachu</span>
+				<span className="text-white font-bold text-xl">{name}</span>
 			</div>
 		</div>
 	)

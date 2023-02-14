@@ -15,6 +15,17 @@ module.exports = {
 			"Midnight-Gray": "#464865",
 			white: "#ffffff",
 			black: "#1B1B1E",
+            
+            // Bg-color for pokemon's type
+            Grass: '#00ff00',
+            Poison: '#800080',
+            Fire: '#ff0000',
+            Flying: '#2C3D55',
+            Water: '#000080',
+            Bug: '#006400',
+            Normal: '#808080',
+            Electric: '#ffff00',
+              
 		},
 		extend: {
 			backgroundImage: {
@@ -23,6 +34,44 @@ module.exports = {
 				"background-img-3": "url('/img/bg/bg-3.png')",
 				"background-img-4": "url('/img/bg/bg-4.png')",
 				"background-img-5": "url('/img/bg/bg-5.png')",
+			},
+			keyframes: {
+				// Source code: https://loading.io/css/
+				"lds-ripple": {
+					"0%": {
+						top: "36px",
+						left: "36px",
+						width: 0,
+						height: 0,
+						opacity: 0,
+					},
+					"4.9%": {
+						top: "36px",
+						left: "36px",
+						width: 0,
+						height: 0,
+						opacity: 0,
+					},
+					"5%": {
+						top: "36px",
+						left: "36px",
+						width: 0,
+						height: 0,
+						opacity: 1,
+					},
+					"100%": {
+						top: 0,
+						left: 0,
+						width: "72px",
+						height: "72px",
+						opacity: 0,
+					},
+				},
+			},
+
+			animation: {
+				"ripple-1": "lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite",
+				"ripple-2": "lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite -0.5s",
 			},
 		},
 	},

@@ -1,6 +1,6 @@
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import MenuBar from "../components/MenuBar"
+import MenuBar from "../components/menu/MenuBar"
 
 export default function HomePage() {
 	return (

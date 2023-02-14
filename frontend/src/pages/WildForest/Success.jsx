@@ -1,12 +1,27 @@
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
-import MenuBar from "../../components/MenuBar"
+import MenuBar from "../../components/menu/MenuBar"
 import PikachuImg from "../../assets/img/pokemon/025.png"
 import StatusNewImg from "../../assets/img/status-new.png"
 import CheckIcon from "../../assets/img/icon/Icon awesome-check.png"
+import { pokemonApi, useCaptureWildPokemonMutation, useGetPokemonByUIDQuery } from "../../redux/services/pokemon"
 
-export default function Success() {
+export default function Result() {
+    const [captureWildPokemon, response] = useCaptureWildPokemonMutation()
+    const {data, error, isLoading} = useGetPokemonByUIDQuery()
+    const [result] = useState(() => data.status === "owned" ? "Succeeded" : "Failed")
+    const [isCaptured, setIsCaptured] = useState()
+    const location = useLocation()
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const myParam = queryParams.get('pokemon_uid');
+
+    }, [location])
+    
+    console.log(response.data)
+
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
 			<Header />
@@ -77,7 +92,6 @@ export default function Success() {
 							</div>
 						</div>
 					</div>
-					<div></div>
 				</div>
 			</div>
 
