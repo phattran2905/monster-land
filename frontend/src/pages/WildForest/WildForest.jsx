@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
-import MenuBar from "../../components/MenuBar"
+import MenuBar from "../../components/menu/MenuBar"
 import CookieImg from "../../assets/img/item/Cookie.png"
 import PikachuImg from "../../assets/img/pokemon/025.png"
 import PokeballImg from "../../assets/img/Pokeball.png"

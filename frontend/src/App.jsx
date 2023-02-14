@@ -23,7 +23,7 @@ function App() {
 					element={<HomePage />}
 				/>
 				<Route
-					path="/pokemon-collection"
+					path="/collection"
 					element={<CollectionPage />}
 				/>
 				<Route

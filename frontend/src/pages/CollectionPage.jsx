@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Loading from "../components/Loading"
-import MenuBar from "../components/MenuBar"
+import MenuBar from "../components/menu/MenuBar"
 import PokemonCard from "../components/pokemon/Card"
 import { useGetOwnedPokemonQuery } from "../redux/services/collection"
 

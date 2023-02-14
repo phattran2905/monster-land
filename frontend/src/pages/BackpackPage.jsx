@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import MenuBar from "../components/MenuBar"
+import MenuBar from "../components/menu/MenuBar"
 import Item from "../components/Item"
 
 export default function BackpackPage() {

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Footer from "../../components/Footer"
 import Header from "../../components/Header"
-import MenuBar from "../../components/MenuBar"
+import MenuBar from "../../components/menu/MenuBar"
 import PikachuImg from "../../assets/img/pokemon/025.png"
 import StatusNewImg from "../../assets/img/status-new.png"
 import TimesIcon from "../../assets/img/icon/Icon ionic-md-close.png"
