@@ -1,4 +1,5 @@
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Loading from "../components/Loading"
@@ -8,9 +9,12 @@ import { useGetOwnedPokemonQuery } from "../redux/services/collection"
 
 export default function CollectionPage() {
 	// Using a query hook automatically fetches data and returns query values
-	const { data, error, isLoading } = useGetOwnedPokemonQuery()
-	// Individual hooks are also accessible under the generated endpoints:
-	// const { data, error, isLoading } = pokemonApi.endpoints.getPokemonByName.useQuery('bulbasaur')
+	const { data, error, isLoading, refetch } = useGetOwnedPokemonQuery()
+	const location = useLocation()
+
+	useEffect(() => {
+		refetch()
+	}, [location])
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
