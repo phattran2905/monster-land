@@ -11,9 +11,6 @@ export default function CollectionPage() {
 	const { data, error, isLoading } = useGetOwnedPokemonQuery()
 	// Individual hooks are also accessible under the generated endpoints:
 	// const { data, error, isLoading } = pokemonApi.endpoints.getPokemonByName.useQuery('bulbasaur')
-	console.log(data, error, isLoading)
-	console.log(error)
-	console.log(isLoading)
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -22,7 +19,7 @@ export default function CollectionPage() {
 			<div className="w-full h-full flex flex-row relative">
 				<MenuBar />
 
-				<div className="m-10 w-full overflow-auto shadow-xl">
+				<div className="m-10 w-full overflow-auto shadow-xl border-t-2 border-Flamingo-Pink">
 					{isLoading && <Loading />}
 
 					<div className="">
