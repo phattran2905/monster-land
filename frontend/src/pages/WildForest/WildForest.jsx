@@ -19,7 +19,7 @@ export default function WildForest() {
 	const [findWildPokemon, { isLoading: findLoading }] = useFindWildPokemonMutation()
 	const [captureWildPokemon, { isLoading: captureLoading }] = useCaptureWildPokemonMutation()
 	const [useItems, { isLoading: useLoading }] = useUseItemsMutation()
-    const { data: backpack, refetch } = useGetBackpackQuery()
+	const { data: backpack, refetch } = useGetBackpackQuery()
 	const [wildPokemon, setWildPokemon] = useState()
 	const [itemToUseList, setItemToUseList] = useState([])
 	const [captureResult, setCaptureResult] = useState()
@@ -63,7 +63,7 @@ export default function WildForest() {
 				.then((data) => {
 					setWildPokemon({ ...wildPokemon, capture_rate: data.capture_rate })
 					setItemToUseList([])
-                    refetch()
+					refetch()
 				})
 				.catch((e) => e)
 		}
@@ -74,7 +74,7 @@ export default function WildForest() {
 			.unwrap()
 			.then((r) => {
 				setWildPokemon(r)
-                setCaptureResult(undefined)
+				setCaptureResult(undefined)
 			})
 			.catch((e) => e)
 	}
@@ -106,7 +106,14 @@ export default function WildForest() {
 								onSkip={onSkip}
 							/>
 						) : (
-							<FailedResult />
+							<FailedResult
+								img_name={wildPokemon.img_name}
+								name={wildPokemon.name}
+								level={wildPokemon.level}
+								type={wildPokemon.type}
+								onSkip={onSkip}
+								capture_rate={wildPokemon.capture_rate}
+							/>
 						)}
 					</>
 				) : (

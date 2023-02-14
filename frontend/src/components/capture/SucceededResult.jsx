@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 import StatusNewImg from "../../assets/img/status-new.png"
 import CheckIcon from "../../assets/img/icon/Icon awesome-check.png"
@@ -21,7 +21,7 @@ export default function Succeed({ img_name, name, level, type, onSkip }) {
 					<div className="w-72 h-72 mb-10 p-10 border-4 rounded-full border-Midnight-Gray bg-white flex flex-col justify-around items-center shadow-lg shadow-Gold-Sand">
 						<img
 							src={`/img/pokemon/${img_name}`}
-							alt="Pokemon Img"
+							alt={img_name}
 						/>
 						<span className="text-Flamingo-Pink font-bold capitalize text-2xl">
 							{name}
