@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom"
 import Footer from "../components/Footer"
-import pokemonLandLogo from "../assets/img/logo-2x.png"
+import logo from "../assets/img/logo/logo-trans-bg.png"
 
 export default function LandingPage() {
 	return (
 		<div className="container-xl flex flex-row h-screen">
-			<div className="basis-2/5 bg-Indigo-Blue flex flex-col items-stretch justify-between">
-				<div className="w-3/5 mt-32 mx-auto">
+			<div className="basis-2/5 bg-Royal-Blue flex flex-col items-stretch justify-between">
+				<div className="w-3/4 mt-32 mx-auto">
 					<img
 						className="rounded-full"
-						src={pokemonLandLogo}
+						src={logo}
 						alt="Pokemon Land logo"
 					/>
 				</div>
