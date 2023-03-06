@@ -27,7 +27,7 @@ export default function LandingPage() {
 
 				<Footer />
 			</div>
-			<div className="basis-3/5 bg-Flamingo-Pink bg-background-img-3 bg-no-repeat bg-cover"></div>
+			<div className="basis-3/5 bg-Flamingo-Pink bg-background-img-2 bg-no-repeat bg-cover"></div>
 		</div>
 	)
 }
