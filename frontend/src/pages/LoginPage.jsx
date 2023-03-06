@@ -18,8 +18,8 @@ function LoginPage() {
 						/>
 					</div>
 
-					<div className="flex flex-col mx-auto justify-center items-center">
-						<div className="w-1/2 my-4">
+					<div className="px-36 flex flex-col mx-auto justify-center items-center">
+						<div className="w-full my-4">
 							<label
 								htmlFor="username"
 								className="flex flex-row items-center mb-2"
@@ -34,7 +34,7 @@ function LoginPage() {
 								placeholder="username"
 							/>
 						</div>
-						<div className="w-1/2 my-4">
+						<div className="w-full my-4">
 							<label
 								htmlFor="password"
 								className="flex flex-row items-center mb-2"
@@ -49,7 +49,7 @@ function LoginPage() {
 								placeholder="********"
 							/>
 						</div>
-						<div className="w-1/2 my-2 flex flex-row items-center ">
+						<div className="w-full my-2 flex flex-row items-center ">
 							<label
 								htmlFor="remember"
 								className="text-xl text-Royal-Blue font-bold pl-10 py-2 relative flex flex-row justify-center items-center align-middle group"
@@ -68,7 +68,7 @@ function LoginPage() {
 								<span className="block">Stay logged in</span>
 							</label>
 						</div>
-						<div className="w-1/2 my-4 bg-Fire-Engine-Red">
+						<div className="w-full my-4 bg-Fire-Engine-Red">
 							<div className="flex flex-row items-center p-2">
 								<FaExclamationCircle className="text-white mx-2" />
 								<p className="text-white font-bold">
@@ -76,7 +76,7 @@ function LoginPage() {
 								</p>
 							</div>
 						</div>
-						<div className="w-1/2 my-2 flex justify-center items-center">
+						<div className="w-full my-12 flex justify-center items-center">
 							<button className="py-4 px-20 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 ">
 								Log in
 							</button>
