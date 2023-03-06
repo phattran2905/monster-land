@@ -1,6 +1,6 @@
 import Footer from "../components/Footer"
 import logo from "../assets/img/logo/logo-trans-bg.png"
-import { FaUserAlt, FaUnlock, FaExclamationCircle, FaLock } from "react-icons/fa"
+import { FaUserAlt, FaExclamationCircle, FaLock } from "react-icons/fa"
 
 function SignUpPage() {
 	return (

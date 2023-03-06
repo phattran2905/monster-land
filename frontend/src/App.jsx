@@ -3,6 +3,7 @@ import LandingPage from "./pages/LandingPage"
 import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
 import HomePage from "./pages/HomePage"
+import CharacterCreationPage from "./pages/CharacterCreationPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import WorldMapPage from "./pages/WorldMapPage"
@@ -29,6 +30,10 @@ function App() {
 				<Route
 					path="/home"
 					element={<HomePage />}
+				/>
+				<Route
+					path="/create-character"
+					element={<CharacterCreationPage />}
 				/>
 				<Route
 					path="/collection"
