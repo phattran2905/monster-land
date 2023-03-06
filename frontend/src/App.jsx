@@ -28,7 +28,7 @@ function App() {
 					path="/backpack"
 					element={<BackpackPage />}
 				/>
-				<Route path="/world-map">
+				<Route path="/map">
 					<Route
 						index={true}
 						element={<WorldMapPage />}
@@ -41,13 +41,13 @@ function App() {
 					</Route>
 				</Route>
 				<Route
+					path="/server-error"
+					element={<Page500 />}
+				/>
+				<Route
 					path="*"
 					element={<Page404 />}
 				/>
-				{/* <Route
-					path="/*"
-					element={<Page500 />}
-				/> */}
 			</Routes>
 		</BrowserRouter>
 	)
