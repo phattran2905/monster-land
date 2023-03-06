@@ -3,10 +3,8 @@ import LandingPage from "./pages/LandingPage"
 import HomePage from "./pages/HomePage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
-import WorldMap from "./pages/WorldMap"
-import WildForest from "./pages/WildForest/WildForest"
-import WildForestSuccess from "./pages/WildForest/Success"
-import WildForestFailure from "./pages/WildForest/Failure"
+import WorldMapPage from "./pages/WorldMapPage"
+import WildForestPage from "./pages/WildForestPage"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 
@@ -33,21 +31,13 @@ function App() {
 				<Route path="/world-map">
 					<Route
 						index={true}
-						element={<WorldMap />}
+						element={<WorldMapPage />}
 					/>
 					<Route path="wild-forest">
 						<Route
 							index={true}
-							element={<WildForest />}
+							element={<WildForestPage />}
 						/>
-						<Route
-							path="result"
-							element={<WildForestSuccess />}
-						/>
-						{/* <Route
-							path="result"
-							element={<WildForestFailure />}
-						/>¬ */}
 					</Route>
 				</Route>
 				<Route

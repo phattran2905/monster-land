@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react"
-import Footer from "../../components/Footer"
-import Header from "../../components/Header"
-import MenuBar from "../../components/menu/MenuBar"
-import PokemonType from "../../components/pokemon/Type"
-import PokemonImg from "../../components/pokemon/Image"
-import Item from "../../components/Item"
-import Loading from "../../components/Loading"
-import SucceededResult from "../../components/capture/SucceededResult"
-import FailedResult from "../../components/capture/FailedResult"
-import PokeballImg from "../../assets/img/Pokeball.png"
+import Footer from "../components/Footer"
+import Header from "../components/Header"
+import MenuBar from "../components/menu/MenuBar"
+import PokemonType from "../components/pokemon/Type"
+import PokemonImg from "../components/pokemon/Image"
+import Item from "../components/Item"
+import Loading from "../components/Loading"
+import SucceededResult from "../components/capture/SucceededResult"
+import FailedResult from "../components/capture/FailedResult"
+import PokeballImg from "../assets/img/Pokeball.png"
 import {
 	useCaptureWildPokemonMutation,
 	useFindWildPokemonMutation,
-} from "../../redux/services/pokemon"
-import { useGetBackpackQuery, useUseItemsMutation } from "../../redux/services/backpack"
-import ProgressBar from "../../components/ProgressBar"
+} from "../redux/services/pokemon"
+import { useGetBackpackQuery, useUseItemsMutation } from "../redux/services/backpack"
+import ProgressBar from "../components/ProgressBar"
 
 export default function WildForest() {
 	const [findWildPokemon, { isLoading: findLoading }] = useFindWildPokemonMutation()

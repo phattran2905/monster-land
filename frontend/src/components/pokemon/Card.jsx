@@ -1,4 +1,4 @@
-import pokemonImg from "../../assets/img/pokemon/025.png"
+
 import energyIcon from "../../assets/img/icon/Icon metro-power.png"
 import Type from "./Type"
 import Image from "./Image"
