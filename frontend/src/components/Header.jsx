@@ -1,16 +1,21 @@
 import diamondIcon from "../assets/img/icon/diamond_1_.png"
 import coinIcon from "../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../assets/img/icon/Pickaxe.png"
-import logo from "../assets/img/logo-2x.png"
+import logo from "../assets/img/logo/logo-trans-bg.png"
+import { Link } from "react-router-dom"
 
 export default function Header() {
 	return (
 		<header className="w-full h-24 bg-Indigo-Blue flex flex-row justify-between">
-        <img
-            className="w-24 h-24"
-            src={logo}
-            alt="Pokemon Land logo"
-        />
+			<div className="w-24 h-24 flex flex-auto justify-center items-center">
+				<Link to="/home" className="w-3/4 h-3/4">
+					<img
+						className="w-100 h-100"
+						src={logo}
+						alt="Pokemon Land logo"
+					/>
+				</Link>
+			</div>
 
 			<div className="px-6 w-full flex flex-row justify-between items-center">
 				<div className="trainer-level flex flex-col items-center justify-center">
