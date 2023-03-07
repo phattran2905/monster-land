@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose"
 
-const PokemonSchema = new Schema(
+const MonsterSchema = new Schema(
 	{
 		uid: {
 			type: String,
@@ -10,7 +10,7 @@ const PokemonSchema = new Schema(
 		info_uid: {
 			type: String,
 			required: true,
-			ref: "PokemonInfo",
+			ref: "MonsterInfo",
 		},
 		level: {
 			type: Number,
@@ -46,13 +46,13 @@ const PokemonSchema = new Schema(
 	}
 )
 
-PokemonSchema.virtual("info", {
-	ref: "PokemonInfo",
+MonsterSchema.virtual("info", {
+	ref: "MonsterInfo",
 	localField: "info_uid",
 	foreignField: "uid",
 	justOne: true,
 })
 
-const PokemonModel = model("Pokemon", PokemonSchema)
+const MonsterModel = model("Monster", MonsterSchema)
 
-export default PokemonModel
+export default MonsterModel

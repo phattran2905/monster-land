@@ -1,10 +1,10 @@
 import { customAlphabet } from "nanoid"
-import { findPkmInfoUID } from "./PokemonInfo.js"
+import { findPkmInfoUID } from "./MonsterInfo.js"
 
 const nanoid = customAlphabet("1234567890abcdef", 10)
 const LEVEL_UP_DEFAULT_EXP = 1000
 
-const Pokemon = [
+const Monster = [
 	{
 		uid: `Pkm-${nanoid()}`,
 		info_uid: findPkmInfoUID("Bulbasaur"),
@@ -170,4 +170,4 @@ const Pokemon = [
 	},
 ]
 
-export default Pokemon
+export default Monster

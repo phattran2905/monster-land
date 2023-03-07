@@ -2,7 +2,7 @@ import { customAlphabet } from "nanoid"
 
 const nanoid = customAlphabet("1234567890abcdef", 10)
 
-const PokemonType = [
+const MonsterType = [
 	{
 		uid: `PkmT-${nanoid()}`,
 		name: "Grass",
@@ -38,7 +38,7 @@ const PokemonType = [
 ]
 
 export function findPkmTypeUID(typeName = "") {
-	return PokemonType.find((i) => i.name.toLowerCase() === typeName.toLowerCase())?.uid
+	return MonsterType.find((i) => i.name.toLowerCase() === typeName.toLowerCase())?.uid
 }
 
-export default PokemonType
+export default MonsterType

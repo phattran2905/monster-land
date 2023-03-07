@@ -1,9 +1,9 @@
 import { customAlphabet } from "nanoid"
-import { findPkmTypeUID } from "./PokemonType.js"
+import { findPkmTypeUID } from "./MonsterType.js"
 
 const nanoid = customAlphabet("1234567890abcdef", 10)
 
-const PokemonInfo = [
+const MonsterInfo = [
 	{
 		uid: `PkmI-${nanoid()}`,
 		name: "Bulbasaur",
@@ -196,13 +196,13 @@ const PokemonInfo = [
 ]
 
 export function findPkmInfoUID(pkmName = "") {
-	return PokemonInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
+	return MonsterInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
 }
 
 export function calcLevelUpExp(pkmName = "", currentLvlUpExp = 1) {
-	const pkmInfo = PokemonInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
+	const pkmInfo = MonsterInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
 	const lvlUpRate = pkmInfo.level_up_exp_rate / 100 + 1
 	return lvlUpRate * currentLvlUpExp
 }
 
-export default PokemonInfo
+export default MonsterInfo

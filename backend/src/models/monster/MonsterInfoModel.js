@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose"
 
-const PokemonInfoSchema = new Schema(
+const MonsterInfoSchema = new Schema(
 	{
 		uid: {
 			type: String,
@@ -37,12 +37,12 @@ const PokemonInfoSchema = new Schema(
 	{ timestamps: true }
 )
 
-PokemonInfoSchema.virtual("pkmType", {
-	ref: "PokemonType",
+MonsterInfoSchema.virtual("pkmType", {
+	ref: "MonsterType",
 	localField: "type",
 	foreignField: "uid",
 })
 
-const PokemonInfoModel = model("PokemonInfo", PokemonInfoSchema)
+const MonsterInfoModel = model("MonsterInfo", MonsterInfoSchema)
 
-export default PokemonInfoModel
+export default MonsterInfoModel

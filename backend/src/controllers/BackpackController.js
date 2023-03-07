@@ -1,9 +1,9 @@
 import BackpackModel from "../models/backpack/BackpackModel.js"
-import PokemonModel from "../models/pokemon/PokemonModel.js"
+import MonsterModel from "../models/monster/MonsterModel.js"
 
 const getItemInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
-// Populate Pokemon data for frontend to render
+// Populate Monster data for frontend to render
 const populateItemData = (backpackDoc) => ({
 	uid: backpackDoc.uid,
 	user_uid: backpackDoc.user_uid,
@@ -40,14 +40,14 @@ export const getItemsFromBackpack = async (req, res) => {
 	}
 }
 
-export const useItemsOnPokemon = async (req, res) => {
+export const useItemsOnMonster = async (req, res) => {
 	try {
 		const backpackUID = req.query?.backpack
 		const pokemonUID = req.query?.pokemon
 		const itemsToUse = req.body ?? []
 
 		if (backpackUID && pokemonUID && itemsToUse.length > 0) {
-			const pokemonDoc = await PokemonModel.findOne({ uid: pokemonUID }).populate({
+			const pokemonDoc = await MonsterModel.findOne({ uid: pokemonUID }).populate({
 				path: "info",
 				populate: { path: "pkmType", select: "-_id -uid name" },
 			})
@@ -92,8 +92,8 @@ export const useItemsOnPokemon = async (req, res) => {
 				})
 			)
 
-			// Update Pokemon
-			const pokemon = await PokemonModel.findOneAndUpdate(
+			// Update Monster
+			const pokemon = await MonsterModel.findOneAndUpdate(
 				{ uid: pokemonDoc.uid },
 				{ ...pokemonDoc.toObject() },
 				{ new: true }
