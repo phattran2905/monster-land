@@ -80,7 +80,7 @@ function CharacterCreationPage() {
 		const result = await fetchCreateTrainer({ jwt_token: auth.jwtToken, data })
 
 		if (result.error) {
-			setError(result.error.message)
+			setError(result.error.data.message)
 		} else {
 			return navigate("/home")
 		}

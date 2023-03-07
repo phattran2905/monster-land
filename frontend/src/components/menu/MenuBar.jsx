@@ -1,15 +1,17 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLogoutMutation } from "../../redux/services/authentication"
-import { logout } from "../../redux/slices/auth"
+import { getStoredJwtToken, logout } from "../../redux/slices/auth"
 import NavLinkItem from "./NavLinkItem"
 
-export default function MenuBar({  }) {
+export default function MenuBar({}) {
 	const [fetchLogoutApi] = useLogoutMutation()
+	const auth = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 
 	const handleLogout = async (e) => {
 		e.preventDefault()
-
+        dispatch(getStoredJwtToken())
+        console.log(auth.jwtToken)
 		await fetchLogoutApi({ jwt_token: auth.jwtToken })
 		dispatch(logout())
 	}
