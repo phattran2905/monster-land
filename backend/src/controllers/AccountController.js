@@ -1,4 +1,5 @@
 import bcrypt from "bcryptjs"
+import jwt from "jsonwebtoken"
 import AccountModel from "../models/user/AccountModel.js"
 import { randomUID } from "../util/random.js"
 
@@ -6,14 +7,30 @@ export const logIn = async (req, res) => {
 	try {
 		const { username, password } = req.body
 
+		// Not found
 		const account = await AccountModel.findOne({ username: username.toLowerCase() })
-
 		if (!account) {
 			return res.status(404).json({ message: "User not found." })
 		}
 
+		// Check password
+		const correctPassword = await bcrypt.compare(password, account.hashed_pwd)
+		if (!correctPassword) {
+			return res.status(401).json({ message: "Username or Password is incorrect." })
+		}
+
+		// Is banned
+		if (account.status === "inactive") {
+			return res.status(403).json({ message: "Your account was banned." })
+		}
+
 		// Generate JWT token
-		const newJwtToken = "1234"
+		const newJwtToken = jwt.sign({ uid: account.uid }, process.env.JWT_SECRET)
+
+		// Update jwt and last_login
+		account.jwt_token = newJwtToken
+		account.last_login = Date()
+		await account.save()
 
 		return res.status(200).message({
 			message: "OK",
@@ -31,7 +48,9 @@ export const signUp = async (req, res) => {
 		const { username, password, confirm } = req.body
 
 		if (!username || !password || !confirm) {
-			return res.status(400).json({ message: "Require username, password, confirm" })
+			return res
+				.status(400)
+				.json({ message: "Missing fields. Require username, password, confirm." })
 		}
 
 		// Password and Confirm do not match
