@@ -1,6 +1,6 @@
 import MonsterModel from "../models/monster/MonsterModel.js"
 import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
-import { getRandomNumber, getRandomElement, randomUID } from "../util/random.js"
+import { getRandomNumber, getRandomArrayElement, randomUID } from "../util/random.js"
 
 // Populate Monster data for frontend to render
 const populateMonsterData = (monsterDoc) => ({
@@ -61,7 +61,7 @@ export const getAllMonster = async (req, res) => {
 export const findWildMonster = async (req, res) => {
 	try {
 		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate("monsterType")
-		const randomMonster = getRandomElement(monsterList)
+		const randomMonster = getRandomArrayElement(monsterList)
 		const LEVEL_UP_DEFAULT_EXP = 1000
 
 		const wildMonsterDoc = await MonsterModel.create({
