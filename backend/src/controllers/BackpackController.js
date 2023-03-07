@@ -43,18 +43,18 @@ export const getItemsFromBackpack = async (req, res) => {
 export const useItemsOnMonster = async (req, res) => {
 	try {
 		const backpackUID = req.query?.backpack
-		const pokemonUID = req.query?.pokemon
+		const monsterUID = req.query?.monster
 		const itemsToUse = req.body ?? []
 
-		if (backpackUID && pokemonUID && itemsToUse.length > 0) {
-			const pokemonDoc = await MonsterModel.findOne({ uid: pokemonUID }).populate({
+		if (backpackUID && monsterUID && itemsToUse.length > 0) {
+			const monsterDoc = await MonsterModel.findOne({ uid: monsterUID }).populate({
 				path: "info",
 				populate: { path: "pkmType", select: "-_id -uid name" },
 			})
 			const backpackDoc = await BackpackModel.findOne({ uid: backpackUID }).populate("items")
 			const backpack = populateItemData(backpackDoc)
 			// Either of them not found
-			if (!backpackDoc || !pokemonDoc) {
+			if (!backpackDoc || !monsterDoc) {
 				return res.status(404).json({ message: "Not found" })
 			}
 
@@ -69,9 +69,9 @@ export const useItemsOnMonster = async (req, res) => {
 						const totalEffectValue = effectValue * usedAmount
 						// Update effect
 						if (ownedItem.effect_property === "capture-rate") {
-							pokemonDoc.capture_rate += totalEffectValue
+							monsterDoc.capture_rate += totalEffectValue
 
-							if (pokemonDoc.capture_rate > 100) pokemonDoc.capture_rate = 100
+							if (monsterDoc.capture_rate > 100) monsterDoc.capture_rate = 100
 						}
 
 						// Update amount in backpack
@@ -93,9 +93,9 @@ export const useItemsOnMonster = async (req, res) => {
 			)
 
 			// Update Monster
-			const pokemon = await MonsterModel.findOneAndUpdate(
-				{ uid: pokemonDoc.uid },
-				{ ...pokemonDoc.toObject() },
+			const monster = await MonsterModel.findOneAndUpdate(
+				{ uid: monsterDoc.uid },
+				{ ...monsterDoc.toObject() },
 				{ new: true }
 			)
 
@@ -108,7 +108,7 @@ export const useItemsOnMonster = async (req, res) => {
 				{ ...backpackDoc.toObject(), item_list: updatedItemList }
 			)
 
-			return res.status(200).json({ ...pokemonDoc.toObject(), ...pokemon.toObject() })
+			return res.status(200).json({ ...monsterDoc.toObject(), ...monster.toObject() })
 		}
 
 		return res.status(400).json({ message: "Failed to use items" })

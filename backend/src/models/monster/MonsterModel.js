@@ -24,8 +24,14 @@ const MonsterSchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		power: {
+		attack: {
 			type: Number,
+			default: 0,
+			required: true,
+		},
+		defense: {
+			type: Number,
+			default: 0,
 			required: true,
 		},
 		capture_rate: {

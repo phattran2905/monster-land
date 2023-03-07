@@ -8,7 +8,8 @@ const populateMonsterData = (monsterDoc) => ({
 	level: monsterDoc.level,
 	exp: monsterDoc.exp,
 	level_up_exp: monsterDoc.level_up_exp,
-	power: monsterDoc.power,
+	attack: monsterDoc.attack,
+	defense: monsterDoc.defense,
 	capture_rate: monsterDoc.capture_rate,
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
@@ -67,7 +68,8 @@ export const findWildMonster = async (req, res) => {
 			uid: `Pkm-${randomUID()}`,
 			info_uid: randomMonster.uid,
 			level_up_exp: LEVEL_UP_DEFAULT_EXP,
-			power: 1000,
+			attack: 10,
+			defense: 10,
 		})
 
 		const wildMonster = {
