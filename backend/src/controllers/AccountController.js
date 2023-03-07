@@ -10,7 +10,7 @@ export const logIn = async (req, res) => {
 		// Not found
 		const account = await AccountModel.findOne({ username: username.toLowerCase() })
 		if (!account) {
-			return res.status(404).json({ message: "User not found." })
+			return res.status(404).json({ message: "Account not found." })
 		}
 
 		// Check password
@@ -29,7 +29,7 @@ export const logIn = async (req, res) => {
 
 		// Update jwt and last_login
 		account.jwt_token = newJwtToken
-		account.last_login = Date()
+		account.last_login = Date.now()
 		await account.save()
 
 		return res.status(200).json({
@@ -78,6 +78,31 @@ export const signUp = async (req, res) => {
 		}
 
 		return res.sendStatus(201)
+	} catch (error) {
+		return res.status(500).json({ message: error.message })
+	}
+}
+
+export const logOut = async (req, res) => {
+	try {
+		const jwtToken = req.get("Authorization").split("Bearer ")[1]
+		if (!jwtToken) {
+			return res.status(401).json({ message: "Invalid token." })
+		}
+
+		// Verify jwtToken
+		const jwtData = jwt.verify(jwtToken, process.env.JWT_SECRET)
+		const account = await AccountModel.findOne({ uid: jwtData.uid, status: "active" })
+		if (!account) {
+			return res.status(404).json({ message: "Account not found." })
+		}
+
+		// Remove jwt_token
+		account.jwt_token = null
+		account.last_login = Date.now()
+		await account.save()
+
+		return res.sendStatus(204)
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}
