@@ -17,8 +17,8 @@ export default function LandingPage() {
 
 					<div className="flex flex-row justify-center">
 						<Link
-							to="/home"
-							className="border-4 border-y-Flamingo-Pink bg-Flamingo-Pink hover:bg-white rounded-full px-32 py-6 text-white hover:text-Flamingo-Pink font-bold text-4xl uppercase hover:underline duration-1000 transition-colors"
+							to="/login"
+							className="border-8 border-y-Flamingo-Pink bg-Flamingo-Pink hover:bg-white rounded-full px-32 py-6 text-white hover:text-Flamingo-Pink font-bold text-4xl uppercase hover:underline duration-1000 transition-colors"
 						>
 							Play
 						</Link>

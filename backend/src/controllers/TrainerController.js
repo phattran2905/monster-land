@@ -112,7 +112,7 @@ export const updateTrainerInfo = async (req, res) => {
 			},
 			{ new: true }
 		)
-		console.log(updatedTrainer)
+
 		if (!updatedTrainer) {
 			return res.status(400).json({ message: "Failed to update trainer's information" })
 		}
