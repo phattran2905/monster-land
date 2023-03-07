@@ -8,13 +8,19 @@ export default function MenuBar() {
 					<NavLinkItem path={"/trainer"} />
 				</li>
 				<li>
-					<NavLinkItem path={"/collection"} />
-				</li>
-				<li>
 					<NavLinkItem path={"/backpack"} />
 				</li>
 				<li>
-					<NavLinkItem path={"/world-map"} />
+					<NavLinkItem path={"/collection"} />
+				</li>
+				<li>
+					<NavLinkItem path={"/team"} />
+				</li>
+				<li>
+					<NavLinkItem path={"/map"} />
+				</li>
+				<li>
+					<NavLinkItem path={"/incubator"} />
 				</li>
 				<li className="mt-auto">
 					<NavLinkItem path={"/logout"} />
