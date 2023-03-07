@@ -25,24 +25,24 @@ function CharacterCreationPage() {
 	const [fetchCreateTrainer] = useCreateTrainerMutation()
 	const auth = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
-	const { data: getTrainerData,error: err } = useGetTrainerInfoQuery({ jwt_token: auth.jwtToken })
+	const { data: getTrainerData, error: err } = useGetTrainerInfoQuery({
+		jwt_token: auth.jwtToken,
+	})
 
 	useEffect(() => {
 		dispatch(getStoredJwtToken())
-        console.log(err, getTrainerData)
 		// Redirect to login if not logged in
 		if (!auth.isLoggedIn) {
 			return navigate("/login", { replace: true })
 		}
-
 	}, [auth.isLoggedIn])
 
-    useEffect(() => {
+	useEffect(() => {
 		// Create first character
 		if (getTrainerData?.data) {
 			return navigate("/home")
 		}
-    }, [getTrainerData])
+	}, [getTrainerData])
 
 	const changeGender = (_gender) => {
 		setGender(_gender)
@@ -76,12 +76,11 @@ function CharacterCreationPage() {
 			avatar: `${gender}-${avatarIndex}.png`,
 		}
 		dispatch(getStoredJwtToken())
-		console.log(auth.jwtToken)
+
 		const result = await fetchCreateTrainer({ jwt_token: auth.jwtToken, data })
 
-		console.log(result)
 		if (result.error) {
-			setError(result.error.data.message)
+			setError(result.error.message)
 		} else {
 			return navigate("/home")
 		}
@@ -109,7 +108,7 @@ function CharacterCreationPage() {
 								</button>
 								<div className="bg-white w-80 py-10 rounded-3xl mt-10 m-4">
 									<img
-										className="w-44 h-96 mx-auto object-fill"
+										className="w-44 h-96 mx-auto object-scale-down"
 										src={avatarImages[gender][avatarIndex]}
 										alt="Avatar image"
 									/>
@@ -177,7 +176,7 @@ function CharacterCreationPage() {
 									Input Your Name
 								</h2>
 								<input
-									className="py-4 px-8 my-8 border-4 border-Indigo-Blue rounded-lg focus:border-Flamingo-Pink"
+									className="py-4 px-8 my-8 border-4 border-Indigo-Blue rounded-lg focus:border-Flamingo-Pink text-center font-bold"
 									type="text"
 									placeholder="Your Name"
 									value={name}

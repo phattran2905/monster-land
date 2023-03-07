@@ -36,7 +36,7 @@ export const createCharacter = async (req, res) => {
 			avatar,
 		})
 
-		return res.sendStatus(201)
+		return res.status(200).json({ message: "OK" })
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}
@@ -117,7 +117,7 @@ export const updateTrainerInfo = async (req, res) => {
 			return res.status(400).json({ message: "Failed to update trainer's information" })
 		}
 
-		return res.sendStatus(204)
+		return res.status(200).json({ message: "OK" })
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}
