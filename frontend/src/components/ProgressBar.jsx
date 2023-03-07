@@ -1,8 +1,13 @@
-export default function ProgressBar({ percentage }) {
+export default function ProgressBar({
+	percentage,
+	bgColorClass = "bg-Midnight-Gray",
+	currentBgColorClass = "bg-Flamingo-Pink",
+	height = "h-2.5",
+}) {
 	return (
-		<div className="w-full bg-Midnight-Gray rounded-full h-2.5">
+		<div className={`w-full ${bgColorClass} rounded-full ${height} `}>
 			<div
-				className="bg-Flamingo-Pink h-2.5 rounded-full"
+				className={`${currentBgColorClass} ${height} rounded-full`}
 				style={{
 					width: `${percentage}%`,
 				}}

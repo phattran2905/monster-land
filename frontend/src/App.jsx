@@ -4,6 +4,7 @@ import LoginPage from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage"
 import HomePage from "./pages/HomePage"
 import CharacterCreationPage from "./pages/CharacterCreationPage"
+import TrainerPage from "./pages/TrainerPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import WorldMapPage from "./pages/WorldMapPage"
@@ -34,6 +35,10 @@ function App() {
 				<Route
 					path="/create-character"
 					element={<CharacterCreationPage />}
+				/>
+				<Route
+					path="/trainer"
+					element={<TrainerPage />}
 				/>
 				<Route
 					path="/collection"
