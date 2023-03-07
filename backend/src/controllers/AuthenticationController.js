@@ -85,14 +85,18 @@ export const signUp = async (req, res) => {
 
 export const logOut = async (req, res) => {
 	try {
-		const jwtToken = req.get("Authorization").split("Bearer ")[1]
+		const jwtToken = req.get("Authorization")?.split("Bearer ")[1]
 		if (!jwtToken) {
 			return res.status(401).json({ message: "Invalid token." })
 		}
 
 		// Verify jwtToken
 		const jwtData = jwt.verify(jwtToken, process.env.JWT_SECRET)
-		const account = await AccountModel.findOne({ uid: jwtData.uid, status: "active" })
+		const account = await AccountModel.findOne({
+			uid: jwtData.uid,
+			jwt_token: jwtToken,
+			status: "active",
+		})
 		if (!account) {
 			return res.status(404).json({ message: "Account not found." })
 		}

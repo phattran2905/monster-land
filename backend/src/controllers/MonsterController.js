@@ -60,7 +60,9 @@ export const getAllMonster = async (req, res) => {
 // Find wild Monster
 export const findWildMonster = async (req, res) => {
 	try {
-		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate("monsterType")
+		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate(
+			"monsterType"
+		)
 		const randomMonster = getRandomArrayElement(monsterList)
 		const LEVEL_UP_DEFAULT_EXP = 1000
 

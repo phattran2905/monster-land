@@ -2,6 +2,7 @@ import { Router } from "express"
 import MonsterRouter from "./Monster.js"
 import BackpackRouter from "./Backpack.js"
 import AuthenticationRouter from "./Authentication.js"
+import TrainerRouter from "./Trainer.js"
 
 const apiRouter = Router()
 apiRouter.get("/", (req, res) => {
@@ -9,6 +10,7 @@ apiRouter.get("/", (req, res) => {
 })
 
 apiRouter.use(AuthenticationRouter)
+apiRouter.use(TrainerRouter)
 apiRouter.use(MonsterRouter)
 apiRouter.use(BackpackRouter)
 
