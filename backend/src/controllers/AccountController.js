@@ -32,7 +32,7 @@ export const logIn = async (req, res) => {
 		account.last_login = Date()
 		await account.save()
 
-		return res.status(200).message({
+		return res.status(200).json({
 			message: "OK",
 			data: {
 				jwt_token: newJwtToken,
