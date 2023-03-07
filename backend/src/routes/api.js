@@ -1,13 +1,17 @@
 import { Router } from "express"
-import PokemonRouter from "./Pokemon.js"
+import MonsterRouter from "./Monster.js"
 import BackpackRouter from "./Backpack.js"
+import AuthenticationRouter from "./Authentication.js"
+import TrainerRouter from "./Trainer.js"
 
 const apiRouter = Router()
 apiRouter.get("/", (req, res) => {
-	res.status(200).json("Pokemon Land - API v1")
+	res.status(200).json("Monster Land - API v1")
 })
 
-apiRouter.use(PokemonRouter)
+apiRouter.use(AuthenticationRouter)
+apiRouter.use(TrainerRouter)
+apiRouter.use(MonsterRouter)
 apiRouter.use(BackpackRouter)
 
 export default apiRouter

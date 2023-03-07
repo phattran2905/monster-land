@@ -15,7 +15,7 @@ app.use(morgan("dev"))
 app.use(Express.json())
 
 app.get("/", (req, res) => {
-	res.send("Pokemon Land")
+	res.send("Monster Land")
 })
 
 app.get("/create-mockup-data", async (req, res) => {

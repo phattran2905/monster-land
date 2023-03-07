@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose"
 
-const PokemonTypeSchema = new Schema(
+const MonsterTypeSchema = new Schema(
 	{
 		uid: {
 			type: String,
@@ -23,6 +23,6 @@ const PokemonTypeSchema = new Schema(
 	{ timestamps: true }
 )
 
-const PokemonTypeModel = model("PokemonType", PokemonTypeSchema)
+const MonsterTypeModel = model("MonsterType", MonsterTypeSchema)
 
-export default PokemonTypeModel
+export default MonsterTypeModel
