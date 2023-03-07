@@ -133,7 +133,7 @@ function LoginPage() {
 						<div className="w-full my-12 flex justify-center items-center">
 							<p>
 								Don't have an account?
-								<Link to="/sign-up" className="mx-2 underline font-bold text-Flamingo-Pink">Sign up now</Link>
+								<Link to="/sign-up" className="mx-2 underline font-bold text-Flamingo-Pink">Sign up</Link>
 							</p>
 						</div>
 					</div>
