@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import logo from "../assets/img/logo/logo-trans-bg.png"
 import { FaUserAlt, FaExclamationCircle, FaLock } from "react-icons/fa"
@@ -129,6 +129,12 @@ function LoginPage() {
 							>
 								Log in
 							</button>
+						</div>
+						<div className="w-full my-12 flex justify-center items-center">
+							<p>
+								Don't have an account?
+								<Link to="/sign-up" className="mx-2 underline font-bold text-Flamingo-Pink">Sign up now</Link>
+							</p>
 						</div>
 					</div>
 				</div>
