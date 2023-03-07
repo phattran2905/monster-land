@@ -44,7 +44,13 @@ function TrainerPage() {
 
 	useEffect(() => {
 		dispatch(getStoredJwtToken())
-	}, [auth])
+
+		// Redirect to login if not logged in
+		if (!auth.isLoggedIn) {
+			return navigate("/login", { replace: true })
+		}
+
+	}, [auth.isLoggedIn])
 
 	useEffect(() => {
 		console.log(trainerData)

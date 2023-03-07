@@ -13,7 +13,7 @@ function LoginPage() {
 	const [username, setUsername] = useState("")
 	const [password, setPassword] = useState("")
 	const [remember, setRemember] = useState(false)
-	const [fetchLoginApi, { isLoading, isError, isSuccess }] = useLoginMutation()
+	const [fetchLoginApi] = useLoginMutation()
 	const auth = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 
