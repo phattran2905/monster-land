@@ -1,6 +1,6 @@
 import NavLinkItem from "./NavLinkItem"
 
-export default function MenuBar() {
+export default function MenuBar({ handleLogout }) {
 	return (
 		<section className="w-24 bg-Indigo-Blue">
 			<ul className="w-24 h-full flex flex-col items-stretch">
@@ -23,7 +23,10 @@ export default function MenuBar() {
 					<NavLinkItem path={"/incubator"} />
 				</li>
 				<li className="mt-auto">
-					<NavLinkItem path={"/logout"} />
+					<NavLinkItem
+						path={"/logout"}
+						handler={handleLogout}
+					/>
 				</li>
 			</ul>
 		</section>

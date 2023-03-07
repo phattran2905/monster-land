@@ -11,7 +11,14 @@ export const authenticationApi = createApi({
 				body: { username, password },
 			}),
 		}),
+		logout: builder.mutation({
+			query: ({ jwt_token }) => ({
+				url: "/logout",
+				method: "PUT",
+				headers: { Authorization: `Bearer ${jwt_token}` },
+			}),
+		}),
 	}),
 })
 
-export const { useLoginMutation } = authenticationApi
+export const { useLoginMutation, useLogoutMutation } = authenticationApi
