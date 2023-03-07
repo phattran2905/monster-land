@@ -33,6 +33,7 @@ function TrainerPage() {
 	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: auth.jwtToken })
 	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
 	const [error, setError] = useState()
+	const [successMsg, setSuccessMsg] = useState()
 	const [name, setName] = useState("")
 	const [gender, setGender] = useState("male")
 	const [joined, setJoined] = useState("yyyy/mm/dd")
@@ -48,12 +49,12 @@ function TrainerPage() {
 		// Redirect to login if not logged in
 		if (!auth.isLoggedIn) {
 			return navigate("/login", { replace: true })
+		} else {
+			return navigate("/trainer", { replace: true })
 		}
-
 	}, [auth.isLoggedIn])
 
 	useEffect(() => {
-		console.log(trainerData)
 		if (trainerData) {
 			setName(trainerData.data.name)
 			setGender(trainerData.data.gender)
@@ -96,23 +97,27 @@ function TrainerPage() {
 		}
 	}
 
-    const handleUpdateInfo = async () => {
-        if (name && gender) {
-            const data = {
-                name,
-                gender,
-                avatar: `${gender}-${avatarIndex}.png`,
-            }
+	const handleUpdateInfo = async () => {
+		setError()
+		setSuccessMsg()
 
-            const result = await fetchUpdateInfoApi({ jwt_token: auth.jwtToken, data })
-    
-            if (result.error) {
-                setError(result.error.message)
-            } else {
-                return navigate("/trainer")
-            }
-        }
-    }
+		if (name && gender) {
+			const data = {
+				name,
+				gender,
+				avatar: `${gender}-${avatarIndex}.png`,
+			}
+
+			const result = await fetchUpdateInfoApi({ jwt_token: auth.jwtToken, data })
+
+			if (result.error) {
+				setError(result.error.message)
+			} else {
+				setSuccessMsg("Successfully saved.")
+				return navigate("/trainer")
+			}
+		}
+	}
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -139,7 +144,7 @@ function TrainerPage() {
 									</button>
 									<div className="bg-white w-80 py-10 rounded-3xl mt-10 m-4">
 										<img
-										className="w-44 h-96 mx-auto object-scale-down"
+											className="w-44 h-96 mx-auto object-scale-down"
 											src={avatarImages[gender][avatarIndex]}
 											alt={avatarName}
 										/>
@@ -247,12 +252,19 @@ function TrainerPage() {
 									<p className="text-white p-1">{error}</p>
 								</div>
 							)}
+							{successMsg && (
+								<div className="bg-Forest-Green flex flex-row justify-start items-center p-4 self-stretch">
+									<FaExclamationCircle className="mx-2 text-xl text-white" />
+									<p className="text-white p-1">{successMsg}</p>
+								</div>
+							)}
 						</div>
 					</div>
 					<div className="w-full mt-10 flex flex-row justify-center items-center">
-						<button 
-                        onClick={handleUpdateInfo}
-                        className="bg-Flamingo-Pink px-16 py-4 text-white rounded-full font-bold text-2xl border-4 border-white hover:border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink">
+						<button
+							onClick={handleUpdateInfo}
+							className="bg-Flamingo-Pink px-16 py-4 text-white rounded-full font-bold text-2xl border-4 border-white hover:border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
+						>
 							Save changes
 						</button>
 					</div>
