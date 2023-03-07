@@ -1,6 +1,19 @@
+import { useDispatch } from "react-redux"
+import { useLogoutMutation } from "../../redux/services/authentication"
+import { logout } from "../../redux/slices/auth"
 import NavLinkItem from "./NavLinkItem"
 
-export default function MenuBar({ handleLogout }) {
+export default function MenuBar({  }) {
+	const [fetchLogoutApi] = useLogoutMutation()
+	const dispatch = useDispatch()
+
+	const handleLogout = async (e) => {
+		e.preventDefault()
+
+		await fetchLogoutApi({ jwt_token: auth.jwtToken })
+		dispatch(logout())
+	}
+
 	return (
 		<section className="w-24 bg-Indigo-Blue">
 			<ul className="w-24 h-full flex flex-col items-stretch">

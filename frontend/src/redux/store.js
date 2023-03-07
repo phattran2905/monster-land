@@ -8,6 +8,7 @@ import { pokemonApi } from "./services/pokemon"
 import { collectionApi } from "./services/collection"
 import { backpackApi } from "./services/backpack"
 import { authenticationApi } from "./services/authentication"
+import { trainerApi } from "./services/trainer"
 
 export const store = configureStore({
 	reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
 		[backpackApi.reducerPath]: backpackApi.reducer,
 		[pokemonApi.reducerPath]: pokemonApi.reducer,
 		[authenticationApi.reducerPath]: authenticationApi.reducer,
+		[trainerApi.reducerPath]: trainerApi.reducer,
 	},
 	// Adding the api middleware enables caching, invalidation, polling,
 	// and other useful features of `rtk-query`.
@@ -28,6 +30,7 @@ export const store = configureStore({
 			collectionApi.middleware,
 			backpackApi.middleware,
 			authenticationApi.middleware,
+			trainerApi.middleware,
 		]),
 })
 

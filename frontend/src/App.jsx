@@ -33,7 +33,7 @@ function App() {
 					element={<HomePage />}
 				/>
 				<Route
-					path="/create-character"
+					path="/create-trainer"
 					element={<CharacterCreationPage />}
 				/>
 				<Route
