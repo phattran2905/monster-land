@@ -1,207 +1,209 @@
 import { customAlphabet } from "nanoid"
-import { findPkmTypeUID } from "./MonsterType.js"
+import { findMonsterTypeUID } from "./MonsterType.js"
 
 const nanoid = customAlphabet("1234567890abcdef", 10)
 
 const MonsterInfo = [
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Bulbasaur",
-		type: [findPkmTypeUID("grass"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("grass"), findMonsterTypeUID("poison")],
 		img_name: "001.png",
 		level_up_exp_rate: 90,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Ivysaur",
-		type: [findPkmTypeUID("grass"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("grass"), findMonsterTypeUID("poison")],
 		img_name: "002.png",
 		level_up_exp_rate: 90,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Venusaur",
-		type: [findPkmTypeUID("grass"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("grass"), findMonsterTypeUID("poison")],
 		img_name: "003.png",
 		level_up_exp_rate: 90,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Charmander",
-		type: [findPkmTypeUID("fire")],
+		type: [findMonsterTypeUID("fire")],
 		img_name: "004.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Charmeleon",
-		type: [findPkmTypeUID("fire")],
+		type: [findMonsterTypeUID("fire")],
 		img_name: "005.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Charizard",
-		type: [findPkmTypeUID("fire")],
+		type: [findMonsterTypeUID("fire")],
 		img_name: "006.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Squirtle",
-		type: [findPkmTypeUID("water")],
+		type: [findMonsterTypeUID("water")],
 		img_name: "007.png",
 		level_up_exp_rate: 80,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Wartortle",
-		type: [findPkmTypeUID("water")],
+		type: [findMonsterTypeUID("water")],
 		img_name: "008.png",
 		level_up_exp_rate: 80,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Blastoise",
-		type: [findPkmTypeUID("water")],
+		type: [findMonsterTypeUID("water")],
 		img_name: "009.png",
 		level_up_exp_rate: 80,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Caterpie",
-		type: [findPkmTypeUID("bug")],
+		type: [findMonsterTypeUID("bug")],
 		img_name: "010.png",
 		level_up_exp_rate: 60,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Metapod",
-		type: [findPkmTypeUID("bug")],
+		type: [findMonsterTypeUID("bug")],
 		img_name: "011.png",
 		level_up_exp_rate: 60,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Butterfree",
-		type: [findPkmTypeUID("bug"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("bug"), findMonsterTypeUID("flying")],
 		img_name: "012.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Weedle",
-		type: [findPkmTypeUID("bug"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("bug"), findMonsterTypeUID("poison")],
 		img_name: "013.png",
 		level_up_exp_rate: 60,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Kakuna",
-		type: [findPkmTypeUID("bug"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("bug"), findMonsterTypeUID("poison")],
 		img_name: "014.png",
 		level_up_exp_rate: 60,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Beedrill",
-		type: [findPkmTypeUID("bug"), findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("bug"), findMonsterTypeUID("poison")],
 		img_name: "015.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Pidgey",
-		type: [findPkmTypeUID("normal"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("normal"), findMonsterTypeUID("flying")],
 		img_name: "016.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Pidgeotto",
-		type: [findPkmTypeUID("normal"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("normal"), findMonsterTypeUID("flying")],
 		img_name: "017.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Pidgeot",
-		type: [findPkmTypeUID("normal"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("normal"), findMonsterTypeUID("flying")],
 		img_name: "018.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Rattata",
-		type: [findPkmTypeUID("normal")],
+		type: [findMonsterTypeUID("normal")],
 		img_name: "019.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Raticate",
-		type: [findPkmTypeUID("normal")],
+		type: [findMonsterTypeUID("normal")],
 		img_name: "020.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Spearow",
-		type: [findPkmTypeUID("normal"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("normal"), findMonsterTypeUID("flying")],
 		img_name: "021.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Fearow",
-		type: [findPkmTypeUID("normal"), findPkmTypeUID("flying")],
+		type: [findMonsterTypeUID("normal"), findMonsterTypeUID("flying")],
 		img_name: "022.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Ekans",
-		type: [findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("poison")],
 		img_name: "023.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Arbok",
-		type: [findPkmTypeUID("poison")],
+		type: [findMonsterTypeUID("poison")],
 		img_name: "024.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Pikachu",
-		type: [findPkmTypeUID("electric")],
+		type: [findMonsterTypeUID("electric")],
 		img_name: "025.png",
 		level_up_exp_rate: 65,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Raichu",
-		type: [findPkmTypeUID("electric")],
+		type: [findMonsterTypeUID("electric")],
 		img_name: "026.png",
 		level_up_exp_rate: 70,
 	},
 	{
-		uid: `PkmI-${nanoid()}`,
+		uid: `MI-${nanoid()}`,
 		name: "Pichu",
-		type: [findPkmTypeUID("electric")],
+		type: [findMonsterTypeUID("electric")],
 		img_name: "172.png",
 		level_up_exp_rate: 60,
 	},
 ]
 
-export function findPkmInfoUID(pkmName = "") {
-	return MonsterInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
+export function findMonsterInfoUID(monsterName = "") {
+	return MonsterInfo.find((i) => i.name.toLowerCase() === monsterName.toLowerCase())?.uid
 }
 
-export function calcLevelUpExp(pkmName = "", currentLvlUpExp = 1) {
-	const pkmInfo = MonsterInfo.find((i) => i.name.toLowerCase() === pkmName.toLowerCase())?.uid
-	const lvlUpRate = pkmInfo.level_up_exp_rate / 100 + 1
+export function calcLevelUpExp(monsterName = "", currentLvlUpExp = 1) {
+	const monsterInfo = MonsterInfo.find(
+		(i) => i.name.toLowerCase() === monsterName.toLowerCase()
+	)?.uid
+	const lvlUpRate = monsterInfo.level_up_exp_rate / 100 + 1
 	return lvlUpRate * currentLvlUpExp
 }
 

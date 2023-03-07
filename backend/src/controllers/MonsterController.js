@@ -14,7 +14,7 @@ const populateMonsterData = (monsterDoc) => ({
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
 	level_up_exp_rate: monsterDoc.info.level_up_exp_rate,
-	type: monsterDoc.info.pkmType.map((i) => i.name),
+	type: monsterDoc.info.monsterType.map((i) => i.name),
 	status: monsterDoc.status,
 })
 
@@ -23,7 +23,7 @@ export const getMonsterById = async (req, res) => {
 	try {
 		const monsterDoc = await MonsterModel.findOne({ uid: req.params.id }).populate({
 			path: "info",
-			populate: { path: "pkmType", select: "-_id -uid name" },
+			populate: { path: "monsterType", select: "-_id -uid name" },
 		})
 
 		if (!monsterDoc) {
@@ -46,7 +46,7 @@ export const getAllMonster = async (req, res) => {
 
 		const monsterListDoc = await MonsterModel.find(criteria).populate({
 			path: "info",
-			populate: { path: "pkmType", select: "-_id -uid name" },
+			populate: { path: "monsterType", select: "-_id -uid name" },
 		})
 
 		const monsterList = monsterListDoc.map((monster) => populateMonsterData(monster))
@@ -60,12 +60,12 @@ export const getAllMonster = async (req, res) => {
 // Find wild Monster
 export const findWildMonster = async (req, res) => {
 	try {
-		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate("pkmType")
+		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate("monsterType")
 		const randomMonster = getRandomElement(monsterList)
 		const LEVEL_UP_DEFAULT_EXP = 1000
 
 		const wildMonsterDoc = await MonsterModel.create({
-			uid: `Pkm-${randomUID()}`,
+			uid: `M-${randomUID()}`,
 			info_uid: randomMonster.uid,
 			level_up_exp: LEVEL_UP_DEFAULT_EXP,
 			attack: 10,
@@ -77,7 +77,7 @@ export const findWildMonster = async (req, res) => {
 			name: randomMonster.name,
 			img_name: randomMonster.img_name,
 			level_up_exp_rate: randomMonster.level_up_exp_rate,
-			type: randomMonster.pkmType.map((i) => i.name),
+			type: randomMonster.monsterType.map((i) => i.name),
 		}
 
 		return res.status(200).json(wildMonster)

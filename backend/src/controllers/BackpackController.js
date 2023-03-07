@@ -49,7 +49,7 @@ export const useItemsOnMonster = async (req, res) => {
 		if (backpackUID && monsterUID && itemsToUse.length > 0) {
 			const monsterDoc = await MonsterModel.findOne({ uid: monsterUID }).populate({
 				path: "info",
-				populate: { path: "pkmType", select: "-_id -uid name" },
+				populate: { path: "monsterType", select: "-_id -uid name" },
 			})
 			const backpackDoc = await BackpackModel.findOne({ uid: backpackUID }).populate("items")
 			const backpack = populateItemData(backpackDoc)

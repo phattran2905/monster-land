@@ -37,7 +37,7 @@ const MonsterInfoSchema = new Schema(
 	{ timestamps: true }
 )
 
-MonsterInfoSchema.virtual("pkmType", {
+MonsterInfoSchema.virtual("monsterType", {
 	ref: "MonsterType",
 	localField: "type",
 	foreignField: "uid",

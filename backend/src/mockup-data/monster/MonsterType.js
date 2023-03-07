@@ -4,40 +4,40 @@ const nanoid = customAlphabet("1234567890abcdef", 10)
 
 const MonsterType = [
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Grass",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Poison",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Fire",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Flying",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Water",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Bug",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Normal",
 	},
 	{
-		uid: `PkmT-${nanoid()}`,
+		uid: `MT-${nanoid()}`,
 		name: "Electric",
 	},
 ]
 
-export function findPkmTypeUID(typeName = "") {
+export function findMonsterTypeUID(typeName = "") {
 	return MonsterType.find((i) => i.name.toLowerCase() === typeName.toLowerCase())?.uid
 }
 
