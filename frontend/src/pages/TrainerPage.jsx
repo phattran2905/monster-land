@@ -3,8 +3,9 @@ import Footer from "../components/Footer"
 import MenuBar from "../components/menu/MenuBar"
 import ProgressBar from "../components/ProgressBar"
 import {
-	FaFemale,
-	FaMale,
+	FaSignInAlt,
+    FaCalendarCheck,
+	FaTransgender,
 	FaAngleLeft,
 	FaAngleRight,
 	FaExclamationCircle,
@@ -91,6 +92,7 @@ function TrainerPage() {
 										htmlFor="gender"
 										className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2"
 									>
+										<FaTransgender className="text-2xl mr-1" />
 										Gender
 									</label>
 									<select
@@ -109,6 +111,7 @@ function TrainerPage() {
 								</div>
 								<div className="flex flex-col mb-6">
 									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
+										<FaCalendarCheck className="text-2xl mr-1" />
 										Joined
 									</span>
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
@@ -117,6 +120,7 @@ function TrainerPage() {
 								</div>
 								<div className="flex flex-col mb-6">
 									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
+										<FaSignInAlt className="text-2xl mr-1" />
 										Last login
 									</span>
 
