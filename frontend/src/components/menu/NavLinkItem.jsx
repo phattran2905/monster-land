@@ -8,7 +8,7 @@ const activeClassName =
 const inactiveClassName =
 	"w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500"
 
-export default function NavLinkItem({ path }) {
+export default function NavLinkItem({ path, handler }) {
 	const [iconName] = useState(() => {
 		switch (path) {
 			case "/backpack":
@@ -30,6 +30,7 @@ export default function NavLinkItem({ path }) {
 
 	return (
 		<NavLink
+            onClick={handler}
 			to={path}
 			className={({ isActive }) => (isActive ? activeClassName : inactiveClassName)}
 		>

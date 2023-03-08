@@ -1,10 +1,50 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import logo from "../assets/img/logo/logo-trans-bg.png"
-import { FaUserAlt, FaUnlock, FaExclamationCircle, FaLock } from "react-icons/fa"
+import { FaUserAlt, FaExclamationCircle, FaLock } from "react-icons/fa"
+import { useLoginMutation } from "../redux/services/authentication"
+import { saveJwtToken, getStoredJwtToken, login } from "../redux/slices/auth"
 
 function LoginPage() {
+	const navigate = useNavigate()
+	const [error, setError] = useState()
+	const [username, setUsername] = useState("")
+	const [password, setPassword] = useState("")
 	const [remember, setRemember] = useState(false)
+	const [fetchLoginApi] = useLoginMutation()
+	const auth = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(getStoredJwtToken())
+		if (auth.isLoggedIn) {
+			return navigate("/home")
+		}
+	}, [auth.isLoggedIn])
+
+	const handleLogin = async (e) => {
+		e.preventDefault()
+		setError()
+
+		if (username && password) {
+			const loginResult = await fetchLoginApi({ username, password })
+
+			if (loginResult.error) {
+				return setError(loginResult.error.data.message)
+			}
+			// Store jwt_token
+			const jwtToken = loginResult.data.data.jwt_token
+
+			if (remember) {
+				dispatch(saveJwtToken(jwtToken))
+			}
+
+			dispatch(login(jwtToken))
+			return navigate("/home")
+		}
+	}
 
 	return (
 		<div className="container-xl flex flex-row h-screen">
@@ -32,6 +72,9 @@ function LoginPage() {
 								id="username"
 								type="text"
 								placeholder="username"
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
+								required
 							/>
 						</div>
 						<div className="w-full my-4">
@@ -47,6 +90,9 @@ function LoginPage() {
 								id="password"
 								type="password"
 								placeholder="********"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								required
 							/>
 						</div>
 						<div className="w-full my-2 flex flex-row items-center ">
@@ -68,18 +114,27 @@ function LoginPage() {
 								<span className="block">Stay logged in</span>
 							</label>
 						</div>
-						<div className="w-full my-4 bg-Fire-Engine-Red">
-							<div className="flex flex-row items-center p-2">
-								<FaExclamationCircle className="text-white mx-2" />
-								<p className="text-white font-bold">
-									Username or password is incorrect
-								</p>
+						{error && (
+							<div className="w-full my-4 bg-Fire-Engine-Red">
+								<div className="flex flex-row items-center p-2">
+									<FaExclamationCircle className="text-white mx-2" />
+									<p className="text-white font-bold capitalize">{error}</p>
+								</div>
 							</div>
-						</div>
+						)}
 						<div className="w-full my-12 flex justify-center items-center">
-							<button className="py-4 px-20 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 ">
+							<button
+								onClick={handleLogin}
+								className="py-4 px-20 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 "
+							>
 								Log in
 							</button>
+						</div>
+						<div className="w-full my-12 flex justify-center items-center">
+							<p>
+								Don't have an account?
+								<Link to="/sign-up" className="mx-2 underline font-bold text-Flamingo-Pink">Sign up</Link>
+							</p>
 						</div>
 					</div>
 				</div>

@@ -65,7 +65,7 @@ const TrainerSchema = new Schema(
 			enum: ["active", "inactive"],
 		},
 	},
-	{ timestamp: true }
+	{ timestamps: true }
 )
 
 TrainerSchema.virtual("account", {
