@@ -12,7 +12,7 @@ export default function Header() {
 					<img
 						className="w-100 h-100"
 						src={logo}
-						alt="Pokemon Land logo"
+						alt="Monster Land logo"
 					/>
 				</Link>
 			</div>

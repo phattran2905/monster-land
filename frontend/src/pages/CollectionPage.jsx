@@ -4,12 +4,12 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Loading from "../components/Loading"
 import MenuBar from "../components/menu/MenuBar"
-import PokemonCard from "../components/pokemon/Card"
-import { useGetOwnedPokemonQuery } from "../redux/services/collection"
+import MonsterCard from "../components/monster/Card"
+import { useGetOwnedMonsterQuery } from "../redux/services/collection"
 
 export default function CollectionPage() {
 	// Using a query hook automatically fetches data and returns query values
-	const { data, error, isLoading, refetch } = useGetOwnedPokemonQuery()
+	const { data, error, isLoading, refetch } = useGetOwnedMonsterQuery()
 	const location = useLocation()
 
 	useEffect(() => {
@@ -35,16 +35,16 @@ export default function CollectionPage() {
 
 								<div className="flex flex-row flex-wrap gap-y-10 gap-x-20 mx-auto">
 									{data &&
-										data.map((pokemon) => (
-											<PokemonCard
-												key={pokemon.uid}
-												uid={pokemon.uid}
-												name={pokemon.name}
-												type={pokemon.type}
-												level={pokemon.level}
-												img_name={pokemon.img_name}
-												power={pokemon.power}
-												exp={pokemon.exp}
+										data.map((monster) => (
+											<MonsterCard
+												key={monster.uid}
+												uid={monster.uid}
+												name={monster.name}
+												type={monster.type}
+												level={monster.level}
+												img_name={monster.img_name}
+												power={monster.power}
+												exp={monster.exp}
 											/>
 										))}
 								</div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom"
 
 import StatusNewImg from "../../assets/img/status-new.png"
 import CheckIcon from "../../assets/img/icon/Icon awesome-check.png"
-import PokemonType from "../pokemon/Type"
+import MonsterType from "../monster/Type"
 
 export default function Succeed({ img_name, name, level, type, onSkip }) {
 	return (
@@ -20,7 +20,7 @@ export default function Succeed({ img_name, name, level, type, onSkip }) {
 
 					<div className="w-72 h-72 mb-10 p-10 border-4 rounded-full border-Midnight-Gray bg-white flex flex-col justify-around items-center shadow-lg shadow-Gold-Sand">
 						<img
-							src={`/img/pokemon/${img_name}`}
+							src={`/img/monster/${img_name}`}
 							alt={img_name}
 						/>
 						<span className="text-Flamingo-Pink font-bold capitalize text-2xl">
@@ -44,7 +44,7 @@ export default function Succeed({ img_name, name, level, type, onSkip }) {
 									key={t}
 									className="inline-block"
 								>
-									<PokemonType name={t} />
+									<MonsterType name={t} />
 								</div>
 							))}
 						</div>
@@ -61,7 +61,7 @@ export default function Succeed({ img_name, name, level, type, onSkip }) {
 					</div>
 					<p className="w-3/4 text-Flamingo-Pink font-bold text-center text-4xl break-words">
 						<span className="block mb-1 capitalize">Congratulations!</span>
-						<span className="capitalize">You captured a wild Pokemon</span>
+						<span className="capitalize">You captured a wild Monster</span>
 					</p>
 
 					<div className="mt-32">

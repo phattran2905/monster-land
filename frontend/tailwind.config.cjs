@@ -16,7 +16,7 @@ module.exports = {
 			white: "#ffffff",
 			black: "#1B1B1E",
             
-            // Bg-color for pokemon's type
+            // Bg-color for monster's type
             Grass: '#00ff00',
             Poison: '#800080',
             Fire: '#ff0000',

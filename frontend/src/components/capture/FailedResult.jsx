@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import PokemonType from "../pokemon/Type"
+import PokemonType from "../monster/Type"
 import TimesIcon from "../../assets/img/icon/Icon ionic-md-close.png"
 
 export default function Fail({ img_name, name, level, type, capture_rate, onSkip }) {
@@ -10,7 +10,7 @@ export default function Fail({ img_name, name, level, type, capture_rate, onSkip
 				<div className="opacity-70 w-1/3 bg-black flex flex-col items-center py-16 px-8 relative">
 					<div className="w-72 h-72 mb-10 p-10 border-4 rounded-full border-Midnight-Gray bg-white flex flex-col justify-around items-center shadow-lg shadow-black">
 						<img
-							src={`/img/pokemon/${img_name}`}
+							src={`/img/monster/${img_name}`}
 							alt={img_name}
 						/>
 						<span className="text-Flamingo-Pink font-bold capitalize text-2xl">

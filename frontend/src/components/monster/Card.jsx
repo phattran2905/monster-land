@@ -3,7 +3,7 @@ import energyIcon from "../../assets/img/icon/Icon metro-power.png"
 import Type from "./Type"
 import Image from "./Image"
 
-export default function PokemonCard({ uid, name, type, level, img_name, power, exp }) {
+export default function MonsterCard({ uid, name, type, level, img_name, power, exp }) {
 	return (
 		<div className="p-4">
 			<div className="border-2 border-Midnight-Gray relative rounded-tl-xl rounded-tr-xl p-4">

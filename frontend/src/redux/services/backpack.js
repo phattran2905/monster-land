@@ -8,8 +8,8 @@ export const backpackApi = createApi({
 			query: () => "",
 		}),
 		useItems: builder.mutation({
-			query: ({ backpackUID, wildPokemonUID, itemToUseList }) => ({
-				url: `/use?backpack=${backpackUID}&pokemon=${wildPokemonUID}`,
+			query: ({ backpackUID, wildMonsterUID, itemToUseList }) => ({
+				url: `/use?backpack=${backpackUID}&monster=${wildMonsterUID}`,
 				method: "PUT",
 				headers: {
 					"Content-type": "application/json; charset=UTF-8",

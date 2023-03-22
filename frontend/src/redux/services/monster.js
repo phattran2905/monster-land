@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 // Define a service using a base URL and expected endpoints
-export const pokemonApi = createApi({
-	reducerPath: "pokemonApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/pokemon" }),
+export const monsterApi = createApi({
+	reducerPath: "monsterApi",
+	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/monster" }),
 	endpoints: (builder) => ({
-        getPokemonByUID: builder.query({
-            query: (pokemonUID) => `/${pokemonUID}`
+        getMonsterByUID: builder.query({
+            query: (monsterUID) => `/${monsterUID}`
         }),
-		findWildPokemon: builder.mutation({
+		findWildMonster: builder.mutation({
 			query: () => ({
 				url: "/find-wild",
 				method: "POST",
@@ -17,9 +17,9 @@ export const pokemonApi = createApi({
 				},
 			}),
 		}),
-        captureWildPokemon: builder.mutation({
-            query: (wildPokemonUID) => ({
-                url: `/capture/${wildPokemonUID}`,
+        captureWildMonster: builder.mutation({
+            query: (wildMonsterUID) => ({
+                url: `/capture/${wildMonsterUID}`,
 				method: "PUT",
 				headers: {
 					"Content-type": "application/json; charset=UTF-8",
@@ -31,4 +31,4 @@ export const pokemonApi = createApi({
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useFindWildPokemonMutation, useCaptureWildPokemonMutation, useGetPokemonByUIDQuery } = pokemonApi
+export const { useFindWildMonsterMutation, useCaptureWildMonsterMutation, useGetMonsterByUIDQuery } = monsterApi

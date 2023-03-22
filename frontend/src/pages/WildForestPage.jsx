@@ -2,33 +2,33 @@ import { useEffect, useState } from "react"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import MenuBar from "../components/menu/MenuBar"
-import PokemonType from "../components/pokemon/Type"
-import PokemonImg from "../components/pokemon/Image"
+import MonsterType from "../components/monster/Type"
+import MonsterImg from "../components/monster/Image"
 import Item from "../components/Item"
 import Loading from "../components/Loading"
 import SucceededResult from "../components/capture/SucceededResult"
 import FailedResult from "../components/capture/FailedResult"
 import PokeballImg from "../assets/img/Pokeball.png"
 import {
-	useCaptureWildPokemonMutation,
-	useFindWildPokemonMutation,
-} from "../redux/services/pokemon"
+	useCaptureWildMonsterMutation,
+	useFindWildMonsterMutation,
+} from "../redux/services/monster"
 import { useGetBackpackQuery, useUseItemsMutation } from "../redux/services/backpack"
 import ProgressBar from "../components/ProgressBar"
 
 export default function WildForest() {
-	const [findWildPokemon, { isLoading: findLoading }] = useFindWildPokemonMutation()
-	const [captureWildPokemon, { isLoading: captureLoading }] = useCaptureWildPokemonMutation()
+	const [findWildMonster, { isLoading: findLoading }] = useFindWildMonsterMutation()
+	const [captureWildMonster, { isLoading: captureLoading }] = useCaptureWildMonsterMutation()
 	const [useItems, { isLoading: useLoading }] = useUseItemsMutation()
 	const { data: backpack, refetch } = useGetBackpackQuery()
-	const [wildPokemon, setWildPokemon] = useState()
+	const [wildMonster, setWildMonster] = useState()
 	const [itemToUseList, setItemToUseList] = useState([])
 	const [captureResult, setCaptureResult] = useState()
 
 	useEffect(() => {
-		findWildPokemon()
+		findWildMonster()
 			.unwrap()
-			.then((data) => setWildPokemon(data))
+			.then((data) => setWildMonster(data))
 			.catch((e) => console.log(e))
 	}, [])
 
@@ -59,10 +59,10 @@ export default function WildForest() {
 
 	const onUseItems = () => {
 		if (itemToUseList.length > 0) {
-			useItems({ backpackUID: backpack.uid, wildPokemonUID: wildPokemon.uid, itemToUseList })
+			useItems({ backpackUID: backpack.uid, wildMonsterUID: wildMonster.uid, itemToUseList })
 				.unwrap()
 				.then((data) => {
-					setWildPokemon({ ...wildPokemon, capture_rate: data.capture_rate })
+					setWildMonster({ ...wildMonster, capture_rate: data.capture_rate })
 					setItemToUseList([])
 					refetch()
 				})
@@ -71,17 +71,17 @@ export default function WildForest() {
 	}
 
 	const onSkip = () => {
-		findWildPokemon()
+		findWildMonster()
 			.unwrap()
 			.then((r) => {
-				setWildPokemon(r)
+				setWildMonster(r)
 				setCaptureResult(undefined)
 			})
 			.catch((e) => e)
 	}
 
 	const onCapture = () => {
-		captureWildPokemon(wildPokemon.uid)
+		captureWildMonster(wildMonster.uid)
 			.unwrap()
 			.then((data) => {
 				setCaptureResult(data)
@@ -100,20 +100,20 @@ export default function WildForest() {
 					<>
 						{captureResult.message.toLowerCase() === "succeeded" ? (
 							<SucceededResult
-								img_name={wildPokemon.img_name}
-								name={wildPokemon.name}
-								level={wildPokemon.level}
-								type={wildPokemon.type}
+								img_name={wildMonster.img_name}
+								name={wildMonster.name}
+								level={wildMonster.level}
+								type={wildMonster.type}
 								onSkip={onSkip}
 							/>
 						) : (
 							<FailedResult
-								img_name={wildPokemon.img_name}
-								name={wildPokemon.name}
-								level={wildPokemon.level}
-								type={wildPokemon.type}
+								img_name={wildMonster.img_name}
+								name={wildMonster.name}
+								level={wildMonster.level}
+								type={wildMonster.type}
 								onSkip={onSkip}
-								capture_rate={wildPokemon.capture_rate}
+								capture_rate={wildMonster.capture_rate}
 							/>
 						)}
 					</>
@@ -185,7 +185,7 @@ export default function WildForest() {
 							</button>
 						</div>
 
-						{/* Wild Pokemon */}
+						{/* Wild Monster */}
 						<div className="w-2/6 flex flex-col items-center justify-evenly">
 							{findLoading || captureLoading ? (
 								<Loading />
@@ -197,19 +197,19 @@ export default function WildForest() {
 												Level
 											</span>
 											<span className="font-bold text-Flamingo-Pink text-xl">
-												{wildPokemon?.level}
+												{wildMonster?.level}
 											</span>
 										</div>
 										<div className="mx-1 mb-4">
 											<span className="text-Indigo-Blue font-bold text-lg mr-6 underline capitalize">
 												Type
 											</span>
-											{wildPokemon?.type.map((type) => (
+											{wildMonster?.type.map((type) => (
 												<div
 													key={type}
 													className="inline-block"
 												>
-													<PokemonType name={type} />
+													<MonsterType name={type} />
 												</div>
 											))}
 										</div>
@@ -218,18 +218,18 @@ export default function WildForest() {
 												<span className="text-Indigo-Blue font-bold text-lg underline capitalize">
 													Capture rate
 												</span>
-												<span className="text-Flamingo-Pink font-bold">{`${wildPokemon?.capture_rate}%`}</span>
+												<span className="text-Flamingo-Pink font-bold">{`${wildMonster?.capture_rate}%`}</span>
 											</div>
-											<ProgressBar percentage={wildPokemon?.capture_rate} />
+											<ProgressBar percentage={wildMonster?.capture_rate} />
 										</div>
 									</div>
 
 									<div className="flex flex-col items-center">
 										<div className="w-80 h-80 bg-white rounded-full flex flex-col justify-center items-center border-4 border-Indigo-Blue">
-											<PokemonImg img_name={wildPokemon?.img_name} />
+											<MonsterImg img_name={wildMonster?.img_name} />
 
 											<span className="text-Flamingo-Pink font-bold text-3xl capitalize">
-												{wildPokemon?.name}
+												{wildMonster?.name}
 											</span>
 										</div>
 										<button

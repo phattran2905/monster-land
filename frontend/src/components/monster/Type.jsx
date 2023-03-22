@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useState } from "react"
 
-const pokemonTypes = {
+const monsterTypes = {
 	grass: "grass",
 	poison: "poison",
 	fire: "fire",
@@ -18,36 +18,36 @@ export default function Type({ name }) {
 
 	useEffect(() => {
 		switch (name.toLowerCase()) {
-			case pokemonTypes.grass: {
+			case monsterTypes.grass: {
 				setBgColorClass("bg-Grass")
 				setTextColorClass("text-black")
 				break
 			}
-			case pokemonTypes.poison: {
+			case monsterTypes.poison: {
 				setBgColorClass("bg-Poison")
 				break
 			}
-			case pokemonTypes.fire: {
+			case monsterTypes.fire: {
 				setBgColorClass("bg-Fire")
 				break
 			}
-			case pokemonTypes.flying: {
+			case monsterTypes.flying: {
 				setBgColorClass("bg-Flying")
 				break
 			}
-			case pokemonTypes.water: {
+			case monsterTypes.water: {
 				setBgColorClass("bg-Water")
 				break
 			}
-			case pokemonTypes.bug: {
+			case monsterTypes.bug: {
 				setBgColorClass("bg-Bug")
 				break
 			}
-			case pokemonTypes.normal: {
+			case monsterTypes.normal: {
 				setBgColorClass("bg-Normal")
 				break
 			}
-			case pokemonTypes.electric: {
+			case monsterTypes.electric: {
 				setBgColorClass("bg-Electric")
 				setTextColorClass("text-black")
 				break

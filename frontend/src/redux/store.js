@@ -4,7 +4,7 @@ import authReducer from "./slices/auth";
 
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from "@reduxjs/toolkit/query"
-import { pokemonApi } from "./services/pokemon"
+import { monsterApi } from "./services/monster"
 import { collectionApi } from "./services/collection"
 import { backpackApi } from "./services/backpack"
 import { authenticationApi } from "./services/authentication"
@@ -18,7 +18,7 @@ export const store = configureStore({
 		// Add the generated reducer as a specific top-level slice
 		[collectionApi.reducerPath]: collectionApi.reducer,
 		[backpackApi.reducerPath]: backpackApi.reducer,
-		[pokemonApi.reducerPath]: pokemonApi.reducer,
+		[monsterApi.reducerPath]: monsterApi.reducer,
 		[authenticationApi.reducerPath]: authenticationApi.reducer,
 		[trainerApi.reducerPath]: trainerApi.reducer,
 	},
@@ -26,7 +26,7 @@ export const store = configureStore({
 	// and other useful features of `rtk-query`.
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat([
-			pokemonApi.middleware,
+			monsterApi.middleware,
 			collectionApi.middleware,
 			backpackApi.middleware,
 			authenticationApi.middleware,
