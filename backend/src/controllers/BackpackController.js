@@ -29,10 +29,11 @@ const populateItemData = (backpackDoc) => ({
 // Get items from backpack
 export const getItemsFromBackpack = async (req, res, next) => {
 	try {
-		const backpackDoc = await BackpackModel.findOne().populate({
+		const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid }).populate({
 			path: "items",
 		})
-		if (backpackDoc) {
+
+		if (!backpackDoc) {
 			return next(new ErrorResponse(404, "Backpack is not found"))
 		}
 
@@ -93,11 +94,15 @@ export const useItemsOnMonster = async (req, res, next) => {
 						if (ownedItem.effect_property === "exp") {
 							const earnedEXP = monsterDoc.exp + totalEffectValue
 
-							// Exceed current exp
+							// Exceed the current exp
 							if (earnedEXP >= monsterDoc.level_up_exp) {
 								monsterDoc.exp = earnedEXP - monsterDoc.level_up_exp
-								// Update new level_up_xep
+								// Level up
+								monsterDoc.level += 1
+								// Update the new level_up_xep
 								monsterDoc.level_up_exp += monsterDoc.level_up_exp * 1.1
+							} else {
+								monsterDoc.exp = earnedEXP
 							}
 						}
 
