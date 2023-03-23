@@ -17,7 +17,7 @@ const ItemSchema = new Schema(
 			type: String,
 			required: true,
 			lowercase: true,
-			enum: ["mystic", "usable"],
+			enum: ["monster", "incubator"],
 		},
 		effect_property: {
 			type: String,

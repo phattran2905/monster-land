@@ -1,65 +1,63 @@
-import { customAlphabet } from "nanoid"
+import { randomUID } from "../../util/random.js"
 import { findMonsterTypeUID } from "./MonsterType.js"
-
-const nanoid = customAlphabet("1234567890abcdef", 10)
 
 const MonsterInfo = [
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Rockpuff",
 		type: [findMonsterTypeUID("rock")],
 		img_name: "rockpuff.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Bouldersmash",
 		type: [findMonsterTypeUID("rock")],
 		img_name: "bouldersmash.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Pebblepaw",
 		type: [findMonsterTypeUID("rock")],
 		img_name: "pebblepaw.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Bubblebloom",
 		type: [findMonsterTypeUID("water")],
 		img_name: "bubblebloom.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Coralcarve",
 		type: [findMonsterTypeUID("water")],
 		img_name: "coralcarve.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Flametail",
 		type: [findMonsterTypeUID("fire")],
 		img_name: "flametail.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Emberwing",
 		type: [findMonsterTypeUID("fire")],
 		img_name: "emberwing.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Shockwhisker",
 		type: [findMonsterTypeUID("electric")],
 		img_name: "shockwhisker.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Thunderfuzz",
 		type: [findMonsterTypeUID("electric")],
 		img_name: "thunderfuzz.png",
 	},
 	{
-		uid: `MI-${nanoid()}`,
+		uid: `MI-${randomUID()}`,
 		name: "Sparkleap",
 		type: [findMonsterTypeUID("electric")],
 		img_name: "sparkleap.png",
