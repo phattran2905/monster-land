@@ -35,7 +35,6 @@ export const getItemsFromBackpack = async (req, res) => {
 
 		return res.status(200).json(backpack)
 	} catch (error) {
-		console.error(error)
 		return res.status(500).json({ message: error.message })
 	}
 }
@@ -113,7 +112,6 @@ export const useItemsOnMonster = async (req, res) => {
 
 		return res.status(400).json({ message: "Failed to use items" })
 	} catch (error) {
-		console.error(error)
 		return res.status(500).json({ message: error.message })
 	}
 }

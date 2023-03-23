@@ -8,6 +8,7 @@ import Items from "./backpack/Item.js"
 import ItemModel from "../models/backpack/ItemModel.js"
 import Backpack from "./backpack/Backpack.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
+import logger from "../util/logger.js"
 
 export default async function initializeMockupData() {
 	try {
@@ -17,6 +18,6 @@ export default async function initializeMockupData() {
 		await Promise.all(Items.map((i) => ItemModel.create(i)))
 		await BackpackModel.create(Backpack)
 	} catch (error) {
-		console.error(error)
+		logger.error(error)
 	}
 }

@@ -1,10 +1,11 @@
 import mongoose from "mongoose"
+import logger from "./util/logger.js"
 
 export function connectDb() {
 	mongoose
 		.connect(process.env.DATABASE_URI)
-		.then(() => console.info("Connected to database"))
-		.catch((error) => console.error(error))
+		.then(() => logger.info("Connected to database"))
+		.catch((error) => logger.error(error))
 }
 
 export async function dropDb() {

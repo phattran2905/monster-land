@@ -37,7 +37,7 @@ export const getMonsterById = async (req, res, next) => {
 }
 
 // Get All Monster
-export const getAllMonster = async (req, res) => {
+export const getAllMonster = async (req, res, next) => {
 	try {
 		const criteria = req.query.status ? { status: req.query.status } : null
 
@@ -50,6 +50,6 @@ export const getAllMonster = async (req, res) => {
 
 		return res.status(200).json(monsterList)
 	} catch (error) {
-		return res.status(500).json({ message: error.message })
+		return next(error)
 	}
 }
