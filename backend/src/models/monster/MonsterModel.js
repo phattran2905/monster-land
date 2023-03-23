@@ -23,6 +23,7 @@ const MonsterSchema = new Schema(
 		level_up_exp: {
 			type: Number,
 			required: true,
+			default: 0,
 		},
 		attack: {
 			type: Number,

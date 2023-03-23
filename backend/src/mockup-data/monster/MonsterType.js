@@ -5,19 +5,7 @@ const nanoid = customAlphabet("1234567890abcdef", 10)
 const MonsterType = [
 	{
 		uid: `MT-${nanoid()}`,
-		name: "Grass",
-	},
-	{
-		uid: `MT-${nanoid()}`,
-		name: "Poison",
-	},
-	{
-		uid: `MT-${nanoid()}`,
 		name: "Fire",
-	},
-	{
-		uid: `MT-${nanoid()}`,
-		name: "Flying",
 	},
 	{
 		uid: `MT-${nanoid()}`,
@@ -25,11 +13,7 @@ const MonsterType = [
 	},
 	{
 		uid: `MT-${nanoid()}`,
-		name: "Bug",
-	},
-	{
-		uid: `MT-${nanoid()}`,
-		name: "Normal",
+		name: "Rock",
 	},
 	{
 		uid: `MT-${nanoid()}`,
