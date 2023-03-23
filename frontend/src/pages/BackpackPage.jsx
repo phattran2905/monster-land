@@ -19,28 +19,27 @@ export default function BackpackPage() {
 		data: backpackData,
 		error,
 		isLoading,
-		isSuccess,
 	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
 	const [eggs, setEggs] = useState([])
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
 
 	useEffect(() => {
-		dispatch(getStoredJwtToken())
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
-			return navigate("/login", { replace: true })
+			return navigate("/login")
 		}
 	}, [authState.isLoggedIn])
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (backpackData) {
+			console.log(backpackData)
 			const items = backpackData.item_list
 			const eggs = backpackData.eggs
 			setItems(items)
 			// setEggs(eggs)
 		}
-	}, [])
+	}, [backpackData])
 
 	const changeTab = () => {
 		if (activeTab === "eggs") {
@@ -97,19 +96,16 @@ export default function BackpackPage() {
 											</div>
 									  ))
 									: items.map((item) => (
-											<div
+											<Item
 												key={item.uid}
-												className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
-											>
-												<Item
-													uid={item.uid}
-													name={item.name}
-													img_name={item.img_name}
-													effect_property={item.effect_property}
-													effect_value={item.effect_value}
-													amount={item.amount}
-												/>
-											</div>
+												uid={item.uid}
+												name={item.name}
+												img_name={item.img_name}
+												effect_property={item.effect_property}
+												effect_value={item.effect_value}
+												amount={item.amount}
+												onSelect={() => {}}
+											/>
 									  ))}
 							</div>
 						</div>
