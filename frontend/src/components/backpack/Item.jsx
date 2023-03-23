@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa"
 
 export default function Item({
 	uid,
@@ -7,62 +8,75 @@ export default function Item({
 	effect_property,
 	effect_value,
 	amount,
-	isInput,
-	onInputChange,
+	onSelect,
 }) {
-	const [effect] = useState(() => {
-		if (effect_value && effect_property) {
-			switch (effect_property) {
-				case "capture-rate": {
-					return `Capture rate +${effect_value}%`
-				}
-			}
-		}
-	})
-	const [useAmount, setUseAmount] = useState(0)
-
-	const handleUseAmountChange = (value) => {
-		const itemToUse = {
-			item_uid: uid,
-			amount: value,
-		}
-
-		setUseAmount(value)
-		onInputChange(itemToUse)
-	}
-
 	return (
-		<>
-			<div className="w-14 h-14 ">
-				<img
-					className="w-full h-full"
-					src={`/img/item/${img_name}`}
-					alt="Item Icon"
-				/>
-			</div>
-			<div className="flex flex-col justify-between">
-				<span className="text-black font-bold text-lg capitalize">{name}</span>
-				<span className="text-Forest-Green font-bold text-sm">{effect}</span>
-			</div>
-			{!isInput ? (
-				<div>
-					<span className="text-black font-bold text-lg">{`x ${amount}`}</span>
-				</div>
-			) : (
-				<div>
-					<input
-						onChange={(e) => handleUseAmountChange(e.target.value)}
-						className={`w-14 border-black border-2 px-2 py-1 text-Indigo-Blue font-bold text-lg rounded-md`}
-						type="number"
-						value={useAmount}
-						min={0}
-                        max={amount}
-						step={1}
-                        disabled={amount === 0}
+		<div className="mx-4 h-80 flex flex-row border-2 border-Royal-Blue">
+			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
+				<div className="w-full p-4 h-5/6">
+					<img
+						className="w-full h-full object-scale-down"
+						src={`/img/items/${img_name}`}
+						alt={name}
 					/>
-					<span className="ml-2 text-black font-bold text-xl">/ {amount}</span>
 				</div>
-			)}
-		</>
+				<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
+					<span className="text-white font-bold text-center text-lg">{name}</span>
+				</div>
+			</div>
+
+			<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
+				<div className="flex flex-col mb-3">
+					<div className="flex flex-row items-center mb-1">
+						<FaSplotch
+							className="text-Flamingo-Pink"
+							size={16}
+						/>
+						<span className="ml-1 font-bold capitalize">Effect</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center">
+						<span className="p-1 font-bold text-white capitalize">
+							Boost {effect_property}
+						</span>
+					</div>
+				</div>
+				<div className="flex flex-col mb-3">
+					<div className="flex flex-row items-center mb-1">
+						<FaArrowAltCircleUp
+							className="text-Flamingo-Pink"
+							size={16}
+						/>
+						<span className="ml-1 font-bold capitalize">Effect Value</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center">
+						<span className="p-1 font-bold text-white">
+							{effect_property === "incubator" ? (
+								<>{`- ${effect_value} seconds`}</>
+							) : (
+								<>{`+ ${effect_value}`}</>
+							)}
+						</span>
+					</div>
+				</div>
+				<div className="flex flex-col mb-3">
+					<div className="flex flex-row items-center mb-1">
+						<FaShoppingBasket
+							className="text-Flamingo-Pink"
+							size={16}
+						/>
+						<span className="ml-1 font-bold capitalize">Amount</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center">
+						<span className="p-1 font-bold text-white capitalize">{amount}</span>
+					</div>
+				</div>
+				<button
+					className="p-2 bg-Flamingo-Pink mt-2 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
+					onClick={() => onSelect()}
+				>
+					Use
+				</button>
+			</div>
+		</div>
 	)
 }
