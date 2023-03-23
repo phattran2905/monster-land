@@ -20,6 +20,7 @@ const MonsterInfoSchema = new Schema(
 		img_name: {
 			type: String,
 			required: true,
+			lowercase: true,
 		},
 		level_up_exp_rate: {
 			type: Number,

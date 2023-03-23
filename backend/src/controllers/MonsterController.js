@@ -1,6 +1,4 @@
 import MonsterModel from "../models/monster/MonsterModel.js"
-import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
-import { getRandomNumber, getRandomArrayElement, randomUID } from "../util/random.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 
 // Populate Monster data for frontend to render
@@ -51,66 +49,6 @@ export const getAllMonster = async (req, res) => {
 		const monsterList = monsterListDoc.map((monster) => populateMonsterData(monster))
 
 		return res.status(200).json(monsterList)
-	} catch (error) {
-		return res.status(500).json({ message: error.message })
-	}
-}
-
-// Find wild Monster
-export const findWildMonster = async (req, res) => {
-	try {
-		const monsterList = await MonsterInfoModel.find({ status: "active" }).populate(
-			"monsterType"
-		)
-		const randomMonster = getRandomArrayElement(monsterList)
-		const LEVEL_UP_DEFAULT_EXP = 1000
-
-		const wildMonsterDoc = await MonsterModel.create({
-			uid: `M-${randomUID()}`,
-			info_uid: randomMonster.uid,
-			level_up_exp: LEVEL_UP_DEFAULT_EXP,
-			attack: 10,
-			defense: 10,
-		})
-
-		const wildMonster = {
-			...wildMonsterDoc.toObject(),
-			name: randomMonster.name,
-			img_name: randomMonster.img_name,
-			level_up_exp_rate: randomMonster.level_up_exp_rate,
-			type: randomMonster.monsterType.map((i) => i.name),
-		}
-
-		return res.status(200).json(wildMonster)
-	} catch (error) {
-		return res.status(500).json({ message: error.message })
-	}
-}
-
-// Capture wild Monster
-export const captureWildMonster = async (req, res) => {
-	try {
-		const wildMonster = await MonsterModel.findOne({ uid: req.params.monster_uid })
-		if (!wildMonster) {
-			return res.status(404).json({ message: "Not found" })
-		}
-
-		const randomRate = getRandomNumber(0, 100)
-		const isCaptured = wildMonster.capture_rate >= randomRate
-
-		const monster = {
-			...wildMonster.toObject(),
-			status: isCaptured ? "owned" : "wild",
-			capture_rate: 0,
-		}
-
-		await MonsterModel.findOneAndUpdate({ uid: wildMonster.uid }, { ...monster })
-
-		if (isCaptured) {
-			return res.status(200).json({ message: "Succeeded", monster })
-		}
-
-		return res.status(200).json({ message: "Failed", monster })
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}

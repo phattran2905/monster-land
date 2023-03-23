@@ -38,8 +38,8 @@ const MonsterSchema = new Schema(
 		status: {
 			type: String,
 			lowercase: true,
-			enum: ["wild", "owned", "inactive"],
-			default: "wild",
+			enum: ["active", "inactive"],
+			default: "active",
 		},
 	},
 	{
