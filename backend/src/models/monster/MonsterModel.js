@@ -35,12 +35,6 @@ const MonsterSchema = new Schema(
 			default: 0,
 			required: true,
 		},
-		capture_rate: {
-			type: Number,
-			default: 0,
-			max: 100,
-			min: 0,
-		},
 		status: {
 			type: String,
 			lowercase: true,

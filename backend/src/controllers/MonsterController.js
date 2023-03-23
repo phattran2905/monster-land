@@ -10,7 +10,6 @@ const populateMonsterData = (monsterDoc) => ({
 	level_up_exp: monsterDoc.level_up_exp,
 	attack: monsterDoc.attack,
 	defense: monsterDoc.defense,
-	capture_rate: monsterDoc.capture_rate,
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
 	level_up_exp_rate: monsterDoc.info.level_up_exp_rate,
