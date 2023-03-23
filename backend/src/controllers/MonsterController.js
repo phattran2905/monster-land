@@ -1,6 +1,7 @@
 import MonsterModel from "../models/monster/MonsterModel.js"
 import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import { getRandomNumber, getRandomArrayElement, randomUID } from "../util/random.js"
+import ErrorResponse from "../objects/ErrorResponse.js"
 
 // Populate Monster data for frontend to render
 const populateMonsterData = (monsterDoc) => ({
@@ -18,7 +19,7 @@ const populateMonsterData = (monsterDoc) => ({
 })
 
 // Get A Monster by id
-export const getMonsterById = async (req, res) => {
+export const getMonsterById = async (req, res, next) => {
 	try {
 		const monsterDoc = await MonsterModel.findOne({ uid: req.params.id }).populate({
 			path: "info",
@@ -26,15 +27,14 @@ export const getMonsterById = async (req, res) => {
 		})
 
 		if (!monsterDoc) {
-			return res.status(404).json({ message: "Not Found" })
+			return next(new ErrorResponse(404, "Not found"))
 		}
 
 		const monster = populateMonsterData(monsterDoc)
 
 		return res.status(200).json(monster)
 	} catch (error) {
-		console.error(error)
-		return res.status(500).json({ message: error.message })
+		return next(error)
 	}
 }
 
