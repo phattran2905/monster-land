@@ -1,33 +1,52 @@
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import MenuBar from "../components/menu/MenuBar"
-import Item from "../components/Item"
+import Item from "../components/backpack/Item"
 import { useGetBackpackQuery } from "../redux/services/backpack"
 import Loading from "../components/Loading"
 import { useState } from "react"
 import { useEffect } from "react"
 import TabLink from "../components/backpack/TabLink"
+import { useDispatch, useSelector } from "react-redux"
+import { getStoredJwtToken } from "../redux/slices/auth"
+import { useNavigate } from "react-router-dom"
 
 export default function BackpackPage() {
-	const { data, error, isLoading } = useGetBackpackQuery()
-	const [usableItems, setUsableItem] = useState([])
-	const [mysticItems, setMysticItems] = useState([])
-	const [activeTab, setActiveTab] = useState("usable")
+	const authState = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const {
+		data: backpackData,
+		error,
+		isLoading,
+		isSuccess,
+	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
+	const [eggs, setEggs] = useState([])
+	const [items, setItems] = useState([])
+	const [activeTab, setActiveTab] = useState("eggs")
 
 	useEffect(() => {
-		if (data) {
-			const usableItemList = data.item_list.filter((item) => item.type === "usable")
-			const mysticItemList = data.item_list.filter((item) => item.type === "mystic")
-			setUsableItem(usableItemList)
-			setMysticItems(mysticItemList)
+		dispatch(getStoredJwtToken())
+		// Redirect to login if not logged in
+		if (!authState.isLoggedIn) {
+			return navigate("/login", { replace: true })
 		}
-	}, [data])
+	}, [authState.isLoggedIn])
+
+	useEffect(() => {
+		if (isSuccess) {
+			const items = backpackData.item_list
+			const eggs = backpackData.eggs
+			setItems(items)
+			// setEggs(eggs)
+		}
+	}, [])
 
 	const changeTab = () => {
-		if (activeTab === "usable") {
-			setActiveTab("mystic")
+		if (activeTab === "eggs") {
+			setActiveTab("items")
 		} else {
-			setActiveTab("usable")
+			setActiveTab("eggs")
 		}
 	}
 
@@ -38,70 +57,62 @@ export default function BackpackPage() {
 			<div className="w-full h-full flex flex-row relative">
 				<MenuBar />
 
-				<div className="m-10 w-full border-t-2 border-Flamingo-Pink">
+				<div className="m-10 w-full ">
 					{isLoading && <Loading />}
 
 					{!error && (
-						<>
-							<div className="bg-Flamingo-Pink rounded-md py-2 px-3 absolute right-1/2 top-6">
-								<span className="text-white font-bold text-sm">{`${
-									activeTab === "usable" ? usableItems.length : mysticItems.length
-								} /${data?.capacity}`}</span>
-							</div>
+						<div className="flex flex-col shadow-xl rounded-sm">
+							<ul className="flex flex-row">
+								<li>
+									<TabLink
+										isActive={activeTab === "eggs"}
+										title="Eggs"
+										clickHandler={changeTab}
+									/>
+								</li>
+								<li>
+									<TabLink
+										isActive={activeTab === "items"}
+										title="Items"
+										clickHandler={changeTab}
+									/>
+								</li>
+							</ul>
 
-							<div className="h-full flex flex-row shadow-xl rounded-sm">
-								<div className="w-full m-4 p-8 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto">
-									{activeTab === "usable"
-										? usableItems.map((item) => (
-												<div
-													key={item.uid}
-													className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
-												>
-													<Item
-														uid={item.uid}
-														name={item.name}
-														img_name={item.img_name}
-														effect_property={item.effect_property}
-														effect_value={item.effect_value}
-														amount={item.amount}
-													/>
-												</div>
-										  ))
-										: mysticItems.map((item) => (
-												<div
-													key={item.uid}
-													className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
-												>
-													<Item
-														uid={item.uid}
-														name={item.name}
-														img_name={item.img_name}
-														effect_property={item.effect_property}
-														effect_value={item.effect_value}
-														amount={item.amount}
-													/>
-												</div>
-										  ))}
-								</div>
-
-								<ul className="h-full flex flex-col">
-									<li className="h-1/2">
-										<TabLink
-											isActive={activeTab === "usable"}
-											title="Usable"
-											clickHandler={changeTab}
-										/>
-									</li>
-									<li className="h-1/2 border-t-2 border-white">
-										<TabLink
-											isActive={activeTab === "mystic"}
-											title="Mystic"
-											clickHandler={changeTab}
-										/>
-									</li>
-								</ul>
+							<div className="p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto border-2 border-Royal-Blue rounded-sm">
+								{activeTab === "eggs"
+									? eggs.map((item) => (
+											<div
+												key={item.uid}
+												className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
+											>
+												<Item
+													uid={item.uid}
+													name={item.name}
+													img_name={item.img_name}
+													effect_property={item.effect_property}
+													effect_value={item.effect_value}
+													amount={item.amount}
+												/>
+											</div>
+									  ))
+									: items.map((item) => (
+											<div
+												key={item.uid}
+												className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
+											>
+												<Item
+													uid={item.uid}
+													name={item.name}
+													img_name={item.img_name}
+													effect_property={item.effect_property}
+													effect_value={item.effect_value}
+													amount={item.amount}
+												/>
+											</div>
+									  ))}
 							</div>
-						</>
+						</div>
 					)}
 				</div>
 			</div>

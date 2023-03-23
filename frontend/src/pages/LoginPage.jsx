@@ -14,15 +14,15 @@ function LoginPage() {
 	const [password, setPassword] = useState("")
 	const [remember, setRemember] = useState(false)
 	const [fetchLoginApi] = useLoginMutation()
-	const auth = useSelector((state) => state.auth)
+	const authState = useSelector((state) => state.authState)
 	const dispatch = useDispatch()
 
 	useEffect(() => {
 		dispatch(getStoredJwtToken())
-		if (auth.isLoggedIn) {
+		if (authState?.isLoggedIn) {
 			return navigate("/home")
 		}
-	}, [auth.isLoggedIn])
+	}, [authState])
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
@@ -30,11 +30,11 @@ function LoginPage() {
 
 		if (username && password) {
 			const loginResult = await fetchLoginApi({ username, password })
-
+			// Failed to login
 			if (loginResult.error) {
 				return setError(loginResult.error.data.message)
 			}
-			// Store jwt_token
+
 			const jwtToken = loginResult.data.data.jwt_token
 
 			if (remember) {
