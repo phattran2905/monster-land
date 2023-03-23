@@ -96,11 +96,18 @@ export const useItemsOnMonster = async (req, res, next) => {
 
 							// Exceed the current exp
 							if (earnedEXP >= monsterDoc.level_up_exp) {
-								monsterDoc.exp = earnedEXP - monsterDoc.level_up_exp
-								// Level up
-								monsterDoc.level += 1
-								// Update the new level_up_xep
-								monsterDoc.level_up_exp += monsterDoc.level_up_exp * 1.1
+								let currentExp = earnedEXP
+								while (currentExp >= monsterDoc.level_up_exp) {
+									// Level up
+									monsterDoc.level += 1
+									currentExp -= monsterDoc.level_up_exp
+
+									monsterDoc.exp = currentExp
+									// Update the new level_up_xep
+									monsterDoc.level_up_exp = Math.floor(
+										monsterDoc.level_up_exp * 1.3
+									)
+								}
 							} else {
 								monsterDoc.exp = earnedEXP
 							}
