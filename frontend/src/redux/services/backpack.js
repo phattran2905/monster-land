@@ -10,7 +10,7 @@ export const backpackApi = createApi({
 				method: "GET",
 				headers: { Authorization: `Bearer ${jwt_token}` },
 			}),
-			invalidatesTags: ["backpack"],
+			providesTags: ["backpack"],
 		}),
 		useItems: builder.mutation({
 			query: ({ backpackUID, wildMonsterUID, itemToUseList }) => ({
