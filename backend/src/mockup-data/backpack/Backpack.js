@@ -1,11 +1,10 @@
-import { customAlphabet } from "nanoid"
+import { randomUID } from "../../util/random.js"
 import items from "./Item.js"
-
-const nanoid = customAlphabet("1234567890abcdef", 10)
+import account from "../user/Account.js"
 
 const Backpack = {
-	uid: `Bp-${nanoid()}`,
-	user_uid: `U-${nanoid()}`,
+	uid: `Bp-${randomUID()}`,
+	user_uid: account.uid,
 	item_list: items.map((i) => ({ item_uid: i.uid, amount: 10 })), // Add all items (10 each)
 }
 

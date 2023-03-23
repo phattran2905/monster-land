@@ -5,6 +5,8 @@ import cors from "cors"
 import apiRouter from "./routes/api.js"
 import { connectDb, dropDb } from "./db.js"
 import createMockupData from "./mockup-data/mockup.js"
+import handleErrors from "./middleware/RespondError.js"
+import logger from "./util/logger.js"
 
 config()
 connectDb()
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
 	res.send("Monster Land")
 })
 
+// Create mockup data
 app.get("/create-mockup-data", async (req, res) => {
 	await dropDb()
 	createMockupData()
@@ -25,8 +28,9 @@ app.get("/create-mockup-data", async (req, res) => {
 })
 
 app.use("/api/v1", apiRouter)
+app.use(handleErrors)
 
 const PORT = process.env.PORT || 5010
 app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`)
+	logger.info(`Server is running on port ${PORT}`)
 })

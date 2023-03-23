@@ -23,6 +23,7 @@ const MonsterSchema = new Schema(
 		level_up_exp: {
 			type: Number,
 			required: true,
+			default: 0,
 		},
 		attack: {
 			type: Number,
@@ -34,17 +35,11 @@ const MonsterSchema = new Schema(
 			default: 0,
 			required: true,
 		},
-		capture_rate: {
-			type: Number,
-			default: 0,
-			max: 100,
-			min: 0,
-		},
 		status: {
 			type: String,
 			lowercase: true,
-			enum: ["wild", "owned", "inactive"],
-			default: "wild",
+			enum: ["active", "inactive"],
+			default: "active",
 		},
 	},
 	{

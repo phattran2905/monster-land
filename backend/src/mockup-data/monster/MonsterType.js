@@ -1,38 +1,20 @@
-import { customAlphabet } from "nanoid"
-
-const nanoid = customAlphabet("1234567890abcdef", 10)
+import { randomUID } from "../../util/random.js"
 
 const MonsterType = [
 	{
-		uid: `MT-${nanoid()}`,
-		name: "Grass",
-	},
-	{
-		uid: `MT-${nanoid()}`,
-		name: "Poison",
-	},
-	{
-		uid: `MT-${nanoid()}`,
+		uid: `MT-${randomUID()}`,
 		name: "Fire",
 	},
 	{
-		uid: `MT-${nanoid()}`,
-		name: "Flying",
-	},
-	{
-		uid: `MT-${nanoid()}`,
+		uid: `MT-${randomUID()}`,
 		name: "Water",
 	},
 	{
-		uid: `MT-${nanoid()}`,
-		name: "Bug",
+		uid: `MT-${randomUID()}`,
+		name: "Rock",
 	},
 	{
-		uid: `MT-${nanoid()}`,
-		name: "Normal",
-	},
-	{
-		uid: `MT-${nanoid()}`,
+		uid: `MT-${randomUID()}`,
 		name: "Electric",
 	},
 ]

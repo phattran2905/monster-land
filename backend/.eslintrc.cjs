@@ -11,6 +11,7 @@ module.exports = {
 	},
 	rules: {
 		semi: ["off"],
+		"no-console": ["error"],
 		quotes: ["error", "double"],
 		"no-tabs": ["error", { allowIndentationTabs: true }],
 		indent: ["error", "tab"],
