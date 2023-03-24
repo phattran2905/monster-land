@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa"
 
 export default function Item({

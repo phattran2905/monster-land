@@ -17,7 +17,7 @@ export default function Type({ name }) {
 	const [textColorClass, setTextColorClass] = useState("text-white")
 
 	useEffect(() => {
-		switch (name.toLowerCase()) {
+		switch (name) {
 			case monsterTypes.grass: {
 				setBgColorClass("bg-Grass")
 				setTextColorClass("text-black")
@@ -61,8 +61,8 @@ export default function Type({ name }) {
 	}, [name])
 
 	return (
-		<div className={`${bgColorClass} py-1 px-4 rounded-md mr-2 shadow-lg`}>
-			<span className={`${textColorClass} capitalize font-bold text-sm`}>{name}</span>
+		<div className={`${bgColorClass} flex flex-row justify-center w-20`}>
+			<span className={`${textColorClass} capitalize font-bold p-1`}>{name}</span>
 		</div>
 	)
 }

@@ -1,43 +1,117 @@
-
 import energyIcon from "../../assets/img/icon/Icon metro-power.png"
-import Type from "./Type"
+import MonsterType from "./Type"
 import Image from "./Image"
+import { FaSplotch, FaAngleDoubleUp } from "react-icons/fa"
+import ProgressBar from "../ProgressBar"
 
-export default function MonsterCard({ uid, name, type, level, img_name, power, exp }) {
+export default function MonsterCard({
+	uid,
+	name,
+	type,
+	level,
+	img_name,
+	attack,
+	defense,
+	exp,
+	level_up_exp,
+}) {
 	return (
-		<div className="p-4">
-			<div className="border-2 border-Midnight-Gray relative rounded-tl-xl rounded-tr-xl p-4">
-				<div className="absolute flex flex-row justify-start items-center w-full -top-2 -left-4">
-					{type.map((name) => (
-						<Type
-							key={name}
-							name={name}
-						/>
-					))}
-				</div>
-
-				<Image img_name={img_name} />
-
-				<div className="flex flex-row justify-center items-center my-3">
-					<span className="text-white capitalize bg-Forest-Moss px-6 py-1 text-sm rounded-xl">
-						{`Lv. ${level}`}
-					</span>
-				</div>
-
-				<div className="flex flex-row justify-center items-center">
+		<div className="flex flex-row border-2 border-Royal-Blue">
+			{/* Name & Image */}
+			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
+				<div className="w-full p-4 h-5/6">
 					<img
-						className="w-5 h-5"
-						src={energyIcon}
-						alt="Power icon"
-					/>{" "}
-					<span className="text-Indigo-Blue ml-1 font-bold text-xl">Power:</span>
-					<span className="text-black text-xl font-bold px-2">
-						{power.toLocaleString("en-US")}
-					</span>
+						className="w-full h-full object-scale-down"
+						src={`/img/monster/${img_name}`}
+						alt={name}
+					/>
+				</div>
+				<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
+					<span className="text-white font-bold text-center text-lg">{name}</span>
 				</div>
 			</div>
-			<div className="bg-Royal-Blue px-6 py-3 text-center rounded-bl-xl rounded-br-xl">
-				<span className="text-white font-bold text-xl">{name}</span>
+
+			{/* Stats */}
+			<div className="w-60 h-full p-4 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
+				<div className="flex flex-row mb-3 justify-between items-center">
+					<div className="flex flex-row items-center mb-1">
+						<img
+							src="/img/icons/stats-icons/chess.png"
+							alt="Chess icon"
+						/>
+						<span className="ml-1 capitalize">Level</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+						<span className="p-1 font-bold text-white capitalize">{level}</span>
+					</div>
+				</div>
+				<div className="flex flex-row mb-3 justify-between items-center">
+					<div className="flex flex-row items-center mb-1">
+						<img
+							src="/img/icons/stats-icons/diamond7.png"
+							alt="Diamond icon"
+						/>
+						<span className="ml-1 capitalize">Type</span>
+					</div>
+                    {/* <MonsterType name={type[0]} /> */}
+					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+						<span className="p-1 font-bold text-white capitalize">{type}</span>
+					</div>
+				</div>
+
+				<div className="flex flex-row mb-3 justify-between items-center">
+					<div className="flex flex-row items-center mb-1">
+						<img
+							src="/img/icons/stats-icons/sword.png"
+							alt="Sword icon"
+						/>
+						<span className="ml-1 capitalize">Attack</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+						<span className="p-1 font-bold text-white capitalize">{attack}</span>
+					</div>
+				</div>
+
+				<div className="flex flex-row mb-3 justify-between items-center">
+					<div className="flex flex-row items-center mb-1">
+						<img
+							src="/img/icons/stats-icons/shield.png"
+							alt="Shield icon"
+						/>
+						<span className="ml-1 capitalize">Defense</span>
+					</div>
+					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+						<span className="p-1 font-bold text-white capitalize">{defense}</span>
+					</div>
+				</div>
+
+				<div className="flex flex-col mb-3 justify-between items-stretch">
+					<div className="flex flex-row items-center mb-1">
+						<FaAngleDoubleUp
+							className="text-Flamingo-Pink"
+							size={16}
+						/>
+						<span className="ml-1 capitalize">Exp</span>
+					</div>
+					<div className="flex flex-col justify-center w-full pt-1">
+						<ProgressBar
+							percentage={Math.floor(exp / level_up_exp)}
+							bgColorClass="bg-white"
+							currentBgColorClass="bg-Forest-Green"
+						/>
+						<div className="flex flex-row justify-between items-center mt-1">
+							<span className="text-sm text-Forest-Green font-bold">{exp}</span>
+							<span className="text-sm font-bold">{level_up_exp}</span>
+						</div>
+					</div>
+				</div>
+
+				<button
+					className="p-2 bg-Flamingo-Pink mt-1 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
+					onClick={() => onSelect()}
+				>
+					Assign
+				</button>
 			</div>
 		</div>
 	)
