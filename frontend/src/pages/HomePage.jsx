@@ -8,10 +8,12 @@ import { logout } from "../redux/slices/auth"
 import { useLogoutMutation } from "../redux/services/authentication"
 import { useGetTrainerInfoQuery } from "../redux/services/trainer"
 import Loading from "../components/Loading"
+import { updateTrainerInfo } from "../redux/slices/trainer"
 
 export default function HomePage() {
 	const navigate = useNavigate()
 	const authState = useSelector((state) => state.auth)
+	const trainerState = useSelector((state) => state.trainer)
 	const dispatch = useDispatch()
 	const [fetchLogoutApi] = useLogoutMutation()
 	const { data: trainerData } = useGetTrainerInfoQuery({
@@ -21,7 +23,7 @@ export default function HomePage() {
 
 	useEffect(() => {
 		setIsLoading(true)
-        
+
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
 			return navigate("/login")
@@ -32,6 +34,12 @@ export default function HomePage() {
 		}
 		setIsLoading(false)
 	}, [authState.isLoggedIn])
+
+	useEffect(() => {
+		if (trainerData) {
+			dispatch(updateTrainerInfo(trainerData))
+		}
+	}, [trainerData])
 
 	const handleLogout = async (e) => {
 		e.preventDefault()

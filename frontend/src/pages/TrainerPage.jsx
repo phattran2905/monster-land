@@ -5,7 +5,7 @@ import {
 	FaExclamationCircle,
 	FaUserTag,
 } from "react-icons/fa"
-import { AiOutlineNumber,AiFillTag, AiTwotoneMail } from "react-icons/ai"
+import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from "react-icons/ai"
 import { useEffect, useState } from "react"
 import moment from "moment"
 import { useNavigate } from "react-router-dom"
@@ -22,9 +22,8 @@ const totalAvatarImages = 4
 function TrainerPage() {
 	const navigate = useNavigate()
 	const authState = useSelector((state) => state.auth)
-	const trainerState = useSelector((state) => state.trainer)
 	const dispatch = useDispatch()
-	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: authState.jwtToken })
+	const trainerState = useSelector((state) => state.trainer)
 	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
 	const [error, setError] = useState()
 	const [successMsg, setSuccessMsg] = useState()
@@ -43,16 +42,15 @@ function TrainerPage() {
 	}, [authState.isLoggedIn])
 
 	useEffect(() => {
-		if (trainerData) {
-			setName(trainerData.name)
-			setEmail(trainerData.email)
-			setJoined(moment(trainerData.createdAt).format("MMM DD, YYYY"))
-			setExp(trainerData.exp)
-			setLevelUpExp(trainerData.level_up_exp)
-
-			dispatch(updateTrainerInfo(trainerData))
+		if (trainerState) {
+			setName(trainerState.name)
+			setEmail(trainerState.email)
+			setAvatarIndex(parseInt(trainerState.avatar.split("-")[1], 10))
+			setJoined(moment(trainerState.createdAt).format("MMM DD, YYYY"))
+			setExp(trainerState.exp)
+			setLevelUpExp(trainerState.level_up_exp)
 		}
-	}, [trainerData])
+	}, [trainerState])
 
 	const selectAvatarImage = (actionType) => {
 		if (actionType === "prev") {
@@ -82,13 +80,18 @@ function TrainerPage() {
 				email,
 				avatar: `body-${avatarIndex}.png`,
 			}
+			console.log(dataToUpdate)
 
-			const result = await fetchUpdateInfoApi({ jwt_token: authState.jwtToken, data: dataToUpdate })
+			const result = await fetchUpdateInfoApi({
+				jwt_token: authState.jwtToken,
+				data: dataToUpdate,
+			})
 
 			if (result.error) {
 				setError(result.error.data.message)
 			} else {
 				setSuccessMsg("Successfully saved.")
+				dispatch(updateTrainerInfo(dataToUpdate))
 				return navigate("/trainer")
 			}
 		}
@@ -122,7 +125,7 @@ function TrainerPage() {
 										<img
 											className="w-44 h-96 mx-auto object-scale-down"
 											src={`/img/avatars/body-${avatarIndex}.png`}
-											alt={trainerData?.avatar}
+											alt={trainerState?.avatar}
 										/>
 									</div>
 									<button onClick={() => selectAvatarImage("next")}>
@@ -208,7 +211,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerData?.username}
+										{trainerState?.username}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">
@@ -218,7 +221,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerData?.uid}
+										{trainerState?.uid}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">
