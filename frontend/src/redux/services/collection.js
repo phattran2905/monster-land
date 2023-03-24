@@ -6,9 +6,12 @@ export const collectionApi = createApi({
 	tagTypes: ["collection"],
 	endpoints: (builder) => ({
 		getOwnedMonster: builder.query({
-			query: () => "?status=owned",
+			query: () => ({
+				// url: "?status=owned",
+				method: "GET",
+			}),
+			providesTags: ["collection"],
 		}),
-        invalidatesTags: ["collection"],
 	}),
 })
 
