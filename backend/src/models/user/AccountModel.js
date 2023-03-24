@@ -14,7 +14,6 @@ const AccountSchema = new Schema(
 		},
 		email: {
 			type: String,
-			required: true,
 			unique: true,
 		},
 		hashed_pwd: {

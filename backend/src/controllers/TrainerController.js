@@ -23,9 +23,9 @@ const populateTrainerData = (trainerInfo) => ({
 export const createCharacter = async (req, res) => {
 	try {
 		// Validate required fields
-		const { name, gender, avatar } = req.body
-		if (!name || !gender || !avatar) {
-			return res.status(400).json({ message: "Missing fields. Require name, gender, avatar" })
+		const { name, avatar } = req.body
+		if (!name || !avatar) {
+			return res.status(400).json({ message: "Missing fields. Require name, avatar" })
 		}
 
 		// Create trainer
@@ -33,7 +33,6 @@ export const createCharacter = async (req, res) => {
 			uid: `T-${randomUID()}`,
 			user_uid: req.user.uid,
 			name,
-			gender,
 			avatar,
 		})
 
@@ -79,7 +78,7 @@ export const updateTrainerInfo = async (req, res) => {
 
 		// Existing email
 		const accountWithSameEmail = await AccountModel.findOne({ email })
-		if (accountWithSameEmail) {
+		if (accountWithSameEmail && accountWithSameEmail.uid !== trainer.user_uid) {
 			return res.status(400).json({ message: "Email is already taken." })
 		}
 
