@@ -27,7 +27,7 @@ const populateItemData = (backpackDoc) => ({
 		return {
 			uid: eggInfo.uid,
 			name: eggInfo.name,
-			type: eggInfo.monsterType.name,
+			monster_type: eggInfo.monsterType.name,
 			hatching_time_in_seconds: eggInfo.hatching_time_in_seconds,
 			img_name: eggInfo.img_name,
 			amount: i.amount,

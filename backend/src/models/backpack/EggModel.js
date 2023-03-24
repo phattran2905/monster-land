@@ -11,7 +11,7 @@ const EggSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		type_uid: {
+		monster_type_uid: {
 			type: String,
 			required: true,
 		},
@@ -37,7 +37,7 @@ const EggSchema = new Schema(
 
 EggSchema.virtual("monsterType", {
 	ref: "MonsterType",
-	localField: "type_uid",
+	localField: "monster_type_uid",
 	foreignField: "uid",
 	justOne: true,
 })
