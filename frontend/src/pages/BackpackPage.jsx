@@ -108,6 +108,15 @@ export default function BackpackPage() {
 											/>
 									  ))}
 							</div>
+
+							{/* Quantity */}
+							<div className="bg-Midnight-Gray inline-block rounded-full self-center px-10 py-2 my-4">
+								{activeTab === "items" && (
+									<span className="text-white">{items.length}</span>
+								)}
+								{activeTab === "eggs" && <span>{eggs.length}</span>}
+								<span className="text-white"> / {backpackData.capacity}</span>
+							</div>
 						</div>
 					)}
 				</div>
