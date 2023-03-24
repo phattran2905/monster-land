@@ -1,14 +1,11 @@
 import { useEffect } from "react"
 import { useState } from "react"
+import { GiPowerLightning, GiRock, GiWaterSplash, GiFire } from "react-icons/gi"
 
 const monsterTypes = {
-	grass: "grass",
-	poison: "poison",
 	fire: "fire",
-	flying: "flying",
 	water: "water",
-	bug: "bug",
-	normal: "normal",
+	rock: "rock",
 	electric: "electric",
 }
 
@@ -18,32 +15,15 @@ export default function Type({ name }) {
 
 	useEffect(() => {
 		switch (name) {
-			case monsterTypes.grass: {
-				setBgColorClass("bg-Grass")
-				setTextColorClass("text-black")
-				break
-			}
-			case monsterTypes.poison: {
-				setBgColorClass("bg-Poison")
-				break
-			}
 			case monsterTypes.fire: {
 				setBgColorClass("bg-Fire")
-				break
-			}
-			case monsterTypes.flying: {
-				setBgColorClass("bg-Flying")
 				break
 			}
 			case monsterTypes.water: {
 				setBgColorClass("bg-Water")
 				break
 			}
-			case monsterTypes.bug: {
-				setBgColorClass("bg-Bug")
-				break
-			}
-			case monsterTypes.normal: {
+			case monsterTypes.rock: {
 				setBgColorClass("bg-Normal")
 				break
 			}
@@ -61,8 +41,34 @@ export default function Type({ name }) {
 	}, [name])
 
 	return (
-		<div className={`${bgColorClass} flex flex-row justify-center w-20`}>
-			<span className={`${textColorClass} capitalize font-bold p-1`}>{name}</span>
+		<div
+			className={`${bgColorClass} flex flex-row justify-center items-center w-20 p-1 rounded-full`}
+		>
+			{name === "fire" && (
+				<GiFire
+					size={14}
+					className="text-white"
+				/>
+			)}
+			{name === "water" && (
+				<GiWaterSplash
+					size={14}
+					className="text-white"
+				/>
+			)}
+			{name === "rock" && (
+				<GiRock
+					size={14}
+					className="text-white"
+				/>
+			)}
+			{name === "electric" && (
+				<GiPowerLightning
+					size={14}
+					className="text-white"
+				/>
+			)}
+			<span className={`${textColorClass} ml-1 capitalize font-bold text-sm`}>{name}</span>
 		</div>
 	)
 }

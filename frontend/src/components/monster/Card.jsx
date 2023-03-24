@@ -22,7 +22,7 @@ export default function MonsterCard({
 				<div className="w-full p-4 h-5/6">
 					<img
 						className="w-full h-full object-scale-down"
-						src={`/img/monster/${img_name}`}
+						src={`/img/monsters/${img_name}`}
 						alt={name}
 					/>
 				</div>

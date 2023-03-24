@@ -19,14 +19,10 @@ module.exports = {
 			black: "#1B1B1E",
             
             // Bg-color for monster's type
-            Grass: '#00ff00',
-            Poison: '#800080',
             Fire: '#ff0000',
-            Flying: '#2C3D55',
-            Water: '#000080',
-            Bug: '#006400',
+            Water: '#3C91E6',
             Normal: '#808080',
-            Electric: '#ffff00',
+            Electric: '#3B2C35',
               
 		},
 		extend: {
