@@ -14,7 +14,7 @@ export default function HomePage() {
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 	const [fetchLogoutApi] = useLogoutMutation()
-	const { data: getTrainerData, isFetching } = useGetTrainerInfoQuery({
+	const { data: trainerData } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const [isLoading, setIsLoading] = useState(true)
@@ -27,7 +27,7 @@ export default function HomePage() {
 			return navigate("/login")
 		}
 		// Create first character
-		if (getTrainerData?.message !== "OK") {
+		if (trainerData?.message) {
 			return navigate("/create-trainer")
 		}
 		setIsLoading(false)
