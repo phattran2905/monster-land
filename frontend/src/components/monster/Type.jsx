@@ -42,7 +42,7 @@ export default function Type({ name }) {
 
 	return (
 		<div
-			className={`${bgColorClass} flex flex-row justify-center items-center w-20 p-1 rounded-full`}
+			className={`${bgColorClass} flex flex-row justify-center items-center w-20 h-full p-2 rounded-full`}
 		>
 			{name === "fire" && (
 				<GiFire
@@ -65,10 +65,10 @@ export default function Type({ name }) {
 			{name === "electric" && (
 				<GiPowerLightning
 					size={14}
-					className="text-white"
+					className="text-black"
 				/>
 			)}
-			<span className={`${textColorClass} ml-1 capitalize font-bold text-sm`}>{name}</span>
+			<span className={`block ${textColorClass} ml-1 capitalize font-bold text-xs`}>{name}</span>
 		</div>
 	)
 }

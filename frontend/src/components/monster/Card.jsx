@@ -53,10 +53,10 @@ export default function MonsterCard({
 						/>
 						<span className="ml-1 capitalize">Type</span>
 					</div>
-                    {/* <MonsterType name={type[0]} /> */}
-					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+                    <MonsterType name={type} />
+					{/* <div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 						<span className="p-1 font-bold text-white capitalize">{type}</span>
-					</div>
+					</div> */}
 				</div>
 
 				<div className="flex flex-row mb-3 justify-between items-center">

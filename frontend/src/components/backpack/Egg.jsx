@@ -13,10 +13,13 @@ export default function Egg({
 	onSelect,
 }) {
 	const [hatchingTime] = useState(() => {
-		const duration = moment.duration(60, "seconds")
-		return moment.utc(duration.asMilliseconds()).format("h:mm:ss")
+		const duration = moment.duration(hatching_time_in_seconds, "seconds")
+		const hours = Math.floor(duration.asHours())
+		const minutes = duration.minutes()
+		const seconds = duration.seconds()
+		return `${hours}:${minutes.toString()}:${seconds.toString()}`
 	})
-	console.log(hatchingTime)
+
 	return (
 		<div className="mx-4 h-80 flex flex-row border-2 border-Royal-Blue">
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
@@ -42,10 +45,7 @@ export default function Egg({
 						<span className="ml-1 font-bold capitalize">Hatching time</span>
 					</div>
 					<div className="bg-Midnight-Gray flex flex-row justify-center">
-						<span className="p-1 font-bold text-white">
-							{hatching_time_in_seconds}
-							{"  s"}
-						</span>
+						<span className="p-1 font-bold text-white tracking-widest">{hatchingTime}</span>
 					</div>
 				</div>
 				<div className="flex flex-col mb-3">

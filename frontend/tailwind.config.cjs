@@ -22,7 +22,7 @@ module.exports = {
             Fire: '#ff0000',
             Water: '#3C91E6',
             Normal: '#808080',
-            Electric: '#3B2C35',
+            Electric: '#FBFF12',
               
 		},
 		extend: {
