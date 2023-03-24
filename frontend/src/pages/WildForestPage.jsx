@@ -8,7 +8,6 @@ import Item from "../components/backpack/Item"
 import Loading from "../components/Loading"
 import SucceededResult from "../components/capture/SucceededResult"
 import FailedResult from "../components/capture/FailedResult"
-import PokeballImg from "../assets/img/Pokeball.png"
 import {
 	useCaptureWildMonsterMutation,
 	useFindWildMonsterMutation,
@@ -178,7 +177,7 @@ export default function WildForest() {
 							>
 								<img
 									className="w-28 h-28 m-2"
-									src={PokeballImg}
+									src={""}
 									alt="Pokeball"
 								/>
 								Capture

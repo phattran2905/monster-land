@@ -5,7 +5,7 @@ import swordIcon from "../assets/img/icon/sword.png"
 import mapIcon from "../assets/img/icon/font-awesome-map.png"
 import powerOffIcon from "../assets/img/icon/font-awesome-power-off.png"
 import userIcon from "../assets/img/icon/font-awesome-user.png"
-import eggIcon from "../assets/img/icon/egg.png"
+import incubatorIcon from "../assets/img/icon/incubator.png"
 
 function ImageIcon({ name }) {
 	const [icon] = useState(() => {
@@ -21,7 +21,7 @@ function ImageIcon({ name }) {
 			case "team":
 				return swordIcon
 			case "incubator":
-				return eggIcon
+				return incubatorIcon
 			case "power-off":
 				return powerOffIcon
 		}
