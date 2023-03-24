@@ -5,7 +5,7 @@ const ITEM_TYPE = {
 	INCUBATOR: "incubator",
 }
 
-const usableItems = [
+const items = [
 	{
 		uid: `I-${randomUID()}`,
 		name: "EXP Boosting Serum",
@@ -39,9 +39,5 @@ const usableItems = [
 		img_name: "accelerating-battery.png",
 	},
 ]
-
-const mysticItems = []
-
-const items = [...mysticItems, ...usableItems]
 
 export default items
