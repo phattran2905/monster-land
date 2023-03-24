@@ -6,6 +6,7 @@ const populateTrainerData = (trainerInfo) => ({
 	uid: trainerInfo.uid,
 	user_uid: trainerInfo.user_uid,
 	name: trainerInfo.name,
+	username: trainerInfo.account.username,
 	email: trainerInfo.account.email,
 	avatar: trainerInfo.avatar,
 	level: trainerInfo.level,
