@@ -1,9 +1,8 @@
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
-import logger from "../util/logger.js"
 
-const getItemInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
+const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
 // Populate Monster data for frontend to render
 const populateItemData = (backpackDoc) => ({
@@ -11,7 +10,7 @@ const populateItemData = (backpackDoc) => ({
 	user_uid: backpackDoc.user_uid,
 	capacity: backpackDoc.capacity,
 	item_list: backpackDoc.item_list.map((i) => {
-		const itemInfo = getItemInfo(i.item_uid, backpackDoc.items)
+		const itemInfo = getElementInfo(i.item_uid, backpackDoc.items)
 		return {
 			uid: itemInfo.uid,
 			name: itemInfo.name,
@@ -23,15 +22,27 @@ const populateItemData = (backpackDoc) => ({
 			status: itemInfo.status,
 		}
 	}),
+	egg_list: backpackDoc.egg_list.map((i) => {
+		const eggInfo = getElementInfo(i.egg_uid, backpackDoc.eggs)
+		return {
+			uid: eggInfo.uid,
+			name: eggInfo.name,
+			monster_type: eggInfo.monsterType.name,
+			hatching_time_in_seconds: eggInfo.hatching_time_in_seconds,
+			img_name: eggInfo.img_name,
+			amount: i.amount,
+			status: eggInfo.status,
+		}
+	}),
 	status: backpackDoc.status,
 })
 
 // Get items from backpack
 export const getItemsFromBackpack = async (req, res, next) => {
 	try {
-		const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid }).populate({
-			path: "items",
-		})
+		const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid })
+			.populate({ path: "items" })
+			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id -uid name" } })
 
 		if (!backpackDoc) {
 			return next(new ErrorResponse(404, "Backpack is not found"))

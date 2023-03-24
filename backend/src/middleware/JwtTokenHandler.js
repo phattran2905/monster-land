@@ -5,7 +5,7 @@ export default async function validateJwt(req, res, next) {
 	try {
 		const jwtToken = req.get("Authorization")?.split("Bearer ")[1]
 		if (!jwtToken) {
-			return res.status(401).json({ message: "Invalid JWT token." })
+			return res.status(401).json({ message: "[JWT] Invalid token." })
 		}
 
 		// Verify jwtToken
@@ -16,12 +16,19 @@ export default async function validateJwt(req, res, next) {
 			status: "active",
 		})
 		if (!account) {
-			return res.status(401).json({ message: "Unknown payload." })
+			return res.status(401).json({ message: "[JWT] Unknown payload." })
 		}
 
 		req.user = account
 		return next()
 	} catch (error) {
+		if (error instanceof jwt.TokenExpiredError) {
+			return res.status(401).json({ message: "[JWT] Token is expired." })
+		}
+		if (error instanceof jwt.JsonWebTokenError || error instanceof jwt.NotBeforeError) {
+			return res.status(401).json({ message: `[JWT] ${error.message}` })
+		}
+
 		return res.status(500).json({ message: "Internal Server Error" })
 	}
 }

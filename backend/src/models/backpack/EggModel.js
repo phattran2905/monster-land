@@ -1,32 +1,27 @@
-import { model, Schema } from "mongoose"
+import { Schema, model } from "mongoose"
 
-const MonsterInfoSchema = new Schema(
+const EggSchema = new Schema(
 	{
 		uid: {
 			type: String,
-			unique: true,
 			required: true,
+			unique: true,
 		},
 		name: {
 			type: String,
-			unique: true,
 			required: true,
-			capitalize: true,
 		},
-		type: {
+		monster_type_uid: {
 			type: String,
 			required: true,
 		},
 		img_name: {
 			type: String,
 			required: true,
-			lowercase: true,
 		},
-		level_up_exp_rate: {
+		hatching_time_in_seconds: {
 			type: Number,
 			required: true,
-			default: 1,
-			min: 1,
 		},
 		status: {
 			type: String,
@@ -35,16 +30,18 @@ const MonsterInfoSchema = new Schema(
 			default: "active",
 		},
 	},
-	{ timestamps: true }
+	{
+		timestamps: true,
+	}
 )
 
-MonsterInfoSchema.virtual("monsterType", {
+EggSchema.virtual("monsterType", {
 	ref: "MonsterType",
-	localField: "type",
+	localField: "monster_type_uid",
 	foreignField: "uid",
 	justOne: true,
 })
 
-const MonsterInfoModel = model("MonsterInfo", MonsterInfoSchema)
+const EggModel = model("Egg", EggSchema)
 
-export default MonsterInfoModel
+export default EggModel

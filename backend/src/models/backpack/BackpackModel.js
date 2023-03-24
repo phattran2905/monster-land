@@ -16,6 +16,10 @@ const BackpackSchema = new Schema(
 			type: [Object], // {item_uid, amount}
 			default: [],
 		},
+		egg_list: {
+			type: [Object], // {egg_uid, amount}
+			default: [],
+		},
 		capacity: {
 			type: Number,
 			default: 50,
@@ -30,10 +34,17 @@ const BackpackSchema = new Schema(
 	{ timestamps: true }
 )
 
-// Populate to items to get data for storing items
+// Populate to items to get item data
 BackpackSchema.virtual("items", {
 	ref: "Item",
 	localField: "item_list.item_uid",
+	foreignField: "uid",
+})
+
+// Populate to eggs to get egg data
+BackpackSchema.virtual("eggs", {
+	ref: "Egg",
+	localField: "egg_list.egg_uid",
 	foreignField: "uid",
 })
 
