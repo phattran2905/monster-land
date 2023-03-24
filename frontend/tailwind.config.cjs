@@ -13,6 +13,8 @@ module.exports = {
 			"Fire-Engine-Red": "#DB0039",
 			"Forest-Moss": "#52796F",
 			"Midnight-Gray": "#464865",
+			"Dim-Gray": "#6C6F7D",
+			"Anti-flash-white": "#E9EAEC",
 			white: "#ffffff",
 			black: "#1B1B1E",
             
