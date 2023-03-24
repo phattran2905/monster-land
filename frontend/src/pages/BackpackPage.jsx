@@ -78,7 +78,7 @@ export default function BackpackPage() {
 								</li>
 							</ul>
 
-							<div className="p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto border-2 border-Royal-Blue rounded-sm">
+							<div className="p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto  rounded-sm">
 								{activeTab === "eggs"
 									? eggs.map((item) => (
 											<div
@@ -110,11 +110,13 @@ export default function BackpackPage() {
 							</div>
 
 							{/* Quantity */}
-							<div className="bg-Midnight-Gray inline-block rounded-full self-center px-10 py-2 my-4">
+							<div className="bg-Midnight-Gray inline-block rounded-full self-center px-10 py-2 my-8">
 								{activeTab === "items" && (
 									<span className="text-white">{items.length}</span>
 								)}
-								{activeTab === "eggs" && <span>{eggs.length}</span>}
+								{activeTab === "eggs" && (
+									<span className="text-white">{eggs.length}</span>
+								)}
 								<span className="text-white"> / {backpackData.capacity}</span>
 							</div>
 						</div>
