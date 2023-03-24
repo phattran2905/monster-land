@@ -23,7 +23,6 @@ module.exports = {
             Water: '#3C91E6',
             Normal: '#808080',
             Electric: '#FBFF12',
-              
 		},
 		extend: {
 			backgroundImage: {
