@@ -17,23 +17,22 @@ export default function BackpackPage() {
 	const navigate = useNavigate()
 	const {
 		data: backpackData,
-		error,
 		isLoading,
 	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
 	const [eggs, setEggs] = useState([])
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
 
+	// Redirect to login if not logged in
 	useEffect(() => {
-		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
 			return navigate("/login")
 		}
 	}, [authState.isLoggedIn])
 
+	// Set Items and Eggs
 	useEffect(() => {
 		if (backpackData) {
-			console.log(backpackData)
 			const items = backpackData.item_list
 			const eggs = backpackData.eggs
 			setItems(items)
@@ -57,9 +56,9 @@ export default function BackpackPage() {
 				<MenuBar />
 
 				<div className="m-10 w-full ">
-					{isLoading && <Loading />}
-
-					{!error && (
+					{isLoading ? (
+						<Loading />
+					) : (
 						<div className="flex flex-col shadow-xl rounded-sm">
 							<ul className="flex flex-row">
 								<li>
@@ -117,7 +116,7 @@ export default function BackpackPage() {
 								{activeTab === "eggs" && (
 									<span className="text-white">{eggs.length}</span>
 								)}
-								<span className="text-white"> / {backpackData.capacity}</span>
+								<span className="text-white"> / {backpackData?.capacity}</span>
 							</div>
 						</div>
 					)}
