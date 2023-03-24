@@ -5,7 +5,7 @@ import Footer from "../components/Footer"
 import logo from "../assets/img/logo/logo-trans-bg.png"
 import { FaUserAlt, FaExclamationCircle, FaLock } from "react-icons/fa"
 import { useLoginMutation } from "../redux/services/authentication"
-import { saveJwtToken, getStoredJwtToken, login } from "../redux/slices/auth"
+import { saveJwtToken, login } from "../redux/slices/auth"
 
 function LoginPage() {
 	const navigate = useNavigate()
@@ -14,15 +14,14 @@ function LoginPage() {
 	const [password, setPassword] = useState("")
 	const [remember, setRemember] = useState(false)
 	const [fetchLoginApi] = useLoginMutation()
-	const auth = useSelector((state) => state.auth)
+	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
-
+    
 	useEffect(() => {
-		dispatch(getStoredJwtToken())
-		if (auth.isLoggedIn) {
+		if (authState.isLoggedIn) {
 			return navigate("/home")
 		}
-	}, [auth.isLoggedIn])
+	}, [])
 
 	const handleLogin = async (e) => {
 		e.preventDefault()
@@ -30,11 +29,11 @@ function LoginPage() {
 
 		if (username && password) {
 			const loginResult = await fetchLoginApi({ username, password })
-
+			// Failed to login
 			if (loginResult.error) {
 				return setError(loginResult.error.data.message)
 			}
-			// Store jwt_token
+
 			const jwtToken = loginResult.data.data.jwt_token
 
 			if (remember) {

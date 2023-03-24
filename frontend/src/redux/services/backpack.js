@@ -3,9 +3,14 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 export const backpackApi = createApi({
 	reducerPath: "backpackApi",
 	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/backpack" }),
+	tagTypes: ["backpack"],
 	endpoints: (builder) => ({
 		getBackpack: builder.query({
-			query: () => "",
+			query: ({ jwt_token }) => ({
+				method: "GET",
+				headers: { Authorization: `Bearer ${jwt_token}` },
+			}),
+			providesTags: ["backpack"],
 		}),
 		useItems: builder.mutation({
 			query: ({ backpackUID, wildMonsterUID, itemToUseList }) => ({
@@ -16,6 +21,7 @@ export const backpackApi = createApi({
 				},
 				body: itemToUseList,
 			}),
+			invalidatesTags: ["backpack"],
 		}),
 	}),
 })
