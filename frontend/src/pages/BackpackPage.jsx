@@ -15,10 +15,7 @@ export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const {
-		data: backpackData,
-		isLoading,
-	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
+	const { data: backpackData, isLoading } = useGetBackpackQuery({ jwt_token: authState.jwtToken })
 	const [eggs, setEggs] = useState([])
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
@@ -52,14 +49,15 @@ export default function BackpackPage() {
 		<div className="container-xl flex flex-col h-screen justify-between">
 			<Header />
 
-			<div className="w-full h-full flex flex-row relative">
+			<div className="w-full h-full flex flex-row relative overflow-hidden">
 				<MenuBar />
 
-				<div className="m-10 w-full ">
+				<div className="m-10 w-full">
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className="flex flex-col shadow-xl rounded-sm">
+						<div className="h-full flex flex-col shadow-xl rounded-sm">
+							{/* Tabs */}
 							<ul className="flex flex-row">
 								<li>
 									<TabLink
@@ -77,9 +75,16 @@ export default function BackpackPage() {
 								</li>
 							</ul>
 
-							<div className="p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto  rounded-sm">
-								{activeTab === "eggs"
-									? eggs.map((item) => (
+							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto rounded-sm">
+								{activeTab === "eggs" ? (
+									eggs.length === 0 ? (
+										<div className="h-full w-full flex flex-row justify-center items-center">
+											<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+												You have no eggs
+											</span>
+										</div>
+									) : (
+										eggs.map((item) => (
 											<div
 												key={item.uid}
 												className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
@@ -93,30 +98,41 @@ export default function BackpackPage() {
 													amount={item.amount}
 												/>
 											</div>
-									  ))
-									: items.map((item) => (
-											<Item
-												key={item.uid}
-												uid={item.uid}
-												name={item.name}
-												img_name={item.img_name}
-												effect_property={item.effect_property}
-												effect_value={item.effect_value}
-												amount={item.amount}
-												onSelect={() => {}}
-											/>
-									  ))}
+										))
+									)
+								) : items.length === 0 ? (
+									<div className="h-full w-full flex flex-row justify-center items-center">
+										<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+											You have no items
+										</span>
+									</div>
+								) : (
+									items.map((item) => (
+										<Item
+											key={item.uid}
+											uid={item.uid}
+											name={item.name}
+											img_name={item.img_name}
+											effect_property={item.effect_property}
+											effect_value={item.effect_value}
+											amount={item.amount}
+											onSelect={() => {}}
+										/>
+									))
+								)}
 							</div>
 
 							{/* Quantity */}
-							<div className="bg-Midnight-Gray inline-block rounded-full self-center px-10 py-2 my-8">
-								{activeTab === "items" && (
-									<span className="text-white">{items.length}</span>
-								)}
-								{activeTab === "eggs" && (
-									<span className="text-white">{eggs.length}</span>
-								)}
-								<span className="text-white"> / {backpackData?.capacity}</span>
+							<div className="bg-Indigo-Blue flex flex-row justify-center mt-auto">
+								<div className="bg-white inline-block rounded-full px-10 py-2 my-3">
+									{activeTab === "items" && (
+										<span className="text-Flamingo-Pink font-bold">{items.length}</span>
+									)}
+									{activeTab === "eggs" && (
+										<span className="text-Flamingo-Pink font-bold">{eggs.length}</span>
+									)}
+									<span className="text-black"> / {backpackData?.capacity}</span>
+								</div>
 							</div>
 						</div>
 					)}
