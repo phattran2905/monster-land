@@ -14,7 +14,7 @@ const MonsterInfoSchema = new Schema(
 			capitalize: true,
 		},
 		type: {
-			type: [String],
+			type: String,
 			required: true,
 		},
 		img_name: {
@@ -42,6 +42,7 @@ MonsterInfoSchema.virtual("monsterType", {
 	ref: "MonsterType",
 	localField: "type",
 	foreignField: "uid",
+	justOne: true,
 })
 
 const MonsterInfoModel = model("MonsterInfo", MonsterInfoSchema)

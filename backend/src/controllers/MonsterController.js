@@ -12,7 +12,7 @@ const populateMonsterData = (monsterDoc) => ({
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
 	level_up_exp_rate: monsterDoc.info.level_up_exp_rate,
-	type: monsterDoc.info.monsterType.map((i) => i.name),
+	type: monsterDoc.info.monsterType.name,
 	status: monsterDoc.status,
 })
 
