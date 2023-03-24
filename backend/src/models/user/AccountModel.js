@@ -1,4 +1,4 @@
-import { Schema, model, Date } from "mongoose"
+import { Schema, model } from "mongoose"
 
 const AccountSchema = new Schema(
 	{
@@ -10,6 +10,10 @@ const AccountSchema = new Schema(
 		username: {
 			type: String,
 			required: true,
+			unique: true,
+		},
+		email: {
+			type: String,
 			unique: true,
 		},
 		hashed_pwd: {
@@ -24,10 +28,6 @@ const AccountSchema = new Schema(
 			type: String,
 			default: "user",
 			enum: ["user", "admin"],
-		},
-		last_login: {
-			type: Date,
-			default: null,
 		},
 		status: {
 			type: String,

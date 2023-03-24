@@ -10,6 +10,7 @@ import TabLink from "../components/backpack/TabLink"
 import { useDispatch, useSelector } from "react-redux"
 import { getStoredJwtToken } from "../redux/slices/auth"
 import { useNavigate } from "react-router-dom"
+import Egg from "../components/backpack/Egg"
 
 export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
@@ -31,9 +32,9 @@ export default function BackpackPage() {
 	useEffect(() => {
 		if (backpackData) {
 			const items = backpackData.item_list
-			const eggs = backpackData.eggs
+			const eggs = backpackData.egg_list
 			setItems(items)
-			// setEggs(eggs)
+			setEggs(eggs)
 		}
 	}, [backpackData])
 
@@ -85,19 +86,16 @@ export default function BackpackPage() {
 										</div>
 									) : (
 										eggs.map((item) => (
-											<div
+											<Egg
 												key={item.uid}
-												className="w-80 p-4 h-24 border-2 border-Flamingo-Pink rounded-xl flex flex-row justify-around items-center"
-											>
-												<Item
-													uid={item.uid}
-													name={item.name}
-													img_name={item.img_name}
-													effect_property={item.effect_property}
-													effect_value={item.effect_value}
-													amount={item.amount}
-												/>
-											</div>
+												uid={item.uid}
+												name={item.name}
+												img_name={item.img_name}
+												hatching_time_in_seconds={item.hatching_time_in_seconds}
+												monster_type={item.monster_type}
+												amount={item.amount}
+												onSelect={() => {}}
+											/>
 										))
 									)
 								) : items.length === 0 ? (
@@ -126,10 +124,14 @@ export default function BackpackPage() {
 							<div className="bg-Indigo-Blue flex flex-row justify-center mt-auto">
 								<div className="bg-white inline-block rounded-full px-10 py-2 my-3">
 									{activeTab === "items" && (
-										<span className="text-Flamingo-Pink font-bold">{items.length}</span>
+										<span className="text-Flamingo-Pink font-bold">
+											{items.length}
+										</span>
 									)}
 									{activeTab === "eggs" && (
-										<span className="text-Flamingo-Pink font-bold">{eggs.length}</span>
+										<span className="text-Flamingo-Pink font-bold">
+											{eggs.length}
+										</span>
 									)}
 									<span className="text-black"> / {backpackData?.capacity}</span>
 								</div>

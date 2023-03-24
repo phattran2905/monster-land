@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Loading from "../components/Loading"
@@ -11,7 +11,7 @@ import { useGetOwnedMonsterQuery } from "../redux/services/collection"
 export default function CollectionPage() {
 	const authState = useSelector((state) => state.auth)
 	const { data: monsterData, error } = useGetOwnedMonsterQuery()
-	const navigation = useNavigate()
+	const navigate = useNavigate()
 	const [monsters, setMonsters] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 
@@ -24,7 +24,6 @@ export default function CollectionPage() {
 
 	// Set monsters
 	useEffect(() => {
-		console.log(monsterData)
 		if (monsterData) {
 			setMonsters(monsterData)
 			setIsLoading(false)

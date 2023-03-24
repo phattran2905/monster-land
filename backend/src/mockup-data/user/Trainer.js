@@ -5,7 +5,6 @@ const Trainer = {
 	uid: `T-${randomUID()}`,
 	user_uid: account.uid,
 	name: "Test",
-	gender: "male",
 	avatar: "avatar.png",
 }
 

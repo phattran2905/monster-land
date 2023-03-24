@@ -1,13 +1,13 @@
 import {
-	FaSignInAlt,
 	FaCalendarCheck,
-	FaTransgender,
 	FaAngleLeft,
 	FaAngleRight,
 	FaExclamationCircle,
 	FaUserTag,
 } from "react-icons/fa"
+import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from "react-icons/ai"
 import { useEffect, useState } from "react"
+import moment from "moment"
 import { useNavigate } from "react-router-dom"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
@@ -15,82 +15,55 @@ import MenuBar from "../components/menu/MenuBar"
 import ProgressBar from "../components/ProgressBar"
 import { useGetTrainerInfoQuery, useUpdateTrainerInfoMutation } from "../redux/services/trainer"
 import { useDispatch, useSelector } from "react-redux"
-import { getStoredJwtToken } from "../redux/slices/auth"
-import Male1Image from "../assets/img/trainer/male-1.png"
-import Male2Image from "../assets/img/trainer/male-2.png"
-import Female1Image from "../assets/img/trainer/female-1.png"
-import Female2Image from "../assets/img/trainer/female-2.png"
+import { updateTrainerInfo } from "../redux/slices/trainer"
 
-const avatarImages = {
-	male: [Male1Image, Male2Image],
-	female: [Female1Image, Female2Image],
-}
+const totalAvatarImages = 4
 
 function TrainerPage() {
 	const navigate = useNavigate()
-	const auth = useSelector((state) => state.auth)
+	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
-	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: auth.jwtToken })
+	const trainerState = useSelector((state) => state.trainer)
 	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
 	const [error, setError] = useState()
 	const [successMsg, setSuccessMsg] = useState()
 	const [name, setName] = useState("")
-	const [gender, setGender] = useState("male")
-	const [joined, setJoined] = useState("yyyy/mm/dd")
-	// const [lastLogin, setLastLogin] = useState("yyyy/mm/dd")
+	const [email, setEmail] = useState("")
+	const [joined, setJoined] = useState("MMM DD, YYYY")
 	const [exp, setExp] = useState(0)
-	const [maxExp, setMaxExp] = useState(0)
-	const [avatarName, setAvatarName] = useState("")
-	const [avatarIndex, setAvatarIndex] = useState(0)
+	const [levelUpExp, setLevelUpExp] = useState(0)
+	const [avatarIndex, setAvatarIndex] = useState(1)
+
+	// Redirect to login if not logged in
+	useEffect(() => {
+		if (!authState.isLoggedIn) {
+			return navigate("/login")
+		}
+	}, [authState.isLoggedIn])
 
 	useEffect(() => {
-		dispatch(getStoredJwtToken())
-
-		// Redirect to login if not logged in
-		if (!auth.isLoggedIn) {
-			return navigate("/login", { replace: true })
-		} else {
-			return navigate("/trainer", { replace: true })
+		if (trainerState) {
+			setName(trainerState.name)
+			setEmail(trainerState.email)
+			setAvatarIndex(parseInt(trainerState.avatar.split("-")[1], 10))
+			setJoined(moment(trainerState.createdAt).format("MMM DD, YYYY"))
+			setExp(trainerState.exp)
+			setLevelUpExp(trainerState.level_up_exp)
 		}
-	}, [auth.isLoggedIn])
-
-	useEffect(() => {
-		if (trainerData) {
-			setName(trainerData.data.name)
-			setGender(trainerData.data.gender)
-
-			const dateString = trainerData.data.createdAt
-			const joinedDate = new Date(dateString)
-			setJoined(
-				new Intl.DateTimeFormat("en-US", {
-					month: "short",
-					day: "numeric",
-					year: "numeric",
-				}).format(joinedDate)
-			)
-			setExp(trainerData.data.exp)
-			setMaxExp(trainerData.data.level_up_exp)
-			setAvatarName(trainerData.data.avatar)
-			const avatarIdx = trainerData.data.avatar.split("-")[1].slice(0, 1)
-			setAvatarIndex(parseInt(avatarIdx, 10))
-		} else {
-		}
-	}, [trainerData])
+	}, [trainerState])
 
 	const selectAvatarImage = (actionType) => {
 		if (actionType === "prev") {
-			const index = Math.floor(avatarIndex / avatarImages[gender].length) - 1
-
-			if (index < 0) {
-				setAvatarIndex(0)
+			const index = avatarIndex - 1
+			if (index < 1) {
+				setAvatarIndex(1)
 			} else {
 				setAvatarIndex(index)
 			}
 		} else {
-			const index = Math.floor(avatarIndex / avatarImages[gender].length) + 1
-
-			if (index > avatarImages[gender].length) {
-				setAvatarIndex(avatarImages[gender].length)
+			const index = avatarIndex + 1
+			if (index > totalAvatarImages) {
+				setAvatarIndex(totalAvatarImages)
 			} else {
 				setAvatarIndex(index)
 			}
@@ -101,19 +74,24 @@ function TrainerPage() {
 		setError()
 		setSuccessMsg()
 
-		if (name && gender) {
-			const data = {
+		if (name && email) {
+			const dataToUpdate = {
 				name,
-				gender,
-				avatar: `${gender}-${avatarIndex}.png`,
+				email,
+				avatar: `body-${avatarIndex}.png`,
 			}
+			console.log(dataToUpdate)
 
-			const result = await fetchUpdateInfoApi({ jwt_token: auth.jwtToken, data })
+			const result = await fetchUpdateInfoApi({
+				jwt_token: authState.jwtToken,
+				data: dataToUpdate,
+			})
 
 			if (result.error) {
-				setError(result.error.message)
+				setError(result.error.data.message)
 			} else {
 				setSuccessMsg("Successfully saved.")
+				dispatch(updateTrainerInfo(dataToUpdate))
 				return navigate("/trainer")
 			}
 		}
@@ -126,6 +104,7 @@ function TrainerPage() {
 				<MenuBar />
 				<div className="w-full px-32 py-12 flex flex-col justify-center items-center">
 					<div className="w-3/4 flex flex-row justify-start items-start border-2 border-Indigo-Blue rounded-md relative">
+						{/* Avatar */}
 						<div className="w-1/2 h-full p-10 bg-Indigo-Blue flex flex-col items-center">
 							<h2 className="py-2 text-4xl font-bold text-Gold-Sand border-b-4 border-Gold-Sand inline-block">
 								Avatar
@@ -136,7 +115,7 @@ function TrainerPage() {
 									<button onClick={() => selectAvatarImage("prev")}>
 										<FaAngleLeft
 											className={`text-4xl text-white ${
-												avatarIndex === 0
+												avatarIndex <= 1
 													? "opacity-40 hover:cursor-not-allowed"
 													: "hover:text-Flamingo-Pink"
 											}`}
@@ -145,14 +124,14 @@ function TrainerPage() {
 									<div className="bg-white w-80 py-10 rounded-3xl mt-10 m-4">
 										<img
 											className="w-44 h-96 mx-auto object-scale-down"
-											src={avatarImages[gender][avatarIndex]}
-											alt={avatarName}
+											src={`/img/avatars/body-${avatarIndex}.png`}
+											alt={trainerState?.avatar}
 										/>
 									</div>
 									<button onClick={() => selectAvatarImage("next")}>
 										<FaAngleRight
 											className={`text-4xl text-white ${
-												avatarIndex === avatarImages[gender].length - 1
+												avatarIndex === totalAvatarImages
 													? "opacity-40 hover:cursor-not-allowed"
 													: "hover:text-Flamingo-Pink"
 											}`}
@@ -168,7 +147,7 @@ function TrainerPage() {
 									<div className="">
 										<ProgressBar
 											height={"h-3"}
-											percentage={Math.floor(exp / maxExp)}
+											percentage={Math.floor(exp / levelUpExp)}
 											bgColorClass={`bg-white`}
 											currentBgColorClass={`bg-Gold-Sand`}
 										/>
@@ -178,7 +157,7 @@ function TrainerPage() {
 												{exp}
 											</span>
 											<span className="text-white font-bold text-lg inline-block">
-												{maxExp}
+												{levelUpExp}
 											</span>
 										</div>
 									</div>
@@ -186,6 +165,7 @@ function TrainerPage() {
 							</div>
 						</div>
 
+						{/* Info */}
 						<div className="w-1/2 h-full p-16 flex flex-col items-center">
 							<div className="w-full flex flex-col items-stretch my-4">
 								<div className="flex flex-col mb-6">
@@ -208,22 +188,41 @@ function TrainerPage() {
 								</div>
 								<div className="flex flex-col mb-6">
 									<label
-										htmlFor="gender"
+										htmlFor="email"
 										className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2"
 									>
-										<FaTransgender className="text-2xl mr-1" />
-										Gender
+										<AiTwotoneMail className="text-2xl mr-1" />
+										Email
 									</label>
-									<select
-										name="gender"
-										id="gender"
+									<input
+										name="email"
+										id="email"
 										className="border-4 border-Indigo-Blue px-8 py-4 rounded-full focus:border-Flamingo-Pink"
-										value={gender}
-										onChange={(e) => setGender(e.target.value)}
-									>
-										<option value="female">Female</option>
-										<option value="male">Male</option>
-									</select>
+										type="email"
+										placeholder="youremail@email.com"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
+								</div>
+								<div className="flex flex-col mb-6">
+									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
+										<AiFillTag className="text-2xl mr-1" />
+										Username
+									</span>
+
+									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
+										{trainerState?.username}
+									</span>
+								</div>
+								<div className="flex flex-col mb-6">
+									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
+										<AiOutlineNumber className="text-2xl mr-1" />
+										ID
+									</span>
+
+									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
+										{trainerState?.uid}
+									</span>
 								</div>
 								<div className="flex flex-col mb-6">
 									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
@@ -234,16 +233,6 @@ function TrainerPage() {
 										{joined}
 									</span>
 								</div>
-								{/* <div className="flex flex-col mb-6">
-									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
-										<FaSignInAlt className="text-2xl mr-1" />
-										Last login
-									</span>
-
-									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{lastLogin}
-									</span>
-								</div> */}
 							</div>
 
 							{error && (
@@ -260,6 +249,7 @@ function TrainerPage() {
 							)}
 						</div>
 					</div>
+					{/* Save Button */}
 					<div className="w-full mt-10 flex flex-row justify-center items-center">
 						<button
 							onClick={handleUpdateInfo}
