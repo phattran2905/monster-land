@@ -17,12 +17,6 @@ const TrainerSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		gender: {
-			type: String,
-			lowercase: true,
-			required: true,
-			enum: ["female", "male"],
-		},
 		avatar: {
 			type: String,
 			default: null,

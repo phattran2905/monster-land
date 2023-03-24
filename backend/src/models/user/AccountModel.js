@@ -12,6 +12,11 @@ const AccountSchema = new Schema(
 			required: true,
 			unique: true,
 		},
+		email: {
+			type: String,
+			required: true,
+			unique: true,
+		},
 		hashed_pwd: {
 			type: String,
 			required: true,
@@ -24,10 +29,6 @@ const AccountSchema = new Schema(
 			type: String,
 			default: "user",
 			enum: ["user", "admin"],
-		},
-		last_login: {
-			type: Date,
-			default: null,
 		},
 		status: {
 			type: String,
