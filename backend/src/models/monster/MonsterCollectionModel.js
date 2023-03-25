@@ -20,10 +20,6 @@ const MonsterCollectionSchema = new Schema(
 			type: [String], // [monster_uids]
 			default: [],
 		},
-		// team_member_limit: {
-		// 	type: Number,
-		// 	default: 1,
-		// },
 		capacity: {
 			type: Number,
 			required: true,

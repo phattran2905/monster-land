@@ -17,9 +17,13 @@ import BackpackModel from "../models/backpack/BackpackModel.js"
 import logger from "../util/logger.js"
 import EggModel from "../models/backpack/EggModel.js"
 import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
+import GameServerSetting from "./game-server.js"
+import GSSettingModel from "../models/setting/GSSettingModel.js"
 
 export default async function initializeMockupData() {
 	try {
+		await GSSettingModel.create(GameServerSetting)
+
 		await Promise.all(MonsterType.map((i) => MonsterTypeModel.create(i)))
 		await Promise.all(MonsterInfo.map((i) => MonsterInfoModel.create(i)))
 		await Promise.all(Monster.map((i) => MonsterModel.create(i)))

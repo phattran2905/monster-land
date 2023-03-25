@@ -3,7 +3,7 @@ import {
 	getItemsFromBackpack,
 	useItemsOnMonster,
 	incubateAnEgg,
-    hatchAnEgg,
+	hatchAnEgg,
 } from "../controllers/BackpackController.js"
 import validateJwt from "../middleware/JwtTokenHandler.js"
 
