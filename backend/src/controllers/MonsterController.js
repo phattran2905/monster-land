@@ -71,3 +71,59 @@ export const getMonsterCollection = async (req, res, next) => {
 		return next(error)
 	}
 }
+
+// Assign a monster to Monster Team
+export const assignMonsterToTeam = async (req, res, next) => {
+	try {
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+
+		if (!monsterCollection) {
+			return next(new ErrorResponse(404, "Collection is not found."))
+		}
+
+		// Check if the trainer has the monster in their collection
+		const { monster_uid: monsterUID } = req.query
+		if (!monsterUID) {
+			return next(new ErrorResponse(400, "Can not find monster_uid in the query."))
+		}
+
+		// Owned but already in the team
+		const alreadyInTeam = monsterCollection.monster_team.findIndex((m) => m === monsterUID)
+		if (alreadyInTeam !== -1) {
+			return next(new ErrorResponse(400, "This monster is already assigned to the team."))
+		}
+
+		// Do not own the monster
+		const ownMonster = monsterCollection.monster_list.findIndex((m) => m === monsterUID)
+		if (ownMonster === -1) {
+			return next(new ErrorResponse(400, "Can not find the monster in your collection."))
+		}
+
+		// Exceed the team member limit
+		const teamMemberLimit = 3
+		if (monsterCollection.monster_team.length === teamMemberLimit) {
+			// Remove the first one and add to the collection
+			const removedMonsterUID = monsterCollection.monster_team.shift()
+			monsterCollection.monster_list.push(removedMonsterUID)
+			// Add to the team
+			monsterCollection.monster_team.push(monsterUID)
+		} else {
+			monsterCollection.monster_list.splice(ownMonster, 1)
+			monsterCollection.monster_team.push(monsterUID)
+		}
+
+		// Update Monster Collection
+		const updatedCollection = await MonsterCollectionModel.findOneAndUpdate(
+			{ uid: monsterCollection.uid },
+			{
+				monster_list: [...monsterCollection.monster_list],
+				monster_team: [...monsterCollection.monster_team],
+			},
+			{ new: true }
+		)
+
+		return res.status(200).json(updatedCollection)
+	} catch (error) {
+		return next(error)
+	}
+}
