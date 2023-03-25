@@ -1,3 +1,4 @@
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 
@@ -49,6 +50,23 @@ export const getAllMonster = async (req, res, next) => {
 		const monsterList = monsterListDoc.map((monster) => populateMonsterData(monster))
 
 		return res.status(200).json(monsterList)
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Get Monster Collection
+export const getMonsterCollection = async (req, res, next) => {
+	try {
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+			.populate({ path: "monster_list_info" })
+			.populate({ path: "trainer_info" })
+
+		if (!monsterCollection) {
+			return res.status(200).json([])
+		}
+
+		return res.status(200).json(monsterCollection)
 	} catch (error) {
 		return next(error)
 	}
