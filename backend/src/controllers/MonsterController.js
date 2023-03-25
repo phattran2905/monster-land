@@ -87,7 +87,7 @@ export const assignMonsterToTeam = async (req, res, next) => {
 			return next(new ErrorResponse(400, "Can not find monster_uid in the query."))
 		}
 
-		// Owned but already in the team
+		// Already in the team
 		const alreadyInTeam = monsterCollection.monster_team.findIndex((m) => m === monsterUID)
 		if (alreadyInTeam !== -1) {
 			return next(new ErrorResponse(400, "This monster is already assigned to the team."))
@@ -111,6 +111,47 @@ export const assignMonsterToTeam = async (req, res, next) => {
 			monsterCollection.monster_list.splice(ownMonster, 1)
 			monsterCollection.monster_team.push(monsterUID)
 		}
+
+		// Update Monster Collection
+		const updatedCollection = await MonsterCollectionModel.findOneAndUpdate(
+			{ uid: monsterCollection.uid },
+			{
+				monster_list: [...monsterCollection.monster_list],
+				monster_team: [...monsterCollection.monster_team],
+			},
+			{ new: true }
+		)
+
+		return res.status(200).json(updatedCollection)
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Assign a monster to Monster Team
+export const removeMonsterFromTeam = async (req, res, next) => {
+	try {
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+
+		if (!monsterCollection) {
+			return next(new ErrorResponse(404, "Collection is not found."))
+		}
+
+		// Check if the trainer has the monster in their collection
+		const { monster_uid: monsterUID } = req.query
+		if (!monsterUID) {
+			return next(new ErrorResponse(400, "Can not find monster_uid in the query."))
+		}
+
+		// Not in the team
+		const notInTeam = monsterCollection.monster_team.findIndex((m) => m === monsterUID)
+		if (notInTeam === -1) {
+			return next(new ErrorResponse(400, "This monster is not in the team."))
+		}
+
+		// Remove from the team and add to the collection
+		monsterCollection.monster_team.splice(notInTeam, 1)
+		monsterCollection.monster_list.push(monsterUID)
 
 		// Update Monster Collection
 		const updatedCollection = await MonsterCollectionModel.findOneAndUpdate(
