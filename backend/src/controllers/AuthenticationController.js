@@ -1,7 +1,10 @@
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import AccountModel from "../models/user/AccountModel.js"
+import BackpackModel from "../models/backpack/BackpackModel.js"
 import { randomUID } from "../util/random.js"
+import GSSettingModel from "../models/setting/GSSettingModel.js"
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
 export const logIn = async (req, res) => {
 	try {
@@ -76,6 +79,29 @@ export const signUp = async (req, res) => {
 		if (!newAccount) {
 			return res.status(400).json({ message: "Failed to sign up" })
 		}
+
+		// Get Game Server Setting
+		const GameServerSetting = await GSSettingModel.findOne({ status: "active" })
+		// Create Backpack
+		await BackpackModel.create({
+			uid: `Bp-${randomUID()}`,
+			user_uid: accountUID,
+			item_list: [],
+			egg_list: [],
+			capacity: {
+				egg: GameServerSetting.backpack_egg_list_capacity_base,
+				item: GameServerSetting.backpack_item_list_capacity_base,
+			},
+		})
+
+		// Create Monster Collection
+		await MonsterCollectionModel.create({
+			uid: `MC-${randomUID()}`,
+			user_uid: accountUID,
+			monster_list: [],
+			monster_team: [],
+			capacity: GameServerSetting.monster_collection_limit,
+		})
 
 		return res.status(200).json({ message: "OK" })
 	} catch (error) {
