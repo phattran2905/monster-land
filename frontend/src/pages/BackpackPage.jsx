@@ -59,7 +59,7 @@ export default function BackpackPage() {
 					) : (
 						<div className="h-full flex flex-col shadow-xl rounded-sm">
 							{/* Tabs */}
-							<ul className="flex flex-row">
+							<ul className="flex flex-row bg-light-white">
 								<li>
 									<TabLink
 										isActive={activeTab === "eggs"}
@@ -91,7 +91,9 @@ export default function BackpackPage() {
 												uid={item.uid}
 												name={item.name}
 												img_name={item.img_name}
-												hatching_time_in_seconds={item.hatching_time_in_seconds}
+												hatching_time_in_seconds={
+													item.hatching_time_in_seconds
+												}
 												monster_type={item.monster_type}
 												amount={item.amount}
 												onSelect={() => {}}
@@ -121,19 +123,25 @@ export default function BackpackPage() {
 							</div>
 
 							{/* Quantity */}
-							<div className="bg-Indigo-Blue flex flex-row justify-center mt-auto">
-								<div className="bg-white inline-block rounded-full px-10 py-2 my-3">
+							<div className="flex flex-row justify-center mt-auto">
+								<div className="bg-Midnight-Gray  inline-block rounded-full px-10 py-2 my-3">
 									{activeTab === "items" && (
-										<span className="text-Flamingo-Pink font-bold">
+										<span className="text-Gold-Sand font-bold">
 											{items.length}
 										</span>
 									)}
 									{activeTab === "eggs" && (
-										<span className="text-Flamingo-Pink font-bold">
+										<span className="text-Gold-Sand font-bold">
 											{eggs.length}
 										</span>
 									)}
-									<span className="text-black"> / {backpackData?.capacity}</span>
+									<span className="text-white">
+										{" "}
+										/{" "}
+										{activeTab === "eggs"
+											? backpackData?.capacity.egg
+											: backpackData?.capacity.item}
+									</span>
 								</div>
 							</div>
 						</div>

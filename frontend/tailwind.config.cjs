@@ -16,13 +16,14 @@ module.exports = {
 			"Dim-Gray": "#6C6F7D",
 			"Anti-flash-white": "#E9EAEC",
 			white: "#ffffff",
+			"light-white": "#F7F7F7",
 			black: "#1B1B1E",
-            
-            // Bg-color for monster's type
-            Fire: '#ff0000',
-            Water: '#3C91E6',
-            Normal: '#808080',
-            Electric: '#FBFF12',
+
+			// Bg-color for monster's type
+			Fire: "#ff0000",
+			Water: "#3C91E6",
+			Normal: "#808080",
+			Electric: "#FBFF12",
 		},
 		extend: {
 			backgroundImage: {

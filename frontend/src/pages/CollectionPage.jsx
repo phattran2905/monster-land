@@ -59,10 +59,10 @@ export default function CollectionPage() {
 								))}
 							</div>
 							{/* Quantity */}
-							<div className="bg-Indigo-Blue flex flex-row justify-center mt-auto">
-								<div className="bg-white inline-block rounded-full px-10 py-2 my-3">
-									<span className="text-Flamingo-Pink font-bold">{monsters.length}</span>
-                                    <span className="text-black"> / 50</span>
+							<div className="bg-light-white flex flex-row justify-center mt-auto">
+								<div className="bg-Midnight-Gray inline-block rounded-full px-10 py-2 my-3">
+									<span className="text-Gold-Sand font-bold">{monsters.length}</span>
+                                    <span className="text-white"> / 50</span>
 								</div>
 							</div>
 						</div>
