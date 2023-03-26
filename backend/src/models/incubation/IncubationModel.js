@@ -19,6 +19,10 @@ const IncubationSchema = new Schema(
 			type: Date,
 			required: true,
 		},
+		incubator_img: {
+			type: String,
+			required: true,
+		},
 		state: {
 			type: String,
 			required: true,

@@ -198,6 +198,7 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		// Starting incubating
 		const egg = backpack.eggs.find((e) => e.uid === eggUID)
+		const incubatorImgName = `${egg.name}-incubator.png`
 		const now = moment()
 		const duration = moment.duration(egg.hatching_time_in_seconds, "seconds")
 		const timeForIncubation = now.clone()
@@ -207,6 +208,7 @@ export const incubateAnEgg = async (req, res, next) => {
 			user_uid: req.user.uid,
 			egg_uid: eggUID,
 			done_hatching_time: timeForIncubation,
+			incubator_img: incubatorImgName,
 		})
 
 		// Update amount
