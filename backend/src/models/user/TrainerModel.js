@@ -34,7 +34,6 @@ const TrainerSchema = new Schema(
 		level_up_exp: {
 			type: Number,
 			required: true,
-			default: 1000,
 		},
 		gold: {
 			type: Number,

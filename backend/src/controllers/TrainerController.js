@@ -1,5 +1,6 @@
 import AccountModel from "../models/user/AccountModel.js"
 import TrainerModel from "../models/user/TrainerModel.js"
+import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import { randomUID } from "../util/random.js"
 
 const populateTrainerData = (trainerInfo) => ({
@@ -28,12 +29,15 @@ export const createCharacter = async (req, res) => {
 			return res.status(400).json({ message: "Missing fields. Require name, avatar" })
 		}
 
+		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+
 		// Create trainer
 		await TrainerModel.create({
 			uid: `T-${randomUID()}`,
 			user_uid: req.user.uid,
 			name,
 			avatar,
+			level_up_exp: GameServerSetting.trainer_lvl_up_exp_base,
 		})
 
 		return res.status(200).json({ message: "OK" })

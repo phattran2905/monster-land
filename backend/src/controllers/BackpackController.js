@@ -1,6 +1,10 @@
+import moment from "moment"
+import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
+import IncubationModel from "../models/incubation/IncubationModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
+import { getRandomNumber, randomUID } from "../util/random.js"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -58,16 +62,17 @@ export const getItemsFromBackpack = async (req, res, next) => {
 
 export const useItemsOnMonster = async (req, res, next) => {
 	try {
-		const backpackUID = req.query?.backpack
 		const monsterUID = req.query?.monster
 		const itemsToUse = req.body ?? []
 
-		if (backpackUID && monsterUID && itemsToUse.length > 0) {
+		if (monsterUID && itemsToUse.length > 0) {
 			const monsterDoc = await MonsterModel.findOne({ uid: monsterUID }).populate({
 				path: "info",
 				populate: { path: "monsterType", select: "-_id -uid name" },
 			})
-			const backpackDoc = await BackpackModel.findOne({ uid: backpackUID }).populate("items")
+			const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid }).populate(
+				"items"
+			)
 			const backpack = populateItemData(backpackDoc)
 			// Either of them not found
 			if (!backpackDoc || !monsterDoc) {
@@ -108,6 +113,9 @@ export const useItemsOnMonster = async (req, res, next) => {
 							// Exceed the current exp
 							if (earnedEXP >= monsterDoc.level_up_exp) {
 								let currentExp = earnedEXP
+								const GameServerSetting = await GameServerSettingModel.findOne({
+									status: "active",
+								})
 								while (currentExp >= monsterDoc.level_up_exp) {
 									// Level up
 									monsterDoc.level += 1
@@ -115,8 +123,9 @@ export const useItemsOnMonster = async (req, res, next) => {
 
 									monsterDoc.exp = currentExp
 									// Update the new level_up_xep
+									const levelUpExpRate = GameServerSetting.monster_lvl_up_exp_rate
 									monsterDoc.level_up_exp = Math.floor(
-										monsterDoc.level_up_exp * 1.3
+										monsterDoc.level_up_exp * (1 + levelUpExpRate)
 									)
 								}
 							} else {
@@ -163,6 +172,101 @@ export const useItemsOnMonster = async (req, res, next) => {
 		}
 
 		return next(new Error(400, "Failed to use items"))
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Incubate an egg
+export const incubateAnEgg = async (req, res, next) => {
+	try {
+		const { egg_uid: eggUID } = req.query
+
+		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid }).populate({
+			path: "eggs",
+			populate: { path: "monsterType", select: "-_id -uid name" },
+		})
+		if (!backpack) {
+			return next(new ErrorResponse(404, "Backpack is not found"))
+		}
+
+		// Do not have the egg
+		const haveEgg = backpack.egg_list.findIndex((egg) => egg.egg_uid === eggUID)
+		if (haveEgg === -1 || backpack.egg_list[haveEgg].amount < 1) {
+			return next(new ErrorResponse(404, "Can not find this egg in your backpack."))
+		}
+
+		// Starting incubating
+		const egg = backpack.eggs.find((e) => e.uid === eggUID)
+		const now = moment()
+		const duration = moment.duration(egg.hatching_time_in_seconds, "seconds")
+		const timeForIncubation = now.clone()
+		timeForIncubation.add(duration)
+		await IncubationModel.create({
+			uid: `Inc-${randomUID()}`,
+			user_uid: req.user.uid,
+			egg_uid: eggUID,
+			done_hatching_time: timeForIncubation,
+		})
+
+		// Update amount
+		backpack.egg_list[haveEgg].amount -= 1
+		await BackpackModel.findOneAndUpdate(
+			{ user_uid: req.user.uid },
+			{ egg_list: [...backpack.egg_list] }
+		)
+
+		return res.status(200).json({ done_hatching_time: timeForIncubation })
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Hatch the egg
+export const hatchAnEgg = async (req, res, next) => {
+	try {
+		const { incubation_uid: incubationUID } = req.query
+
+		const incubation = await IncubationModel.findOne({
+			uid: incubationUID,
+			status: "incubating",
+		})
+		if (!incubation) {
+			return next(new ErrorResponse(404, "Can not find your egg that are in incubation."))
+		}
+
+		// Check hatching_time
+		const now = moment()
+		const doneHatchingTime = moment(incubation.done_hatching_time)
+		// Still in incubation time
+		if (doneHatchingTime.diff(now, "seconds") > 0) {
+			return next(
+				new ErrorResponse(400, "This egg needs more time to hatch. Come back later.")
+			)
+		}
+
+		const updatedIncubation = await IncubationModel.findOneAndUpdate(
+			{ uid: incubationUID },
+			{ status: "done" },
+			{ new: true }
+		).populate({ path: "egg_info", populate: { path: "monsterType" } })
+
+		// Create a new monster
+		const { monster_type_uid: monsterTypeUID } = updatedIncubation.egg_info
+
+		const randomAttackPts = getRandomNumber(50, 250)
+		const randomDefensePts = getRandomNumber(50, 250)
+		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+		const newMonster = await MonsterModel.create({
+			uid: `M-${randomUID()}`,
+			info_uid: monsterTypeUID,
+			level: 1,
+			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
+			attack: randomAttackPts,
+			defense: randomDefensePts,
+		})
+
+		return res.status(200).json(newMonster)
 	} catch (error) {
 		return next(error)
 	}

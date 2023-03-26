@@ -21,9 +21,9 @@ const BackpackSchema = new Schema(
 			default: [],
 		},
 		capacity: {
-			type: Number,
-			default: 50,
-			min: 1,
+			type: Object, // {egg: 50, item: 50}
+			required: true,
+			default: { egg: 1, item: 1 },
 		},
 		status: {
 			type: String,

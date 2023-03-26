@@ -2,6 +2,7 @@ import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import MonsterTypeModel from "../models/monster/MonsterTypeModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import Monster from "./monster/Monster.js"
+import MonsterCollection from "./monster/MonsterCollection.js"
 import MonsterType from "./monster/MonsterType.js"
 import MonsterInfo from "./monster/MonsterInfo.js"
 import Items from "./backpack/Item.js"
@@ -15,17 +16,25 @@ import TrainerModel from "../models/user/TrainerModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import logger from "../util/logger.js"
 import EggModel from "../models/backpack/EggModel.js"
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
+import GameServerSetting from "./game-server.js"
+import GSSettingModel from "../models/setting/GSSettingModel.js"
 
 export default async function initializeMockupData() {
 	try {
+		await GSSettingModel.create(GameServerSetting)
+
 		await Promise.all(MonsterType.map((i) => MonsterTypeModel.create(i)))
 		await Promise.all(MonsterInfo.map((i) => MonsterInfoModel.create(i)))
 		await Promise.all(Monster.map((i) => MonsterModel.create(i)))
+		await MonsterCollectionModel.create(MonsterCollection)
+
+		await BackpackModel.create(Backpack)
 		await Promise.all(Items.map((i) => ItemModel.create(i)))
 		await Promise.all(Eggs.map((i) => EggModel.create(i)))
+
 		await AccountModel.create(TestAccount)
 		await TrainerModel.create(TestTrainer)
-		await BackpackModel.create(Backpack)
 	} catch (error) {
 		logger.error(error)
 	}
