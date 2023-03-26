@@ -26,15 +26,19 @@ const GSSettingSchema = new Schema(
 			type: Number,
 			required: true,
 		},
-		backpack_item_list_capacity_base_rate: {
+		backpack_item_list_capacity_base: {
 			type: Number,
 			required: true,
 		},
-		backpack_egg_list_capacity_base_rate: {
+		backpack_egg_list_capacity_base: {
 			type: Number,
 			required: true,
 		},
 		backpack_capacity_up_rate: {
+			type: Number,
+			required: true,
+		},
+		stamina_max_base: {
 			type: Number,
 			required: true,
 		},

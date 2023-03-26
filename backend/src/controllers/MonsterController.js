@@ -1,5 +1,6 @@
 import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
+import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 
 // Populate Monster data for frontend to render
@@ -12,7 +13,6 @@ const populateMonsterData = (monsterDoc) => ({
 	defense: monsterDoc.defense,
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
-	level_up_exp_rate: monsterDoc.info.level_up_exp_rate,
 	type: monsterDoc.info.monsterType.name,
 	status: monsterDoc.status,
 })
@@ -100,8 +100,9 @@ export const assignMonsterToTeam = async (req, res, next) => {
 		}
 
 		// Exceed the team member limit
-		const teamMemberLimit = 3
-		if (monsterCollection.monster_team.length === teamMemberLimit) {
+		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+
+		if (monsterCollection.monster_team.length === GameServerSetting.monster_team_member_limit) {
 			// Remove the first one and add to the collection
 			const removedMonsterUID = monsterCollection.monster_team.shift()
 			monsterCollection.monster_list.push(removedMonsterUID)

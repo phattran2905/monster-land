@@ -1,9 +1,10 @@
+import moment from "moment"
+import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import IncubationModel from "../models/incubation/IncubationModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 import { getRandomNumber, randomUID } from "../util/random.js"
-import moment from "moment"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -112,6 +113,9 @@ export const useItemsOnMonster = async (req, res, next) => {
 							// Exceed the current exp
 							if (earnedEXP >= monsterDoc.level_up_exp) {
 								let currentExp = earnedEXP
+								const GameServerSetting = await GameServerSettingModel.findOne({
+									status: "active",
+								})
 								while (currentExp >= monsterDoc.level_up_exp) {
 									// Level up
 									monsterDoc.level += 1
@@ -119,8 +123,9 @@ export const useItemsOnMonster = async (req, res, next) => {
 
 									monsterDoc.exp = currentExp
 									// Update the new level_up_xep
+									const levelUpExpRate = GameServerSetting.monster_lvl_up_exp_rate
 									monsterDoc.level_up_exp = Math.floor(
-										monsterDoc.level_up_exp * 1.3
+										monsterDoc.level_up_exp * (1 + levelUpExpRate)
 									)
 								}
 							} else {
@@ -251,11 +256,12 @@ export const hatchAnEgg = async (req, res, next) => {
 
 		const randomAttackPts = getRandomNumber(50, 250)
 		const randomDefensePts = getRandomNumber(50, 250)
+		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
 		const newMonster = await MonsterModel.create({
 			uid: `M-${randomUID()}`,
 			info_uid: monsterTypeUID,
 			level: 1,
-			level_up_exp: 1000,
+			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 			attack: randomAttackPts,
 			defense: randomDefensePts,
 		})

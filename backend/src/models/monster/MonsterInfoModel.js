@@ -22,12 +22,6 @@ const MonsterInfoSchema = new Schema(
 			required: true,
 			lowercase: true,
 		},
-		level_up_exp_rate: {
-			type: Number,
-			required: true,
-			default: 1,
-			min: 1,
-		},
 		status: {
 			type: String,
 			lowercase: true,
