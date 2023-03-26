@@ -20,7 +20,7 @@ function ImageIcon({ name }) {
 				return dragonIcon
 			case "team":
 				return swordIcon
-			case "incubator":
+			case "incubation":
 				return incubatorIcon
 			case "power-off":
 				return powerOffIcon

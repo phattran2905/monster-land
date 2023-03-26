@@ -32,7 +32,7 @@ export default function MenuBar({}) {
 					<NavLinkItem path={"/collection"} />
 				</li>
 				<li>
-					<NavLinkItem path={"/incubator"} />
+					<NavLinkItem path={"/incubation"} />
 				</li>
 				<li>
 					<NavLinkItem path={"/team"} />

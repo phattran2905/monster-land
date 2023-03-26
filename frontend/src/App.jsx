@@ -7,6 +7,7 @@ import CharacterCreationPage from "./pages/CharacterCreationPage"
 import TrainerPage from "./pages/TrainerPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
+import IncubationPage from "./pages/IncubationPage"
 import WorldMapPage from "./pages/WorldMapPage"
 import WildForestPage from "./pages/WildForestPage"
 import Page404 from "./pages/Page404"
@@ -22,7 +23,7 @@ function App() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-        dispatch(getStoredJwtToken())
+		dispatch(getStoredJwtToken())
 		setIsLoading(authState.isLoading)
 	}, [authState])
 
@@ -63,6 +64,10 @@ function App() {
 					<Route
 						path="/backpack"
 						element={<BackpackPage />}
+					/>
+					<Route
+						path="/incubation"
+						element={<IncubationPage />}
 					/>
 					<Route path="/map">
 						<Route

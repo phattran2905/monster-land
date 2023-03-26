@@ -14,6 +14,7 @@ module.exports = {
 			"Forest-Moss": "#52796F",
 			"Midnight-Gray": "#464865",
 			"Dim-Gray": "#6C6F7D",
+			"Light-Gray": "#BFBFC6",
 			"Anti-flash-white": "#E9EAEC",
 			white: "#ffffff",
 			"light-white": "#F7F7F7",

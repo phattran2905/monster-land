@@ -1,6 +1,6 @@
 import { useState } from "react"
 import moment from "moment"
-import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa"
+import { FaClock, FaShoppingBasket } from "react-icons/fa"
 import MonsterType from "../monster/Type"
 
 export default function Egg({
@@ -38,7 +38,7 @@ export default function Egg({
 			<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
 				<div className="flex flex-col mb-3">
 					<div className="flex flex-row items-center mb-1">
-						<FaSplotch
+						<FaClock
 							className="text-Flamingo-Pink"
 							size={16}
 						/>
@@ -62,9 +62,9 @@ export default function Egg({
 				</div>
 				<div className="flex flex-col mb-3">
 					<div className="flex flex-row items-center mb-1">
-						<FaArrowAltCircleUp
-							className="text-Flamingo-Pink"
-							size={16}
+						<img
+							src="/img/icons/stats-icons/diamond7.png"
+							alt="Diamond icon"
 						/>
 						<span className="ml-1 font-bold capitalize">Monster Type</span>
 					</div>

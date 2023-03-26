@@ -21,8 +21,8 @@ export default function NavLinkItem({ path, handler }) {
 				return "monster-collection"
 			case "/team":
 				return "team"
-			case "/incubator":
-				return "incubator"
+			case "/incubation":
+				return "incubation"
 			case "/logout":
 				return "power-off"
 		}
