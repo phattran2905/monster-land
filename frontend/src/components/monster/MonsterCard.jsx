@@ -104,12 +104,12 @@ export default function MonsterCard({
 					</div>
 				</div>
 
-				<button
+				{/* <button
 					className="p-2 bg-Flamingo-Pink mt-1 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
 					onClick={() => onSelect()}
 				>
 					Assign
-				</button>
+				</button> */}
 			</div>
 		</div>
 	)
