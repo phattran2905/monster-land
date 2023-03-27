@@ -194,7 +194,9 @@ export const getIncubatingEggs = async (req, res, next) => {
 		const incubatingEggs = await IncubationModel.find({
 			user_uid: req.user.uid,
 			status: "incubating",
-		}).populate({ path: "egg_info" })
+		})
+			.populate({ path: "egg_info" })
+			.sort({ createdAt: -1 })
 
 		const populatedIncubatingEggs = incubatingEggs.map((e) => populateIncubationData(e))
 
