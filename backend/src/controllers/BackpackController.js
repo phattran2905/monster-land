@@ -41,6 +41,17 @@ const populateItemData = (backpackDoc) => ({
 	status: backpackDoc.status,
 })
 
+const populateIncubationData = (incubationDoc) => ({
+	uid: incubationDoc.uid,
+	user_uid: incubationDoc.uid,
+	egg_uid: incubationDoc.uid,
+	egg_type: incubationDoc.egg_info.name,
+	done_hatching_time: incubationDoc.uid,
+	incubator_img: incubationDoc.incubator_img,
+	state: incubationDoc.status,
+	createdAt: incubationDoc.createdAt,
+})
+
 // Get items from backpack
 export const getItemsFromBackpack = async (req, res, next) => {
 	try {
@@ -177,6 +188,22 @@ export const useItemsOnMonster = async (req, res, next) => {
 	}
 }
 
+// Get incubating eggs
+export const getIncubatingEggs = async (req, res, next) => {
+	try {
+		const incubatingEggs = await IncubationModel.find({
+			user_uid: req.user.uid,
+			status: "incubating",
+		}).populate({ path: "egg_info" })
+
+		const populatedIncubatingEggs = incubatingEggs.map((e) => populateIncubationData(e))
+
+		return res.status(200).json(populatedIncubatingEggs)
+	} catch (error) {
+		return next(error)
+	}
+}
+
 // Incubate an egg
 export const incubateAnEgg = async (req, res, next) => {
 	try {
@@ -198,7 +225,7 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		// Starting incubating
 		const egg = backpack.eggs.find((e) => e.uid === eggUID)
-		const incubatorImgName = `${egg.name}-incubator.png`
+		const incubatorImgName = `${egg.img_name.split(".png")[0]}-incubator.png`
 		const now = moment()
 		const duration = moment.duration(egg.hatching_time_in_seconds, "seconds")
 		const timeForIncubation = now.clone()

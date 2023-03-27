@@ -2,6 +2,7 @@ import { Router } from "express"
 import {
 	getItemsFromBackpack,
 	useItemsOnMonster,
+	getIncubatingEggs,
 	incubateAnEgg,
 	hatchAnEgg,
 } from "../controllers/BackpackController.js"
@@ -12,6 +13,7 @@ const router = Router()
 router
 	.get("/backpack", validateJwt, getItemsFromBackpack)
 	.put("/backpack/use", validateJwt, useItemsOnMonster)
+	.get("/backpack/incubation", validateJwt, getIncubatingEggs)
 	.post("/backpack/incubate", validateJwt, incubateAnEgg)
 	.post("/backpack/hatch", validateJwt, hatchAnEgg)
 
