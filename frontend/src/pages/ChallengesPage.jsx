@@ -8,9 +8,8 @@ import MenuBar from "../components/menu/MenuBar"
 
 export default function ChallengesPage() {
 	const [showStages, setShowStages] = useState(false)
-	const [showBattle, setShowBattle] = useState(false)
-    const [showResult, setShowResult] = useState(false)
-    const [showRewards, setShowRewards] = useState(true)
+	const [showBattle, setShowBattle] = useState(true)
+    const [showRewards, setShowRewards] = useState(false)
 
 	const onChallenge = (stageUID) => {}
 
@@ -25,8 +24,6 @@ export default function ChallengesPage() {
 					{showStages && <ChallengeStages onChallenge={onChallenge} />}
 
                     {showBattle && <ChallengeBattle />}
-
-                    {showResult && <ChallengeResult />}
 
                     {showRewards && <ChallengeRewards />}
 				</div>
