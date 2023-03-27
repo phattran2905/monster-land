@@ -47,9 +47,9 @@ const populateIncubationData = (incubationDoc) => ({
 	monster_type: incubationDoc.egg_info.monsterType.name,
 	egg_uid: incubationDoc.uid,
 	egg_type: incubationDoc.egg_info.name,
-	done_hatching_time: incubationDoc.uid,
+	done_hatching_time: incubationDoc.done_hatching_time,
 	incubator_img: incubationDoc.incubator_img,
-	state: incubationDoc.status,
+	status: incubationDoc.status,
 	createdAt: incubationDoc.createdAt,
 })
 
@@ -285,20 +285,22 @@ export const hatchAnEgg = async (req, res, next) => {
 
 		// Create a new monster
 		const { monster_type_uid: monsterTypeUID } = updatedIncubation.egg_info
+		const { name: monsterType } = updatedIncubation.egg_info.monsterType
 
 		const randomAttackPts = getRandomNumber(50, 250)
 		const randomDefensePts = getRandomNumber(50, 250)
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
-		const newMonster = await MonsterModel.create({
+		const newMonster = {
 			uid: `M-${randomUID()}`,
 			info_uid: monsterTypeUID,
 			level: 1,
 			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 			attack: randomAttackPts,
 			defense: randomDefensePts,
-		})
+		}
+		await MonsterModel.create(newMonster)
 
-		return res.status(200).json(newMonster)
+		return res.status(200).json({ ...newMonster, monster_type: monsterType })
 	} catch (error) {
 		return next(error)
 	}
