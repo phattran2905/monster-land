@@ -55,7 +55,7 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 
 				{/* Stages */}
-				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-start overflow-x-hidden">
+				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-start overflow-x-hidden gap-10">
 					{/* Stage Card */}
 					{stages.map((stage, index) => (
 						<button
