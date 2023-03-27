@@ -25,7 +25,7 @@ function App() {
 		dispatch(getStoredJwtToken())
 		setTimeout(() => {
 			setIsLoading(authState.isLoading)
-		}, 1500)
+		}, 1000)
 	}, [authState])
 
 	return (
