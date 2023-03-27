@@ -3,6 +3,7 @@ import Header from "../components/Header"
 import IncubatorCard from "../components/incubator/IncubatorCard"
 import MenuBar from "../components/menu/MenuBar"
 import BoostIncubatorModal from "../components/modal/BoostIncubatorModal"
+import HatchModal from "../components/modal/HatchModal"
 
 const incubatorMachines = [
 	{ id: "Inc-01", name: "Incubator #1", in_use: true },
@@ -12,6 +13,7 @@ const incubatorMachines = [
 function IncubationPage() {
 	const [incubators, setIncubators] = useState(incubatorMachines)
 	const [showBoostModal, setShowBoostModal] = useState(false)
+    const [showHatchModel, setShowHatchModal] = useState(true)
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -33,6 +35,12 @@ function IncubationPage() {
 						<BoostIncubatorModal
 							onClose={() => setShowBoostModal(false)}
 							onConfirm={() => {}}
+						/>
+					)}
+					{showHatchModel && (
+						<HatchModal
+							onClose={() => setShowHatchModal(false)}
+							onNext={() => {}}
 						/>
 					)}
 				</div>

@@ -1,7 +1,7 @@
 import { useState } from "react"
 import moment from "moment"
 import { FaClock, FaShoppingBasket } from "react-icons/fa"
-import MonsterType from "../monster/Type"
+import MonsterType from "../monster/MonsterType"
 
 export default function Egg({
 	uid,

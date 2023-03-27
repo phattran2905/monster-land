@@ -1,6 +1,6 @@
 import { FaAngleDoubleUp, FaAngleUp, FaClock } from "react-icons/fa"
 import { AiOutlineNumber } from "react-icons/ai"
-import MonsterType from "../monster/Type"
+import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 
 function IncubatorCard({ incubator, onShowBoostModal }) {

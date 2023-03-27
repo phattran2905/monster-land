@@ -11,31 +11,32 @@ function BoostIncubatorModal({ onConfirm, onClose }) {
 				>
 					<FaTimesCircle
 						size={40}
-						className="text-Flamingo-Pink hover:text-black"
+						className="text-Fire-Engine-Red hover:text-black"
 					/>
 				</button>
 
 				{/* Header */}
-				<div className="bg-Indigo-Blue p-4">
+				<div className="bg-Indigo-Blue py-4 px-6">
 					<h2 className="text-white font-bold text-xl">Reduce the hatching time?</h2>
 				</div>
 
-				<div className="flex flex-col justify-center py-10 items-center">
+				{/* Content */}
+				<div className="flex flex-col justify-between py-10 items-center mx-6 my-6">
 					<p className="text-lg mb-2">
 						It costs you{" "}
 						<span className="text-Flamingo-Pink font-bold">15 diamonds</span> to finish
 						the incubation.
 					</p>
 					<p className="text-lg mb-1">Do you want to proceed?</p>
-				</div>
 
-				<div className="w-full flex flex-row justify-center items-center my-6">
-					<button
-						onClick={onConfirm}
-						className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
-					>
-						<span className="text-white font-bold text-xl">Confirm</span>
-					</button>
+					<div className="w-full flex flex-row justify-center items-center mt-12">
+						<button
+							onClick={onConfirm}
+							className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
+						>
+							<span className="text-white font-bold text-xl">Confirm</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

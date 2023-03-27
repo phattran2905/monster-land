@@ -5,7 +5,7 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import Loading from "../components/Loading"
 import MenuBar from "../components/menu/MenuBar"
-import MonsterCard from "../components/monster/Card"
+import MonsterCard from "../components/monster/MonsterCard"
 import { useGetOwnedMonsterQuery } from "../redux/services/collection"
 
 export default function CollectionPage() {
