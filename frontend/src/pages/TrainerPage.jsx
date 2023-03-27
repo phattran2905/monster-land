@@ -125,7 +125,7 @@ function TrainerPage() {
 										<img
 											className="w-44 h-96 mx-auto object-scale-down"
 											src={`/img/avatars/body-${avatarIndex}.png`}
-											alt={trainerState?.avatar}
+											alt={trainerData?.avatar}
 										/>
 									</div>
 									<button onClick={() => selectAvatarImage("next")}>
@@ -211,7 +211,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerState?.username}
+										{trainerData?.username}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">
@@ -221,7 +221,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerState?.uid}
+										{trainerData?.uid}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">
