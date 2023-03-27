@@ -3,7 +3,7 @@ import { AiOutlineNumber } from "react-icons/ai"
 import MonsterType from "../monster/Type"
 import LoadingDots from "../LoadingDots"
 
-function IncubatorCard({ incubator }) {
+function IncubatorCard({ incubator, onShowBoostModal }) {
 	return (
 		<div
 			className={`${
@@ -94,7 +94,10 @@ function IncubatorCard({ incubator }) {
 											<div className="bg-Light-Gray w-full h-2 rounded-full relative">
 												<div className="bg-Flamingo-Pink w-1/12 h-2 rounded-l-full "></div>
 											</div>
-											<button className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink">
+											<button
+												onClick={onShowBoostModal}
+												className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
+											>
 												<FaAngleDoubleUp
 													className="text-white  rotate-90 "
 													size={16}
