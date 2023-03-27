@@ -1,18 +1,22 @@
-import { FaAngleDoubleUp, FaAngleUp, FaClock } from "react-icons/fa"
+import { FaAngleDoubleUp, FaCheckCircle, FaClock } from "react-icons/fa"
 import { AiOutlineNumber } from "react-icons/ai"
 import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
+import ProgressBar from "../ProgressBar"
 
 function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 	return (
 		<div
 			className={`${
-				incubator.in_use ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
-			} flex flex-col items-center w-1/2 h-3/4 m-14 py-10 border-4  rounded-lg shadow-2xl`}
+				incubator.in_use && !incubator.done
+					? "border-Light-Gray bg-light-white"
+					: "border-Indigo-Blue"
+			} ${incubator.in_use && incubator.done && "border-Forest-Green bg-Light-Green"}
+            flex flex-col items-center w-1/2 h-3/4 m-14 py-10 border-4  rounded-lg shadow-2xl`}
 			key={incubator.uid}
 		>
 			{/* Name */}
-			<div className="bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
+			<div className=" bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
 				<span className="text-white capitalize font-bold text-2xl">{incubator.name}</span>
 			</div>
 
@@ -42,7 +46,6 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 					{/* Egg Info */}
 					{incubator.in_use && (
 						<>
-							{/* Pointer */}
 							<div
 								style={{
 									width: 0,
@@ -52,16 +55,21 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 									borderRight: "1rem solid #393E7D",
 								}}
 							></div>
+
 							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-xl">
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
 										<span className="mr-1 text-Fire-Engine-Red font-bold">
 											<AiOutlineNumber className="font-bold" />
 										</span>
-										<span className="font-bold text-Indigo-Blue">UID</span>
+										<span className="font-bold text-Indigo-Blue underline">
+											UID
+										</span>
 									</div>
 									<div className="ml-4 py-1 bg-Midnight-Gray">
-										<span className="text-white py-2 px-4">{incubator.uid}</span>
+										<span className="text-white py-2 px-4">
+											{incubator.uid}
+										</span>
 									</div>
 								</div>
 								<div className="mb-3">
@@ -71,7 +79,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 											src="/img/icons/stats-icons/diamond7.png"
 											alt="Diamond icon"
 										/>
-										<span className="font-bold text-Indigo-Blue">
+										<span className="font-bold text-Indigo-Blue underline">
 											Monster Type
 										</span>
 									</div>
@@ -85,32 +93,57 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 											className="text-Fire-Engine-Red mr-1"
 											size={16}
 										/>
-										<span className="font-bold text-Indigo-Blue">
+										<span className="font-bold text-Indigo-Blue underline">
 											Hatching Time
 										</span>
 									</div>
 									<div className="ml-1 py-1">
 										<div className="w-full flex flex-row items-center">
-											<div className="bg-Light-Gray w-full h-2 rounded-full relative">
-												<div className="bg-Flamingo-Pink w-1/12 h-2 rounded-l-full "></div>
-											</div>
-											<button
-												onClick={onShowBoostModal}
-												className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
-											>
-												<FaAngleDoubleUp
-													className="text-white  rotate-90 "
-													size={16}
+											{/* Progress bar */}
+											<ProgressBar
+												percentage={incubator.done ? 100 : 10}
+												bgColorClass="bg-Light-Gray"
+												currentBgColorClass={
+													incubator.done
+														? "bg-Forest-Green"
+														: "bg-Flamingo-Pink"
+												}
+											/>
+											{/* Done icon && Boost button */}
+											{incubator.done ? (
+												<FaCheckCircle
+													className="ml-2 text-Forest-Green"
+													size={22}
 												/>
-											</button>
+											) : (
+												<button
+													onClick={onShowBoostModal}
+													className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
+												>
+													<FaAngleDoubleUp
+														className="text-white rotate-90 "
+														size={16}
+													/>
+												</button>
+											)}
 										</div>
-										<div className="flex flex-row justify-center my-2">
-											<span className="py-2 px-4 font-bold rounded-lg bg-Midnight-Gray text-white">
-												29:05
-											</span>
-										</div>
+										{/* Time */}
+										{incubator.in_use && !incubator.done && (
+											<div className="flex flex-row justify-center my-2">
+												<span className="py-2 px-4 font-bold rounded-lg bg-Midnight-Gray text-white">
+													29:05
+												</span>
+											</div>
+										)}
 									</div>
 								</div>
+
+								{/* Hatch button */}
+								{incubator.done && (
+									<button className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize">
+										Hatch now
+									</button>
+								)}
 							</div>
 						</>
 					)}
@@ -118,14 +151,16 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 
 				{/* Loading dots and Choose Button */}
 				<div className="w-full my-4 flex flex-row justify-center items-center">
-					{incubator.in_use ? (
+					{incubator.in_use && !incubator.done && (
 						<div className="py-4 px-14 flex flex-row">
 							<LoadingDots />
 						</div>
-					) : (
-						<button 
-                            onClick={onShowSelectEggModal}
-                            className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue">
+					)}
+					{!incubator.in_use && (
+						<button
+							onClick={onShowSelectEggModal}
+							className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue"
+						>
 							<span className="font-bold text-lg capitalize text-white">
 								Choose an egg
 							</span>

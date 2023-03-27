@@ -22,7 +22,9 @@ function App() {
 
 	useEffect(() => {
 		dispatch(getStoredJwtToken())
-		setIsLoading(authState.isLoading)
+        setTimeout(() => {
+            setIsLoading(authState.isLoading)
+        }, 1500)
 	}, [authState])
 
 	return (

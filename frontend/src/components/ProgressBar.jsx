@@ -5,7 +5,7 @@ export default function ProgressBar({
 	height = "h-3",
 }) {
 	return (
-		<div className={`w-full ${bgColorClass} rounded-full ${height} border-2 border-Dim-Gray`}>
+		<div className={`w-full ${bgColorClass} rounded-full ${height}`}>
 			<div
 				className={`${currentBgColorClass} ${height} rounded-full`}
 				style={{

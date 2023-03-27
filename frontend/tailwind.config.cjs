@@ -9,6 +9,7 @@ module.exports = {
 			"Amethyst-Purple": "#D7B1FD",
 			"Gold-Sand": "#ECD07C",
 			"Fresh-Green": "#D2FF89",
+			"Light-Green": "#E5FFDB",
 			"Forest-Green": "#2C8837",
 			"Fire-Engine-Red": "#DB0039",
 			"Forest-Moss": "#52796F",
