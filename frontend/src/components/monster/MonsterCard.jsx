@@ -1,7 +1,5 @@
-import energyIcon from "../../assets/img/icon/Icon metro-power.png"
-import MonsterType from "./Type"
-import Image from "./Image"
-import { FaSplotch, FaAngleDoubleUp } from "react-icons/fa"
+import MonsterType from "./MonsterType"
+import { FaAngleDoubleUp } from "react-icons/fa"
 import ProgressBar from "../ProgressBar"
 
 export default function MonsterCard({

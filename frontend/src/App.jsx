@@ -7,8 +7,8 @@ import CharacterCreationPage from "./pages/CharacterCreationPage"
 import TrainerPage from "./pages/TrainerPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
-import WorldMapPage from "./pages/WorldMapPage"
-import WildForestPage from "./pages/WildForestPage"
+import IncubationPage from "./pages/IncubationPage"
+import ChallengesPage from "./pages/ChallengesPage"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,8 +22,10 @@ function App() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-        dispatch(getStoredJwtToken())
-		setIsLoading(authState.isLoading)
+		dispatch(getStoredJwtToken())
+		setTimeout(() => {
+			setIsLoading(authState.isLoading)
+		}, 1000)
 	}, [authState])
 
 	return (
@@ -64,17 +66,21 @@ function App() {
 						path="/backpack"
 						element={<BackpackPage />}
 					/>
-					<Route path="/map">
+					<Route
+						path="/incubation"
+						element={<IncubationPage />}
+					/>
+					<Route path="/challenges">
 						<Route
 							index={true}
-							element={<WorldMapPage />}
+							element={<ChallengesPage />}
 						/>
-						<Route path="wild-forest">
+						{/* <Route path="wild-forest">
 							<Route
 								index={true}
 								element={<WildForestPage />}
 							/>
-						</Route>
+						</Route>*/}
 					</Route>
 					<Route
 						path="/server-error"

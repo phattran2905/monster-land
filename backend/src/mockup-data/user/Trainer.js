@@ -6,7 +6,7 @@ const Trainer = {
 	uid: `T-${randomUID()}`,
 	user_uid: account.uid,
 	name: "Test",
-	avatar: "avatar.png",
+	avatar: "body-1.png",
 	level_up_exp: GameServerSetting.trainer_lvl_up_exp_base,
 }
 

@@ -15,14 +15,14 @@ export default function NavLinkItem({ path, handler }) {
 				return "backpack"
 			case "/trainer":
 				return "user"
-			case "/map":
-				return "map"
+			case "/challenges":
+				return "challenges"
 			case "/collection":
 				return "monster-collection"
 			case "/team":
 				return "team"
-			case "/incubator":
-				return "incubator"
+			case "/incubation":
+				return "incubation"
 			case "/logout":
 				return "power-off"
 		}

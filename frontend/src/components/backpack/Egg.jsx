@@ -1,7 +1,7 @@
 import { useState } from "react"
 import moment from "moment"
-import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa"
-import MonsterType from "../monster/Type"
+import { FaClock, FaShoppingBasket } from "react-icons/fa"
+import MonsterType from "../monster/MonsterType"
 
 export default function Egg({
 	uid,
@@ -22,6 +22,7 @@ export default function Egg({
 
 	return (
 		<div className="mx-4 h-80 flex flex-row border-2 border-Royal-Blue">
+			{/* Name & Image */}
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
 				<div className="w-full p-4 h-5/6">
 					<img
@@ -35,17 +36,20 @@ export default function Egg({
 				</div>
 			</div>
 
+			{/* Stats */}
 			<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
 				<div className="flex flex-col mb-3">
 					<div className="flex flex-row items-center mb-1">
-						<FaSplotch
+						<FaClock
 							className="text-Flamingo-Pink"
 							size={16}
 						/>
 						<span className="ml-1 font-bold capitalize">Hatching time</span>
 					</div>
 					<div className="bg-Midnight-Gray flex flex-row justify-center">
-						<span className="p-1 font-bold text-white tracking-widest">{hatchingTime}</span>
+						<span className="p-1 font-bold text-white tracking-widest">
+							{hatchingTime}
+						</span>
 					</div>
 				</div>
 				<div className="flex flex-col mb-3">
@@ -62,9 +66,9 @@ export default function Egg({
 				</div>
 				<div className="flex flex-col mb-3">
 					<div className="flex flex-row items-center mb-1">
-						<FaArrowAltCircleUp
-							className="text-Flamingo-Pink"
-							size={16}
+						<img
+							src="/img/icons/stats-icons/diamond7.png"
+							alt="Diamond icon"
 						/>
 						<span className="ml-1 font-bold capitalize">Monster Type</span>
 					</div>
@@ -72,6 +76,7 @@ export default function Egg({
 						<MonsterType name={monster_type} />
 					</div>
 				</div>
+				{/* Incubate Button */}
 				<button
 					className="p-2 bg-Flamingo-Pink mt-2 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
 					onClick={() => onSelect()}
