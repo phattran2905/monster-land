@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { FaTimesCircle } from "react-icons/fa"
-import MonsterCard from "../monster/MonsterCard"
 import MonsterType from "../monster/MonsterType"
 
 function HatchModal({ onClose, onNext }) {
@@ -12,7 +11,7 @@ function HatchModal({ onClose, onNext }) {
 	const [defense, setDefense] = useState(0)
 
 	return (
-		<div className="w-screen h-screen absolute bg-white flex flex-row justify-center items-center bg-opacity-80">
+		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-center bg-opacity-80">
 			<div className="relative w-1/3 shadow-2xl flex flex-col bg-white rounded-2xl">
 				{/* Close button */}
 				<button

@@ -3,7 +3,7 @@ import { AiOutlineNumber } from "react-icons/ai"
 import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 
-function IncubatorCard({ incubator, onShowBoostModal }) {
+function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 	return (
 		<div
 			className={`${
@@ -123,7 +123,9 @@ function IncubatorCard({ incubator, onShowBoostModal }) {
 							<LoadingDots />
 						</div>
 					) : (
-						<button className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue">
+						<button 
+                            onClick={onShowSelectEggModal}
+                            className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue">
 							<span className="font-bold text-lg capitalize text-white">
 								Choose an egg
 							</span>
