@@ -18,7 +18,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 
 			{/* Incubator Image & Egg */}
 			<div className="w-full h-full p-8 flex flex-col justify-between items-center">
-				<div className="w-full h-full flex flex-row justify-around items-center">
+				<div className="w-full my-6 flex flex-row justify-around items-center">
 					<div
 						style={{ width: "30rem" }}
 						className="h-full flex flex-row justify-center items-center relative bg-background-incubator-img g-no-repeat bg-cover"
@@ -117,7 +117,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 				</div>
 
 				{/* Loading dots and Choose Button */}
-				<div className="w-full flex flex-row justify-center items-center">
+				<div className="w-full my-4 flex flex-row justify-center items-center">
 					{incubator.in_use ? (
 						<div className="py-4 px-14 flex flex-row">
 							<LoadingDots />

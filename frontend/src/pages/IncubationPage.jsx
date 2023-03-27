@@ -12,7 +12,7 @@ function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
 	const navigate = useNavigate()
 	const [incubators, setIncubators] = useState([
-		{ uid: "Inc-01", name: "Incubator #1", in_use: true, done: false },
+		{ uid: "Inc-01", name: "Incubator #1", in_use: false, done: false },
 		{ uid: "Inc-02", name: "Incubator #2", in_use: false, done: false },
 	])
 	const [showBoostModal, setShowBoostModal] = useState(false)
@@ -43,7 +43,7 @@ function IncubationPage() {
 	}
 
 	const onStartIncubating = (eggUID) => {
-        
+
     }
 
 	const updateIncubator = (incubatorUID, dataToUpdate) => {
