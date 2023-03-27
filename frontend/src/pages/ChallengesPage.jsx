@@ -1,15 +1,16 @@
 import { useState } from "react"
 import ChallengeBattle from "../components/challenges/ChallengeBattle"
 import ChallengeStages from "../components/challenges/ChallengeStages"
-import ChallengeResult from "../components/challenges/ChallengeResult"
+import ChallengeRewards from "../components/challenges/ChallengeRewards"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
 import MenuBar from "../components/menu/MenuBar"
 
 export default function ChallengesPage() {
 	const [showStages, setShowStages] = useState(false)
-	const [showBattle, setShowBattle] = useState(true)
+	const [showBattle, setShowBattle] = useState(false)
     const [showResult, setShowResult] = useState(false)
+    const [showRewards, setShowRewards] = useState(true)
 
 	const onChallenge = (stageUID) => {}
 
@@ -26,6 +27,8 @@ export default function ChallengesPage() {
                     {showBattle && <ChallengeBattle />}
 
                     {showResult && <ChallengeResult />}
+
+                    {showRewards && <ChallengeRewards />}
 				</div>
 			</div>
 

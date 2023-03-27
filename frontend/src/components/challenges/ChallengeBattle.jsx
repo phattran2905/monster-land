@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp } from "react-icons/fa"
 import BossCard from "./BossCard"
 import MonsterCard from "./MonsterCard"
 import LoadingDots from "../LoadingDots"
