@@ -244,9 +244,10 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		// Update amount
 		backpack.egg_list[haveEgg].amount -= 1
+		const updatedEggList = [...backpack.egg_list].filter((e) => e.amount > 0)
 		await BackpackModel.findOneAndUpdate(
 			{ user_uid: req.user.uid },
-			{ egg_list: [...backpack.egg_list] }
+			{ egg_list: updatedEggList }
 		)
 
 		return res.status(200).json({ done_hatching_time: timeForIncubation })
