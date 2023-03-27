@@ -66,11 +66,40 @@ module.exports = {
 						opacity: 0,
 					},
 				},
+                // Source code: https://loading.io/css/
+				"lds-ellipsis1": {
+					"0%": {
+						transform: "scale(0)",
+					},
+					"100%": {
+						transform: "scale(1)",
+					},
+				},
+				"lds-ellipsis2": {
+					"0%": {
+						transform: "translate(0, 0)",
+					},
+					"100%": {
+						transform: "translate(24px, 0)",
+					},
+				},
+				"lds-ellipsis3": {
+					"0%": {
+						transform: "scale(1)",
+					},
+					"100%": {
+						transform: "scale(0)",
+					},
+				},
 			},
 
 			animation: {
 				"ripple-1": "lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite",
 				"ripple-2": "lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite -0.5s",
+				"ellipsis-1": "lds-ellipsis1 0.6s infinite",
+				"ellipsis-2": "lds-ellipsis2 0.6s infinite",
+				"ellipsis-3": "lds-ellipsis2 0.6s infinite",
+				"ellipsis-4": "lds-ellipsis3 0.6s infinite",
 			},
 		},
 	},
