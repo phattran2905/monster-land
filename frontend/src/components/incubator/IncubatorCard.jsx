@@ -9,7 +9,7 @@ function IncubatorCard({ incubator, onShowBoostModal }) {
 			className={`${
 				incubator.in_use ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
 			} flex flex-col items-center w-1/2 h-3/4 m-14 py-10 border-4  rounded-lg shadow-2xl`}
-			key={incubator.id}
+			key={incubator.uid}
 		>
 			{/* Name */}
 			<div className="bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
@@ -61,7 +61,7 @@ function IncubatorCard({ incubator, onShowBoostModal }) {
 										<span className="font-bold text-Indigo-Blue">UID</span>
 									</div>
 									<div className="ml-4 py-1 bg-Midnight-Gray">
-										<span className="text-white py-2 px-4">{incubator.id}</span>
+										<span className="text-white py-2 px-4">{incubator.uid}</span>
 									</div>
 								</div>
 								<div className="mb-3">
