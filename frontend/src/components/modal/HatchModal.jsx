@@ -12,7 +12,7 @@ function HatchModal({ onClose, onNext }) {
 
 	return (
 		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-center bg-opacity-80">
-			<div className="relative w-1/3 shadow-2xl flex flex-col bg-white rounded-2xl">
+			<div className="relative w-1/2 shadow-2xl flex flex-col bg-white rounded-2xl">
 				{/* Close button */}
 				<button
 					onClick={onClose}
@@ -32,11 +32,11 @@ function HatchModal({ onClose, onNext }) {
 				</div>
 
 				{/* Content */}
-				<div className="flex flex-col justify-between py-10 items-center mx-6 my-6">
-					<div className="mb-2 flex flex-row items-stretch border-2 border-Royal-Blue relative">
+				<div className="w-full flex flex-col justify-between py-10 px-12 items-center">
+					<div className="my-10 flex flex-row items-stretch border-2 border-Royal-Blue relative">
 						{/* Badge */}
 						<div
-                        className="absolute -top-2 -left-12 bg-Forest-Green rounded-xl px-10 py-1 -rotate-[40deg] shadow-Fresh-Green shadow-lg">
+                        className="absolute -top-2 -left-9 bg-Forest-Green rounded-xl px-8 py-1 -rotate-[40deg] shadow-Fresh-Green shadow-lg">
 							<span className="text-white font-bold">New</span>
 						</div>
 						{/* Name & Image */}
@@ -56,7 +56,7 @@ function HatchModal({ onClose, onNext }) {
 						</div>
 
 						{/* Stats */}
-						<div className="w-64 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue ">
+						<div className="w-60 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue ">
 							<div className="flex flex-row mb-3 justify-between items-center">
 								<div className="flex flex-row items-center mb-1">
 									<img
