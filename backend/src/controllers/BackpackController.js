@@ -44,6 +44,7 @@ const populateItemData = (backpackDoc) => ({
 const populateIncubationData = (incubationDoc) => ({
 	uid: incubationDoc.uid,
 	user_uid: incubationDoc.uid,
+	monster_type: incubationDoc.egg_info.monsterType.name,
 	egg_uid: incubationDoc.uid,
 	egg_type: incubationDoc.egg_info.name,
 	done_hatching_time: incubationDoc.uid,
@@ -195,7 +196,7 @@ export const getIncubatingEggs = async (req, res, next) => {
 			user_uid: req.user.uid,
 			status: "incubating",
 		})
-			.populate({ path: "egg_info" })
+			.populate({ path: "egg_info", populate: { path: "monsterType" } })
 			.sort({ createdAt: -1 })
 
 		const populatedIncubatingEggs = incubatingEggs.map((e) => populateIncubationData(e))
