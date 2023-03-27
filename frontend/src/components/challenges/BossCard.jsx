@@ -1,10 +1,17 @@
 import MonsterType from "../../components/monster/MonsterType"
 import HealthBar from "./HealthBar"
 
-function BossCard() {
+function BossCard({ isWinner }) {
 	return (
-		<div className="flex flex-col w-1/5 ">
-			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Fire-Engine-Red `}>
+		<div className="flex flex-col">
+			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Fire-Engine-Red relative`}>
+				{/* Badge */}
+				{isWinner && (
+					<div className="absolute top-0 -left-6 bg-Forest-Green rounded-xl px-8 py-2 -rotate-[40deg] shadow-Fresh-Green shadow-lg">
+						<span className="text-white font-bold">Winner</span>
+					</div>
+				)}
+                
 				{/* Name */}
 				<h3
 					className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}
@@ -60,7 +67,7 @@ function BossCard() {
 				</div>
 			</div>
 
-			<HealthBar  />
+			<HealthBar />
 		</div>
 	)
 }
