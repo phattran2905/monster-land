@@ -16,7 +16,7 @@ function IncubationPage() {
 		{ uid: "Inc-02", name: "Incubator #2", in_use: false, done: false },
 	])
 	const [showBoostModal, setShowBoostModal] = useState(false)
-	const [showHatchModal, setShowHatchModal] = useState(false)
+	const [showHatchModal, setShowHatchModal] = useState(true)
 	const [showSelectEggModal, setShowSelectEggModal] = useState(false)
 
 	// Redirect to login if not logged in
@@ -27,19 +27,7 @@ function IncubationPage() {
 	}, [authState.isLoggedIn])
 
 	const onDoneIncubating = (incubatorUID) => {
-		const finishedIncubator = incubators.find((i) => i.uid === incubatorUID)
 
-		if (finishedIncubator) {
-			const updatedIncubators = incubators.map((i) => {
-				if (i.uid === incubatorUID) {
-					i.done = true
-					i.in_use = false
-				}
-
-				return i
-			})
-			setIncubators(updatedIncubators)
-		}
 	}
 
 	const onStartIncubating = (eggUID) => {

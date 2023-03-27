@@ -33,7 +33,12 @@ function HatchModal({ onClose, onNext }) {
 
 				{/* Content */}
 				<div className="flex flex-col justify-between py-10 items-center mx-6 my-6">
-					<div className="mb-2 flex flex-row items-stretch border-2 border-Royal-Blue">
+					<div className="mb-2 flex flex-row items-stretch border-2 border-Royal-Blue relative">
+						{/* Badge */}
+						<div
+                        className="absolute -top-2 -left-12 bg-Forest-Green rounded-xl px-10 py-1 -rotate-[40deg] shadow-Fresh-Green shadow-lg">
+							<span className="text-white font-bold">New</span>
+						</div>
 						{/* Name & Image */}
 						<div className="w-60 h-full flex flex-col border-r-4 border-r-Royal-Blue">
 							<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center py-3">
@@ -51,7 +56,7 @@ function HatchModal({ onClose, onNext }) {
 						</div>
 
 						{/* Stats */}
-						<div className="w-64 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue">
+						<div className="w-64 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue ">
 							<div className="flex flex-row mb-3 justify-between items-center">
 								<div className="flex flex-row items-center mb-1">
 									<img
