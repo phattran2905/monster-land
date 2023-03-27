@@ -1,7 +1,7 @@
 import { GiHealthNormal } from "react-icons/gi"
 import ProgressBar from "../ProgressBar"
 
-function HealthBar() {
+function HealthBar({ percentage = 100 }) {
 	return (
 		<div className={`flex flex-col w-full mt-8`}>
 			<div className="flex flex-row items-center">
@@ -13,8 +13,11 @@ function HealthBar() {
 			</div>
 			<div className="mt-2">
 				<ProgressBar
-					percentage={10}
+					percentage={percentage}
 					bgColorClass="bg-Light-Gray"
+					currentBgColorClass={
+						percentage === 100 ? "bg-Forest-Green" : "bg-Flamingo-Pink"
+					}
 				/>
 			</div>
 		</div>

@@ -1,11 +1,10 @@
-
 import MonsterType from "../../components/monster/MonsterType"
 import HealthBar from "./HealthBar"
 
 function MonsterCard() {
 	return (
 		<div className="flex flex-col w-1/5 ">
-			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Flamingo-Pink `}>
+			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Amethyst-Purple`}>
 				{/* Name */}
 				<h3
 					className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}
@@ -22,6 +21,7 @@ function MonsterCard() {
 				</div>
 				{/* Stats */}
 				<div className={`flex flex-col items-center py-2`}>
+					{/* Type */}
 					<div className="w-2/3 flex flex-row my-2 justify-between items-center">
 						<div className="flex flex-row items-center">
 							<img
@@ -33,6 +33,7 @@ function MonsterCard() {
 						<MonsterType name={"rock"} />
 					</div>
 
+					{/* Attack */}
 					<div className="w-2/3 flex flex-row my-2 justify-between items-center">
 						<div className="flex flex-row items-center">
 							<img
@@ -46,6 +47,7 @@ function MonsterCard() {
 						</div>
 					</div>
 
+					{/* Defense */}
 					<div className="w-2/3 flex flex-row my-2 justify-between items-center">
 						<div className="flex flex-row items-center">
 							<img
@@ -61,7 +63,8 @@ function MonsterCard() {
 				</div>
 			</div>
 
-			<HealthBar />
+			{/* Health */}
+			<HealthBar percentage={10} />
 		</div>
 	)
 }

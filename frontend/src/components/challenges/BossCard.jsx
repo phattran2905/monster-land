@@ -4,7 +4,7 @@ import HealthBar from "./HealthBar"
 function BossCard() {
 	return (
 		<div className="flex flex-col w-1/5 ">
-			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Flamingo-Pink `}>
+			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Fire-Engine-Red `}>
 				{/* Name */}
 				<h3
 					className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}

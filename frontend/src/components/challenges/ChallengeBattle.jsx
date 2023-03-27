@@ -6,13 +6,13 @@ import LoadingDots from "../LoadingDots"
 
 function ChallengeBattle() {
 	return (
-		<div className="flex flex-row w-full h-full items-center justify-around">
+		<div className="flex flex-row w-full h-full items-center justify-around ">
 			<BossCard />
-			
-            <div className="flex flex-col justify-center">
+
+			<div className="flex flex-col justify-center">
 				<img src="/img/challenges/cross-swords.png" />
 				<div className="ml-4">
-					<LoadingDots />
+					<LoadingDots color="bg-Dim-Gray" />
 				</div>
 			</div>
 
