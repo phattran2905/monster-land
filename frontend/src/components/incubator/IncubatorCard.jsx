@@ -1,18 +1,58 @@
 import { FaAngleDoubleUp, FaCheckCircle, FaClock } from "react-icons/fa"
 import { AiOutlineNumber } from "react-icons/ai"
+import moment from "moment"
+import { useState, useEffect } from "react"
 import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
 
-function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
+function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDoneIncubating }) {
+	const [done, setDone] = useState(incubator.done)
+	const [secondsToCount] = useState(() => {
+		const now = moment()
+		const doneHatchingTime = moment(incubator.done_hatching_time)
+		const diffTime = doneHatchingTime.diff(now, "seconds")
+		return diffTime
+	})
+	const [counter, setCounter] = useState(secondsToCount)
+	const [hatchingTime, setHatchingTime] = useState("")
+
+	const displayHatchingTime = (hatching_time_in_seconds) => {
+		const duration = moment.duration(hatching_time_in_seconds, "seconds")
+		const hours = Math.floor(duration.asHours())
+		const minutes = duration.minutes()
+		const seconds = duration.seconds()
+		return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+			.toString()
+			.padStart(2, "0")}`
+	}
+
+	useEffect(() => {
+		const intervalIndex = setInterval(() => {
+			if (counter > 0) {
+				setCounter((counter) => counter - 1)
+			}
+		}, 1000)
+
+		return () => clearInterval(intervalIndex)
+	}, [])
+
+	useEffect(() => {
+		if (counter <= 0) {
+			setDone(true)
+		} else {
+			setHatchingTime(displayHatchingTime(counter))
+		}
+	}, [counter])
+
 	return (
 		<div
 			className={`${
-				incubator.in_use && !incubator.done
+				incubator.in_use && !done
 					? "border-Light-Gray bg-light-white"
 					: "border-Indigo-Blue"
-			} ${incubator.in_use && incubator.done && "border-Forest-Green bg-Light-Green"}
-            flex flex-col items-center w-1/2 h-3/4 m-14 py-10 border-4  rounded-lg shadow-2xl`}
+			} ${incubator.in_use && done && "border-Forest-Green bg-Light-Green"}
+            flex flex-col items-center w-1/2 h-3/4 py-10 border-4  rounded-lg shadow-2xl`}
 			key={incubator.uid}
 		>
 			{/* Name */}
@@ -66,10 +106,8 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 											UID
 										</span>
 									</div>
-									<div className="ml-4 py-1 bg-Midnight-Gray">
-										<span className="text-white py-2 px-4">
-											{incubator.uid}
-										</span>
+									<div className="py-2 bg-Midnight-Gray flex flex-row justify-center items-center">
+										<span className="text-white px-4">{incubator.uid}</span>
 									</div>
 								</div>
 								<div className="mb-3">
@@ -84,7 +122,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 										</span>
 									</div>
 									<div className="ml-4 py-1">
-										<MonsterType name={"fire"} />
+										<MonsterType name={incubator.monster_type} />
 									</div>
 								</div>
 								<div className="mb-3">
@@ -101,16 +139,14 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 										<div className="w-full flex flex-row items-center">
 											{/* Progress bar */}
 											<ProgressBar
-												percentage={incubator.done ? 100 : 10}
+												percentage={done ? 100 : 50}
 												bgColorClass="bg-Light-Gray"
 												currentBgColorClass={
-													incubator.done
-														? "bg-Forest-Green"
-														: "bg-Flamingo-Pink"
+													done ? "bg-Forest-Green" : "bg-Flamingo-Pink"
 												}
 											/>
 											{/* Done icon && Boost button */}
-											{incubator.done ? (
+											{done ? (
 												<FaCheckCircle
 													className="ml-2 text-Forest-Green"
 													size={22}
@@ -128,10 +164,10 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 											)}
 										</div>
 										{/* Time */}
-										{incubator.in_use && !incubator.done && (
+										{incubator.in_use && !done && (
 											<div className="flex flex-row justify-center my-2">
-												<span className="py-2 px-4 font-bold rounded-lg bg-Midnight-Gray text-white">
-													29:05
+												<span className="py-2 px-4 font-bold rounded-lg bg-Flamingo-Pink text-white">
+													{hatchingTime}
 												</span>
 											</div>
 										)}
@@ -139,8 +175,11 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 								</div>
 
 								{/* Hatch button */}
-								{incubator.done && (
-									<button className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize">
+								{done && (
+									<button
+										onClick={() => onDoneIncubating(incubator.uid)}
+										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize"
+									>
 										Hatch now
 									</button>
 								)}
@@ -151,7 +190,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal }) {
 
 				{/* Loading dots and Choose Button */}
 				<div className="w-full my-4 flex flex-row justify-center items-center">
-					{incubator.in_use && !incubator.done && (
+					{incubator.in_use && !done && (
 						<div className="py-4 px-14 flex flex-row">
 							<LoadingDots />
 						</div>

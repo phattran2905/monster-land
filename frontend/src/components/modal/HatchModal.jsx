@@ -2,13 +2,7 @@ import { useState } from "react"
 import { FaTimesCircle } from "react-icons/fa"
 import MonsterType from "../monster/MonsterType"
 
-function HatchModal({ onClose, onNext }) {
-	const [name, setName] = useState("pebblepaw")
-	const [imgName, setImgName] = useState("pebblepaw.png")
-	const [level, setLevel] = useState(1)
-	const [type, setType] = useState("rock")
-	const [attack, setAttack] = useState(0)
-	const [defense, setDefense] = useState(0)
+function HatchModal({ monster, onClose, onNext }) {
 
 	return (
 		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-center bg-opacity-80">
@@ -43,14 +37,14 @@ function HatchModal({ onClose, onNext }) {
 						<div className="w-60 h-full flex flex-col border-r-4 border-r-Royal-Blue">
 							<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center py-3">
 								<span className="text-white font-bold text-center text-lg capitalize">
-									{name}
+									{monster.name}
 								</span>
 							</div>
 							<div className="w-full p-4 h-5/6">
 								<img
 									className="w-full h-full object-scale-down"
-									src={`/img/monsters/${imgName}`}
-									alt={name}
+									src={`/img/monsters/${monster.img_name}`}
+									alt={monster.name}
 								/>
 							</div>
 						</div>
@@ -67,7 +61,7 @@ function HatchModal({ onClose, onNext }) {
 								</div>
 								<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 									<span className="p-1 font-bold text-white capitalize">
-										{level}
+										{monster.level}
 									</span>
 								</div>
 							</div>
@@ -79,7 +73,7 @@ function HatchModal({ onClose, onNext }) {
 									/>
 									<span className="ml-1 capitalize">Type</span>
 								</div>
-								<MonsterType name={type} />
+								<MonsterType name={monster.monster_type} />
 							</div>
 
 							<div className="flex flex-row mb-3 justify-between items-center">
@@ -92,7 +86,7 @@ function HatchModal({ onClose, onNext }) {
 								</div>
 								<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 									<span className="p-1 font-bold text-white capitalize">
-										{attack}
+										{monster.attack}
 									</span>
 								</div>
 							</div>
@@ -107,7 +101,7 @@ function HatchModal({ onClose, onNext }) {
 								</div>
 								<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 									<span className="p-1 font-bold text-white capitalize">
-										{defense}
+										{monster.defense}
 									</span>
 								</div>
 							</div>
