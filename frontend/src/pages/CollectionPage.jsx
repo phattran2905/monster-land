@@ -41,8 +41,8 @@ export default function CollectionPage() {
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className="h-full flex flex-col shadow-xl rounded-sm overflow-auto">
-							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-16 gap-x-20 overflow-auto rounded-sm">
+						<div className="h-full flex flex-col shadow-xl rounded-sm overflow-auto bg-light-white">
+							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-16 gap-x-16 overflow-auto rounded-sm">
 								{monsters.map((monster) => (
 									<MonsterCard
 										key={monster.uid}
@@ -59,10 +59,12 @@ export default function CollectionPage() {
 								))}
 							</div>
 							{/* Quantity */}
-							<div className="bg-light-white flex flex-row justify-center mt-auto">
+							<div className="bg-white flex flex-row justify-center mt-auto">
 								<div className="bg-Midnight-Gray inline-block rounded-full px-10 py-2 my-3">
-									<span className="text-Gold-Sand font-bold">{monsters.length}</span>
-                                    <span className="text-white"> / 50</span>
+									<span className="text-Gold-Sand font-bold">
+										{monsters.length}
+									</span>
+									<span className="text-white"> / 50</span>
 								</div>
 							</div>
 						</div>
