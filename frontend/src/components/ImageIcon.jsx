@@ -14,7 +14,7 @@ function ImageIcon({ name }) {
 				return backpackIcon
 			case "user":
 				return userIcon
-			case "map":
+			case "challenges":
 				return mapIcon
 			case "monster-collection":
 				return dragonIcon

@@ -8,6 +8,7 @@ import TrainerPage from "./pages/TrainerPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import IncubationPage from "./pages/IncubationPage"
+import ChallengesPage from "./pages/ChallengesPage"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 import { useDispatch, useSelector } from "react-redux"
@@ -22,9 +23,9 @@ function App() {
 
 	useEffect(() => {
 		dispatch(getStoredJwtToken())
-        setTimeout(() => {
-            setIsLoading(authState.isLoading)
-        }, 1500)
+		setTimeout(() => {
+			setIsLoading(authState.isLoading)
+		}, 1500)
 	}, [authState])
 
 	return (
@@ -69,18 +70,18 @@ function App() {
 						path="/incubation"
 						element={<IncubationPage />}
 					/>
-					{/* <Route path="/map">
+					<Route path="/challenges">
 						<Route
 							index={true}
-							element={<WorldMapPage />}
+							element={<ChallengesPage />}
 						/>
-						<Route path="wild-forest">
+						{/* <Route path="wild-forest">
 							<Route
 								index={true}
 								element={<WildForestPage />}
 							/>
-						</Route>
-					</Route> */}
+						</Route>*/}
+					</Route>
 					<Route
 						path="/server-error"
 						element={<Page500 />}

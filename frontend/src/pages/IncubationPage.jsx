@@ -56,7 +56,7 @@ function IncubationPage() {
 		<div className="container-xl flex flex-col h-screen justify-between">
 			<Header />
 
-			<div className="w-full h-full flex flex-row  overflow-hidden">
+			<div className="w-full h-full flex flex-row overflow-hidden">
 				<MenuBar />
 
 				<div className="m-10 w-full flex flex-row justify-between items-center relative">

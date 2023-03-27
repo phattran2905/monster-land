@@ -38,7 +38,7 @@ export default function MenuBar({}) {
 					<NavLinkItem path={"/team"} />
 				</li> */}
 				<li>
-					<NavLinkItem path={"/map"} />
+					<NavLinkItem path={"/challenges"} />
 				</li>
 				<li className="mt-auto">
 					<NavLinkItem

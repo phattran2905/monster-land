@@ -15,8 +15,8 @@ export default function NavLinkItem({ path, handler }) {
 				return "backpack"
 			case "/trainer":
 				return "user"
-			case "/map":
-				return "map"
+			case "/challenges":
+				return "challenges"
 			case "/collection":
 				return "monster-collection"
 			case "/team":
