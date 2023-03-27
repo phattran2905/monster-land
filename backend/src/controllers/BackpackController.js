@@ -208,6 +208,26 @@ export const getIncubatingEggs = async (req, res, next) => {
 	}
 }
 
+// Get incubating eggs
+export const getIncubatingEggByUId = async (req, res, next) => {
+	try {
+		const { incubation_uid: incubationUID } = req.params
+
+		const incubatingEgg = await IncubationModel.findOne({
+			user_uid: req.user.uid,
+			uid: incubationUID ?? null,
+			status: "incubating",
+		})
+			.populate({ path: "egg_info", populate: { path: "monsterType" } })
+
+		const populatedIncubatingEgg = populateIncubationData(incubatingEgg)
+
+		return res.status(200).json(populatedIncubatingEgg)
+	} catch (error) {
+		return next(error)
+	}
+}
+
 // Incubate an egg
 export const incubateAnEgg = async (req, res, next) => {
 	try {

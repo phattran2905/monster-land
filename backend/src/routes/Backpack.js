@@ -3,6 +3,7 @@ import {
 	getItemsFromBackpack,
 	useItemsOnMonster,
 	getIncubatingEggs,
+	getIncubatingEggByUId,
 	incubateAnEgg,
 	hatchAnEgg,
 } from "../controllers/BackpackController.js"
@@ -16,5 +17,6 @@ router
 	.get("/backpack/incubation", validateJwt, getIncubatingEggs)
 	.post("/backpack/incubate", validateJwt, incubateAnEgg)
 	.post("/backpack/hatch", validateJwt, hatchAnEgg)
+	.get("/backpack/incubation/:incubation_uid", validateJwt, getIncubatingEggByUId)
 
 export default router
