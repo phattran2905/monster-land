@@ -34,9 +34,9 @@ export default function MenuBar({}) {
 				<li>
 					<NavLinkItem path={"/incubation"} />
 				</li>
-				<li>
+				{/* <li>
 					<NavLinkItem path={"/team"} />
-				</li>
+				</li> */}
 				<li>
 					<NavLinkItem path={"/map"} />
 				</li>
