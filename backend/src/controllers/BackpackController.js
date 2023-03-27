@@ -3,8 +3,9 @@ import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import IncubationModel from "../models/incubation/IncubationModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
+import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
-import { getRandomNumber, randomUID } from "../util/random.js"
+import { getRandomNumber, randomUID, getRandomArrayElement } from "../util/random.js"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -290,13 +291,21 @@ export const hatchAnEgg = async (req, res, next) => {
 		const randomAttackPts = getRandomNumber(50, 250)
 		const randomDefensePts = getRandomNumber(50, 250)
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+		// Random a monster from monster's types
+		const monsterInfosWithSameType = await MonsterInfoModel.find({
+			type: monsterTypeUID,
+			status: "active",
+		})
+		const randomMonsterInfo = getRandomArrayElement(monsterInfosWithSameType)
+
 		const newMonster = {
 			uid: `M-${randomUID()}`,
-			info_uid: monsterTypeUID,
+			info_uid: randomMonsterInfo.uid,
 			level: 1,
 			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 			attack: randomAttackPts,
 			defense: randomDefensePts,
+			img_name: randomMonsterInfo.img_name,
 		}
 		await MonsterModel.create(newMonster)
 
