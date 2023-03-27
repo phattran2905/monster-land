@@ -8,8 +8,6 @@ import TrainerPage from "./pages/TrainerPage"
 import CollectionPage from "./pages/CollectionPage"
 import BackpackPage from "./pages/BackpackPage"
 import IncubationPage from "./pages/IncubationPage"
-import WorldMapPage from "./pages/WorldMapPage"
-import WildForestPage from "./pages/WildForestPage"
 import Page404 from "./pages/Page404"
 import Page500 from "./pages/Page500"
 import { useDispatch, useSelector } from "react-redux"
@@ -69,7 +67,7 @@ function App() {
 						path="/incubation"
 						element={<IncubationPage />}
 					/>
-					<Route path="/map">
+					{/* <Route path="/map">
 						<Route
 							index={true}
 							element={<WorldMapPage />}
@@ -80,7 +78,7 @@ function App() {
 								element={<WildForestPage />}
 							/>
 						</Route>
-					</Route>
+					</Route> */}
 					<Route
 						path="/server-error"
 						element={<Page500 />}
