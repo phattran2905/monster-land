@@ -94,7 +94,7 @@ export default function MonsterCard({
 					<div className="flex flex-col justify-center w-full pt-1">
 						<ProgressBar
 							percentage={Math.floor(exp / level_up_exp)}
-							bgColorClass="bg-white"
+							bgColorClass="bg-Light-Gray"
 							currentBgColorClass="bg-Forest-Green"
 						/>
 						<div className="flex flex-row justify-between items-center mt-1">
@@ -104,12 +104,12 @@ export default function MonsterCard({
 					</div>
 				</div>
 
-				<button
+				{/* <button
 					className="p-2 bg-Flamingo-Pink mt-1 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
 					onClick={() => onSelect()}
 				>
 					Assign
-				</button>
+				</button> */}
 			</div>
 		</div>
 	)
