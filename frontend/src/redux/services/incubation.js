@@ -13,6 +13,14 @@ export const incubationApi = createApi({
 			}),
 			providesTags: ["incubation"],
 		}),
+		getIncubatingEggByUID: builder.query({
+			query: ({ jwt_token, incubation_UID }) => ({
+				url: `/incubation/${incubation_UID}`,
+				method: "GET",
+				headers: { Authorization: `Bearer ${jwt_token}` },
+			}),
+			providesTags: ["incubation"],
+		}),
 		incubateEgg: builder.mutation({
 			query: ({ jwt_token, egg_uid }) => ({
 				url: `/incubate?egg_uid=${egg_uid}`,
@@ -32,5 +40,9 @@ export const incubationApi = createApi({
 	}),
 })
 
-export const { useGetIncubatingEggsQuery, useIncubateEggMutation, useHatchEggMutation } =
-	incubationApi
+export const {
+	useGetIncubatingEggsQuery,
+	useGetIncubatingEggByUIDQuery,
+	useIncubateEggMutation,
+	useHatchEggMutation,
+} = incubationApi

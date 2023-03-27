@@ -7,15 +7,20 @@ import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
 
 function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDoneIncubating }) {
-	const [done, setDone] = useState(incubator.done)
-	const [secondsToCount] = useState(() => {
-		const now = moment()
-		const doneHatchingTime = moment(incubator.done_hatching_time)
-		const diffTime = doneHatchingTime.diff(now, "seconds")
-		return diffTime
-	})
-	const [counter, setCounter] = useState(secondsToCount)
-	const [hatchingTime, setHatchingTime] = useState("")
+	const [done, setDone] = useState(false)
+	const [secondsToCount, setSecondsToCount] = useState(1)
+	const [counter, setCounter] = useState(0)
+	const [hatchingTime, setHatchingTime] = useState("00:00:00")
+
+	useEffect(() => {
+		const intervalIndex = setInterval(() => {
+			if (counter >= 0) {
+                setCounter((counter) => counter - 1)
+			}
+		}, 1000)
+
+		return () => clearInterval(intervalIndex)
+	}, [])
 
 	const displayHatchingTime = (hatching_time_in_seconds) => {
 		const duration = moment.duration(hatching_time_in_seconds, "seconds")
@@ -28,21 +33,32 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 	}
 
 	useEffect(() => {
-		const intervalIndex = setInterval(() => {
-			if (counter > 0) {
-				setCounter((counter) => counter - 1)
-			}
-		}, 1000)
+		if (incubator.done_hatching_time) {
+			const now = moment()
+			const doneHatchingTime = moment(incubator.done_hatching_time)
+			const diffTime = doneHatchingTime.diff(now, "seconds")
 
-		return () => clearInterval(intervalIndex)
-	}, [])
+			if (diffTime > 0) {
+				setSecondsToCount(diffTime)
+				setCounter(diffTime)
+				setHatchingTime(displayHatchingTime(counter))
+				setDone(false)
+			} else {
+				setSecondsToCount(1)
+				setCounter(0)
+				setHatchingTime("00:00:00")
+				setDone(true)
+			}
+		}
+	}, [incubator])
 
 	useEffect(() => {
-		if (counter <= 0) {
-			setDone(true)
-		} else {
-			setHatchingTime(displayHatchingTime(counter))
-		}
+        	if (counter <= 0) {
+        		setDone(true)
+        	} else {
+        		setHatchingTime(displayHatchingTime(counter))
+        		setDone(false)
+        	}
 	}, [counter])
 
 	return (
@@ -139,10 +155,14 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 										<div className="w-full flex flex-row items-center">
 											{/* Progress bar */}
 											<ProgressBar
-												percentage={done ? 100 : 50}
+												percentage={
+													done
+														? 100
+														: ((secondsToCount - counter) / 60) * 100
+												}
 												bgColorClass="bg-Light-Gray"
 												currentBgColorClass={
-													done ? "bg-Forest-Green" : "bg-Flamingo-Pink"
+													done ? "bg-Forest-Green" :  "bg-Flamingo-Pink"
 												}
 											/>
 											{/* Done icon && Boost button */}

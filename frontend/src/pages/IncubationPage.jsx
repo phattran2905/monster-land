@@ -8,19 +8,24 @@ import MenuBar from "../components/menu/MenuBar"
 import BoostIncubatorModal from "../components/modal/BoostIncubatorModal"
 import HatchModal from "../components/modal/HatchModal"
 import SelectEggModal from "../components/modal/SelectEggModal"
-import { useGetIncubatingEggsQuery, useHatchEggMutation } from "../redux/services/incubation"
+import { useGetBackpackQuery } from "../redux/services/backpack"
+import {
+	useGetIncubatingEggsQuery,
+	useHatchEggMutation,
+	useIncubateEggMutation,
+} from "../redux/services/incubation"
 
 function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
 	const navigate = useNavigate()
-	const { data: incubatingEggs, refetch } = useGetIncubatingEggsQuery({
+	const { data: incubatingEggs, refetch: refetchIncubation } = useGetIncubatingEggsQuery({
+		jwt_token: authState.jwtToken,
+	})
+	const { refetch: refetchBackpack } = useGetBackpackQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const [hatchEgg] = useHatchEggMutation()
-	const [incubators, setIncubators] = useState([
-		{ uid: "Inc-01", name: "Incubator #1", in_use: false, done: false },
-		{ uid: "Inc-02", name: "Incubator #2", in_use: false, done: false },
-	])
+	const [incubateEgg] = useIncubateEggMutation()
 	const [incubator1, setIncubator1] = useState({
 		uid: "Inc-01",
 		name: "Incubator #1",
@@ -39,7 +44,7 @@ function IncubationPage() {
 	const [newMonster, setNewMonster] = useState({})
 
 	useEffect(() => {
-		refetch()
+		// refetchIncubation()
 	}, [])
 
 	// Redirect to login if not logged in
@@ -50,21 +55,20 @@ function IncubationPage() {
 	}, [authState.isLoggedIn])
 
 	useEffect(() => {
-		if (incubatingEggs) {
+		if (incubatingEggs?.length > 0) {
 			const incubations = incubatingEggs.slice(0, 2)
 
-			setIncubator1({
-				...incubator1,
+			setIncubator1((prev) => ({
+				...prev,
 				...incubations[0],
-				in_use: incubations[0]?.status === "incubating",
-				done: incubations[0]?.status === "done",
-			})
-			setIncubator2({
-				...incubator2,
+				in_use: incubations[0] ? true : false,
+			}))
+
+			setIncubator2((prev) => ({
+				...prev,
 				...incubations[1],
-				in_use: incubations[1]?.status === "incubating",
-				done: incubations[1]?.status === "done",
-			})
+				in_use: incubations[1] ? true : false,
+			}))
 		}
 	}, [incubatingEggs])
 
@@ -79,28 +83,25 @@ function IncubationPage() {
 				setNewMonster(babyMonster?.data)
 			}
 
-			// Update incubators
-			const updatedIncubators = incubators.map((inc, index) => {
-				if (inc.uid === incubationUID) {
-					return {
-						uid: `Inc-${index}`,
-						name: inc.name,
-						in_use: false,
-						done: false,
-					}
-				}
-
-				return inc
-			})
-
+			refetchIncubation()
 			setShowHatchModal(true)
-			setIncubators(updatedIncubators)
 		}
 	}
 
-	const onStartIncubating = (eggUID) => {
-
-    }
+	const onStartIncubating = async (eggUID) => {
+		if (eggUID) {
+			const incubationResult = await incubateEgg({
+				jwt_token: authState.jwtToken,
+				egg_uid: eggUID,
+			})
+			// Set new monster data
+			if (incubationResult?.data) {
+				refetchIncubation()
+				refetchBackpack()
+				setShowSelectEggModal(false)
+			}
+		}
+	}
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -110,10 +111,8 @@ function IncubationPage() {
 				<MenuBar />
 
 				<div className="m-10 w-full flex flex-row justify-between items-center relative gap-x-10">
-
 					{/* Incubator #1 */}
 					<IncubatorCard
-						key={incubator1.uid}
 						incubator={incubator1}
 						onShowBoostModal={() => setShowBoostModal(true)}
 						onShowSelectEggModal={() => setShowSelectEggModal(true)}
@@ -122,7 +121,6 @@ function IncubationPage() {
 
 					{/* Incubator #2 */}
 					<IncubatorCard
-						key={incubator2.uid}
 						incubator={incubator2}
 						onShowBoostModal={() => setShowBoostModal(true)}
 						onShowSelectEggModal={() => setShowSelectEggModal(true)}
@@ -140,7 +138,10 @@ function IncubationPage() {
 					{showHatchModal && (
 						<HatchModal
 							monster={newMonster}
-							onClose={() => setShowHatchModal(false)}
+							onClose={() => {
+								setShowHatchModal(false)
+								// refetchIncubation()
+							}}
 							onNext={() => navigate("/collection")}
 						/>
 					)}
