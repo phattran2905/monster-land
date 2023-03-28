@@ -1,7 +1,7 @@
 import MonsterType from "../../components/monster/MonsterType"
 import HealthBar from "./HealthBar"
 
-function BossCard({ isWinner, health }) {
+function BossCard({ isWinner, health, boss }) {
 	return (
 		<div className="flex flex-col">
 			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Fire-Engine-Red relative`}>
@@ -11,19 +11,19 @@ function BossCard({ isWinner, health }) {
 						<span className="text-white font-bold">Winner</span>
 					</div>
 				)}
-                
+
 				{/* Name */}
 				<h3
 					className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}
 				>
-					Boss Stage #1
+					{boss.boss_name}
 				</h3>
 				{/* Boss Image */}
 				<div className={`bg-light-white w-full p-4`}>
 					<img
 						className="w-full object-scale-down"
-						src={`/img/challenges/boss-1.png`}
-						alt={"Boss 1"}
+						src={`/img/challenges/${boss.boss_img_name}`}
+						alt={boss.boss_name}
 					/>
 				</div>
 				{/* Stats */}
@@ -36,7 +36,7 @@ function BossCard({ isWinner, health }) {
 							/>
 							<span className="ml-1 capitalize">Type</span>
 						</div>
-						<MonsterType name={"rock"} />
+						<MonsterType name={boss.boss_type} />
 					</div>
 
 					<div className="w-2/3 flex flex-row my-2 justify-between items-center">
@@ -48,7 +48,9 @@ function BossCard({ isWinner, health }) {
 							<span className="ml-1 capitalize">Attack</span>
 						</div>
 						<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-							<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+							<span className="p-1 font-bold text-white capitalize">
+								{boss.boss_attack}
+							</span>
 						</div>
 					</div>
 
@@ -61,7 +63,9 @@ function BossCard({ isWinner, health }) {
 							<span className="ml-1 capitalize">Defense</span>
 						</div>
 						<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-							<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+							<span className="p-1 font-bold text-white capitalize">
+								{boss.boss_defense}
+							</span>
 						</div>
 					</div>
 				</div>

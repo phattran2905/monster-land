@@ -60,6 +60,7 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 					<BossCard
 						isWinner={winner === "boss"}
 						health={bossHealth}
+						boss={boss}
 					/>
 				</div>
 
@@ -80,6 +81,7 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 					<MonsterCard
 						isWinner={winner === "monster"}
 						health={monsterHealth}
+						monster={monster}
 					/>
 				</div>
 			</div>
