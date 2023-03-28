@@ -14,12 +14,12 @@ const Stages = [
 		reward_exp: 100,
 		reward_coins: 500,
 		reward_items: [
-			{ uid: eggs[2].uid, amount: 2 },
-			{ uid: eggs[1].uid, amount: 1 },
+			{ ...eggs[2], amount: 1 },
+			{ ...eggs[1], amount: 1 },
 		],
 		reward_eggs: [
-			{ uid: items[0].uid, amount: 3 },
-			{ uid: items[1].uid, amount: 3 },
+			{ ...items[2], amount: 1 },
+			{ ...items[1], amount: 1 },
 		],
 		stamina_cost: 10,
 	},
@@ -33,14 +33,14 @@ const Stages = [
 		reward_exp: 100,
 		reward_coins: 500,
 		reward_items: [
-			{ uid: eggs[2].uid, amount: 2 },
-			{ uid: eggs[1].uid, amount: 1 },
+			{ ...eggs[2], amount: 2 },
+			{ ...eggs[1], amount: 2 },
 		],
 		reward_eggs: [
-			{ uid: items[0].uid, amount: 3 },
-			{ uid: items[1].uid, amount: 3 },
+			{ ...items[0], amount: 2 },
+			{ ...items[1], amount: 2 },
 		],
-		stamina_cost: 10,
+		stamina_cost: 20,
 	},
 	{
 		uid: `S-${randomUID()}`,
@@ -52,14 +52,14 @@ const Stages = [
 		reward_exp: 100,
 		reward_coins: 500,
 		reward_items: [
-			{ uid: eggs[1].uid, amount: 3 },
-			{ uid: eggs[2].uid, amount: 3 },
+			{ ...eggs[1], amount: 3 },
+			{ ...eggs[2], amount: 3 },
 		],
 		reward_eggs: [
-			{ uid: items[1].uid, amount: 3 },
-			{ uid: items[2].uid, amount: 3 },
+			{ ...items[1], amount: 3 },
+			{ ...items[2], amount: 3 },
 		],
-		stamina_cost: 10,
+		stamina_cost: 30,
 	},
 	{
 		uid: `S-${randomUID()}`,
@@ -71,14 +71,14 @@ const Stages = [
 		reward_exp: 100,
 		reward_coins: 500,
 		reward_items: [
-			{ uid: eggs[1].uid, amount: 4 },
-			{ uid: eggs[2].uid, amount: 4 },
+			{ ...eggs[1], amount: 4 },
+			{ ...eggs[2], amount: 4 },
 		],
 		reward_eggs: [
-			{ uid: items[1].uid, amount: 3 },
-			{ uid: items[2].uid, amount: 3 },
+			{ ...items[1], amount: 4 },
+			{ ...items[2], amount: 4 },
 		],
-		stamina_cost: 10,
+		stamina_cost: 40,
 	},
 ]
 

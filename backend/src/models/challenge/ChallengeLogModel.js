@@ -21,7 +21,7 @@ const ChallengeLogSchema = new Schema(
 		},
 		status: {
 			type: String,
-			enum: ["active", "inactive"],
+			enum: ["active", "done"],
 			default: "active",
 		},
 	},
