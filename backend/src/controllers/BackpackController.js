@@ -3,8 +3,9 @@ import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import IncubationModel from "../models/incubation/IncubationModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
+import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
-import { getRandomNumber, randomUID } from "../util/random.js"
+import { getRandomNumber, randomUID, getRandomArrayElement } from "../util/random.js"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -44,11 +45,12 @@ const populateItemData = (backpackDoc) => ({
 const populateIncubationData = (incubationDoc) => ({
 	uid: incubationDoc.uid,
 	user_uid: incubationDoc.uid,
+	monster_type: incubationDoc.egg_info.monsterType.name,
 	egg_uid: incubationDoc.uid,
 	egg_type: incubationDoc.egg_info.name,
-	done_hatching_time: incubationDoc.uid,
+	done_hatching_time: incubationDoc.done_hatching_time,
 	incubator_img: incubationDoc.incubator_img,
-	state: incubationDoc.status,
+	status: incubationDoc.status,
 	createdAt: incubationDoc.createdAt,
 })
 
@@ -195,12 +197,32 @@ export const getIncubatingEggs = async (req, res, next) => {
 			user_uid: req.user.uid,
 			status: "incubating",
 		})
-			.populate({ path: "egg_info" })
+			.populate({ path: "egg_info", populate: { path: "monsterType" } })
 			.sort({ createdAt: -1 })
 
 		const populatedIncubatingEggs = incubatingEggs.map((e) => populateIncubationData(e))
 
 		return res.status(200).json(populatedIncubatingEggs)
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Get incubating eggs
+export const getIncubatingEggByUId = async (req, res, next) => {
+	try {
+		const { incubation_uid: incubationUID } = req.params
+
+		const incubatingEgg = await IncubationModel.findOne({
+			user_uid: req.user.uid,
+			uid: incubationUID ?? null,
+			status: "incubating",
+		})
+			.populate({ path: "egg_info", populate: { path: "monsterType" } })
+
+		const populatedIncubatingEgg = populateIncubationData(incubatingEgg)
+
+		return res.status(200).json(populatedIncubatingEgg)
 	} catch (error) {
 		return next(error)
 	}
@@ -242,9 +264,10 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		// Update amount
 		backpack.egg_list[haveEgg].amount -= 1
+		const updatedEggList = [...backpack.egg_list].filter((e) => e.amount > 0)
 		await BackpackModel.findOneAndUpdate(
 			{ user_uid: req.user.uid },
-			{ egg_list: [...backpack.egg_list] }
+			{ egg_list: updatedEggList }
 		)
 
 		return res.status(200).json({ done_hatching_time: timeForIncubation })
@@ -284,20 +307,30 @@ export const hatchAnEgg = async (req, res, next) => {
 
 		// Create a new monster
 		const { monster_type_uid: monsterTypeUID } = updatedIncubation.egg_info
+		const { name: monsterType } = updatedIncubation.egg_info.monsterType
 
 		const randomAttackPts = getRandomNumber(50, 250)
 		const randomDefensePts = getRandomNumber(50, 250)
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
-		const newMonster = await MonsterModel.create({
+		// Random a monster from monster's types
+		const monsterInfosWithSameType = await MonsterInfoModel.find({
+			type: monsterTypeUID,
+			status: "active",
+		})
+		const randomMonsterInfo = getRandomArrayElement(monsterInfosWithSameType)
+
+		const newMonster = {
 			uid: `M-${randomUID()}`,
-			info_uid: monsterTypeUID,
+			info_uid: randomMonsterInfo.uid,
 			level: 1,
 			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 			attack: randomAttackPts,
 			defense: randomDefensePts,
-		})
+			img_name: randomMonsterInfo.img_name,
+		}
+		await MonsterModel.create(newMonster)
 
-		return res.status(200).json(newMonster)
+		return res.status(200).json({ ...newMonster, monster_type: monsterType })
 	} catch (error) {
 		return next(error)
 	}

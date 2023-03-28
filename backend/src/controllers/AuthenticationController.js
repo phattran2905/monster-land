@@ -27,18 +27,22 @@ export const logIn = async (req, res) => {
 			return res.status(403).json({ message: "Your account was banned." })
 		}
 
-		// Generate JWT token
-		const newJwtToken = jwt.sign({ uid: account.uid }, process.env.JWT_SECRET)
+		// Not have JWT token
+		if (!account.jwt_token) {
+			// Generate JWT token
+			const newJwtToken = jwt.sign({ uid: account.uid }, process.env.JWT_SECRET)
 
-		// Update jwt and last_login
-		account.jwt_token = newJwtToken
+			// Update jwt and last_login
+			account.jwt_token = newJwtToken
+		}
+
 		account.last_login = Date.now()
 		await account.save()
 
 		return res.status(200).json({
 			message: "OK",
 			data: {
-				jwt_token: newJwtToken,
+				jwt_token: account.jwt_token,
 			},
 		})
 	} catch (error) {
@@ -111,16 +115,8 @@ export const signUp = async (req, res) => {
 
 export const logOut = async (req, res) => {
 	try {
-		const jwtToken = req.get("Authorization")?.split("Bearer ")[1]
-		if (!jwtToken) {
-			return res.status(401).json({ message: "Invalid token." })
-		}
-
-		// Verify jwtToken
-		const jwtData = jwt.verify(jwtToken, process.env.JWT_SECRET)
 		const account = await AccountModel.findOne({
-			uid: jwtData.uid,
-			jwt_token: jwtToken,
+			uid: req.user.uid,
 			status: "active",
 		})
 		if (!account) {

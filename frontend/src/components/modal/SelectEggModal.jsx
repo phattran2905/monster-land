@@ -81,7 +81,7 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 										</div>
 										<div className="bg-Midnight-Gray flex flex-row justify-center">
 											<span className="p-1 font-bold text-white tracking-widest">
-												{egg.hatching_time}
+												{egg.hatching_time_in_seconds}
 											</span>
 										</div>
 									</div>
@@ -122,7 +122,7 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 
 					<div className="w-full flex flex-row justify-center items-start">
 						<button
-							onClick={() => onStartIncubating(egg.uid)}
+							onClick={() => onStartIncubating(selectedUID)}
 							className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
 						>
 							<span className="text-white font-bold text-xl">Confirm</span>

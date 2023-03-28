@@ -25,6 +25,7 @@ function TrainerPage() {
 	const dispatch = useDispatch()
 	const trainerState = useSelector((state) => state.trainer)
 	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
+	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: authState.jwtToken })
 	const [error, setError] = useState()
 	const [successMsg, setSuccessMsg] = useState()
 	const [name, setName] = useState("")
@@ -42,15 +43,15 @@ function TrainerPage() {
 	}, [authState.isLoggedIn])
 
 	useEffect(() => {
-		if (trainerState) {
-			setName(trainerState.name)
-			setEmail(trainerState.email)
-			setAvatarIndex(parseInt(trainerState.avatar.split("-")[1], 10))
-			setJoined(moment(trainerState.createdAt).format("MMM DD, YYYY"))
-			setExp(trainerState.exp)
-			setLevelUpExp(trainerState.level_up_exp)
+		if (trainerData) {
+			setName(trainerData.name)
+			setEmail(trainerData.email)
+			setAvatarIndex(parseInt(trainerData.avatar.split("-")[1], 10))
+			setJoined(moment(trainerData.createdAt).format("MMM DD, YYYY"))
+			setExp(trainerData.exp)
+			setLevelUpExp(trainerData.level_up_exp)
 		}
-	}, [trainerState])
+	}, [trainerData])
 
 	const selectAvatarImage = (actionType) => {
 		if (actionType === "prev") {
@@ -80,7 +81,6 @@ function TrainerPage() {
 				email,
 				avatar: `body-${avatarIndex}.png`,
 			}
-			console.log(dataToUpdate)
 
 			const result = await fetchUpdateInfoApi({
 				jwt_token: authState.jwtToken,
@@ -125,7 +125,7 @@ function TrainerPage() {
 										<img
 											className="w-44 h-96 mx-auto object-scale-down"
 											src={`/img/avatars/body-${avatarIndex}.png`}
-											alt={trainerState?.avatar}
+											alt={trainerData?.avatar}
 										/>
 									</div>
 									<button onClick={() => selectAvatarImage("next")}>
@@ -211,7 +211,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerState?.username}
+										{trainerData?.username}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">
@@ -221,7 +221,7 @@ function TrainerPage() {
 									</span>
 
 									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerState?.uid}
+										{trainerData?.uid}
 									</span>
 								</div>
 								<div className="flex flex-col mb-6">

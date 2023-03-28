@@ -17,7 +17,9 @@ export default function Egg({
 		const hours = Math.floor(duration.asHours())
 		const minutes = duration.minutes()
 		const seconds = duration.seconds()
-		return `${hours}:${minutes.toString()}:${seconds.toString()}`
+		return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+			.toString()
+			.padStart(2, "0")}`
 	})
 
 	return (

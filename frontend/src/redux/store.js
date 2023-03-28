@@ -9,6 +9,7 @@ import { monsterApi } from "./services/monster"
 import { collectionApi } from "./services/collection"
 import { backpackApi } from "./services/backpack"
 import { authenticationApi } from "./services/authentication"
+import { incubationApi } from "./services/incubation"
 import { trainerApi } from "./services/trainer"
 
 export const store = configureStore({
@@ -20,6 +21,7 @@ export const store = configureStore({
 		// Add the generated reducer as a specific top-level slice
 		[collectionApi.reducerPath]: collectionApi.reducer,
 		[backpackApi.reducerPath]: backpackApi.reducer,
+		[incubationApi.reducerPath]: incubationApi.reducer,
 		[monsterApi.reducerPath]: monsterApi.reducer,
 		[authenticationApi.reducerPath]: authenticationApi.reducer,
 		[trainerApi.reducerPath]: trainerApi.reducer,
@@ -32,6 +34,7 @@ export const store = configureStore({
 			collectionApi.middleware,
 			backpackApi.middleware,
 			authenticationApi.middleware,
+			incubationApi.middleware,
 			trainerApi.middleware,
 		]),
 })
