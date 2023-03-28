@@ -122,7 +122,7 @@ export const challengeBoss = async (req, res, next) => {
 
 		// Calculate damage
 		const { enemyDamage, monsterDamage } = calculateDamage(monster, boss)
-		const defeatBoss = monsterDamage > boss.defense
+		const defeatBoss = monsterDamage >= boss.defense
 
 		if (!defeatBoss) {
 			return res.status(200).json({ message: "You are defeated.", result: "defeated" })

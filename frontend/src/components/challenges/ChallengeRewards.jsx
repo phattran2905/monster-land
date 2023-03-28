@@ -98,16 +98,23 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 
 						{/* Exp */}
 						<div className="w-2/3 flex flex-col my-2">
-							<div className="flex flex-row items-center mb-1">
-								<FaAngleDoubleUp
-									className="text-Flamingo-Pink"
-									size={16}
-								/>
-								<span className="ml-1 capitalize">Exp</span>
+							<div className="flex flex-row items-center justify-between mb-1">
+								<div className="flex flex-row items-center">
+									<FaAngleDoubleUp
+										className="text-Flamingo-Pink"
+										size={16}
+									/>
+									<span className="ml-1 capitalize">Exp</span>
+								</div>
+								<div className="text-Forest-Green font-bold">
+									+{stage?.reward_exp}
+								</div>
 							</div>
 							<div className="flex flex-col justify-center w-full pt-1">
 								<ProgressBar
-									percentage={Math.floor(monster.exp / monster.level_up_exp * 100)}
+									percentage={Math.floor(
+										(monster.exp / monster.level_up_exp) * 100
+									)}
 									bgColorClass="bg-Light-Gray"
 									currentBgColorClass="bg-Forest-Green"
 								/>
