@@ -1,7 +1,7 @@
 import MonsterType from "../../components/monster/MonsterType"
 import HealthBar from "./HealthBar"
 
-function MonsterCard({ isWinner }) {
+function MonsterCard({ isWinner, health }) {
 	return (
 		<div className="flex flex-col">
 			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Amethyst-Purple relative`}>
@@ -70,7 +70,7 @@ function MonsterCard({ isWinner }) {
 			</div>
 
 			{/* Health */}
-			<HealthBar percentage={10} />
+			<HealthBar percentage={health} />
 		</div>
 	)
 }

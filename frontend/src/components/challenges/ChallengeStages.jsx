@@ -9,6 +9,7 @@ function ChallengeStages({ onChallenge }) {
 	const { data: challengeList } = useGetChallengeListQuery()
 	const [stages, setStages] = useState([])
 	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
+	const [selectedStageUID, setSelectedStageUID] = useState(0)
 
 	useEffect(() => {
 		if (challengeList) {
@@ -20,7 +21,7 @@ function ChallengeStages({ onChallenge }) {
 		if (actionType === "prev") {
 			const index = selectedStageIndex - 1
 			if (index < 0) {
-				setSelectedStageIndex(1)
+				setSelectedStageIndex(0)
 			} else {
 				setSelectedStageIndex(index)
 			}
@@ -37,7 +38,7 @@ function ChallengeStages({ onChallenge }) {
 	return (
 		<>
 			{/* Challenge Boss */}
-			<div className="flex flex-row w-11/12 h-full items-center justify-between">
+			<div className="flex flex-row w-full h-full items-center justify-between">
 				{/* Left Arrow */}
 				<button
 					onClick={() => selectStage("prev")}
@@ -54,12 +55,15 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 
 				{/* Stages */}
-				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-start overflow-x-hidden gap-10">
+				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-center overflow-x-hidden gap-10">
 					{/* Stage Card */}
 					{stages.map((stage, index) => (
 						<button
 							key={stage.uid}
-							onClick={() => setSelectedStageIndex(index)}
+							onClick={() => {
+								setSelectedStageIndex(index)
+								setSelectedStageUID(stage.uid)
+							}}
 							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-xl hover:shadow-Flamingo-Pink ${
 								index === selectedStageIndex
 									? "shadow-Flamingo-Pink "
@@ -74,7 +78,7 @@ function ChallengeStages({ onChallenge }) {
 										: "border-white"
 								}`}
 							>
-								Stage #1
+								{stage.boss_name}
 							</h3>
 							{/* Boss Image */}
 							<div
@@ -106,7 +110,7 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Type</span>
 									</div>
-									<MonsterType name={"rock"} />
+									<MonsterType name={stage.boss_type} />
 								</div>
 
 								<div className="w-2/3 flex flex-row my-2 justify-between items-center">
@@ -119,7 +123,7 @@ function ChallengeStages({ onChallenge }) {
 									</div>
 									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 										<span className="p-1 font-bold text-white capitalize">
-											{"50"}
+											{stage.boss_attack}
 										</span>
 									</div>
 								</div>
@@ -134,7 +138,7 @@ function ChallengeStages({ onChallenge }) {
 									</div>
 									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 										<span className="p-1 font-bold text-white capitalize">
-											{"50"}
+											{stage.boss_defense}
 										</span>
 									</div>
 								</div>
@@ -261,7 +265,10 @@ function ChallengeStages({ onChallenge }) {
 			</div>
 			{/* Challenge Button */}
 			<div className="h-1/12 w-11/12 p-6 flex flex-row justify-center items-center">
-				<button className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red">
+				<button
+					onClick={() => onChallenge(selectedStageUID, challengeList[0].uid)}
+					className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red"
+				>
 					Challenge
 				</button>
 			</div>

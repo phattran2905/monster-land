@@ -3,7 +3,7 @@ import coinIcon from "../../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
 import MonsterType from "..//monster/MonsterType"
 
-function ChallengeRewards() {
+function ChallengeRewards({onReturnStages}) {
 	const [rewardList, setRewardList] = useState([
 		{
 			uid: 1,
