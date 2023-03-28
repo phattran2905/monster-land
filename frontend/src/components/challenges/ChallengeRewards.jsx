@@ -166,7 +166,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								key={item.uid}
 								className="w-1/2 my-6 py-4 px-12 shadow-lg"
 							>
-								<div className="flex flex-row justify-center items-center">
+								<div className="flex flex-row justify-between items-center">
 									<div className="flex flex-row items-center">
 										<img
 											className="w-14 h-14 object-scale-down"

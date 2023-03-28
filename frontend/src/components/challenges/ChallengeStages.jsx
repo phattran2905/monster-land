@@ -87,14 +87,14 @@ function ChallengeStages({ onChallenge }) {
 							</h3>
 							{/* Boss Image */}
 							<div
-								className={`bg-light-white w-full h-80 p-4 border-r-4 border-l-4 ${
+								className={`bg-light-white w-full h-96 p-4 border-r-4 border-l-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
 								}`}
 							>
 								<img
-									className="w-full object-scale-down"
+									className="w-full h-full object-scale-down"
 									src={`/img/challenges/${stage.boss_img_name}`}
 									alt={"Boss 1"}
 								/>
@@ -226,7 +226,7 @@ function ChallengeStages({ onChallenge }) {
 
 							{/* Stamina Cost */}
 							<div
-								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
+								className={`bg-Water p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
