@@ -6,6 +6,7 @@ import MonsterModel from "../models/monster/MonsterModel.js"
 import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 import { getRandomNumber, randomUID, getRandomArrayElement } from "../util/random.js"
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -333,6 +334,11 @@ export const hatchAnEgg = async (req, res, next) => {
 			img_name: randomMonsterInfo.img_name,
 		}
 		await MonsterModel.create(newMonster)
+
+		// Add new monster to monster collection
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+		monsterCollection.monster_list = [...monsterCollection.monster_list, newMonster]
+		await monsterCollection.save()
 
 		return res.status(200).json({ ...newMonster, monster_type: monsterType })
 	} catch (error) {

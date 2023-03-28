@@ -3,6 +3,8 @@ import MonsterModel from "../models/monster/MonsterModel.js"
 import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
 
+const getMonsterInfo = (monsterUid, monsterInfos) => monsterInfos.find((i) => i.uid === monsterUid)
+
 // Populate Monster data for frontend to render
 const populateMonsterData = (monsterDoc) => ({
 	uid: monsterDoc.uid,
@@ -15,6 +17,30 @@ const populateMonsterData = (monsterDoc) => ({
 	img_name: monsterDoc.info.img_name,
 	type: monsterDoc.info.monsterType.name,
 	status: monsterDoc.status,
+})
+
+// Populate Monster data for frontend to render
+const populateMonsterCollectionData = (monsterCollectionDoc) => ({
+	uid: monsterCollectionDoc.uid,
+	user_uid: monsterCollectionDoc.user_uid,
+	capacity: monsterCollectionDoc.capacity,
+	monster_list: monsterCollectionDoc.monster_list.map((i) => {
+		const monsterInfo = getMonsterInfo(i.info_uid, monsterCollectionDoc.detailed_monster_list)
+
+		return {
+			uid: i.uid,
+			type_uid: monsterInfo.uid,
+			attack: i.attack,
+			defense: i.attack,
+			level: i.level,
+			level_up_exp: i.level_up_exp,
+			name: monsterInfo.name,
+			type: monsterInfo.type,
+			img_name: monsterInfo.img_name,
+			status: monsterInfo.status,
+		}
+	}),
+	status: monsterCollectionDoc.status,
 })
 
 // Get A Monster by id
@@ -59,14 +85,19 @@ export const getAllMonster = async (req, res, next) => {
 export const getMonsterCollection = async (req, res, next) => {
 	try {
 		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
-			.populate({ path: "monster_list_info" })
 			.populate({ path: "trainer_info" })
+			.populate({
+				path: "detailed_monster_list",
+				populate: { path: "monsterType", select: "-_id -uid name" },
+			})
 
 		if (!monsterCollection) {
 			return res.status(200).json([])
 		}
 
-		return res.status(200).json(monsterCollection)
+		const detailedMonsterCollection = populateMonsterCollectionData(monsterCollection)
+
+		return res.status(200).json(detailedMonsterCollection)
 	} catch (error) {
 		return next(error)
 	}
