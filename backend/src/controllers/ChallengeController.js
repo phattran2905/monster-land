@@ -35,7 +35,8 @@ export const getAllChallenge = async (req, res, next) => {
 		})
 
 		const detailedStages = challengeListDoc[0].stages.map((challenge, index) => ({
-			boss_name: challenge.name,
+            uid: challenge.uid,
+			boss_name: challenge.boss_name,
 			boss_img_name: challenge.boss_img_name,
 			boss_type_uid: challenge.boss_type_uid,
 			boss_type: challengeListDoc[0].stage_boss_type[index].name,
@@ -48,7 +49,13 @@ export const getAllChallenge = async (req, res, next) => {
 			stamina_cost: challenge.stamina_cost,
 		}))
 
-		return res.status(200).json({ ...challengeListDoc, stages: detailedStages })
+		return res
+			.status(200)
+			.json({
+				uid: challengeListDoc[0].uid,
+				status: challengeListDoc[0].status,
+				stages: detailedStages,
+			})
 	} catch (error) {
 		return next(error)
 	}
@@ -113,7 +120,7 @@ export const challengeBoss = async (req, res, next) => {
 		const defeatBoss = monsterDamage > boss.defense
 
 		if (!defeatBoss) {
-			return res.status(200).json({ message: "You are defeated." })
+			return res.status(200).json({ message: "You are defeated.", result: "defeated" })
 		}
 
 		// Add result to ChallengeLog
@@ -214,7 +221,7 @@ export const challengeBoss = async (req, res, next) => {
 		backpack.item_list = updateItemList
 		await backpack.save()
 
-		return res.status(200).json(stageDoc)
+		return res.status(200).json({ winner: stageDoc, result: "won" })
 	} catch (error) {
 		return next(error)
 	}
