@@ -1,37 +1,16 @@
 import { useState } from "react"
+import { FaAngleDoubleUp } from "react-icons/fa"
 import coinIcon from "../../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
 import MonsterType from "..//monster/MonsterType"
+import ProgressBar from "../ProgressBar"
 
-function ChallengeRewards({onReturnStages}) {
-	const [rewardList, setRewardList] = useState([
-		{
-			uid: 1,
-			list: [],
-		},
-		{
-			uid: 2,
-			list: [],
-		},
-		{
-			uid: 3,
-			list: [],
-		},
-		{
-			uid: 4,
-			list: [],
-		},
-		{
-			uid: 5,
-			list: [],
-		},
-		{
-			uid: 6,
-			list: [],
-		},
-	])
+function ChallengeRewards({ onReturnStages, stage, monster }) {
+	const [rewardEggs] = useState(() => stage?.reward_eggs ?? [])
+	const [rewardItems] = useState(() => stage?.reward_items ?? [])
+
 	return (
-		<div className="w-full h-full flex flex-col">
+		<div className="w-full h-full flex flex-col p-10">
 			<div className="flex flex-row w-full items-start justify-between">
 				{/* Monster Card */}
 				<div
@@ -45,18 +24,34 @@ function ChallengeRewards({onReturnStages}) {
 					<h3
 						className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}
 					>
-						Monster #1
+						{monster?.name}
 					</h3>
 					{/* Boss Image */}
 					<div className={`bg-light-white w-full p-4`}>
 						<img
 							className="w-full object-scale-down"
-							src={`/img/monsters/shockwhisker.png`}
-							alt={"Boss 1"}
+							src={`/img/monsters/${monster?.img_name}`}
+							alt={monster?.name}
 						/>
 					</div>
 					{/* Stats */}
 					<div className={`flex flex-col items-center py-2`}>
+						{/* Level */}
+						<div className="w-2/3 flex flex-row my-2 justify-between items-center">
+							<div className="flex flex-row items-center mb-1">
+								<img
+									src="/img/icons/stats-icons/chess.png"
+									alt="Chess icon"
+								/>
+								<span className="ml-1 capitalize">Level</span>
+							</div>
+							<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+								<span className="p-1 font-bold text-white capitalize">
+									{monster?.level}
+								</span>
+							</div>
+						</div>
+
 						{/* Type */}
 						<div className="w-2/3 flex flex-row my-2 justify-between items-center">
 							<div className="flex flex-row items-center">
@@ -66,7 +61,7 @@ function ChallengeRewards({onReturnStages}) {
 								/>
 								<span className="ml-1 capitalize">Type</span>
 							</div>
-							<MonsterType name={"rock"} />
+							<MonsterType name={monster?.monster_type} />
 						</div>
 
 						{/* Attack */}
@@ -79,7 +74,9 @@ function ChallengeRewards({onReturnStages}) {
 								<span className="ml-1 capitalize">Attack</span>
 							</div>
 							<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-								<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+								<span className="p-1 font-bold text-white capitalize">
+									{monster?.attack}
+								</span>
 							</div>
 						</div>
 
@@ -93,7 +90,35 @@ function ChallengeRewards({onReturnStages}) {
 								<span className="ml-1 capitalize">Defense</span>
 							</div>
 							<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-								<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+								<span className="p-1 font-bold text-white capitalize">
+									{monster?.defense}
+								</span>
+							</div>
+						</div>
+
+						{/* Exp */}
+						<div className="w-2/3 flex flex-col my-2">
+							<div className="flex flex-row items-center mb-1">
+								<FaAngleDoubleUp
+									className="text-Flamingo-Pink"
+									size={16}
+								/>
+								<span className="ml-1 capitalize">Exp</span>
+							</div>
+							<div className="flex flex-col justify-center w-full pt-1">
+								<ProgressBar
+									percentage={Math.floor(monster.exp / monster.level_up_exp * 100)}
+									bgColorClass="bg-Light-Gray"
+									currentBgColorClass="bg-Forest-Green"
+								/>
+								<div className="flex flex-row justify-between items-center mt-1">
+									<span className="text-sm text-Forest-Green font-bold">
+										{monster?.exp}
+									</span>
+									<span className="text-sm font-bold">
+										{monster?.level_up_exp}
+									</span>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -106,22 +131,48 @@ function ChallengeRewards({onReturnStages}) {
 					</h3>
 
 					{/* Items && Eggs */}
-					<div className="flex flex-row w-full flex-wrap bg-white">
-						{rewardList.map((reward) => (
+					<div className="flex flex-row w-full flex-wrap bg-white p-6">
+						{rewardEggs.map((egg) => (
 							<div
-								key={reward.uid}
-								className="w-1/2 my-6 p-4"
+								key={egg.uid}
+								className="w-1/2 my-6 py-4 px-12 shadow-lg"
+							>
+								<div className="flex flex-row justify-between items-center">
+									<div className="flex flex-row items-center">
+										<img
+											className="w-14 h-14 object-scale-down"
+											src={`/img/eggs/${egg.img_name}`}
+											name={egg.name}
+										/>
+										<span className="text-4xl font-bold text-Royal-Blue capitalize ml-8 mr-12">
+											{egg.name}
+										</span>
+									</div>
+									<span className="text-4xl font-bold text-Forest-Green">
+										x{egg.amount}
+									</span>
+								</div>
+							</div>
+						))}
+						{rewardItems.map((item) => (
+							<div
+								key={item.uid}
+								className="w-1/2 my-6 py-4 px-12 shadow-lg"
 							>
 								<div className="flex flex-row justify-center items-center">
-									<img
-										className="w-14 h-14 object-scale-down"
-										src="/img/eggs/lunar-egg.png"
-										name="Lunar egg"
-									/>
-									<span className="text-4xl font-bold text-Royal-Blue capitalize ml-8 mr-12">
-										Lunar egg
+									<div className="flex flex-row items-center">
+										<img
+											className="w-14 h-14 object-scale-down"
+											src={`/img/items/${item.img_name}`}
+											name={item.name}
+										/>
+										<span className="text-4xl font-bold text-Royal-Blue capitalize ml-8 mr-12">
+											{item.name}
+										</span>
+									</div>
+									<span className="text-4xl font-bold text-Forest-Green">
+										x{item.amount}
 									</span>
-									<span className="text-4xl font-bold text-Forest-Green">x1</span>
 								</div>
 							</div>
 						))}
@@ -138,7 +189,9 @@ function ChallengeRewards({onReturnStages}) {
 								/>
 								<span className="text-4xl font-bold text-Indigo-Blue">Coins</span>
 							</div>
-							<span className="text-Forest-Green text-4xl font-bold">+1,000</span>
+							<span className="text-Forest-Green text-4xl font-bold">
+								+{stage?.reward_coins}
+							</span>
 						</div>
 						<div className="w-1/4 flex flex-row justify-between items-center">
 							<div className="flex flex-row items-center">
@@ -149,13 +202,18 @@ function ChallengeRewards({onReturnStages}) {
 								/>
 								<span className="text-4xl font-bold text-Indigo-Blue">Stamina</span>
 							</div>
-							<span className="text-Fire text-4xl font-bold">-20</span>
+							<span className="text-Fire text-4xl font-bold">
+								-{stage?.stamina_cost}
+							</span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div className="w-full flex flex-row justify-center items-center mt-40">
-				<button className="py-3 px-10 bg-Midnight-Gray text-white font-bold text-2xl rounded-full hover:bg-Indigo-Blue">
+				<button
+					onClick={onReturnStages}
+					className="py-3 px-10 bg-Midnight-Gray text-white font-bold text-2xl rounded-full hover:bg-Indigo-Blue"
+				>
 					Return
 				</button>
 			</div>

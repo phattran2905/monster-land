@@ -6,14 +6,19 @@ import MonsterType from "../../components/monster/MonsterType"
 import { useGetChallengeListQuery } from "../../redux/services/challenge"
 
 function ChallengeStages({ onChallenge }) {
-	const { data: challengeList } = useGetChallengeListQuery()
+	const { data: challengeList, refetch: refetchChallenges } = useGetChallengeListQuery()
 	const [stages, setStages] = useState([])
 	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
 	const [boss, setBoss] = useState()
 
 	useEffect(() => {
+		refetchChallenges()
+	}, [])
+
+	useEffect(() => {
 		if (challengeList) {
 			setStages(challengeList.stages)
+			setBoss(challengeList.stages[0])
 		}
 	}, [challengeList])
 

@@ -8,6 +8,7 @@ import ErrorResponse from "../objects/ErrorResponse.js"
 import { calculateDamage } from "../util/fight.js"
 import { randomUID } from "../util/random.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
 // Get A Challenge by id
 export const getChallengeById = async (req, res, next) => {
@@ -35,7 +36,7 @@ export const getAllChallenge = async (req, res, next) => {
 		})
 
 		const detailedStages = challengeListDoc[0].stages.map((challenge, index) => ({
-            uid: challenge.uid,
+			uid: challenge.uid,
 			boss_name: challenge.boss_name,
 			boss_img_name: challenge.boss_img_name,
 			boss_type_uid: challenge.boss_type_uid,
@@ -49,13 +50,11 @@ export const getAllChallenge = async (req, res, next) => {
 			stamina_cost: challenge.stamina_cost,
 		}))
 
-		return res
-			.status(200)
-			.json({
-				uid: challengeListDoc[0].uid,
-				status: challengeListDoc[0].status,
-				stages: detailedStages,
-			})
+		return res.status(200).json({
+			uid: challengeListDoc[0].uid,
+			status: challengeListDoc[0].status,
+			stages: detailedStages,
+		})
 	} catch (error) {
 		return next(error)
 	}
@@ -69,6 +68,7 @@ export const challengeBoss = async (req, res, next) => {
 			stage_uid: stageUID,
 			challenge_uid: challengeUID,
 		} = req.query
+
 		// Get the stage info
 		const stageDoc = await StageModel.findOne({ uid: stageUID })
 			.populate({
@@ -79,6 +79,11 @@ export const challengeBoss = async (req, res, next) => {
 
 		if (!stageDoc) {
 			return next(new ErrorResponse(404, "Stage is not found."))
+		}
+
+		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
+		if (trainer.stamina < stageDoc.stamina_cost) {
+			return next(new ErrorResponse(400, "You do not have enough stamina."))
 		}
 
 		// Get monster info
@@ -164,8 +169,27 @@ export const challengeBoss = async (req, res, next) => {
 		}
 		await monsterDoc.save()
 
+		const updatedMonster = {
+			...monster,
+			exp: monsterDoc.exp,
+			monster_type: monster.type,
+			level_up_exp: monsterDoc.level_up_exp,
+			level: monsterDoc.level,
+		}
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+		const updatedMonsterList = monsterCollection.monster_list.map((m) => {
+			if (m.uid === updatedMonster.uid) {
+				return updatedMonster
+			}
+
+			return m
+		})
+		monsterCollection.monster_list = updatedMonsterList
+		await monsterCollection.save()
+
+		// Update collection
+
 		// Add coins and subtract stamina
-		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
 		trainer.stamina =
 			trainer.stamina >= stageDoc.stamina_cost ? trainer.stamina - stageDoc.stamina_cost : 0
 
@@ -221,7 +245,11 @@ export const challengeBoss = async (req, res, next) => {
 		backpack.item_list = updateItemList
 		await backpack.save()
 
-		return res.status(200).json({ winner: stageDoc, result: "won" })
+		return res.status(200).json({
+			stage: stageDoc,
+			winner: updatedMonster,
+			result: "won",
+		})
 	} catch (error) {
 		return next(error)
 	}

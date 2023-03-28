@@ -18,10 +18,11 @@ export default function ChallengesPage() {
 	const [showRewards, setShowRewards] = useState(false)
 	const [showSelectMonsterModal, setShowSelectMonsterModal] = useState(false)
 	const [selectedBoss, setSelectedBoss] = useState()
+	const [winner, setWinner] = useState()
 	const [challengeUID, setChallengeUID] = useState()
 	const [selectedMonster, setSelectedMonster] = useState()
 	const [battleBoss] = useBattleBossMutation()
-	const { data: trainerData, refetch: refetchTrainerInfo } = useGetTrainerInfoQuery({
+	const { refetch: refetchTrainerInfo } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const [result, setResult] = useState()
@@ -65,8 +66,6 @@ export default function ChallengesPage() {
 	}
 
 	const onBattleBoss = async (monster) => {
-		console.log(selectedBoss)
-		console.log(monster)
 		const result = await battleBoss({
 			jwt_token: authState.jwtToken,
 			stageUID: selectedBoss.uid,
@@ -81,6 +80,9 @@ export default function ChallengesPage() {
 		} else {
 			const battleResult = result?.data?.result
 			if (result?.data.result === "won") {
+				setWinner(result?.data.winner)
+				// setSelectedMonster(result?.data.winner)
+				// setSelectedBoss(result?.data.stage)
 			} else if (result?.data.result === "defeated") {
 			}
 
@@ -118,7 +120,11 @@ export default function ChallengesPage() {
 					)}
 
 					{showRewards && result === "won" && (
-						<ChallengeRewards onReturnStages={onReturnStages} />
+						<ChallengeRewards
+							stage={selectedBoss}
+							monster={winner}
+							onReturnStages={onReturnStages}
+						/>
 					)}
 
 					{showSelectMonsterModal && (

@@ -6,11 +6,15 @@ import MonsterType from "../monster/MonsterType"
 
 function SelectMonsterModal({ onClose, onSelectMonster }) {
 	const authState = useSelector((state) => state.auth)
-	const { data: monsterCollection, isLoading } = useGetMonsterCollectionQuery({
+	const { data: monsterCollection, refetch: refetchMonsterCollection } = useGetMonsterCollectionQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const [monsters, setMonsters] = useState([])
 	const [selectedUID, setSelectedUID] = useState()
+
+	useEffect(() => {
+        refetchMonsterCollection()
+	}, [])
 
 	// Set Items and Eggs
 	useEffect(() => {

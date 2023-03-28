@@ -327,6 +327,7 @@ export const hatchAnEgg = async (req, res, next) => {
 
 		const newMonster = {
 			uid: `M-${randomUID()}`,
+			name: randomMonsterInfo.name,
 			info_uid: randomMonsterInfo.uid,
 			level: 1,
 			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,

@@ -10,12 +10,16 @@ import { useGetMonsterCollectionQuery } from "../redux/services/collection"
 
 export default function CollectionPage() {
 	const authState = useSelector((state) => state.auth)
-	const { data: monsterData, error } = useGetMonsterCollectionQuery({
+	const { data: monsterData, refetch: refetchCollection } = useGetMonsterCollectionQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const navigate = useNavigate()
 	const [monsters, setMonsters] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		refetchCollection()
+	}, [])
 
 	// Redirect to login if not logged in
 	useEffect(() => {

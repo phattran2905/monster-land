@@ -93,7 +93,7 @@ export default function MonsterCard({
 					</div>
 					<div className="flex flex-col justify-center w-full pt-1">
 						<ProgressBar
-							percentage={Math.floor(exp / level_up_exp)}
+							percentage={Math.floor(exp / level_up_exp * 100)}
 							bgColorClass="bg-Light-Gray"
 							currentBgColorClass="bg-Forest-Green"
 						/>

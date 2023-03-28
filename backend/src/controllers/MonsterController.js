@@ -33,6 +33,7 @@ const populateMonsterCollectionData = (monsterCollectionDoc) => ({
 			attack: i.attack,
 			defense: i.attack,
 			level: i.level,
+			exp: i.exp,
 			level_up_exp: i.level_up_exp,
 			name: monsterInfo.name,
 			monster_type: monsterInfo.monsterType.name,
