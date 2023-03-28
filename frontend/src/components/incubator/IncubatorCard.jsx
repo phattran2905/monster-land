@@ -6,7 +6,15 @@ import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
 
-function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDoneIncubating }) {
+function IncubatorCard({
+	index,
+	name,
+	incubator,
+	onShowBoostModal,
+	onShowSelectEggModal,
+	onDoneIncubating,
+}) {
+	const [inUse, setInUse] = useState(false)
 	const [done, setDone] = useState(false)
 	const [secondsToCount, setSecondsToCount] = useState(1)
 	const [counter, setCounter] = useState(0)
@@ -15,7 +23,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 	useEffect(() => {
 		const intervalIndex = setInterval(() => {
 			if (counter >= 0) {
-                setCounter((counter) => counter - 1)
+				setCounter((counter) => counter - 1)
 			}
 		}, 1000)
 
@@ -33,9 +41,10 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 	}
 
 	useEffect(() => {
-		if (incubator.done_hatching_time) {
+		if (incubator) {
+			setInUse(true)
 			const now = moment()
-			const doneHatchingTime = moment(incubator.done_hatching_time)
+			const doneHatchingTime = moment(incubator?.done_hatching_time)
 			const diffTime = doneHatchingTime.diff(now, "seconds")
 
 			if (diffTime > 0) {
@@ -53,27 +62,24 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 	}, [incubator])
 
 	useEffect(() => {
-        	if (counter <= 0) {
-        		setDone(true)
-        	} else {
-        		setHatchingTime(displayHatchingTime(counter))
-        		setDone(false)
-        	}
+		if (counter <= 0) {
+			setDone(true)
+		} else {
+			setHatchingTime(displayHatchingTime(counter))
+			setDone(false)
+		}
 	}, [counter])
 
 	return (
 		<div
 			className={`${
-				incubator.in_use && !done
-					? "border-Light-Gray bg-light-white"
-					: "border-Indigo-Blue"
-			} ${incubator.in_use && done && "border-Forest-Green bg-Light-Green"}
+				inUse && !done ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
+			} ${inUse && done && "border-Forest-Green bg-Light-Green"}
             flex flex-col items-center w-1/2 h-3/4 py-10 border-4  rounded-lg shadow-2xl`}
-			key={incubator.uid}
 		>
 			{/* Name */}
 			<div className=" bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
-				<span className="text-white capitalize font-bold text-2xl">{incubator.name}</span>
+				<span className="text-white capitalize font-bold text-2xl">{name}</span>
 			</div>
 
 			{/* Incubator Image & Egg */}
@@ -83,24 +89,24 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 						style={{ width: "30rem" }}
 						className="h-full flex flex-row justify-center items-center relative bg-background-incubator-img g-no-repeat bg-cover"
 					>
-						{incubator.in_use ? (
+						{inUse ? (
 							<img
 								style={{ height: "32rem" }}
 								className="object-fit"
 								src="/img/incubators/inferno-egg-incubator.png"
-								alt={incubator.name}
+								alt={name}
 							/>
 						) : (
 							<img
 								style={{ height: "32rem" }}
 								className="object-fit"
 								src="/img/incubators/incubator.png"
-								alt={incubator.name}
+								alt={name}
 							/>
 						)}
 					</div>
 					{/* Egg Info */}
-					{incubator.in_use && (
+					{inUse && (
 						<>
 							<div
 								style={{
@@ -123,7 +129,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 										</span>
 									</div>
 									<div className="py-2 bg-Midnight-Gray flex flex-row justify-center items-center">
-										<span className="text-white px-4">{incubator.uid}</span>
+										<span className="text-white px-4">{incubator?.uid}</span>
 									</div>
 								</div>
 								<div className="mb-3">
@@ -138,7 +144,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 										</span>
 									</div>
 									<div className="ml-4 py-1">
-										<MonsterType name={incubator.monster_type} />
+										<MonsterType name={incubator?.monster_type} />
 									</div>
 								</div>
 								<div className="mb-3">
@@ -162,7 +168,7 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 												}
 												bgColorClass="bg-Light-Gray"
 												currentBgColorClass={
-													done ? "bg-Forest-Green" :  "bg-Flamingo-Pink"
+													done ? "bg-Forest-Green" : "bg-Flamingo-Pink"
 												}
 											/>
 											{/* Done icon && Boost button */}
@@ -172,7 +178,8 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 													size={22}
 												/>
 											) : (
-												<button
+												<>
+													{/* <button
 													onClick={onShowBoostModal}
 													className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
 												>
@@ -180,11 +187,12 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 														className="text-white rotate-90 "
 														size={16}
 													/>
-												</button>
+												</button> */}
+												</>
 											)}
 										</div>
 										{/* Time */}
-										{incubator.in_use && !done && (
+										{inUse && !done && (
 											<div className="flex flex-row justify-center my-2">
 												<span className="py-2 px-4 font-bold rounded-lg bg-Flamingo-Pink text-white">
 													{hatchingTime}
@@ -197,7 +205,10 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 								{/* Hatch button */}
 								{done && (
 									<button
-										onClick={() => onDoneIncubating(incubator.uid)}
+										onClick={() => {
+											onDoneIncubating(incubator?.uid, index)
+                                            setInUse(false)
+										}}
 										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize"
 									>
 										Hatch now
@@ -210,12 +221,12 @@ function IncubatorCard({ incubator, onShowBoostModal, onShowSelectEggModal, onDo
 
 				{/* Loading dots and Choose Button */}
 				<div className="w-full my-4 flex flex-row justify-center items-center">
-					{incubator.in_use && !done && (
+					{inUse && !done && (
 						<div className="py-4 px-14 flex flex-row">
 							<LoadingDots />
 						</div>
 					)}
-					{!incubator.in_use && (
+					{!inUse && (
 						<button
 							onClick={onShowSelectEggModal}
 							className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue"

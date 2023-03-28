@@ -26,7 +26,7 @@ export default function CollectionPage() {
 
 	// Set monsters
 	useEffect(() => {
-		if (monsterData) {    console.log(monsterData.monster_list)
+		if (monsterData) {
 			setMonsters(monsterData.monster_list)
 			setIsLoading(false)
 		}
