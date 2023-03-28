@@ -20,9 +20,9 @@ const ChallengeSchema = new Schema(
 	{ timestamps: true }
 )
 
-ChallengeSchema.virtual("stage_info", {
-	ref: "Stage",
-	localField: "stages.uid",
+ChallengeSchema.virtual("stage_boss_type", {
+	ref: "MonsterType",
+	localField: "stages.boss_type_uid",
 	foreignField: "uid",
 })
 

@@ -31,10 +31,24 @@ export const getAllChallenge = async (req, res, next) => {
 		const criteria = req.query.status ? { status: req.query.status } : null
 
 		const challengeListDoc = await ChallengeModel.find(criteria).populate({
-			path: "stage_info",
+			path: "stage_boss_type",
 		})
 
-		return res.status(200).json(challengeListDoc)
+		const detailedStages = challengeListDoc[0].stages.map((challenge, index) => ({
+			boss_name: challenge.name,
+			boss_img_name: challenge.boss_img_name,
+			boss_type_uid: challenge.boss_type_uid,
+			boss_type: challengeListDoc[0].stage_boss_type[index].name,
+			boss_attack: challenge.boss_attack,
+			boss_defense: challenge.boss_defense,
+			reward_exp: challenge.reward_exp,
+			reward_coins: challenge.reward_coins,
+			reward_eggs: challenge.reward_eggs,
+			reward_items: challenge.reward_items,
+			stamina_cost: challenge.stamina_cost,
+		}))
+
+		return res.status(200).json({ ...challengeListDoc, stages: detailedStages })
 	} catch (error) {
 		return next(error)
 	}
