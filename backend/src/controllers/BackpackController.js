@@ -217,8 +217,7 @@ export const getIncubatingEggByUId = async (req, res, next) => {
 			user_uid: req.user.uid,
 			uid: incubationUID ?? null,
 			status: "incubating",
-		})
-			.populate({ path: "egg_info", populate: { path: "monsterType" } })
+		}).populate({ path: "egg_info", populate: { path: "monsterType" } })
 
 		const populatedIncubatingEgg = populateIncubationData(incubatingEgg)
 
@@ -233,44 +232,49 @@ export const incubateAnEgg = async (req, res, next) => {
 	try {
 		const { egg_uid: eggUID } = req.query
 
-		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid }).populate({
-			path: "eggs",
-			populate: { path: "monsterType", select: "-_id -uid name" },
-		})
+		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
+			.populate({ path: "items" })
+			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id -uid name" } })
+
 		if (!backpack) {
 			return next(new ErrorResponse(404, "Backpack is not found"))
 		}
 
+		const backpackDoc = populateItemData(backpack)
+
 		// Do not have the egg
-		const haveEgg = backpack.egg_list.findIndex((egg) => egg.egg_uid === eggUID)
-		if (haveEgg === -1 || backpack.egg_list[haveEgg].amount < 1) {
+		const haveEgg = backpackDoc.egg_list.findIndex((egg) => egg.uid === eggUID)
+		if (haveEgg === -1 || backpackDoc.egg_list[haveEgg].amount < 1) {
 			return next(new ErrorResponse(404, "Can not find this egg in your backpack."))
 		}
 
 		// Starting incubating
-		const egg = backpack.eggs.find((e) => e.uid === eggUID)
+		const egg = backpackDoc.egg_list[haveEgg]
 		const incubatorImgName = `${egg.img_name.split(".png")[0]}-incubator.png`
 		const now = moment()
 		const duration = moment.duration(egg.hatching_time_in_seconds, "seconds")
 		const timeForIncubation = now.clone()
 		timeForIncubation.add(duration)
-		await IncubationModel.create({
+		const newIncubation = {
 			uid: `Inc-${randomUID()}`,
 			user_uid: req.user.uid,
-			egg_uid: eggUID,
+			egg_uid: egg.uid,
+			egg_name: egg.name,
+			monster_type: egg.monster_type,
 			done_hatching_time: timeForIncubation,
 			incubator_img: incubatorImgName,
-		})
+		}
+		await IncubationModel.create(newIncubation)
 
-		// Update amount
-		backpack.egg_list[haveEgg].amount -= 1
-		const updatedEggList = [...backpack.egg_list].filter((e) => e.amount > 0)
+		// Update amount of the egg list
+		backpackDoc.egg_list[haveEgg].amount -= 1
+		const updatedEggList = [...backpackDoc.egg_list].filter((e) => e.amount > 0)
 		await BackpackModel.findOneAndUpdate(
 			{ user_uid: req.user.uid },
 			{ egg_list: updatedEggList }
 		)
 
-		return res.status(200).json({ done_hatching_time: timeForIncubation })
+		return res.status(200).json(newIncubation)
 	} catch (error) {
 		return next(error)
 	}

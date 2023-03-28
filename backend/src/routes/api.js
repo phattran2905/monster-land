@@ -3,6 +3,7 @@ import MonsterRouter from "./Monster.js"
 import BackpackRouter from "./Backpack.js"
 import AuthenticationRouter from "./Authentication.js"
 import TrainerRouter from "./Trainer.js"
+import ChallengeRouter from "./Challenge.js"
 
 const apiRouter = Router()
 apiRouter.get("/", (req, res) => {
@@ -13,5 +14,6 @@ apiRouter.use(AuthenticationRouter)
 apiRouter.use(TrainerRouter)
 apiRouter.use(MonsterRouter)
 apiRouter.use(BackpackRouter)
+apiRouter.use(ChallengeRouter)
 
 export default apiRouter
