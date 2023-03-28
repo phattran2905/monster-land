@@ -1,21 +1,20 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp } from "react-icons/fa"
 import coinIcon from "../../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
 import MonsterType from "../../components/monster/MonsterType"
+import { useGetChallengeListQuery } from "../../redux/services/challenge"
 
 function ChallengeStages({ onChallenge }) {
-	const [stages, setStages] = useState([
-		{ uid: 1, boss: 1 },
-		{ uid: 2, boss: 2 },
-		{ uid: 3, boss: 1 },
-		{ uid: 4, boss: 2 },
-		{ uid: 5, boss: 1 },
-		{ uid: 6, boss: 2 },
-		{ uid: 7, boss: 1 },
-		{ uid: 8, boss: 2 },
-	])
+	const { data: challengeList } = useGetChallengeListQuery()
+	const [stages, setStages] = useState([])
 	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
+
+	useEffect(() => {
+		if (challengeList) {
+			setStages(challengeList[0].stages)
+		}
+	}, [challengeList])
 
 	const selectStage = (actionType) => {
 		if (actionType === "prev") {
@@ -79,7 +78,7 @@ function ChallengeStages({ onChallenge }) {
 							</h3>
 							{/* Boss Image */}
 							<div
-								className={`bg-light-white w-80 h-80 p-4 border-r-4 border-l-4 ${
+								className={`bg-light-white w-full h-80 p-4 border-r-4 border-l-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
