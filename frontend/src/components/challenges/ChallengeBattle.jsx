@@ -5,7 +5,7 @@ import LoadingDots from "../LoadingDots"
 import { useBattleBossMutation } from "../../redux/services/challenge"
 import { useSelector } from "react-redux"
 
-function ChallengeBattle({ battleResult, onReturnStages, onShowRewards }) {
+function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster, boss }) {
 	const [result, setResult] = useState(false)
 	const [winner, setWinner] = useState()
 	const [bossHealth, setBossHealth] = useState(100)
@@ -26,11 +26,11 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards }) {
 			if (battleResult === "won") {
 				setResult(true)
 				setWinner("monster")
-                setBossHealth(0)
+				setBossHealth(0)
 			} else {
-                setResult(true)
+				setResult(true)
 				setWinner("boss")
-                setMonsterHealth(0)
+				setMonsterHealth(0)
 			}
 		}, 4000)
 	}, [])

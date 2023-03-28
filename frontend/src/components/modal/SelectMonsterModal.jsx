@@ -118,7 +118,9 @@ function SelectMonsterModal({ onClose, onSelectMonster }) {
 
 					<div className="w-full flex flex-row justify-center items-center py-4 bg-white">
 						<button
-							onClick={() => onSelectMonster(selectedUID)}
+							onClick={() =>
+								onSelectMonster(monsters.find((m) => m.uid === selectedUID))
+							}
 							className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
 						>
 							<span className="text-white font-bold text-xl">Select</span>

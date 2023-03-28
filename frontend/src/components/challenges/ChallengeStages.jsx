@@ -9,7 +9,7 @@ function ChallengeStages({ onChallenge }) {
 	const { data: challengeList } = useGetChallengeListQuery()
 	const [stages, setStages] = useState([])
 	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
-	const [selectedStageUID, setSelectedStageUID] = useState(0)
+	const [boss, setBoss] = useState()
 
 	useEffect(() => {
 		if (challengeList) {
@@ -34,7 +34,7 @@ function ChallengeStages({ onChallenge }) {
 			}
 		}
 	}
-	console.log(stages)
+
 	return (
 		<>
 			{/* Challenge Boss */}
@@ -62,7 +62,7 @@ function ChallengeStages({ onChallenge }) {
 							key={stage.uid}
 							onClick={() => {
 								setSelectedStageIndex(index)
-								setSelectedStageUID(stage.uid)
+								setBoss(stage)
 							}}
 							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-xl hover:shadow-Flamingo-Pink ${
 								index === selectedStageIndex
@@ -258,7 +258,7 @@ function ChallengeStages({ onChallenge }) {
 			{/* Challenge Button */}
 			<div className="h-1/12 w-11/12 p-6 flex flex-row justify-center items-center">
 				<button
-					onClick={() => onChallenge(selectedStageUID, challengeList.uid)}
+					onClick={() => onChallenge(boss, challengeList.uid)}
 					className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red"
 				>
 					Challenge

@@ -8,6 +8,7 @@ import MenuBar from "../components/menu/MenuBar"
 import { useBattleBossMutation, useGetChallengeListQuery } from "../redux/services/challenge"
 import SelectMonsterModal from "../components/modal/SelectMonsterModal"
 import { useSelector } from "react-redux"
+import { useGetTrainerInfoQuery } from "../redux/services/trainer"
 
 export default function ChallengesPage() {
 	const { data: challengeList } = useGetChallengeListQuery()
@@ -16,31 +17,43 @@ export default function ChallengesPage() {
 	const [showBattle, setShowBattle] = useState(false)
 	const [showRewards, setShowRewards] = useState(false)
 	const [showSelectMonsterModal, setShowSelectMonsterModal] = useState(false)
-	const [stageUID, setStageUID] = useState()
+	const [selectedBoss, setSelectedBoss] = useState()
 	const [challengeUID, setChallengeUID] = useState()
-	const [monsterUID, setMonsterUID] = useState()
+	const [selectedMonster, setSelectedMonster] = useState()
 	const [battleBoss] = useBattleBossMutation()
+	const { data: trainerData, refetch: refetchTrainerInfo } = useGetTrainerInfoQuery({
+		jwt_token: authState.jwtToken,
+	})
 	const [result, setResult] = useState()
+	const [error, setError] = useState()
 
-	const onChallenge = (stage_uid, challenge_uid) => {
-		console.log(stage_uid)
+	useEffect(() => {
+		if (showRewards && result === "won") {
+			refetchTrainerInfo()
+		}
+	}, [showRewards])
+
+	const onChallenge = (boss, challenge_uid) => {
+		setError()
 		setShowSelectMonsterModal(true)
-		setStageUID(stage_uid)
+		setSelectedBoss(boss)
 		setChallengeUID(challenge_uid)
 	}
 
 	const onReturnStages = () => {
+		setError()
 		setShowBattle(false)
 		setShowRewards(false)
 		setShowSelectMonsterModal(false)
 		setShowStages(true)
 	}
 
-	const onSelectMonster = (monster_uid) => {
-		setMonsterUID(monster_uid)
+	const onSelectMonster = (monster) => {
+		setError()
+		setSelectedMonster(monster)
 		setShowSelectMonsterModal(false)
 
-		onBattleBoss(monster_uid)
+		onBattleBoss(monster)
 	}
 
 	const onShowRewards = () => {
@@ -48,25 +61,33 @@ export default function ChallengesPage() {
 		setShowStages(false)
 		setShowSelectMonsterModal(false)
 		setShowRewards(true)
+		setError()
 	}
 
-	const onBattleBoss = async (monster_uid) => {
+	const onBattleBoss = async (monster) => {
+		console.log(selectedBoss)
+		console.log(monster)
 		const result = await battleBoss({
 			jwt_token: authState.jwtToken,
-			stageUID: stageUID,
-			monsterUID: monster_uid,
+			stageUID: selectedBoss.uid,
+			monsterUID: monster.uid,
 			challengeUID: challengeUID,
 		})
 
-		console.log(result)
-		const battleResult = result?.data?.result
-		if (result?.data.result === "won") {
-		} else if (result?.data.result === "defeated") {
-		}
+		if (result?.error) {
+			setError(result.error.data.message)
+			setShowBattle(false)
+			setShowStages(true)
+		} else {
+			const battleResult = result?.data?.result
+			if (result?.data.result === "won") {
+			} else if (result?.data.result === "defeated") {
+			}
 
-		setResult(battleResult)
-		setShowStages(false)
-		setShowBattle(true)
+			setResult(battleResult)
+			setShowStages(false)
+			setShowBattle(true)
+		}
 	}
 
 	return (
@@ -77,6 +98,13 @@ export default function ChallengesPage() {
 				<MenuBar />
 
 				<div className="m-10 w-full h-11/12 flex flex-col items-center relative">
+					{/* Error */}
+					{error && (
+						<div className="bg-Fire-Engine-Red p-4 rounded-xl">
+							<p className="text-white font-bold">Error: {error}</p>
+						</div>
+					)}
+
 					{showStages && <ChallengeStages onChallenge={onChallenge} />}
 
 					{showBattle && (
@@ -84,6 +112,8 @@ export default function ChallengesPage() {
 							battleResult={result}
 							onReturnStages={onReturnStages}
 							onShowRewards={onShowRewards}
+							monster={selectedMonster}
+							boss={selectedBoss}
 						/>
 					)}
 
