@@ -1,8 +1,13 @@
+import MonsterModel from "../models/monster/MonsterModel.js"
 import ChallengeModel from "../models/challenge/ChallengeModel.js"
 import ChallengeLogModel from "../models/challenge/ChallengeLogModel.js"
 import StageModel from "../models/challenge/StageModel.js"
+import TrainerModel from "../models/user/TrainerModel.js"
 import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
+import { calculateDamage } from "../util/fight.js"
+import { randomUID } from "../util/random.js"
+import BackpackModel from "../models/backpack/BackpackModel.js"
 
 // Get A Challenge by id
 export const getChallengeById = async (req, res, next) => {
@@ -35,117 +40,155 @@ export const getAllChallenge = async (req, res, next) => {
 	}
 }
 
-// Get Challenge Collection
-// export const getMonsterCollection = async (req, res, next) => {
-// 	try {
-// 		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
-// 			.populate({ path: "monster_list_info" })
-// 			.populate({ path: "trainer_info" })
+// Challenge a boss
+export const challengeBoss = async (req, res, next) => {
+	try {
+		const {
+			monster_uid: monsterUID,
+			stage_uid: stageUID,
+			challenge_uid: challengeUID,
+		} = req.query
+		// Get the stage info
+		const stageDoc = await StageModel.findOne({ uid: stageUID })
+			.populate({
+				path: "boss_type",
+			})
+			.populate({ path: "reward_detailed_items" })
+			.populate({ path: "reward_detailed_eggs" })
 
-// 		if (!monsterCollection) {
-// 			return res.status(200).json([])
-// 		}
+		if (!stageDoc) {
+			return next(new ErrorResponse(404, "Stage is not found."))
+		}
 
-// 		return res.status(200).json(monsterCollection)
-// 	} catch (error) {
-// 		return next(error)
-// 	}
-// }
+		// Get monster info
+		const monsterDoc = await MonsterModel.findOne({ uid: monsterUID }).populate({
+			path: "info",
+			populate: { path: "monsterType" },
+		})
+		if (!monsterDoc) {
+			return next(new ErrorResponse(404, "Monster is not found."))
+		}
 
-// // Assign a challenge to Challenge Team
-// export const assignMonsterToTeam = async (req, res, next) => {
-// 	try {
-// 		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+		const monster = {
+			uid: monsterDoc.uid,
+			info_uid: monsterDoc.info_uid,
+			level: monsterDoc.level,
+			exp: monsterDoc.exp,
+			level_up_exp: monsterDoc.level_up_exp,
+			attack: monsterDoc.attack,
+			defense: monsterDoc.defense,
+			status: monsterDoc.status,
+			name: monsterDoc.info.name,
+			img_name: monsterDoc.info.img_name,
+			type: monsterDoc.info.monsterType.name,
+			type_uid: monsterDoc.info.monsterType.uid,
+		}
+		const boss = {
+			uid: stageDoc.uid,
+			attack: stageDoc.boss_attack,
+			defense: stageDoc.boss_defense,
+			status: stageDoc.status,
+			name: stageDoc.boss_name,
+			img_name: stageDoc.boss_img_name,
+			type: stageDoc.boss_type.name,
+			type_uid: stageDoc.boss_type_uid,
+		}
 
-// 		if (!monsterCollection) {
-// 			return next(new ErrorResponse(404, "Collection is not found."))
-// 		}
+		// Calculate damage
+		const { enemyDamage, monsterDamage } = calculateDamage(monster, boss)
+		const defeatBoss = monsterDamage > boss.defense
 
-// 		// Check if the trainer has the challenge in their collection
-// 		const { monster_uid: monsterUID } = req.query
-// 		if (!monsterUID) {
-// 			return next(new ErrorResponse(400, "Can not find monster_uid in the query."))
-// 		}
+		if (!defeatBoss) {
+			return res.status(200).json({ message: "You are defeated." })
+		}
 
-// 		// Already in the team
-// 		const alreadyInTeam = monsterCollection.monster_team.findIndex((m) => m === monsterUID)
-// 		if (alreadyInTeam !== -1) {
-// 			return next(new ErrorResponse(400, "This challenge is already assigned to the team."))
-// 		}
+		// Add result to ChallengeLog
+		const challengeLog = await ChallengeLogModel.findOne({
+			user_uid: req.user.uid,
+			challenge_uid: challengeUID,
+		})
 
-// 		// Do not own the challenge
-// 		const ownMonster = monsterCollection.monster_list.findIndex((m) => m === monsterUID)
-// 		if (ownMonster === -1) {
-// 			return next(new ErrorResponse(400, "Can not find the challenge in your collection."))
-// 		}
+		// Update log
+		if (challengeLog) {
+			const updateFinishedStages = challengeLog.finished_stages.filter((s) => s !== stageUID)
+			await ChallengeLogModel.findOneAndUpdate(
+				{
+					user_uid: req.user.uid,
+					challenge_uid: challengeUID,
+				},
+				{
+					finished_stages: [...updateFinishedStages, stageUID],
+				}
+			)
+		} else {
+			// Create a new log
+			await ChallengeLogModel.create({
+				uid: `M-${randomUID()}`,
+				user_uid: req.user.uid,
+				challenge_uid: challengeUID,
+				finished_stages: [stageUID],
+			})
+		}
 
-// 		// Exceed the team member limit
-// 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+		// Rewards points
+		// Add exp to monster
+		monsterDoc.exp = stageDoc.reward_exp
+		if (monsterDoc.exp >= monsterDoc.level_up_exp) {
+			// Level up
+			monsterDoc.level += 1
+			monsterDoc.exp = 0
+			const GsSetting = await GameServerSettingModel.findOne({})
+			const newLvlUpExp = (GsSetting.monster_lvl_up_exp_rate + 1) * monsterDoc.level_up_exp
+			monsterDoc.level_up_exp = newLvlUpExp
+		}
+		await monsterDoc.save()
 
-// 		if (monsterCollection.monster_team.length === GameServerSetting.monster_team_member_limit) {
-// 			// Remove the first one and add to the collection
-// 			const removedMonsterUID = monsterCollection.monster_team.shift()
-// 			monsterCollection.monster_list.push(removedMonsterUID)
-// 			// Add to the team
-// 			monsterCollection.monster_team.push(monsterUID)
-// 		} else {
-// 			monsterCollection.monster_list.splice(ownMonster, 1)
-// 			monsterCollection.monster_team.push(monsterUID)
-// 		}
+		// Add coins and subtract stamina
+		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
+		trainer.stamina =
+			trainer.stamina >= stageDoc.stamina_cost ? trainer.stamina - stageDoc.stamina_cost : 0
 
-// 		// Update Challenge Collection
-// 		const updatedCollection = await MonsterCollectionModel.findOneAndUpdate(
-// 			{ uid: monsterCollection.uid },
-// 			{
-// 				monster_list: [...monsterCollection.monster_list],
-// 				monster_team: [...monsterCollection.monster_team],
-// 			},
-// 			{ new: true }
-// 		)
+		trainer.gold += stageDoc.reward_coins
+		await trainer.save()
 
-// 		return res.status(200).json(updatedCollection)
-// 	} catch (error) {
-// 		return next(error)
-// 	}
-// }
+		// Items and Eggs
+		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
 
-// // Assign a challenge to Challenge Team
-// export const removeMonsterFromTeam = async (req, res, next) => {
-// 	try {
-// 		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+		const updateItemList = backpack.item_list.map((item) => {
+			const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.item_uid)
+			if (hasItem !== -1) {
+				const newAmount = item.amount + stageDoc.reward_items[hasItem].amount
 
-// 		if (!monsterCollection) {
-// 			return next(new ErrorResponse(404, "Collection is not found."))
-// 		}
+				return {
+					...item,
+					amount: newAmount,
+				}
+			}
 
-// 		// Check if the trainer has the challenge in their collection
-// 		const { monster_uid: monsterUID } = req.query
-// 		if (!monsterUID) {
-// 			return next(new ErrorResponse(400, "Can not find monster_uid in the query."))
-// 		}
+			return item
+		})
 
-// 		// Not in the team
-// 		const notInTeam = monsterCollection.monster_team.findIndex((m) => m === monsterUID)
-// 		if (notInTeam === -1) {
-// 			return next(new ErrorResponse(400, "This challenge is not in the team."))
-// 		}
+		const updateEggList = backpack.egg_list.map((egg) => {
+			const hasItem = stageDoc.reward_eggs.findIndex((e) => e.uid === egg.egg_uid)
+			if (hasItem !== -1) {
+				const newAmount = egg.amount + stageDoc.reward_eggs[hasItem].amount
 
-// 		// Remove from the team and add to the collection
-// 		monsterCollection.monster_team.splice(notInTeam, 1)
-// 		monsterCollection.monster_list.push(monsterUID)
+				return {
+					...egg,
+					amount: newAmount,
+				}
+			}
 
-// 		// Update Challenge Collection
-// 		const updatedCollection = await MonsterCollectionModel.findOneAndUpdate(
-// 			{ uid: monsterCollection.uid },
-// 			{
-// 				monster_list: [...monsterCollection.monster_list],
-// 				monster_team: [...monsterCollection.monster_team],
-// 			},
-// 			{ new: true }
-// 		)
+			return egg
+		})
 
-// 		return res.status(200).json(updatedCollection)
-// 	} catch (error) {
-// 		return next(error)
-// 	}
-// }
+		// Update backpack
+		backpack.egg_list = updateEggList
+		backpack.item_list = updateItemList
+		await backpack.save()
+
+		return res.status(200).json(stageDoc)
+	} catch (error) {
+		return next(error)
+	}
+}

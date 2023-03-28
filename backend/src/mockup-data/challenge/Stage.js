@@ -13,11 +13,11 @@ const Stages = [
 		boss_defense: 30,
 		reward_exp: 100,
 		reward_coins: 500,
-		reward_items: [
+		reward_eggs: [
 			{ ...eggs[2], amount: 1 },
 			{ ...eggs[1], amount: 1 },
 		],
-		reward_eggs: [
+		reward_items: [
 			{ ...items[2], amount: 1 },
 			{ ...items[1], amount: 1 },
 		],
@@ -32,11 +32,11 @@ const Stages = [
 		boss_defense: 30,
 		reward_exp: 100,
 		reward_coins: 500,
-		reward_items: [
+		reward_eggs: [
 			{ ...eggs[2], amount: 2 },
 			{ ...eggs[1], amount: 2 },
 		],
-		reward_eggs: [
+		reward_items: [
 			{ ...items[0], amount: 2 },
 			{ ...items[1], amount: 2 },
 		],
@@ -51,11 +51,11 @@ const Stages = [
 		boss_defense: 30,
 		reward_exp: 100,
 		reward_coins: 500,
-		reward_items: [
+		reward_eggs: [
 			{ ...eggs[1], amount: 3 },
 			{ ...eggs[2], amount: 3 },
 		],
-		reward_eggs: [
+		reward_items: [
 			{ ...items[1], amount: 3 },
 			{ ...items[2], amount: 3 },
 		],
@@ -70,11 +70,11 @@ const Stages = [
 		boss_defense: 30,
 		reward_exp: 100,
 		reward_coins: 500,
-		reward_items: [
+		reward_eggs: [
 			{ ...eggs[1], amount: 4 },
 			{ ...eggs[2], amount: 4 },
 		],
-		reward_eggs: [
+		reward_items: [
 			{ ...items[1], amount: 4 },
 			{ ...items[2], amount: 4 },
 		],
