@@ -154,8 +154,22 @@ export const challengeBoss = async (req, res, next) => {
 		// Items and Eggs
 		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
 
+		// const updateItemList = backpack.item_list.map((item) => {
+		// 	const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.item_uid)
+		// 	if (hasItem !== -1) {
+		// 		const newAmount = item.amount + stageDoc.reward_items[hasItem].amount
+
+		// 		return {
+		// 			...item,
+		// 			amount: newAmount,
+		// 		}
+		// 	}
+
+		// 	return item
+		// })
+
 		const updateItemList = backpack.item_list.map((item) => {
-			const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.item_uid)
+			const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.uid)
 			if (hasItem !== -1) {
 				const newAmount = item.amount + stageDoc.reward_items[hasItem].amount
 
@@ -164,12 +178,11 @@ export const challengeBoss = async (req, res, next) => {
 					amount: newAmount,
 				}
 			}
-
 			return item
 		})
 
 		const updateEggList = backpack.egg_list.map((egg) => {
-			const hasItem = stageDoc.reward_eggs.findIndex((e) => e.uid === egg.egg_uid)
+			const hasItem = stageDoc.reward_eggs.findIndex((e) => e.uid === egg.uid)
 			if (hasItem !== -1) {
 				const newAmount = egg.amount + stageDoc.reward_eggs[hasItem].amount
 
