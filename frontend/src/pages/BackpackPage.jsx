@@ -35,6 +35,7 @@ export default function BackpackPage() {
 			const eggs = backpackData.egg_list
 			setItems(items)
 			setEggs(eggs)
+            console.log(backpackData)
 		}
 	}, [backpackData])
 

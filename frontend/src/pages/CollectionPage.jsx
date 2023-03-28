@@ -26,7 +26,7 @@ export default function CollectionPage() {
 
 	// Set monsters
 	useEffect(() => {
-		if (monsterData) {
+		if (monsterData) {    console.log(monsterData.monster_list)
 			setMonsters(monsterData.monster_list)
 			setIsLoading(false)
 		}
@@ -50,7 +50,7 @@ export default function CollectionPage() {
 										key={monster.uid}
 										uid={monster.uid}
 										name={monster.name}
-										type={monster.type}
+										type={monster.monster_type}
 										level={monster.level}
 										img_name={monster.img_name}
 										attack={monster.attack}

@@ -16,7 +16,7 @@ const populateItemData = (backpackDoc) => ({
 	user_uid: backpackDoc.user_uid,
 	capacity: backpackDoc.capacity,
 	item_list: backpackDoc.item_list.map((i) => {
-		const itemInfo = getElementInfo(i.item_uid, backpackDoc.items)
+		const itemInfo = getElementInfo(i.uid, backpackDoc.items)
 
 		return {
 			uid: itemInfo.uid,
@@ -30,7 +30,7 @@ const populateItemData = (backpackDoc) => ({
 		}
 	}),
 	egg_list: backpackDoc.egg_list.map((i) => {
-		const eggInfo = getElementInfo(i.egg_uid, backpackDoc.eggs)
+		const eggInfo = getElementInfo(i.uid, backpackDoc.eggs)
 		return {
 			uid: eggInfo.uid,
 			name: eggInfo.name,
@@ -62,16 +62,14 @@ export const getItemsFromBackpack = async (req, res, next) => {
 		const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid })
 			.populate({ path: "items" })
 			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id -uid name" } })
-            console.log(backpackDoc)
-            console.log(backpackDoc.eggs)
-            console.log(backpackDoc.eggs)
+
 		if (!backpackDoc) {
 			return next(new ErrorResponse(404, "Backpack is not found"))
 		}
 
-		// const backpack = populateItemData(backpackDoc)
+		const backpack = populateItemData(backpackDoc)
 
-		return res.status(200).json(backpackDoc)
+		return res.status(200).json(backpack)
 	} catch (error) {
 		return next(error)
 	}
