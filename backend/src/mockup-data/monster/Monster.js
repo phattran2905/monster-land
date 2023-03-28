@@ -35,6 +35,7 @@ const Monster = [
 		info_uid: findMonsterInfoUID("Bubblebloom"),
 		attack: 50,
 		defense: 50,
+		exp: 1,
 		level: 1,
 		level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 	},
@@ -52,6 +53,7 @@ const Monster = [
 		info_uid: findMonsterInfoUID("Flametail"),
 		attack: 50,
 		defense: 50,
+		exp: 1,
 		level: 1,
 		level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 	},
@@ -70,6 +72,7 @@ const Monster = [
 		attack: 50,
 		defense: 50,
 		level: 1,
+		exp: 1,
 		level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
 	},
 	{
