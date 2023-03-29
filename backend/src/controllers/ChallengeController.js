@@ -165,7 +165,7 @@ export const challengeBoss = async (req, res, next) => {
 			monsterDoc.exp = 0
 			const GsSetting = await GameServerSettingModel.findOne({})
 			const newLvlUpExp = (GsSetting.monster_lvl_up_exp_rate + 1) * monsterDoc.level_up_exp
-			monsterDoc.level_up_exp = newLvlUpExp
+			monsterDoc.level_up_exp = Math.floor(newLvlUpExp)
 		}
 		await monsterDoc.save()
 

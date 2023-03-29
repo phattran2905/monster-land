@@ -26,8 +26,8 @@ const Stages = [
 	{
 		uid: `S-${randomUID()}`,
 		boss_name: "Boss #2",
-		boss_img_name: "boss-1.png",
-		boss_type_uid: findMonsterTypeUID("rock"),
+		boss_img_name: "boss-2.png",
+		boss_type_uid: findMonsterTypeUID("electric"),
 		boss_attack: 50,
 		boss_defense: 50,
 		reward_exp: 200,
@@ -45,7 +45,7 @@ const Stages = [
 	{
 		uid: `S-${randomUID()}`,
 		boss_name: "Boss #3",
-		boss_img_name: "boss-1.png",
+		boss_img_name: "boss-3.png",
 		boss_type_uid: findMonsterTypeUID("fire"),
 		boss_attack: 100,
 		boss_defense: 100,
@@ -64,7 +64,7 @@ const Stages = [
 	{
 		uid: `S-${randomUID()}`,
 		boss_name: "Boss #4",
-		boss_img_name: "boss-1.png",
+		boss_img_name: "boss-4.png",
 		boss_type_uid: findMonsterTypeUID("water"),
 		boss_attack: 250,
 		boss_defense: 250,
