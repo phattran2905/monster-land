@@ -23,6 +23,8 @@ export default function BackpackPage() {
 
 	useEffect(() => {
         refetchBackpackIno()
+
+        document.title = "Monster Land - Backpack"
 	}, [])
 
 	// Redirect to login if not logged in
