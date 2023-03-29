@@ -93,7 +93,7 @@ function IncubatorCard({
 							<img
 								style={{ height: "32rem" }}
 								className="object-fit"
-								src="/img/incubators/inferno-egg-incubator.png"
+								src={`/img/incubators/${incubator.incubator_img}`}
 								alt={name}
 							/>
 						) : (
@@ -207,7 +207,7 @@ function IncubatorCard({
 									<button
 										onClick={() => {
 											onDoneIncubating(incubator?.uid, index)
-                                            setInUse(false)
+											setInUse(false)
 										}}
 										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize"
 									>
