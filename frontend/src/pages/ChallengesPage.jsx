@@ -29,6 +29,10 @@ export default function ChallengesPage() {
 	const [error, setError] = useState()
 
 	useEffect(() => {
+        document.title = "Monster Land - Challenges"git a
+	}, [])
+
+	useEffect(() => {
 		if (showRewards && result === "won") {
 			refetchTrainerInfo()
 		}
