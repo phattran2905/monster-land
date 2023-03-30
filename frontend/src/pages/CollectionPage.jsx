@@ -19,6 +19,7 @@ export default function CollectionPage() {
 
 	useEffect(() => {
 		refetchCollection()
+        document.title = "Monster Land - Collection"
 	}, [])
 
 	// Redirect to login if not logged in
