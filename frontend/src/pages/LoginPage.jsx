@@ -16,11 +16,12 @@ function LoginPage() {
 	const [fetchLoginApi] = useLoginMutation()
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
-    
+
 	useEffect(() => {
 		if (authState.isLoggedIn) {
 			return navigate("/home")
 		}
+		document.title = "Monster Land - Login"
 	}, [])
 
 	const handleLogin = async (e) => {
