@@ -1,9 +1,15 @@
+import { useEffect } from "react"
 import { Link } from "react-router-dom"
 import Footer from "../components/Footer"
 import code404Img from "../assets/img/error/404.png"
 import logo from "../assets/img/logo/logo-trans-bg.png"
 
 export default function Page404() {
+
+	useEffect(() => {
+		document.title = "Monster Land - Page not found"
+	}, [])
+
 	return (
 		<div className="container-xl flex flex-row h-screen">
 			<div className="basis-2/5 bg-Royal-Blue flex flex-col items-stretch justify-between">
