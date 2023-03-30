@@ -33,6 +33,10 @@ function IncubationPage() {
 	const [showSelectEggModal, setShowSelectEggModal] = useState(false)
 	const [newMonster, setNewMonster] = useState({})
 
+	useEffect(() => {
+		document.title = "Monster Land - Incubation"
+	}, [])
+
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
