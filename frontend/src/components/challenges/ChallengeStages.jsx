@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp } from "react-icons/fa"
+import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp, FaStar } from "react-icons/fa"
 import coinIcon from "../../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
 import MonsterType from "../../components/monster/MonsterType"
@@ -99,6 +99,27 @@ function ChallengeStages({ onChallenge }) {
 									alt={"Boss 1"}
 								/>
 							</div>
+							{/* Difficulty */}
+							<div className="bg-Midnight-Gray flex flex-row justify-around items-center p-2">
+								<span className="font-bold text-white">Difficulty</span>
+								<ul
+									className="flex flex-row justify-center items-center"
+									r
+								>
+									<li>
+										<FaStar className="text-Gold-Sand" />
+									</li>
+									<li>
+										<FaStar className="text-Gold-Sand" />
+									</li>
+									<li>
+										<FaStar className="text-Gold-Sand" />
+									</li>
+									<li>
+										<FaStar className="text-Gold-Sand" />
+									</li>
+								</ul>
+							</div>
 							{/* Stats */}
 							<div
 								className={`flex flex-col items-center py-2 border-r-4 border-l-4 ${
@@ -141,8 +162,8 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Defense</span>
 									</div>
-									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-										<span className="p-1 font-bold text-white capitalize">
+									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Light-Gray">
+										<span className="p-1 font-bold text-Indigo-Blue capitalize">
 											{stage.boss_defense}
 										</span>
 									</div>
@@ -157,7 +178,7 @@ function ChallengeStages({ onChallenge }) {
 										: "border-white"
 								}`}
 							>
-								<p className="bg-Indigo-Blue text-white font-bold p-2">Rewards</p>
+								<p className="bg-Midnight-Gray text-white font-bold p-2">Rewards</p>
 								{/* Reward List */}
 								<div className="w-full flex flex-row ">
 									{/* Drop items & eggs */}
@@ -194,8 +215,9 @@ function ChallengeStages({ onChallenge }) {
 										))}
 									</div>
 									{/* Points */}
-									<div className="w-1/2 p-3 flex flex-col gap-3 justify-center items-center">
-										<div className="flex flex-row items-center">
+									<div className="w-1/2 p-3 flex flex-col gap-3 items-stretch">
+										{/* Reward EXP */}
+										<div className="flex flex-row items-center justify-between">
 											<div className="flex flex-row items-center justify-between">
 												<FaAngleDoubleUp
 													className="w-5 h-5 text-Fire-Engine-Red"
@@ -207,7 +229,8 @@ function ChallengeStages({ onChallenge }) {
 												+{stage.reward_exp}
 											</span>
 										</div>
-										<div className="flex flex-row items-center">
+										{/* Reward Coins */}
+										<div className="flex flex-row items-center justify-between">
 											<div className="flex flex-row items-center justify-between">
 												<img
 													className="w-5 h-5 object-scale-down"
@@ -226,7 +249,7 @@ function ChallengeStages({ onChallenge }) {
 
 							{/* Stamina Cost */}
 							<div
-								className={`bg-Water p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
+								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
