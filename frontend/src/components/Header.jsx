@@ -48,9 +48,9 @@ export default function Header() {
 
 			<div className="px-6 w-full flex flex-row justify-between items-center">
 				<div className="trainer-level flex flex-col items-center justify-center">
-					<span className="text-white capitalize font-bold text-2xl">
-						Lv. {level}
-					</span>
+					<p className="text-white capitalize text-2xl">
+						Lv. <span className="font-bold text-2xl"> {level}</span>
+					</p>
 				</div>
 
 				<div className="game-resources h-full w-96 flex flex-row items-center justify-around ">
@@ -60,7 +60,7 @@ export default function Header() {
 							src={diamondIcon}
 							alt="Diamond icon"
 						/>
-						<span className="text-white  text-2xl">{diamond}</span>
+						<span className="text-white font-bold text-2xl">{diamond}</span>
 					</div>
 
 					<div className="coins mx-2 flex flex-row items-center">
@@ -69,7 +69,7 @@ export default function Header() {
 							src={coinIcon}
 							alt="Coin icon"
 						/>
-						<span className="text-white text-2xl">{coins}</span>
+						<span className="text-white font-bold text-2xl">{coins}</span>
 					</div>
 
 					<div className="stamina mx-2 flex flex-row items-center text-white">
@@ -78,7 +78,7 @@ export default function Header() {
 							src={pickaxeIcon}
 							alt="Pickaxe icon"
 						/>
-						<span className="text-2xl">
+						<span className="text-2xl font-bold space-x-3">
 							{stamina}/{maxStamina}
 						</span>
 					</div>
