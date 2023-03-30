@@ -29,7 +29,7 @@ export default function ChallengesPage() {
 	const [error, setError] = useState()
 
 	useEffect(() => {
-        document.title = "Monster Land - Challenges"git a
+        document.title = "Monster Land - Challenges"
 	}, [])
 
 	useEffect(() => {
