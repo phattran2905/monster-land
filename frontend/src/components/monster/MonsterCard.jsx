@@ -51,7 +51,7 @@ export default function MonsterCard({
 						/>
 						<span className="ml-1 capitalize">Type</span>
 					</div>
-                    <MonsterType name={type} />
+					<MonsterType name={type} />
 					{/* <div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 						<span className="p-1 font-bold text-white capitalize">{type}</span>
 					</div> */}
@@ -83,7 +83,7 @@ export default function MonsterCard({
 					</div>
 				</div>
 
-				<div className="flex flex-col mb-3 justify-between items-stretch">
+				<div className="flex flex-col justify-between items-stretch">
 					<div className="flex flex-row items-center mb-1">
 						<FaAngleDoubleUp
 							className="text-Flamingo-Pink"
@@ -93,13 +93,16 @@ export default function MonsterCard({
 					</div>
 					<div className="flex flex-col justify-center w-full pt-1">
 						<ProgressBar
-							percentage={Math.floor(exp / level_up_exp * 100)}
+							percentage={Math.floor((exp / level_up_exp) * 100)}
 							bgColorClass="bg-Light-Gray"
 							currentBgColorClass="bg-Forest-Green"
 						/>
-						<div className="flex flex-row justify-between items-center mt-1">
-							<span className="text-sm text-Forest-Green font-bold">{exp}</span>
-							<span className="text-sm font-bold">{level_up_exp}</span>
+						<div className="flex flex-row justify-end items-center mt-2">
+							<p className="text-sm font-bold">
+								<span className="text-sm text-Forest-Green font-bold">{exp}</span>
+								{" / "}
+								{level_up_exp}
+							</p>
 						</div>
 					</div>
 				</div>
