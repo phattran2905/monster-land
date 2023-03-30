@@ -1,27 +1,32 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp } from "react-icons/fa"
 import coinIcon from "../../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
 import MonsterType from "../../components/monster/MonsterType"
+import { useGetChallengeListQuery } from "../../redux/services/challenge"
 
 function ChallengeStages({ onChallenge }) {
-	const [stages, setStages] = useState([
-		{ uid: 1, boss: 1 },
-		{ uid: 2, boss: 2 },
-		{ uid: 3, boss: 1 },
-		{ uid: 4, boss: 2 },
-		{ uid: 5, boss: 1 },
-		{ uid: 6, boss: 2 },
-		{ uid: 7, boss: 1 },
-		{ uid: 8, boss: 2 },
-	])
+	const { data: challengeList, refetch: refetchChallenges } = useGetChallengeListQuery()
+	const [stages, setStages] = useState([])
 	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
+	const [boss, setBoss] = useState()
+
+	useEffect(() => {
+		refetchChallenges()
+	}, [])
+
+	useEffect(() => {
+		if (challengeList) {
+			setStages(challengeList.stages)
+			setBoss(challengeList.stages[0])
+		}
+	}, [challengeList])
 
 	const selectStage = (actionType) => {
 		if (actionType === "prev") {
 			const index = selectedStageIndex - 1
 			if (index < 0) {
-				setSelectedStageIndex(1)
+				setSelectedStageIndex(0)
 			} else {
 				setSelectedStageIndex(index)
 			}
@@ -38,7 +43,7 @@ function ChallengeStages({ onChallenge }) {
 	return (
 		<>
 			{/* Challenge Boss */}
-			<div className="flex flex-row w-11/12 h-full items-center justify-between">
+			<div className="flex flex-row w-full h-full items-center justify-between">
 				{/* Left Arrow */}
 				<button
 					onClick={() => selectStage("prev")}
@@ -55,12 +60,15 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 
 				{/* Stages */}
-				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-start overflow-x-hidden gap-10">
+				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-center overflow-x-hidden gap-10">
 					{/* Stage Card */}
 					{stages.map((stage, index) => (
 						<button
 							key={stage.uid}
-							onClick={() => setSelectedStageIndex(index)}
+							onClick={() => {
+								setSelectedStageIndex(index)
+								setBoss(stage)
+							}}
 							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-xl hover:shadow-Flamingo-Pink ${
 								index === selectedStageIndex
 									? "shadow-Flamingo-Pink "
@@ -75,19 +83,19 @@ function ChallengeStages({ onChallenge }) {
 										: "border-white"
 								}`}
 							>
-								Stage #1
+								{stage.boss_name}
 							</h3>
 							{/* Boss Image */}
 							<div
-								className={`bg-light-white w-80 h-80 p-4 border-r-4 border-l-4 ${
+								className={`bg-light-white w-full h-96 p-4 border-r-4 border-l-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
 								}`}
 							>
 								<img
-									className="w-full object-scale-down"
-									src={`/img/challenges/boss-1.png`}
+									className="w-full h-full object-scale-down"
+									src={`/img/challenges/${stage.boss_img_name}`}
 									alt={"Boss 1"}
 								/>
 							</div>
@@ -107,7 +115,7 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Type</span>
 									</div>
-									<MonsterType name={"rock"} />
+									<MonsterType name={stage.boss_type} />
 								</div>
 
 								<div className="w-2/3 flex flex-row my-2 justify-between items-center">
@@ -120,7 +128,7 @@ function ChallengeStages({ onChallenge }) {
 									</div>
 									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 										<span className="p-1 font-bold text-white capitalize">
-											{"50"}
+											{stage.boss_attack}
 										</span>
 									</div>
 								</div>
@@ -135,7 +143,7 @@ function ChallengeStages({ onChallenge }) {
 									</div>
 									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
 										<span className="p-1 font-bold text-white capitalize">
-											{"50"}
+											{stage.boss_defense}
 										</span>
 									</div>
 								</div>
@@ -154,46 +162,36 @@ function ChallengeStages({ onChallenge }) {
 								<div className="w-full flex flex-row ">
 									{/* Drop items & eggs */}
 									<div className="w-1/2 p-3 border-r-4 border-Indigo-Blue flex flex-row flex-wrap gap-3 justify-center">
-										<div className="flex flex-row items-center">
-											<img
-												className="w-5 h-5 object-scale-down"
-												src="/img/eggs/inferno-egg.png"
-												alt="Diamond icon"
-											/>
-											<span className="text-Forest-Green font-bold ml-2">
-												x1
-											</span>
-										</div>
-										<div className="flex flex-row items-center">
-											<img
-												className="w-5 h-5 object-scale-down"
-												src="/img/eggs/aqua-glow-egg.png"
-												alt="Diamond icon"
-											/>
-											<span className="text-Forest-Green font-bold ml-2">
-												x1
-											</span>
-										</div>
-										<div className="flex flex-row items-center">
-											<img
-												className="w-5 h-5 object-scale-down"
-												src="/img/items/exp-boosting-serum.png"
-												alt="Diamond icon"
-											/>
-											<span className="text-Forest-Green font-bold ml-2">
-												x1
-											</span>
-										</div>
-										<div className="flex flex-row items-center">
-											<img
-												className="w-5 h-5 object-scale-down"
-												src="/img/items/attack-boosting-potion.png"
-												alt="Diamond icon"
-											/>
-											<span className="text-Forest-Green font-bold ml-2">
-												x1
-											</span>
-										</div>
+										{stage.reward_eggs.map((egg) => (
+											<div
+												key={egg.uid}
+												className="flex flex-row items-center"
+											>
+												<img
+													className="w-5 h-5 object-scale-down"
+													src={`/img/eggs/${egg.img_name}`}
+													alt={egg.name}
+												/>
+												<span className="text-Forest-Green font-bold ml-2">
+													x{egg.amount}
+												</span>
+											</div>
+										))}
+										{stage.reward_items.map((item) => (
+											<div
+												key={item.uid}
+												className="flex flex-row items-center"
+											>
+												<img
+													className="w-5 h-5 object-scale-down"
+													src={`/img/items/${item.img_name}`}
+													alt={item.name}
+												/>
+												<span className="text-Forest-Green font-bold ml-2">
+													x{item.amount}
+												</span>
+											</div>
+										))}
 									</div>
 									{/* Points */}
 									<div className="w-1/2 p-3 flex flex-col gap-3 justify-center items-center">
@@ -206,7 +204,7 @@ function ChallengeStages({ onChallenge }) {
 												<span className="font-bold ml-1">EXP</span>
 											</div>
 											<span className="text-Forest-Green font-bold ml-2">
-												+500
+												+{stage.reward_exp}
 											</span>
 										</div>
 										<div className="flex flex-row items-center">
@@ -219,7 +217,7 @@ function ChallengeStages({ onChallenge }) {
 												<span className="font-bold ml-1">Coins</span>
 											</div>
 											<span className="text-Forest-Green font-bold ml-2">
-												+1000
+												+{stage.reward_coins}
 											</span>
 										</div>
 									</div>
@@ -228,13 +226,15 @@ function ChallengeStages({ onChallenge }) {
 
 							{/* Stamina Cost */}
 							<div
-								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
+								className={`bg-Water p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
 								}`}
 							>
-								<span className="text-white px-2 font-bold">Cost 20</span>
+								<span className="text-white px-2 font-bold">
+									Cost {stage.stamina_cost}
+								</span>
 								<img
 									className="w-4 h-4 object-scale-down"
 									src={pickaxeIcon}
@@ -262,7 +262,10 @@ function ChallengeStages({ onChallenge }) {
 			</div>
 			{/* Challenge Button */}
 			<div className="h-1/12 w-11/12 p-6 flex flex-row justify-center items-center">
-				<button className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red">
+				<button
+					onClick={() => onChallenge(boss, challengeList.uid)}
+					className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red"
+				>
 					Challenge
 				</button>
 			</div>

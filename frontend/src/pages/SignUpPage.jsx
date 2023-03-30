@@ -19,6 +19,10 @@ function SignUpPage() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
+		document.title = "Monster Land - Sign Up"
+	}, [])
+
+	useEffect(() => {
 		dispatch(getStoredJwtToken())
 		if (auth.isLoggedIn) {
 			return navigate("/home")

@@ -16,10 +16,16 @@ export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
-	const { data: backpackData, isLoading } = useGetBackpackQuery({ jwt_token: authState.jwtToken })
+	const { data: backpackData, isLoading, refetch: refetchBackpackIno } = useGetBackpackQuery({ jwt_token: authState.jwtToken })
 	const [eggs, setEggs] = useState([])
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
+
+	useEffect(() => {
+        refetchBackpackIno()
+
+        document.title = "Monster Land - Backpack"
+	}, [])
 
 	// Redirect to login if not logged in
 	useEffect(() => {

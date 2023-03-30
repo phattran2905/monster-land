@@ -1,7 +1,7 @@
 import MonsterType from "../../components/monster/MonsterType"
 import HealthBar from "./HealthBar"
 
-function MonsterCard({ isWinner }) {
+function MonsterCard({ isWinner, health, monster }) {
 	return (
 		<div className="flex flex-col">
 			<div className={`bg-white shadow-lg mx-4 rounded-xl  shadow-Amethyst-Purple relative`}>
@@ -15,14 +15,14 @@ function MonsterCard({ isWinner }) {
 				<h3
 					className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl text-center`}
 				>
-					Monster #1
+					{monster.name}
 				</h3>
 				{/* Boss Image */}
 				<div className={`bg-light-white w-full p-4`}>
 					<img
 						className="w-full object-scale-down"
-						src={`/img/monsters/shockwhisker.png`}
-						alt={"Boss 1"}
+						src={`/img/monsters/${monster.img_name}`}
+						alt={monster.name}
 					/>
 				</div>
 				{/* Stats */}
@@ -36,7 +36,7 @@ function MonsterCard({ isWinner }) {
 							/>
 							<span className="ml-1 capitalize">Type</span>
 						</div>
-						<MonsterType name={"rock"} />
+						<MonsterType name={monster.monster_type} />
 					</div>
 
 					{/* Attack */}
@@ -49,7 +49,9 @@ function MonsterCard({ isWinner }) {
 							<span className="ml-1 capitalize">Attack</span>
 						</div>
 						<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-							<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+							<span className="p-1 font-bold text-white capitalize">
+								{monster.attack}
+							</span>
 						</div>
 					</div>
 
@@ -63,14 +65,16 @@ function MonsterCard({ isWinner }) {
 							<span className="ml-1 capitalize">Defense</span>
 						</div>
 						<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-							<span className="p-1 font-bold text-white capitalize">{"50"}</span>
+							<span className="p-1 font-bold text-white capitalize">
+								{monster.defense}
+							</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			{/* Health */}
-			<HealthBar percentage={10} />
+			<HealthBar percentage={health} />
 		</div>
 	)
 }

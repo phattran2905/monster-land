@@ -26,25 +26,15 @@ function IncubationPage() {
 	})
 	const [hatchEgg] = useHatchEggMutation()
 	const [incubateEgg] = useIncubateEggMutation()
-	const [incubator1, setIncubator1] = useState({
-		uid: "Inc-01",
-		name: "Incubator #1",
-		in_use: false,
-		done: false,
-	})
-	const [incubator2, setIncubator2] = useState({
-		uid: "Inc-02",
-		name: "Incubator #2",
-		in_use: false,
-		done: false,
-	})
+	const [incubator1, setIncubator1] = useState()
+	const [incubator2, setIncubator2] = useState()
 	const [showBoostModal, setShowBoostModal] = useState(false)
 	const [showHatchModal, setShowHatchModal] = useState(false)
 	const [showSelectEggModal, setShowSelectEggModal] = useState(false)
 	const [newMonster, setNewMonster] = useState({})
 
 	useEffect(() => {
-		// refetchIncubation()
+		document.title = "Monster Land - Incubation"
 	}, [])
 
 	// Redirect to login if not logged in
@@ -58,21 +48,17 @@ function IncubationPage() {
 		if (incubatingEggs?.length > 0) {
 			const incubations = incubatingEggs.slice(0, 2)
 
-			setIncubator1((prev) => ({
-				...prev,
-				...incubations[0],
-				in_use: incubations[0] ? true : false,
-			}))
+			if (incubations[0]) {
+				setIncubator1(incubations[0])
+			}
 
-			setIncubator2((prev) => ({
-				...prev,
-				...incubations[1],
-				in_use: incubations[1] ? true : false,
-			}))
+			if (incubations[1]) {
+				setIncubator2(incubations[1])
+			}
 		}
 	}, [incubatingEggs])
 
-	const onDoneIncubating = async (incubationUID) => {
+	const onDoneIncubating = async (incubationUID, incubatorIndex) => {
 		if (incubationUID) {
 			const babyMonster = await hatchEgg({
 				jwt_token: authState.jwtToken,
@@ -83,9 +69,14 @@ function IncubationPage() {
 				setNewMonster(babyMonster?.data)
 			}
 
-			refetchIncubation()
 			setShowHatchModal(true)
+			if (incubatorIndex) {
+				setIncubator1()
+			} else {
+				setIncubator2()
+			}
 		}
+		refetchIncubation()
 	}
 
 	const onStartIncubating = async (eggUID) => {
@@ -113,6 +104,8 @@ function IncubationPage() {
 				<div className="m-10 w-full flex flex-row justify-between items-center relative gap-x-10">
 					{/* Incubator #1 */}
 					<IncubatorCard
+						index={1}
+						name="Incubator #1"
 						incubator={incubator1}
 						onShowBoostModal={() => setShowBoostModal(true)}
 						onShowSelectEggModal={() => setShowSelectEggModal(true)}
@@ -121,6 +114,8 @@ function IncubationPage() {
 
 					{/* Incubator #2 */}
 					<IncubatorCard
+						index={2}
+						name="Incubator #2"
 						incubator={incubator2}
 						onShowBoostModal={() => setShowBoostModal(true)}
 						onShowSelectEggModal={() => setShowSelectEggModal(true)}

@@ -37,14 +37,14 @@ const BackpackSchema = new Schema(
 // Populate to items to get item data
 BackpackSchema.virtual("items", {
 	ref: "Item",
-	localField: "item_list.item_uid",
+	localField: "item_list.uid",
 	foreignField: "uid",
 })
 
 // Populate to eggs to get egg data
 BackpackSchema.virtual("eggs", {
 	ref: "Egg",
-	localField: "egg_list.egg_uid",
+	localField: "egg_list.uid",
 	foreignField: "uid",
 })
 

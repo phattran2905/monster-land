@@ -6,14 +6,21 @@ import Header from "../components/Header"
 import Loading from "../components/Loading"
 import MenuBar from "../components/menu/MenuBar"
 import MonsterCard from "../components/monster/MonsterCard"
-import { useGetOwnedMonsterQuery } from "../redux/services/collection"
+import { useGetMonsterCollectionQuery } from "../redux/services/collection"
 
 export default function CollectionPage() {
 	const authState = useSelector((state) => state.auth)
-	const { data: monsterData, error } = useGetOwnedMonsterQuery()
+	const { data: monsterData, refetch: refetchCollection } = useGetMonsterCollectionQuery({
+		jwt_token: authState.jwtToken,
+	})
 	const navigate = useNavigate()
 	const [monsters, setMonsters] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		refetchCollection()
+        document.title = "Monster Land - Collection"
+	}, [])
 
 	// Redirect to login if not logged in
 	useEffect(() => {
@@ -25,7 +32,7 @@ export default function CollectionPage() {
 	// Set monsters
 	useEffect(() => {
 		if (monsterData) {
-			setMonsters(monsterData)
+			setMonsters(monsterData.monster_list)
 			setIsLoading(false)
 		}
 	}, [monsterData])
@@ -48,7 +55,7 @@ export default function CollectionPage() {
 										key={monster.uid}
 										uid={monster.uid}
 										name={monster.name}
-										type={monster.type}
+										type={monster.monster_type}
 										level={monster.level}
 										img_name={monster.img_name}
 										attack={monster.attack}

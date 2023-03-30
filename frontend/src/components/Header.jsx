@@ -3,10 +3,33 @@ import coinIcon from "../assets/img/icon/coin_1_.png"
 import pickaxeIcon from "../assets/img/icon/Pickaxe.png"
 import logo from "../assets/img/logo/logo-trans-bg.png"
 import { Link } from "react-router-dom"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+import { useGetTrainerInfoQuery } from "../redux/services/trainer"
+import { updateTrainerInfo } from "../redux/slices/trainer"
 
 export default function Header() {
-	const trainerState = useSelector((state) => state.trainer)
+	const authState = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+	const [diamond, setDiamond] = useState(0)
+	const [coins, setCoins] = useState(0)
+	const [stamina, setStamina] = useState(0)
+	const [maxStamina, setMaxStamina] = useState(0)
+	const [level, setLevel] = useState(0)
+	const { data: trainerData } = useGetTrainerInfoQuery({
+		jwt_token: authState.jwtToken,
+	})
+
+	useEffect(() => {
+		if (trainerData) {
+			dispatch(updateTrainerInfo(trainerData))
+			setDiamond(trainerData.diamond)
+			setCoins(trainerData.gold)
+			setStamina(trainerData.stamina)
+			setMaxStamina(trainerData.max_stamina)
+			setLevel(trainerData.level)
+		}
+	}, [trainerData])
 
 	return (
 		<header className="w-full h-24 bg-Indigo-Blue flex flex-row justify-between">
@@ -26,7 +49,7 @@ export default function Header() {
 			<div className="px-6 w-full flex flex-row justify-between items-center">
 				<div className="trainer-level flex flex-col items-center justify-center">
 					<span className="text-white capitalize font-bold text-2xl">
-						Lv. {trainerState?.level}
+						Lv. {level}
 					</span>
 				</div>
 
@@ -37,7 +60,7 @@ export default function Header() {
 							src={diamondIcon}
 							alt="Diamond icon"
 						/>
-						<span className="text-white  text-2xl">{trainerState?.diamond}</span>
+						<span className="text-white  text-2xl">{diamond}</span>
 					</div>
 
 					<div className="coins mx-2 flex flex-row items-center">
@@ -46,7 +69,7 @@ export default function Header() {
 							src={coinIcon}
 							alt="Coin icon"
 						/>
-						<span className="text-white text-2xl">{trainerState?.gold}</span>
+						<span className="text-white text-2xl">{coins}</span>
 					</div>
 
 					<div className="stamina mx-2 flex flex-row items-center text-white">
@@ -56,7 +79,7 @@ export default function Header() {
 							alt="Pickaxe icon"
 						/>
 						<span className="text-2xl">
-							{trainerState?.stamina}/{trainerState?.max_stamina}
+							{stamina}/{maxStamina}
 						</span>
 					</div>
 				</div>

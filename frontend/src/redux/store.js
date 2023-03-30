@@ -11,6 +11,7 @@ import { backpackApi } from "./services/backpack"
 import { authenticationApi } from "./services/authentication"
 import { incubationApi } from "./services/incubation"
 import { trainerApi } from "./services/trainer"
+import { challengeApi } from "./services/challenge"
 
 export const store = configureStore({
 	reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
 		[monsterApi.reducerPath]: monsterApi.reducer,
 		[authenticationApi.reducerPath]: authenticationApi.reducer,
 		[trainerApi.reducerPath]: trainerApi.reducer,
+		[challengeApi.reducerPath]: challengeApi.reducer,
 	},
 	// Adding the api middleware enables caching, invalidation, polling,
 	// and other useful features of `rtk-query`.
@@ -36,6 +38,7 @@ export const store = configureStore({
 			authenticationApi.middleware,
 			incubationApi.middleware,
 			trainerApi.middleware,
+			challengeApi.middleware,
 		]),
 })
 

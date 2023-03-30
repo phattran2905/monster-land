@@ -13,7 +13,7 @@ const MonsterCollectionSchema = new Schema(
 			unique: true,
 		},
 		monster_list: {
-			type: [String], // [monster_uids]
+			type: [Object], 
 			default: [],
 		},
 		monster_team: {
@@ -44,9 +44,9 @@ MonsterCollectionSchema.virtual("trainer_info", {
 })
 
 // Populate with MonsterModel
-MonsterCollectionSchema.virtual("monster_list_info", {
+MonsterCollectionSchema.virtual("detailed_monster_list", {
 	ref: "MonsterInfo",
-	localField: "monster_list",
+	localField: "monster_list.info_uid",
 	foreignField: "uid",
 })
 

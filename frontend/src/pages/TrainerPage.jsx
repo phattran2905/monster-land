@@ -35,6 +35,10 @@ function TrainerPage() {
 	const [levelUpExp, setLevelUpExp] = useState(0)
 	const [avatarIndex, setAvatarIndex] = useState(1)
 
+	useEffect(() => {
+		document.title = "Monster Land - Trainer"
+	}, [])
+
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
