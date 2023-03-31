@@ -104,7 +104,6 @@ function ChallengeStages({ onChallenge }) {
 								<span className="font-bold text-white">Difficulty</span>
 								<ul
 									className="flex flex-row justify-center items-center"
-									r
 								>
 									<li>
 										<FaStar className="text-Gold-Sand" />

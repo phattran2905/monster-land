@@ -19,7 +19,7 @@ const IncubationSchema = new Schema(
 			type: Date,
 			required: true,
 		},
-		incubator_img: {
+		img_name: {
 			type: String,
 			required: true,
 		},

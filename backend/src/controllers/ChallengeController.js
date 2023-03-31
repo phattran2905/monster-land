@@ -1,6 +1,6 @@
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ChallengeModel from "../models/challenge/ChallengeModel.js"
-import ChallengeLogModel from "../models/challenge/ChallengeLogModel.js"
+import BossModel from "../models/challenge/BossModel.js"
 import StageModel from "../models/challenge/StageModel.js"
 import TrainerModel from "../models/user/TrainerModel.js"
 import GameServerSettingModel from "../models/setting/GSSettingModel.js"
@@ -32,7 +32,7 @@ export const getAllChallenge = async (req, res, next) => {
 		const criteria = req.query.status ? { status: req.query.status } : null
 
 		const challengeListDoc = await ChallengeModel.find(criteria).populate({
-			path: "stage_boss_type",
+			path: "stage_info",
 		})
 
 		const detailedStages = challengeListDoc[0].stages.map((challenge, index) => ({
@@ -74,8 +74,8 @@ export const challengeBoss = async (req, res, next) => {
 			.populate({
 				path: "boss_type",
 			})
-			.populate({ path: "reward_detailed_items" })
-			.populate({ path: "reward_detailed_eggs" })
+			.populate({ path: "detailed_reward_items" })
+			.populate({ path: "detailed_reward_eggs" })
 
 		if (!stageDoc) {
 			return next(new ErrorResponse(404, "Stage is not found."))
@@ -128,34 +128,6 @@ export const challengeBoss = async (req, res, next) => {
 			return res.status(200).json({ message: "You are defeated.", result: "defeated" })
 		}
 
-		// Add result to ChallengeLog
-		const challengeLog = await ChallengeLogModel.findOne({
-			user_uid: req.user.uid,
-			challenge_uid: challengeUID,
-		})
-
-		// Update log
-		if (challengeLog) {
-			const updateFinishedStages = challengeLog.finished_stages.filter((s) => s !== stageUID)
-			await ChallengeLogModel.findOneAndUpdate(
-				{
-					user_uid: req.user.uid,
-					challenge_uid: challengeUID,
-				},
-				{
-					finished_stages: [...updateFinishedStages, stageUID],
-				}
-			)
-		} else {
-			// Create a new log
-			await ChallengeLogModel.create({
-				uid: `M-${randomUID()}`,
-				user_uid: req.user.uid,
-				challenge_uid: challengeUID,
-				finished_stages: [stageUID],
-			})
-		}
-
 		// Rewards points
 		// Add exp to monster
 		monsterDoc.exp = stageDoc.reward_exp
@@ -169,6 +141,7 @@ export const challengeBoss = async (req, res, next) => {
 		}
 		await monsterDoc.save()
 
+        // Update monster
 		const updatedMonster = {
 			...monster,
 			exp: monsterDoc.exp,

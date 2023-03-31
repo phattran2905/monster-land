@@ -7,7 +7,7 @@ const MonsterCollection = {
 	uid: `MC-${randomUID()}`,
 	user_uid: Account.uid,
 	monster_list: Monsters,
-	monster_team: [],
+	// monster_team: [],
 	capacity: GameServerSetting.monster_collection_limit,
 }
 

@@ -3,7 +3,6 @@ import MonsterTypeModel from "../models/monster/MonsterTypeModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import StageModel from "../models/challenge/StageModel.js"
 import ChallengeModel from "../models/challenge/ChallengeModel.js"
-import ChallengeLogModel from "../models/challenge/ChallengeLogModel.js"
 import Monster from "./monster/Monster.js"
 import MonsterCollection from "./monster/MonsterCollection.js"
 import MonsterType from "./monster/MonsterType.js"
@@ -24,7 +23,8 @@ import GameServerSetting from "./game-server.js"
 import GSSettingModel from "../models/setting/GSSettingModel.js"
 import Stages from "./challenge/Stage.js"
 import Challenges from "./challenge/Challenge.js"
-import ChallengeLogs from "./challenge/ChallengeLog.js"
+import Bosses from "./challenge/Boss.js"
+import BossModel from "../models/challenge/BossModel.js"
 
 export default async function initializeMockupData() {
 	try {
@@ -35,9 +35,9 @@ export default async function initializeMockupData() {
 		await Promise.all(Monster.map((i) => MonsterModel.create(i)))
 		await MonsterCollectionModel.create(MonsterCollection)
 
+		await Promise.all(Bosses.map((i) => BossModel.create(i)))
 		await Promise.all(Stages.map((i) => StageModel.create(i)))
 		await Promise.all(Challenges.map((i) => ChallengeModel.create(i)))
-		await Promise.all(ChallengeLogs.map((i) => ChallengeLogModel.create(i)))
 
 		await BackpackModel.create(Backpack)
 		await Promise.all(Items.map((i) => ItemModel.create(i)))

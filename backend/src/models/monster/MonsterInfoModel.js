@@ -13,7 +13,7 @@ const MonsterInfoSchema = new Schema(
 			required: true,
 			capitalize: true,
 		},
-		type: {
+		type_uid: {
 			type: String,
 			required: true,
 		},
@@ -34,7 +34,7 @@ const MonsterInfoSchema = new Schema(
 
 MonsterInfoSchema.virtual("monsterType", {
 	ref: "MonsterType",
-	localField: "type",
+	localField: "type_uid",
 	foreignField: "uid",
 	justOne: true,
 })

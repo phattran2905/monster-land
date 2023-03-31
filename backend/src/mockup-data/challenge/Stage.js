@@ -1,16 +1,13 @@
 import { randomUID } from "../../util/random.js"
-import { findMonsterTypeUID } from "../monster/MonsterType.js"
 import eggs from "../backpack/Egg.js"
 import items from "../backpack/Item.js"
+import bosses from "./Boss.js"
 
 const Stages = [
 	{
 		uid: `S-${randomUID()}`,
-		boss_name: "Boss #1",
-		boss_img_name: "boss-1.png",
-		boss_type_uid: findMonsterTypeUID("rock"),
-		boss_attack: 30,
-		boss_defense: 30,
+		boss_uid: bosses[0],
+		difficulty_level: 1,
 		reward_exp: 100,
 		reward_coins: 500,
 		reward_eggs: [
@@ -25,11 +22,8 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_name: "Boss #2",
-		boss_img_name: "boss-2.png",
-		boss_type_uid: findMonsterTypeUID("electric"),
-		boss_attack: 50,
-		boss_defense: 50,
+		boss_uid: bosses[1],
+		difficulty_level: 2,
 		reward_exp: 200,
 		reward_coins: 1000,
 		reward_eggs: [
@@ -44,11 +38,8 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_name: "Boss #3",
-		boss_img_name: "boss-3.png",
-		boss_type_uid: findMonsterTypeUID("fire"),
-		boss_attack: 100,
-		boss_defense: 100,
+		boss_uid: bosses[2],
+		difficulty_level: 3,
 		reward_exp: 800,
 		reward_coins: 2000,
 		reward_eggs: [
@@ -63,13 +54,10 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_name: "Boss #4",
-		boss_img_name: "boss-4.png",
-		boss_type_uid: findMonsterTypeUID("water"),
-		boss_attack: 250,
-		boss_defense: 250,
-		reward_exp: 2000,
-		reward_coins: 5000,
+		boss_uid: bosses[3],
+		difficulty_level: 4,
+		reward_exp: 1500,
+		reward_coins: 3500,
 		reward_eggs: [
 			{ ...eggs[1], amount: 4 },
 			{ ...eggs[2], amount: 4 },
