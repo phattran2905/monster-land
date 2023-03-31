@@ -7,8 +7,12 @@ const ChallengeSchema = new Schema(
 			required: true,
 			unique: true,
 		},
-		stages: {
-			type: [Object], // {uid, level}
+		stage_uids: {
+			type: [String],
+			required: true,
+		},
+		trainer_level_requirement: {
+			type: Number,
 			required: true,
 		},
 		status: {
@@ -20,9 +24,9 @@ const ChallengeSchema = new Schema(
 	{ timestamps: true }
 )
 
-ChallengeSchema.virtual("stage_boss_type", {
-	ref: "MonsterType",
-	localField: "stages.boss_type_uid",
+ChallengeSchema.virtual("stage_info", {
+	ref: "Stage",
+	localField: "stages_uids",
 	foreignField: "uid",
 })
 

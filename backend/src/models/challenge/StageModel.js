@@ -7,24 +7,11 @@ const StageSchema = new Schema(
 			required: true,
 			unique: true,
 		},
-		boss_name: {
-			type: String,
-			required: true,
-			unique: true,
-		},
-		boss_img_name: {
+		boss_uid: {
 			type: String,
 			required: true,
 		},
-		boss_type_uid: {
-			type: String,
-			required: true,
-		},
-		boss_attack: {
-			type: Number,
-			required: true,
-		},
-		boss_defense: {
+		difficulty_level: {
 			type: Number,
 			required: true,
 		},
@@ -58,20 +45,20 @@ const StageSchema = new Schema(
 	{ timestamps: true }
 )
 
-StageSchema.virtual("boss_type", {
-	ref: "MonsterType",
-	localField: "boss_type_uid",
+StageSchema.virtual("boss_info", {
+	ref: "Boss",
+	localField: "boss_uid",
 	foreignField: "uid",
 	justOne: true,
 })
 
-StageSchema.virtual("reward_detailed_items", {
+StageSchema.virtual("detailed_reward_items", {
 	ref: "Item",
 	localField: "reward_items.uid",
 	foreignField: "uid",
 })
 
-StageSchema.virtual("reward_detailed_eggs", {
+StageSchema.virtual("detailed_reward_eggs", {
 	ref: "Egg",
 	localField: "reward_eggs.uid",
 	foreignField: "uid",
