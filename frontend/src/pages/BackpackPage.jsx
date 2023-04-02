@@ -29,6 +29,7 @@ export default function BackpackPage() {
 	const [activeTab, setActiveTab] = useState("eggs")
 	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false)
 	const [selected, setSelected] = useState("")
+	const [error, setError] = useState()
 
 	useEffect(() => {
 		refetchBackpackIno()
@@ -62,19 +63,26 @@ export default function BackpackPage() {
 	}
 
 	const incubateEggByUID = async (eggUID) => {
-		console.log(eggUID)
+		setError()
 		const incubationResult = await incubateEgg({
 			jwt_token: authState.jwtToken,
 			egg_uid: eggUID,
 		})
-		console.log(incubationResult)
-		// Set new monster datal
+
+		// Set new monster data
 		if (incubationResult?.data) {
-			navigate("/incubation")
+			return navigate("/incubation")
 		}
+
+		if (incubationResult?.error.data) {
+			setError(incubationResult?.error.data.message)
+		}
+
+		setConfirmIncubateModal(false)
 	}
 
 	const onSelect = (item) => {
+		setError()
 		setConfirmIncubateModal(true)
 		setSelected(item)
 	}
@@ -102,22 +110,32 @@ export default function BackpackPage() {
 					) : (
 						<div className="h-full flex flex-col shadow-xl rounded-sm">
 							{/* Tabs */}
-							<ul className="flex flex-row bg-light-white">
-								<li>
-									<TabLink
-										isActive={activeTab === "eggs"}
-										title="Eggs"
-										clickHandler={changeTab}
-									/>
-								</li>
-								<li>
-									<TabLink
-										isActive={activeTab === "items"}
-										title="Items"
-										clickHandler={changeTab}
-									/>
-								</li>
-							</ul>
+							<div className="flex flex-row bg-light-white justify-between items-center">
+								<ul className="flex flex-row ">
+									<li>
+										<TabLink
+											isActive={activeTab === "eggs"}
+											title="Eggs"
+											clickHandler={changeTab}
+										/>
+									</li>
+									<li>
+										<TabLink
+											isActive={activeTab === "items"}
+											title="Items"
+											clickHandler={changeTab}
+										/>
+									</li>
+								</ul>
+								{/* Error */}
+								{error && (
+									<div className="bg-Fire-Engine-Red py-2 px-4 mr-4 rounded-md">
+										<span className="text-lg font-bold text-white ">
+											{error}
+										</span>
+									</div>
+								)}
+							</div>
 
 							{/* Items and Eggs */}
 							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto rounded-sm">

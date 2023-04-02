@@ -63,6 +63,21 @@ export const incubateAnEgg = async (req, res, next) => {
 	try {
 		const { egg_uid: eggUID } = req.query
 
+		const incubation = await IncubationModel.find({
+			user_uid: req.user.uid,
+			status: "incubating",
+		})
+console.log(incubation?.length)
+		// Can not incubate simultaneously more than two eggs.
+		if (incubation?.length >= 2) {
+			return next(
+				new ErrorResponse(
+					400,
+					"Please free up your incubators before starting a new one."
+				)
+			)
+		}
+
 		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
 			.populate({ path: "items" })
 			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id -uid name" } })
@@ -107,7 +122,6 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		return res.status(200).json(newIncubation)
 	} catch (error) {
-        console.log(error)
 		return next(error)
 	}
 }
