@@ -6,7 +6,7 @@ import bosses from "./Boss.js"
 const Stages = [
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[0],
+		boss_uid: bosses[0].uid,
 		difficulty_level: 1,
 		reward_exp: 100,
 		reward_coins: 500,
@@ -22,7 +22,7 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[1],
+		boss_uid: bosses[1].uid,
 		difficulty_level: 2,
 		reward_exp: 200,
 		reward_coins: 1000,
@@ -38,7 +38,7 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[2],
+		boss_uid: bosses[2].uid,
 		difficulty_level: 3,
 		reward_exp: 800,
 		reward_coins: 2000,
@@ -54,7 +54,7 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[3],
+		boss_uid: bosses[3].uid,
 		difficulty_level: 4,
 		reward_exp: 1500,
 		reward_coins: 3500,
