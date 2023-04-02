@@ -289,7 +289,7 @@ function ChallengeStages({ onChallenge }) {
 			<div className="h-1/12 w-11/12 p-6 flex flex-row justify-center items-center">
 				<button
 					onClick={() => onChallenge(boss, challengeList.uid)}
-					className="bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-Fire-Engine-Red"
+					className="border-4 border-Flamingo-Pink bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-white hover:text-Flamingo-Pink"
 				>
 					Challenge
 				</button>

@@ -67,7 +67,7 @@ module.exports = {
 						opacity: 0,
 					},
 				},
-                // Source code: https://loading.io/css/
+				// Source code: https://loading.io/css/
 				"lds-ellipsis1": {
 					"0%": {
 						transform: "scale(0)",
