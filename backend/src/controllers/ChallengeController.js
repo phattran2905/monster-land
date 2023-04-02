@@ -63,6 +63,7 @@ export const getAllChallenge = async (req, res, next) => {
 				stamina_cost: st.stamina_cost,
 				reward_items: st.reward_items,
 				reward_eggs: st.reward_eggs,
+				difficulty_level: st.difficulty_level,
 			}))
 
 			return {

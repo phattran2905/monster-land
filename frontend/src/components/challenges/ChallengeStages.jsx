@@ -17,8 +17,10 @@ function ChallengeStages({ onChallenge }) {
 
 	useEffect(() => {
 		if (challengeList) {
-			setStages(challengeList.stages)
-			setBoss(challengeList.stages[0])
+			console.log(challengeList)
+			const challenge = challengeList[0]
+			setStages(challenge.stages)
+			setBoss(challenge.stages[0])
 		}
 	}, [challengeList])
 
@@ -38,6 +40,20 @@ function ChallengeStages({ onChallenge }) {
 				setSelectedStageIndex(index)
 			}
 		}
+	}
+
+	const renderDifficultyLevels = (levels) => {
+		console.log(levels)
+		let levelComponent = []
+		for (let i = 0; i < levels; i++) {
+			levelComponent.push(
+				<li key={i}>
+					<FaStar className="text-Gold-Sand" />
+				</li>
+			)
+		}
+
+		return levelComponent
 	}
 
 	return (
@@ -101,22 +117,9 @@ function ChallengeStages({ onChallenge }) {
 							</div>
 							{/* Difficulty */}
 							<div className="bg-Midnight-Gray flex flex-row justify-around items-center p-2">
-								<span className="font-bold text-white">Difficulty</span>
-								<ul
-									className="flex flex-row justify-center items-center"
-								>
-									<li>
-										<FaStar className="text-Gold-Sand" />
-									</li>
-									<li>
-										<FaStar className="text-Gold-Sand" />
-									</li>
-									<li>
-										<FaStar className="text-Gold-Sand" />
-									</li>
-									<li>
-										<FaStar className="text-Gold-Sand" />
-									</li>
+								<span className="w-1/2 font-bold text-white">Difficulty</span>
+								<ul className="w-1/2 flex flex-row justify-center items-center">
+									{renderDifficultyLevels(stage?.difficulty_level)}
 								</ul>
 							</div>
 							{/* Stats */}
@@ -135,7 +138,7 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Type</span>
 									</div>
-									<MonsterType name={stage.boss_type} />
+									<MonsterType name={stage.boss_monster_type} />
 								</div>
 
 								<div className="w-2/3 flex flex-row my-2 justify-between items-center">
@@ -146,8 +149,8 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Attack</span>
 									</div>
-									<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-										<span className="p-1 font-bold text-white capitalize">
+									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Indigo-Blue">
+										<span className="p-1 font-bold text-Indigo-Blue capitalize">
 											{stage.boss_attack}
 										</span>
 									</div>
@@ -161,7 +164,7 @@ function ChallengeStages({ onChallenge }) {
 										/>
 										<span className="ml-1 capitalize">Defense</span>
 									</div>
-									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Light-Gray">
+									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Indigo-Blue">
 										<span className="p-1 font-bold text-Indigo-Blue capitalize">
 											{stage.boss_defense}
 										</span>
