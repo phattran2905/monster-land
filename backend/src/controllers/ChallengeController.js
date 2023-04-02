@@ -141,7 +141,7 @@ export const challengeBoss = async (req, res, next) => {
 		}
 		await monsterDoc.save()
 
-        // Update monster
+		// Update monster
 		const updatedMonster = {
 			...monster,
 			exp: monsterDoc.exp,
@@ -171,20 +171,6 @@ export const challengeBoss = async (req, res, next) => {
 
 		// Items and Eggs
 		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
-
-		// const updateItemList = backpack.item_list.map((item) => {
-		// 	const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.item_uid)
-		// 	if (hasItem !== -1) {
-		// 		const newAmount = item.amount + stageDoc.reward_items[hasItem].amount
-
-		// 		return {
-		// 			...item,
-		// 			amount: newAmount,
-		// 		}
-		// 	}
-
-		// 	return item
-		// })
 
 		const updateItemList = backpack.item_list.map((item) => {
 			const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.uid)

@@ -30,14 +30,14 @@ const items = [
 		effect_value: 20,
 		img_name: "defense-boosting-potion.png",
 	},
-	// {
-	// 	uid: `I-${randomUID()}`,
-	// 	name: "Accelerating Battery",
-	// 	type: ITEM_TYPE.MONSTER,
-	// 	effect_property: "incubator",
-	// 	effect_value: 10,
-	// 	img_name: "accelerating-battery.png",
-	// },
+	/* {
+		uid: `I-${randomUID()}`,
+		name: "Accelerating Battery",
+		type: ITEM_TYPE.MONSTER,
+		effect_property: "incubator",
+		effect_value: 10,
+		img_name: "accelerating-battery.png",
+	}, */
 ]
 
 export default items

@@ -14,10 +14,11 @@ module.exports = {
 		"no-console": ["error"],
 		quotes: ["error", "double"],
 		"no-tabs": ["error", { allowIndentationTabs: true }],
-		indent: ["error", "tab"],
+		indent: ["warn", "tab", { SwitchCase: 1 }],
 		"no-unused-vars": ["warn"],
 		"import/extensions": ["off"],
 		"comma-dangle": ["off"],
 		"import/no-extraneous-dependencies": ["off"],
+		"operator-linebreak": ["warn"],
 	},
 }
