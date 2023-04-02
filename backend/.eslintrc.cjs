@@ -13,7 +13,7 @@ module.exports = {
 		semi: ["off"],
 		"no-console": ["error"],
 		quotes: ["error", "double"],
-		"no-tabs": ["error", { allowIndentationTabs: true }],
+		"no-tabs": ["warn", { allowIndentationTabs: true }],
 		indent: ["warn", "tab", { SwitchCase: 1 }],
 		"no-unused-vars": ["warn"],
 		"import/extensions": ["off"],

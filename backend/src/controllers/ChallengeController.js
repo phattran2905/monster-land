@@ -10,6 +10,10 @@ import { randomUID } from "../util/random.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
+const populateStageData = (stage) => {}
+
+const populateChallengeData = (challenge) => {}
+
 // Get A Challenge by id
 export const getChallengeById = async (req, res, next) => {
 	try {
@@ -33,28 +37,49 @@ export const getAllChallenge = async (req, res, next) => {
 
 		const challengeListDoc = await ChallengeModel.find(criteria).populate({
 			path: "stage_info",
+			select: "-_id",
+			populate: [
+				{
+					path: "boss_info",
+					populate: { path: "monsterType", select: "name" },
+				},
+				// {
+				// 	path: "detailed_reward_items",
+				// },
+				// {
+				// 	path: "detailed_reward_eggs",
+				// },
+			],
 		})
 
-		const detailedStages = challengeListDoc[0].stages.map((challenge, index) => ({
-			uid: challenge.uid,
-			boss_name: challenge.boss_name,
-			boss_img_name: challenge.boss_img_name,
-			boss_type_uid: challenge.boss_type_uid,
-			boss_type: challengeListDoc[0].stage_boss_type[index].name,
-			boss_attack: challenge.boss_attack,
-			boss_defense: challenge.boss_defense,
-			reward_exp: challenge.reward_exp,
-			reward_coins: challenge.reward_coins,
-			reward_eggs: challenge.reward_eggs,
-			reward_items: challenge.reward_items,
-			stamina_cost: challenge.stamina_cost,
-		}))
+		const challenges = challengeListDoc.map((ch) => {
+			// console.log(ch.stage_info.detailed_reward_items)
+			const stages = ch.stage_info.map((st) => ({
+				uid: st.uid,
+				boss_uid: st.boss_uid,
+				boss_name: st.boss_info.name,
+				boss_type_uid: st.boss_info.type_uid,
+				boss_monster_type: st.boss_info.monsterType.name,
+				boss_img_name: st.boss_info.img_name,
+				boss_attack: st.boss_info.attack,
+				boss_defense: st.boss_info.defense,
+				reward_exp: st.reward_exp,
+				reward_coins: st.reward_coins,
+				stamina_cost: st.stamina_cost,
+				reward_items: st.reward_items,
+				reward_eggs: st.reward_eggs,
+			}))
 
-		return res.status(200).json({
-			uid: challengeListDoc[0].uid,
-			status: challengeListDoc[0].status,
-			stages: detailedStages,
+			return {
+				uid: ch.uid,
+				stages,
+				trainer_level_requirement: ch.trainer_level_requirement,
+				status: ch.status,
+				createdAt: ch.createdAt,
+			}
 		})
+
+		return res.status(200).json(challenges)
 	} catch (error) {
 		return next(error)
 	}

@@ -26,7 +26,7 @@ const ChallengeSchema = new Schema(
 
 ChallengeSchema.virtual("stage_info", {
 	ref: "Stage",
-	localField: "stages_uids",
+	localField: "stage_uids",
 	foreignField: "uid",
 })
 

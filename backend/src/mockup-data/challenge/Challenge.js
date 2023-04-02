@@ -1,10 +1,10 @@
 import { randomUID } from "../../util/random.js"
-import stages from "./Stage.js"
+import Stages from "./Stage.js"
 
 const Challenges = [
 	{
 		uid: `C-${randomUID()}`,
-		stages_uids: stages.map((stage) => stage.uid),
+		stage_uids: Stages.map((stage) => stage.uid),
 		trainer_level_requirement: 1,
 	},
 ]
