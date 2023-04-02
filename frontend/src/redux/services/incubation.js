@@ -2,12 +2,11 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const incubationApi = createApi({
 	reducerPath: "incubationApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/backpack" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/incubation" }),
 	tagTypes: ["incubation"],
 	endpoints: (builder) => ({
 		getIncubatingEggs: builder.query({
 			query: ({ jwt_token }) => ({
-				url: "/incubation",
 				method: "GET",
 				headers: { Authorization: `Bearer ${jwt_token}` },
 			}),
@@ -15,7 +14,7 @@ export const incubationApi = createApi({
 		}),
 		getIncubatingEggByUID: builder.query({
 			query: ({ jwt_token, incubation_UID }) => ({
-				url: `/incubation/${incubation_UID}`,
+				url: `/${incubation_UID}`,
 				method: "GET",
 				headers: { Authorization: `Bearer ${jwt_token}` },
 			}),

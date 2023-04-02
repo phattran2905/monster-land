@@ -38,53 +38,59 @@ export default function Egg({
 				</div>
 			</div>
 
-			{/* Stats */}
-			<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
-				<div className="flex flex-col mb-3">
-					<div className="flex flex-row items-center mb-1">
-						<FaClock
-							className="text-Flamingo-Pink"
-							size={16}
-						/>
-						<span className="ml-1 font-bold capitalize">Hatching time</span>
+			{/* Info */}
+			<div className="w-52 h-full flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
+				<div className="w-full bg-light-white py-4 px-6">
+					<div className="flex flex-col mb-3">
+						<div className="flex flex-row items-center mb-1">
+							<FaClock
+								className="text-Flamingo-Pink"
+								size={16}
+							/>
+							<span className="ml-1 font-bold capitalize">Hatching time</span>
+						</div>
+						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
+							<span className="p-1 font-bold text-white tracking-widest">
+								{hatchingTime}
+							</span>
+						</div>
 					</div>
-					<div className="bg-Midnight-Gray flex flex-row justify-center">
-						<span className="p-1 font-bold text-white tracking-widest">
-							{hatchingTime}
-						</span>
+					<div className="flex flex-col mb-3">
+						<div className="flex flex-row items-center mb-1">
+							<FaShoppingBasket
+								className="text-Flamingo-Pink"
+								size={16}
+							/>
+							<span className="ml-1 font-bold capitalize">Amount</span>
+						</div>
+						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
+							<span className="p-1 font-bold text-white tracking-widest">
+								{amount}
+							</span>
+						</div>
+					</div>
+					<div className="flex flex-col mb-3">
+						<div className="flex flex-row items-center mb-1">
+							<img
+								src="/img/icons/stats-icons/diamond7.png"
+								alt="Diamond icon"
+							/>
+							<span className="ml-1 font-bold capitalize">Monster Type</span>
+						</div>
+						<div className="flex flex-row justify-center items-stretch">
+							<MonsterType name={monster_type} />
+						</div>
 					</div>
 				</div>
-				<div className="flex flex-col mb-3">
-					<div className="flex flex-row items-center mb-1">
-						<FaShoppingBasket
-							className="text-Flamingo-Pink"
-							size={16}
-						/>
-						<span className="ml-1 font-bold capitalize">Amount</span>
-					</div>
-					<div className="bg-Midnight-Gray flex flex-row justify-center">
-						<span className="p-1 font-bold text-white capitalize">{amount}</span>
-					</div>
+				{/* Button */}
+				<div className="flex flex-row items-stretch w-full p-2">
+					<button
+						className="w-full p-2 bg-Flamingo-Pink text-white font-bold rounded-full border-2 hover:border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
+						onClick={() => onSelect({ uid, name, img_name })}
+					>
+						Incubate
+					</button>
 				</div>
-				<div className="flex flex-col mb-3">
-					<div className="flex flex-row items-center mb-1">
-						<img
-							src="/img/icons/stats-icons/diamond7.png"
-							alt="Diamond icon"
-						/>
-						<span className="ml-1 font-bold capitalize">Monster Type</span>
-					</div>
-					<div className="flex flex-row justify-center items-stretch">
-						<MonsterType name={monster_type} />
-					</div>
-				</div>
-				{/* Incubate Button */}
-				<button
-					className="p-2 bg-Flamingo-Pink mt-2 text-white font-bold rounded-full hover:bg-Gold-Sand hover:text-Midnight-Gray"
-					onClick={() => onSelect()}
-				>
-					Incubate
-				</button>
 			</div>
 		</div>
 	)
