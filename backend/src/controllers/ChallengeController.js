@@ -53,7 +53,6 @@ export const getAllChallenge = async (req, res, next) => {
 		})
 
 		const challenges = challengeListDoc.map((ch) => {
-			// console.log(ch.stage_info.detailed_reward_items)
 			const stages = ch.stage_info.map((st) => ({
 				uid: st.uid,
 				boss_uid: st.boss_uid,
@@ -97,7 +96,8 @@ export const challengeBoss = async (req, res, next) => {
 		// Get the stage info
 		const stageDoc = await StageModel.findOne({ uid: stageUID })
 			.populate({
-				path: "boss_type",
+				path: "boss_info",
+				populate: { path: "monsterType" },
 			})
 			.populate({ path: "detailed_reward_items" })
 			.populate({ path: "detailed_reward_eggs" })
@@ -106,6 +106,7 @@ export const challengeBoss = async (req, res, next) => {
 			return next(new ErrorResponse(404, "Stage is not found."))
 		}
 
+		// Get Trainer info
 		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
 		if (trainer.stamina < stageDoc.stamina_cost) {
 			return next(new ErrorResponse(400, "You do not have enough stamina."))
@@ -135,14 +136,14 @@ export const challengeBoss = async (req, res, next) => {
 			type_uid: monsterDoc.info.monsterType.uid,
 		}
 		const boss = {
-			uid: stageDoc.uid,
-			attack: stageDoc.boss_attack,
-			defense: stageDoc.boss_defense,
-			status: stageDoc.status,
-			name: stageDoc.boss_name,
-			img_name: stageDoc.boss_img_name,
-			type: stageDoc.boss_type.name,
-			type_uid: stageDoc.boss_type_uid,
+			uid: stageDoc.boss_info.uid,
+			attack: stageDoc.boss_info.attack,
+			defense: stageDoc.boss_info.defense,
+			status: stageDoc.boss_info.status,
+			name: stageDoc.boss_info.name,
+			img_name: stageDoc.boss_info.img_name,
+			type: stageDoc.boss_info.monsterType.name,
+			type_uid: stageDoc.boss_info.type_uid,
 		}
 
 		// Calculate damage
@@ -155,18 +156,26 @@ export const challengeBoss = async (req, res, next) => {
 
 		// Rewards points
 		// Add exp to monster
-		monsterDoc.exp = stageDoc.reward_exp
-		if (monsterDoc.exp >= monsterDoc.level_up_exp) {
-			// Level up
-			monsterDoc.level += 1
-			monsterDoc.exp = 0
-			const GsSetting = await GameServerSettingModel.findOne({})
-			const newLvlUpExp = (GsSetting.monster_lvl_up_exp_rate + 1) * monsterDoc.level_up_exp
-			monsterDoc.level_up_exp = Math.floor(newLvlUpExp)
+		const accumulatedExp = monsterDoc.exp + stageDoc.reward_exp
+		const GsSetting = await GameServerSettingModel.findOne({ status: "active" })
+		if (accumulatedExp >= monsterDoc.level_up_exp) {
+			let currentExp = accumulatedExp
+			while (currentExp >= monsterDoc.level_up_exp) {
+				// Level up
+				monsterDoc.level += 1
+				currentExp -= monsterDoc.level_up_exp
+
+				monsterDoc.exp = currentExp
+				// Update the new level_up_xep
+				const levelUpExpRate = GsSetting.monster_lvl_up_exp_rate
+				monsterDoc.level_up_exp = Math.floor(monsterDoc.level_up_exp * (1 + levelUpExpRate))
+			}
+		} else {
+			monsterDoc.exp = accumulatedExp
 		}
 		await monsterDoc.save()
 
-		// Update monster
+		// Update monster collection after receiving rewards
 		const updatedMonster = {
 			...monster,
 			exp: monsterDoc.exp,
@@ -185,8 +194,6 @@ export const challengeBoss = async (req, res, next) => {
 		monsterCollection.monster_list = updatedMonsterList
 		await monsterCollection.save()
 
-		// Update collection
-
 		// Add coins and subtract stamina
 		trainer.stamina =
 			trainer.stamina >= stageDoc.stamina_cost ? trainer.stamina - stageDoc.stamina_cost : 0
@@ -194,9 +201,8 @@ export const challengeBoss = async (req, res, next) => {
 		trainer.gold += stageDoc.reward_coins
 		await trainer.save()
 
-		// Items and Eggs
+		// Update backpack with rewarded Items and Eggs
 		const backpack = await BackpackModel.findOne({ user_uid: req.user.uid })
-
 		const updateItemList = backpack.item_list.map((item) => {
 			const hasItem = stageDoc.reward_items.findIndex((i) => i.uid === item.uid)
 			if (hasItem !== -1) {
