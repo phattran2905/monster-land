@@ -10,10 +10,6 @@ import { randomUID } from "../util/random.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
-const populateStageData = (stage) => {}
-
-const populateChallengeData = (challenge) => {}
-
 // Get A Challenge by id
 export const getChallengeById = async (req, res, next) => {
 	try {
