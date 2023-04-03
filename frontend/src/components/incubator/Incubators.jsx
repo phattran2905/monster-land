@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHatchEggMutation, useGetIncubatingEggsQuery } from "../../redux/services/incubation"
 import IncubatorCard from "./IncubatorCard"
-import { updateIncubator } from "../../redux/slices/incubators"
+import { resetIncubator, updateIncubator } from "../../redux/slices/incubators"
 
 function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, setShowHatchModal }) {
 	const authState = useSelector((state) => state.auth)
@@ -15,20 +15,15 @@ function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, set
 
 	useEffect(() => {
 		if (incubatingEggs?.length > 0) {
-			const incubations = incubatingEggs.slice(0, 2)
+			const incubation = incubatingEggs.slice(0, 2)
 
-			if (!incubatorsState.incubator1?.uid && !incubatorsState.incubator2?.uid) {
-				dispatch(
-					updateIncubator({ incubator: { index: 1, ...incubations[0], selected: false } })
-				)
-				dispatch(
-					updateIncubator({ incubator: { index: 2, ...incubations[1], selected: false } })
-				)
+			if (incubatorsState.selectedIndex === 0) {
+				dispatch(updateIncubator({ incubation: incubation }))
 			}
 		}
 	}, [incubatingEggs])
 
-	const onDoneIncubating = async (incubationUID) => {
+	const onDoneIncubating = async (incubationUID, incubatorIndex) => {
 		if (incubationUID) {
 			const babyMonster = await hatchEgg({
 				jwt_token: authState.jwtToken,
@@ -39,12 +34,11 @@ function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, set
 				setNewMonster(babyMonster?.data)
 			}
 
-			if (incubatorsState.incubator1?.uid === incubationUID) {
-				dispatch(updateIncubator({ incubator: { index: 1, selected: false } }))
-			}
-			if (incubatorsState.incubator2?.uid === incubationUID) {
-				dispatch(updateIncubator({ incubator: { index: 2, selected: false } }))
-			}
+			const updatedIncubator =
+				incubatorIndex === 1 ? incubatorsState.incubator1 : incubatorsState.incubator2
+
+			// dispatch(updateIncubator({ incubation: { ...updatedIncubator } }))
+			dispatch(resetIncubator(incubatorIndex))
 
 			setShowHatchModal(true)
 		}

@@ -6,7 +6,7 @@ import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
 import { useDispatch } from "react-redux"
-import { updateIncubator } from "../../redux/slices/incubators"
+import { selectIncubator } from "../../redux/slices/incubators"
 
 function IncubatorCard({
 	index,
@@ -74,7 +74,7 @@ function IncubatorCard({
 	}, [counter])
 
 	const onSelectIncubator = () => {
-		dispatch(updateIncubator({ incubator: { index, selected: true } }))
+		dispatch(selectIncubator(index))
 		onShowSelectEggModal()
 	}
 

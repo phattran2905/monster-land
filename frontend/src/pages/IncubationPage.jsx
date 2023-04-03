@@ -15,7 +15,7 @@ import {
 	useIncubateEggMutation,
 } from "../redux/services/incubation"
 import Incubators from "../components/incubator/Incubators"
-import { updateIncubator } from "../redux/slices/incubators"
+import { selectIncubator, updateIncubator } from "../redux/slices/incubators"
 
 function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
@@ -57,19 +57,11 @@ function IncubationPage() {
 				refetchBackpack()
 				setShowSelectEggModal(false)
 
-				if (incubatorsState.incubator1.selected) {
-					dispatch(
-						updateIncubator({
-							incubator: { index: 1, ...incubationResult?.data, selected: false },
-						})
-					)
-				} else if (incubatorsState.incubator2.selected) {
-					dispatch(
-						updateIncubator({
-							incubator: { index: 2, ...incubationResult?.data, selected: false },
-						})
-					)
-				}
+				dispatch(
+					updateIncubator({
+						incubation: incubationResult?.data,
+					})
+				)
 			}
 
 			// Has error
@@ -83,7 +75,7 @@ function IncubationPage() {
 			<div className="w-full h-full flex flex-row overflow-hidden">
 				<MenuBar />
 
-				<div className="m-10 w-full flex flex-row justify-between items-center relative gap-x-10">
+				<div className="my-10 mx-20 w-full flex flex-row justify-between items-center relative gap-x-20">
 					<Incubators
 						setNewMonster={setNewMonster}
 						onShowBoostModal={() => setShowBoostModal(true)}
@@ -111,7 +103,10 @@ function IncubationPage() {
 
 					{showSelectEggModal && (
 						<SelectEggModal
-							onClose={() => setShowSelectEggModal(false)}
+							onClose={() => {
+								dispatch(selectIncubator(0))
+								setShowSelectEggModal(false)
+							}}
 							onStartIncubating={onStartIncubating}
 						/>
 					)}
