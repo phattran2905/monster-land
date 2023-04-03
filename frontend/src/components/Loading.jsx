@@ -1,4 +1,7 @@
-// Source code: https://loading.io/css/
+/**
+ * I have implemented a Pure CSS Loaders solution that I found here:
+ * https://loading.io/css/
+ * */
 export default function Loading() {
 	return (
 		<div className="w-full h-full flex flex-row justify-center items-center">
