@@ -123,9 +123,9 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 					<div className="w-full flex flex-row justify-center items-start">
 						<button
 							onClick={() => onStartIncubating(selectedUID)}
-							className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
+							className="bg-Flamingo-Pink py-2 px-8 rounded-full text-white font-bold text-xl border-Flamingo-Pink border-2 hover:bg-white hover:text-Flamingo-Pink"
 						>
-							<span className="text-white font-bold text-xl">Confirm</span>
+							Incubate
 						</button>
 					</div>
 				</div>

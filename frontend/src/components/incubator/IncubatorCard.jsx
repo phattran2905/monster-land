@@ -74,8 +74,8 @@ function IncubatorCard({
 		<div
 			className={`${
 				inUse && !done ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
-			} ${inUse && done && "border-Forest-Green bg-Light-Green"}
-            flex flex-col items-center w-1/2 h-3/4 py-10 border-4  rounded-lg shadow-2xl`}
+			} ${inUse && done && "border-Forest-Green bg-Light-Green shadow-Forest-Green"}
+            flex flex-col items-center w-1/2 h-3/4 py-10 border-4 rounded-lg shadow-lg`}
 		>
 			{/* Name */}
 			<div className=" bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
@@ -119,19 +119,6 @@ function IncubatorCard({
 							></div>
 
 							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-xl">
-								<div className="mb-3">
-									<div className="mb-1 flex flex-row items-center">
-										<span className="mr-1 text-Fire-Engine-Red font-bold">
-											<AiOutlineNumber className="font-bold" />
-										</span>
-										<span className="font-bold text-Indigo-Blue underline">
-											UID
-										</span>
-									</div>
-									<div className="py-2 bg-Midnight-Gray flex flex-row justify-center items-center">
-										<span className="text-white px-4">{incubator?.uid}</span>
-									</div>
-								</div>
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
 										<img
@@ -209,7 +196,7 @@ function IncubatorCard({
 											onDoneIncubating(incubator?.uid, index)
 											setInUse(false)
 										}}
-										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize"
+										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white border-4 border-Flamingo-Pink font-bold capitalize hover:bg-white hover:text-Flamingo-Pink"
 									>
 										Hatch now
 									</button>
@@ -229,11 +216,9 @@ function IncubatorCard({
 					{!inUse && (
 						<button
 							onClick={onShowSelectEggModal}
-							className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue"
+							className="bg-Flamingo-Pink border-Flamingo-Pink border-4 py-4 px-14 rounded-full font-bold text-lg capitalize text-white hover:bg-white hover:border-Flamingo-Pink hover:text-Flamingo-Pink"
 						>
-							<span className="font-bold text-lg capitalize text-white">
-								Choose an egg
-							</span>
+							Choose an egg
 						</button>
 					)}
 				</div>
