@@ -39,18 +39,6 @@ export const populateItemData = (backpackDoc) => ({
 	status: backpackDoc.status,
 })
 
-const populateIncubationData = (incubationDoc) => ({
-	uid: incubationDoc.uid,
-	user_uid: incubationDoc.uid,
-	monster_type: incubationDoc.egg_info.monsterType.name,
-	egg_uid: incubationDoc.uid,
-	egg_type: incubationDoc.egg_info.name,
-	done_hatching_time: incubationDoc.done_hatching_time,
-	incubator_img: incubationDoc.incubator_img,
-	status: incubationDoc.status,
-	createdAt: incubationDoc.createdAt,
-})
-
 // Get items from backpack
 export const getItemsFromBackpack = async (req, res, next) => {
 	try {

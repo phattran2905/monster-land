@@ -6,19 +6,19 @@ import bosses from "./Boss.js"
 const Stages = [
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[0].uid,
+		boss_uid: bosses[3].uid,
 		difficulty_level: 1,
-		reward_exp: 100,
-		reward_coins: 500,
+		reward_exp: 1500,
+		reward_coins: 3500,
 		reward_eggs: [
-			{ ...eggs[2], amount: 1 },
-			{ ...eggs[1], amount: 1 },
+			{ ...eggs[1], amount: 4 },
+			{ ...eggs[2], amount: 4 },
 		],
 		reward_items: [
-			{ ...items[2], amount: 1 },
-			{ ...items[1], amount: 1 },
+			{ ...items[1], amount: 4 },
+			{ ...items[2], amount: 4 },
 		],
-		stamina_cost: 10,
+		stamina_cost: 40,
 	},
 	{
 		uid: `S-${randomUID()}`,
@@ -54,19 +54,19 @@ const Stages = [
 	},
 	{
 		uid: `S-${randomUID()}`,
-		boss_uid: bosses[3].uid,
+		boss_uid: bosses[0].uid,
 		difficulty_level: 4,
-		reward_exp: 1500,
-		reward_coins: 3500,
+		reward_exp: 100,
+		reward_coins: 500,
 		reward_eggs: [
-			{ ...eggs[1], amount: 4 },
-			{ ...eggs[2], amount: 4 },
+			{ ...eggs[2], amount: 1 },
+			{ ...eggs[1], amount: 1 },
 		],
 		reward_items: [
-			{ ...items[1], amount: 4 },
-			{ ...items[2], amount: 4 },
+			{ ...items[2], amount: 1 },
+			{ ...items[1], amount: 1 },
 		],
-		stamina_cost: 40,
+		stamina_cost: 10,
 	},
 ]
 

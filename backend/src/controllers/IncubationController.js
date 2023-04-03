@@ -67,14 +67,10 @@ export const incubateAnEgg = async (req, res, next) => {
 			user_uid: req.user.uid,
 			status: "incubating",
 		})
-console.log(incubation?.length)
 		// Can not incubate simultaneously more than two eggs.
 		if (incubation?.length >= 2) {
 			return next(
-				new ErrorResponse(
-					400,
-					"Please free up your incubators before starting a new one."
-				)
+				new ErrorResponse(400, "Please free up your incubators before starting a new one.")
 			)
 		}
 
