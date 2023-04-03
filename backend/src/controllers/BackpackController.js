@@ -2,6 +2,7 @@ import GameServerSettingModel from "../models/setting/GSSettingModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
 import MonsterModel from "../models/monster/MonsterModel.js"
 import ErrorResponse from "../objects/ErrorResponse.js"
+import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 
 const getElementInfo = (itemUid, items) => items.find((i) => i.uid === itemUid)
 
@@ -44,7 +45,7 @@ export const getItemsFromBackpack = async (req, res, next) => {
 	try {
 		const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid })
 			.populate({ path: "items" })
-			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id -uid name" } })
+			.populate({ path: "eggs", populate: { path: "monsterType", select: "-_id" } })
 
 		if (!backpackDoc) {
 			return next(new ErrorResponse(404, "Backpack is not found"))
@@ -66,31 +67,49 @@ export const useItemsOnMonster = async (req, res, next) => {
 		if (monsterUID && itemsToUse.length > 0) {
 			const monsterDoc = await MonsterModel.findOne({ uid: monsterUID }).populate({
 				path: "info",
-				populate: { path: "monsterType", select: "-_id -uid name" },
+				populate: { path: "monsterType", select: "-_id uid name" },
 			})
-			const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid }).populate(
-				"items"
-			)
-			const backpack = populateItemData(backpackDoc)
-			// Either of them not found
-			if (!backpackDoc || !monsterDoc) {
-				return next(new ErrorResponse(404, "Not found"))
+			// Monster is not found
+			if (!monsterDoc) {
+				return next(new ErrorResponse(404, "Monster is not found"))
 			}
+			const backpackDoc = await BackpackModel.findOne({ user_uid: req.user.uid }).populate({
+				path: "items",
+			})
+
+			// Backpack is not found
+			if (!monsterDoc) {
+				return next(new ErrorResponse(404, "Backpack is not found"))
+			}
+
+			// Map item's information with item_list
+			const itemsInBackpack = backpackDoc.item_list.map((i) => {
+				const itemInfo = backpackDoc.items.findIndex((info) => info.uid === i.uid)
+
+				return {
+					...backpackDoc.items[itemInfo].toObject(),
+					amount: i.amount,
+				}
+			})
 
 			// Use all items in the array
 			await Promise.all(
 				itemsToUse.map(async (item) => {
 					const usedAmount = Number.parseInt(item.amount ?? 0, 10)
-					const ownedItem = backpack.item_list.find((i) => i.uid === item.item_uid)
+					const ownedItem = itemsInBackpack.find((i) => i.uid === item.uid)
 
 					if (!ownedItem) {
-						throw new ErrorResponse(404, "Item is not found")
+						throw new ErrorResponse(404, "Item is not found in your backpack")
 					}
 
-					// Not a "monster" type item
-					if (ownedItem.type !== "monster") {
+					// // Not a "monster" type item
+					if (ownedItem?.type !== "monster") {
 						throw new ErrorResponse(400, "Can not use on monsters.")
 					}
+
+					const GameServerSetting = await GameServerSettingModel.findOne({
+						status: "active",
+					})
 
 					// Check ownership
 					if (ownedItem && usedAmount <= ownedItem.amount) {
@@ -111,9 +130,6 @@ export const useItemsOnMonster = async (req, res, next) => {
 							// Exceed the current exp
 							if (earnedEXP >= monsterDoc.level_up_exp) {
 								let currentExp = earnedEXP
-								const GameServerSetting = await GameServerSettingModel.findOne({
-									status: "active",
-								})
 								while (currentExp >= monsterDoc.level_up_exp) {
 									// Level up
 									monsterDoc.level += 1
@@ -132,15 +148,18 @@ export const useItemsOnMonster = async (req, res, next) => {
 						}
 
 						// Update amount in backpack
-						backpack.item_list = backpack.item_list.map((i) => {
-							if (i.uid === item.item_uid) {
-								return {
-									...i,
-									amount: i.amount - usedAmount,
-								}
+						const updatedAmountItems = itemsInBackpack.map((i) => {
+							let updatedAmount = i.amount
+							if (i.uid === item.uid) {
+								updatedAmount =
+									i.amount - usedAmount > 0 ? i.amount - usedAmount : 0
 							}
-							return i
+							return {
+								...i,
+								amount: updatedAmount,
+							}
 						})
+						backpackDoc.item_list = updatedAmountItems.filter((i) => i.amount > 0)
 
 						return ownedItem
 					}
@@ -150,15 +169,25 @@ export const useItemsOnMonster = async (req, res, next) => {
 			)
 
 			// Update Monster with new changes
-			const monster = await MonsterModel.findOneAndUpdate(
-				{ uid: monsterDoc.uid },
-				{ ...monsterDoc.toObject() },
-				{ new: true }
-			)
+			await monsterDoc.save()
+
+			// Update Monster Collection
+			const monsterCollection = await MonsterCollectionModel.findOne({
+				user_uid: req.user.uid,
+			})
+			const updatedCollection = monsterCollection.monster_list.map((m) => {
+				if (m.uid === monsterDoc.uid) {
+					return monsterDoc
+				}
+
+				return m
+			})
+			monsterCollection.monster_list = updatedCollection
+			await monsterCollection.save()
 
 			// Update Backpack
-			const updatedItemList = backpack.item_list.map((item) => ({
-				item_uid: item.uid,
+			const updatedItemList = backpackDoc.item_list.map((item) => ({
+				uid: item.uid,
 				amount: item.amount,
 			}))
 			await BackpackModel.findOneAndUpdate(
@@ -166,7 +195,7 @@ export const useItemsOnMonster = async (req, res, next) => {
 				{ ...backpackDoc.toObject(), item_list: updatedItemList }
 			)
 
-			return res.status(200).json({ ...monsterDoc.toObject(), ...monster.toObject() })
+			return res.status(200).json({ ...monsterDoc.toObject() })
 		}
 
 		return next(new Error(400, "Failed to use items"))

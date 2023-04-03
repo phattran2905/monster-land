@@ -2,10 +2,11 @@ import Footer from "../components/Footer"
 import Header from "../components/Header"
 import MenuBar from "../components/menu/MenuBar"
 import Item from "../components/backpack/Item"
-import { useGetBackpackQuery } from "../redux/services/backpack"
+import { useGetBackpackQuery, useUseItemsMutation } from "../redux/services/backpack"
 import Loading from "../components/Loading"
 import { useState } from "react"
 import { useEffect } from "react"
+import { AiFillWarning } from "react-icons/ai"
 import TabLink from "../components/backpack/TabLink"
 import { useDispatch, useSelector } from "react-redux"
 import { getStoredJwtToken } from "../redux/slices/auth"
@@ -14,6 +15,7 @@ import Egg from "../components/backpack/Egg"
 import { useIncubateEggMutation } from "../redux/services/incubation"
 import IncubationConfirmModal from "../components/modal/IncubationConfirmModal"
 import UseItemModal from "../components/modal/UseItemModal"
+import { useGetMonsterCollectionQuery } from "../redux/services/collection"
 
 export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
@@ -24,13 +26,16 @@ export default function BackpackPage() {
 		isLoading,
 		refetch: refetchBackpackIno,
 	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
+	const fetchMonsterCollection = useGetMonsterCollectionQuery({ jwt_token: authState.jwtToken })
 	const [incubateEgg] = useIncubateEggMutation()
+	const [fetchUseItemAPI] = useUseItemsMutation()
 	const [eggs, setEggs] = useState([])
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
 	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false)
 	const [confirmItemUseModal, setConfirmItemUseModal] = useState(false)
 	const [selectedEgg, setSelectedEgg] = useState("")
+	const [selectedItem, setSelectedItem] = useState("")
 	const [error, setError] = useState()
 
 	useEffect(() => {
@@ -92,7 +97,32 @@ export default function BackpackPage() {
 	const onSelectItem = (item) => {
 		setError()
 		setConfirmItemUseModal(true)
-		setSelectedEgg(item)
+		setSelectedItem(item)
+	}
+
+	const onUseItem = async (item) => {
+		setError()
+		setConfirmItemUseModal(false)
+		setSelectedItem(item)
+
+		if (item < 1 || item.amountToUse > item.amount) {
+			return setError("The amount is invalid.")
+		}
+
+		const result = await fetchUseItemAPI({
+			jwt_token: authState.jwtToken,
+			monster_uid: item.monster_uid,
+			items: [{ amount: item.amountToUse, uid: item.uid }],
+		})
+
+		// Has error
+		if (result?.error) {
+			setError(result?.error.data.message)
+		} else {
+			setError()
+			fetchMonsterCollection.refetch()
+			console.log(result)
+		}
 	}
 
 	return (
@@ -115,7 +145,8 @@ export default function BackpackPage() {
 						<UseItemModal
 							onClose={() => setConfirmItemUseModal(false)}
 							onConfirm={() => incubateEggByUID(selectedEgg?.uid)}
-							itemToUse={selectedEgg?.name}
+							itemToUse={selectedItem}
+							onUse={onUseItem}
 						/>
 					)}
 
@@ -142,12 +173,14 @@ export default function BackpackPage() {
 										/>
 									</li>
 								</ul>
+
 								{/* Error */}
 								{error && (
 									<div className="bg-Fire-Engine-Red py-2 px-4 mr-4 rounded-md">
-										<span className="text-lg font-bold text-white ">
+										<p className="text-lg font-bold text-white flex flex-row items-center">
+											<AiFillWarning className="text-white mx-1" />
 											{error}
-										</span>
+										</p>
 									</div>
 								)}
 							</div>

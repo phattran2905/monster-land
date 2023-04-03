@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { FaTimesCircle, FaPlus, FaMinus } from "react-icons/fa"
+import { AiFillWarning } from "react-icons/ai"
 import MonsterType from "../monster/MonsterType"
 import { useGetMonsterCollectionQuery } from "../../redux/services/collection"
 
-function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
+function UseItemModal({ onUse, onClose, itemToUse }) {
 	const authState = useSelector((state) => state.auth)
 	const { data: monsterCollection, refetch: refetchMonsterCollection } =
 		useGetMonsterCollectionQuery({
@@ -12,11 +13,12 @@ function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
 		})
 	const [monsters, setMonsters] = useState([])
 	const [selectedUID, setSelectedUID] = useState()
-	const [amount, setAmount] = useState(0)
+	const [amount, setAmount] = useState(1)
+	const [error, setError] = useState()
 
-	useEffect(() => {
-		refetchMonsterCollection()
-	}, [])
+	// useEffect(() => {
+	// 	refetchMonsterCollection()
+	// }, [])
 
 	// Set Items and Eggs
 	useEffect(() => {
@@ -26,7 +28,7 @@ function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
 	}, [monsterCollection])
 
 	const onIncreaseAmount = () => {
-		if (amount < itemToUse.amountToUse) {
+		if (amount < itemToUse.amount) {
 			setAmount((prev) => prev + 1)
 		} else {
 			setAmount(itemToUse.amount)
@@ -34,16 +36,31 @@ function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
 	}
 
 	const onDecreaseAmount = () => {
-		if (amount > 0) {
+		if (amount > 1) {
 			setAmount((prev) => prev - 1)
 		} else {
-			setAmount(0)
+			setAmount(1)
 		}
+	}
+
+	const useButtonHandler = () => {
+		setError()
+
+		if (!selectedUID) {
+			setError("Please select a monster")
+			return
+		}
+
+		return onUse({
+			...itemToUse,
+			amountToUse: amount,
+			monster_uid: selectedUID,
+		})
 	}
 
 	return (
 		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-start bg-opacity-80">
-			<div className="relative w-10/12 h-5/6 shadow-2xl flex flex-col bg-white ">
+			<div className="relative w-11/12 h-5/6 shadow-2xl flex flex-col bg-white ">
 				{/* Close button */}
 				<button
 					onClick={onClose}
@@ -62,7 +79,7 @@ function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
 
 				{/* Content */}
 				<div className="h-full flex flex-col justify-between rounded-2xl py-10">
-					<div className="h-full px-8 bg-light-white flex flex-row flex-wrap content-start gap-y-8 gap-x-12 overflow-auto ">
+					<div className="h-full px-8 bg-light-white flex flex-row flex-wrap content-start gap-y-8 gap-x-12 overflow-auto mb-4">
 						{monsters.map((monster) => (
 							<button
 								key={monster.uid}
@@ -139,40 +156,68 @@ function UseItemModal({ onConfirm, onClose, itemToUse, objectToUse }) {
 					</div>
 
 					<div className="w-full flex flex-col justify-start items-center bg-white">
-						<div className="w-full mb-4 flex flex-row justify-center items-stretch bg-Midnight-Gray p-4">
+						{error && (
+							<div className="w-full flex flex-row justify-center items-stretch bg-white p-4">
+								<p className="bg-Fire-Engine-Red py-2 px-6 text-white rounded-md font-bold flex flex-row items-center">
+									<AiFillWarning className="text-white mx-1" />
+									{error}
+								</p>
+							</div>
+						)}
+						<div className="w-full flex flex-row justify-center items-stretch bg-Midnight-Gray p-4">
+							<div className="mx-6 flex flex-row justify-center items-center">
+								<span className="text-white font-bold text-xl mr-2 underline">
+									Item:
+								</span>
+								<img
+									className="w-8 h-8 object-scale-down"
+									src={`/img/items/${itemToUse.img_name}`}
+									alt={itemToUse.name}
+								/>
+								<span className="text-white font-bold text-xl mx-2">
+									{itemToUse.name}
+								</span>
+							</div>
 							<div className="mx-6 flex flex-row justify-center items-center">
 								<label
 									htmlFor="amount"
-									className="text-white font-bold text-xl"
+									className="text-white font-bold text-xl underline mx-4"
 								>
-									Amount
+									Amount:
 								</label>
+								<button
+									onClick={() => onIncreaseAmount()}
+									className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand"
+								>
+									<FaPlus className="font-bold " />
+								</button>
+								<input
+									className="p-2 w-20 border-Indigo-Blue border-4 rounded-xl focus:border-Flamingo-Pink font-bold text-center text-lg outline-none m-0"
+									type="number"
+									name="amount"
+									id="amount"
+									min={1}
+									max={itemToUse?.amount}
+									value={amount}
+									onChange={(e) => setAmount(e.target.value)}
+								/>
+								<button
+									onClick={() => onDecreaseAmount()}
+									className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand"
+								>
+									<FaMinus className="font-bold " />
+								</button>
 							</div>
-							<button className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand">
-								<FaPlus className="font-bold " />
-							</button>
-							<input
-								className="p-2 w-20 border-Indigo-Blue border-4 rounded-xl focus:border-Flamingo-Pink font-bold text-center text-lg outline-none m-0"
-								type="number"
-								name="amount"
-								id="amount"
-								min={0}
-								value={amount}
-								onChange={(e) => setAmount(e.target.value)}
-							/>
-							<button className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand">
-								<FaMinus className="font-bold " />
-							</button>
 
 							{/* Use button */}
-							<button
-								onClick={() =>
-									onSelectMonster(monsters.find((m) => m.uid === selectedUID))
-								}
-								className="bg-Flamingo-Pink ml-8 py-2 px-14 rounded-full border-4 border-Flamingo-Pink hover:text-Flamingo-Pink hover:border-Flamingo-Pink hover:bg-white text-white font-bold text-xl"
-							>
-								Use
-							</button>
+							<div className="mx-6 flex flex-row justify-center items-center">
+								<button
+									onClick={useButtonHandler}
+									className="bg-Flamingo-Pink ml-8 py-2 px-14 rounded-full border-4 border-Flamingo-Pink hover:text-Flamingo-Pink hover:border-Flamingo-Pink hover:bg-white text-white font-bold text-xl"
+								>
+									Use
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>
