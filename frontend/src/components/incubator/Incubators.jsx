@@ -34,10 +34,6 @@ function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, set
 				setNewMonster(babyMonster?.data)
 			}
 
-			const updatedIncubator =
-				incubatorIndex === 1 ? incubatorsState.incubator1 : incubatorsState.incubator2
-
-			// dispatch(updateIncubator({ incubation: { ...updatedIncubator } }))
 			dispatch(resetIncubator(incubatorIndex))
 
 			setShowHatchModal(true)

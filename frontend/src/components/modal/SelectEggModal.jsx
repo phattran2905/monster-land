@@ -7,7 +7,7 @@ import MonsterType from "../monster/MonsterType"
 
 function SelectEggModal({ onClose, onStartIncubating }) {
 	const authState = useSelector((state) => state.auth)
-	const { data: backpackData, isLoading } = useGetBackpackQuery({ jwt_token: authState.jwtToken })
+	const { data: backpackData } = useGetBackpackQuery({ jwt_token: authState.jwtToken })
 	const [eggs, setEggs] = useState([])
 	const [selectedUID, setSelectedUID] = useState()
 

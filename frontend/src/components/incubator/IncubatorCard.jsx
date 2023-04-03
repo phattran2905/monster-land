@@ -24,14 +24,17 @@ function IncubatorCard({
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		const intervalIndex = setInterval(() => {
-			if (counter >= 0) {
-				setCounter((counter) => counter - 1)
-			}
-		}, 1000)
+		if (incubator?.uid && counter >= 0) {
+			// Count down every second
+			const intervalIndex = setInterval(() => {
+				if (counter >= 0) {
+					setCounter((counter) => counter - 1)
+				}
+			}, 1000)
 
-		return () => clearInterval(intervalIndex)
-	}, [])
+			return () => clearInterval(intervalIndex)
+		}
+	}, [incubator, counter])
 
 	const displayHatchingTime = (hatching_time_in_seconds) => {
 		const duration = moment.duration(hatching_time_in_seconds, "seconds")
@@ -159,7 +162,10 @@ function IncubatorCard({
 												percentage={
 													done
 														? 100
-														: ((secondsToCount - counter) / 60) * 100
+														: ((incubator.hatching_time_in_seconds -
+																counter) /
+																60) *
+														  100
 												}
 												bgColorClass="bg-Light-Gray"
 												currentBgColorClass={
@@ -174,15 +180,15 @@ function IncubatorCard({
 												/>
 											) : (
 												<>
-													{/* <button
-													onClick={onShowBoostModal}
-													className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
-												>
-													<FaAngleDoubleUp
-														className="text-white rotate-90 "
-														size={16}
-													/>
-												</button> */}
+													<button
+														onClick={onShowBoostModal}
+														className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
+													>
+														<FaAngleDoubleUp
+															className="text-white rotate-90"
+															size={16}
+														/>
+													</button>
 												</>
 											)}
 										</div>

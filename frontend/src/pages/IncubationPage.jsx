@@ -3,15 +3,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
-import IncubatorCard from "../components/incubator/IncubatorCard"
 import MenuBar from "../components/menu/MenuBar"
 import BoostIncubatorModal from "../components/modal/BoostIncubatorModal"
 import HatchModal from "../components/modal/HatchModal"
 import SelectEggModal from "../components/modal/SelectEggModal"
 import { useGetBackpackQuery } from "../redux/services/backpack"
 import {
-	useGetIncubatingEggsQuery,
-	useHatchEggMutation,
 	useIncubateEggMutation,
 } from "../redux/services/incubation"
 import Incubators from "../components/incubator/Incubators"
@@ -19,16 +16,12 @@ import { selectIncubator, updateIncubator } from "../redux/slices/incubators"
 
 function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
-	const incubatorsState = useSelector((state) => state.incubators)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const { refetch: refetchBackpack } = useGetBackpackQuery({
 		jwt_token: authState.jwtToken,
 	})
-	const [hatchEgg] = useHatchEggMutation()
 	const [incubateEgg] = useIncubateEggMutation()
-	const [incubator1, setIncubator1] = useState()
-	const [incubator2, setIncubator2] = useState()
 	const [showBoostModal, setShowBoostModal] = useState(false)
 	const [showHatchModal, setShowHatchModal] = useState(false)
 	const [showSelectEggModal, setShowSelectEggModal] = useState(false)
