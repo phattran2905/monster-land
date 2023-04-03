@@ -7,8 +7,8 @@ const bosses = [
 		name: "Boss #1",
 		type_uid: findMonsterTypeUID("rock"),
 		img_name: "boss-1.png",
-		attack: 30,
-		defense: 30,
+		attack: 220,
+		defense: 220,
 	},
 	{
 		uid: `B-${randomUID()}`,
@@ -31,8 +31,8 @@ const bosses = [
 		name: "Boss #4",
 		type_uid: findMonsterTypeUID("water"),
 		img_name: "boss-4.png",
-		attack: 220,
-		defense: 220,
+		attack: 30,
+		defense: 30,
 	},
 ]
 

@@ -39,7 +39,7 @@ export default function MonsterCard({
 						/>
 						<span className="ml-1 capitalize">Level</span>
 					</div>
-					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-20">
 						<span className="p-1 font-bold text-white capitalize">{level}</span>
 					</div>
 				</div>
@@ -52,9 +52,6 @@ export default function MonsterCard({
 						<span className="ml-1 capitalize">Type</span>
 					</div>
 					<MonsterType name={type} />
-					{/* <div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-						<span className="p-1 font-bold text-white capitalize">{type}</span>
-					</div> */}
 				</div>
 
 				<div className="flex flex-row mb-3 justify-between items-center">
@@ -65,7 +62,7 @@ export default function MonsterCard({
 						/>
 						<span className="ml-1 capitalize">Attack</span>
 					</div>
-					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-20">
 						<span className="p-1 font-bold text-white capitalize">{attack}</span>
 					</div>
 				</div>
@@ -78,7 +75,7 @@ export default function MonsterCard({
 						/>
 						<span className="ml-1 capitalize">Defense</span>
 					</div>
-					<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-20">
 						<span className="p-1 font-bold text-white capitalize">{defense}</span>
 					</div>
 				</div>

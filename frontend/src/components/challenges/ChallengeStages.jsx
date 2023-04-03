@@ -17,7 +17,6 @@ function ChallengeStages({ onChallenge }) {
 
 	useEffect(() => {
 		if (challengeList) {
-			console.log(challengeList)
 			const challenge = challengeList[0]
 			setStages(challenge.stages)
 			setBoss(challenge.stages[0])
@@ -43,7 +42,6 @@ function ChallengeStages({ onChallenge }) {
 	}
 
 	const renderDifficultyLevels = (levels) => {
-		console.log(levels)
 		let levelComponent = []
 		for (let i = 0; i < levels; i++) {
 			levelComponent.push(
@@ -136,7 +134,7 @@ function ChallengeStages({ onChallenge }) {
 											src="/img/icons/stats-icons/diamond7.png"
 											alt="Diamond icon"
 										/>
-										<span className="ml-1 capitalize">Type</span>
+										<span className="ml-2 capitalize">Type</span>
 									</div>
 									<MonsterType name={stage.boss_monster_type} />
 								</div>
@@ -147,10 +145,10 @@ function ChallengeStages({ onChallenge }) {
 											src="/img/icons/stats-icons/sword.png"
 											alt="Sword icon"
 										/>
-										<span className="ml-1 capitalize">Attack</span>
+										<span className="ml-2 capitalize">Attack</span>
 									</div>
-									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Indigo-Blue">
-										<span className="p-1 font-bold text-Indigo-Blue capitalize">
+									<div className="flex flex-row justify-center w-20 rounded-lg bg-Indigo-Blue shadow-sm border-2 border-Indigo-Blue">
+										<span className="p-1 font-bold text-white capitalize">
 											{stage.boss_attack}
 										</span>
 									</div>
@@ -162,10 +160,10 @@ function ChallengeStages({ onChallenge }) {
 											src="/img/icons/stats-icons/shield.png"
 											alt="Shield icon"
 										/>
-										<span className="ml-1 capitalize">Defense</span>
+										<span className="ml-2 capitalize">Defense</span>
 									</div>
-									<div className="flex flex-row justify-center w-20 rounded-full bg-light-white shadow-sm border-2 border-Indigo-Blue">
-										<span className="p-1 font-bold text-Indigo-Blue capitalize">
+									<div className="flex flex-row justify-center w-20 rounded-lg bg-Indigo-Blue shadow-sm border-2 border-Indigo-Blue">
+										<span className="p-1 font-bold text-white capitalize">
 											{stage.boss_defense}
 										</span>
 									</div>
@@ -217,7 +215,7 @@ function ChallengeStages({ onChallenge }) {
 										))}
 									</div>
 									{/* Points */}
-									<div className="w-1/2 p-3 flex flex-col gap-3 items-stretch">
+									<div className="w-1/2 p-4 flex flex-col gap-3 items-stretch">
 										{/* Reward EXP */}
 										<div className="flex flex-row items-center justify-between">
 											<div className="flex flex-row items-center justify-between">
@@ -225,7 +223,7 @@ function ChallengeStages({ onChallenge }) {
 													className="w-5 h-5 text-Fire-Engine-Red"
 													size={14}
 												/>
-												<span className="font-bold ml-1">EXP</span>
+												<span className="font-bold ml-2">EXP</span>
 											</div>
 											<span className="text-Forest-Green font-bold ml-2">
 												+{stage.reward_exp}
@@ -239,7 +237,7 @@ function ChallengeStages({ onChallenge }) {
 													src={coinIcon}
 													alt="Coin icon"
 												/>
-												<span className="font-bold ml-1">Coins</span>
+												<span className="font-bold ml-2">Coins</span>
 											</div>
 											<span className="text-Forest-Green font-bold ml-2">
 												+{stage.reward_coins}
@@ -251,20 +249,20 @@ function ChallengeStages({ onChallenge }) {
 
 							{/* Stamina Cost */}
 							<div
-								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
+								className={`bg-Light-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
 								}`}
 							>
-								<span className="text-white px-2 font-bold">
-									Cost {stage.stamina_cost}
-								</span>
 								<img
 									className="w-4 h-4 object-scale-down"
 									src={pickaxeIcon}
 									alt="Pickaxe icon"
 								/>
+								<span className="text-Fire-Engine-Red px-1 font-bold text-xl">
+									{stage.stamina_cost}
+								</span>
 							</div>
 						</button>
 					))}
