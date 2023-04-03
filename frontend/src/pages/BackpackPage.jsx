@@ -13,6 +13,7 @@ import { useNavigate } from "react-router-dom"
 import Egg from "../components/backpack/Egg"
 import { useIncubateEggMutation } from "../redux/services/incubation"
 import IncubationConfirmModal from "../components/modal/IncubationConfirmModal"
+import UseItemModal from "../components/modal/UseItemModal"
 
 export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
@@ -28,7 +29,8 @@ export default function BackpackPage() {
 	const [items, setItems] = useState([])
 	const [activeTab, setActiveTab] = useState("eggs")
 	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false)
-	const [selected, setSelected] = useState("")
+	const [confirmItemUseModal, setConfirmItemUseModal] = useState(false)
+	const [selectedEgg, setSelectedEgg] = useState("")
 	const [error, setError] = useState()
 
 	useEffect(() => {
@@ -81,10 +83,16 @@ export default function BackpackPage() {
 		setConfirmIncubateModal(false)
 	}
 
-	const onSelect = (item) => {
+	const onSelectEgg = (egg) => {
 		setError()
 		setConfirmIncubateModal(true)
-		setSelected(item)
+		setSelectedEgg(egg)
+	}
+
+	const onSelectItem = (item) => {
+		setError()
+		setConfirmItemUseModal(true)
+		setSelectedEgg(item)
 	}
 
 	return (
@@ -99,8 +107,15 @@ export default function BackpackPage() {
 					{confirmIncubateModal && (
 						<IncubationConfirmModal
 							onClose={() => setConfirmIncubateModal(false)}
-							onConfirm={() => incubateEggByUID(selected?.uid)}
-							eggName={selected?.name}
+							onConfirm={() => incubateEggByUID(selectedEgg?.uid)}
+							eggName={selectedEgg?.name}
+						/>
+					)}
+					{confirmItemUseModal && (
+						<UseItemModal
+							onClose={() => setConfirmItemUseModal(false)}
+							onConfirm={() => incubateEggByUID(selectedEgg?.uid)}
+							itemToUse={selectedEgg?.name}
 						/>
 					)}
 
@@ -108,10 +123,10 @@ export default function BackpackPage() {
 					{isLoading ? (
 						<Loading />
 					) : (
-						<div className="h-full flex flex-col shadow-xl rounded-sm">
+						<div className="h-full flex flex-col shadow-lg rounded-sm">
 							{/* Tabs */}
-							<div className="flex flex-row bg-light-white justify-between items-center">
-								<ul className="flex flex-row ">
+							<div className="flex flex-row justify-between items-center bg-Light-Indigo-Blue">
+								<ul className="flex flex-row">
 									<li>
 										<TabLink
 											isActive={activeTab === "eggs"}
@@ -138,7 +153,7 @@ export default function BackpackPage() {
 							</div>
 
 							{/* Items and Eggs */}
-							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto rounded-sm">
+							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-12 gap-x-20 overflow-auto rounded-sm bg-light-white">
 								{activeTab === "eggs" ? (
 									eggs.length === 0 ? (
 										<div className="h-full w-full flex flex-row justify-center items-center">
@@ -158,7 +173,7 @@ export default function BackpackPage() {
 												}
 												monster_type={item.monster_type}
 												amount={item.amount}
-												onSelect={onSelect}
+												onSelect={onSelectEgg}
 											/>
 										))
 									)
@@ -178,7 +193,7 @@ export default function BackpackPage() {
 											effect_property={item.effect_property}
 											effect_value={item.effect_value}
 											amount={item.amount}
-											onSelect={() => {}}
+											onSelect={onSelectItem}
 										/>
 									))
 								)}

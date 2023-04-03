@@ -40,7 +40,7 @@ export default function Egg({
 
 			{/* Info */}
 			<div className="w-52 h-full flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
-				<div className="w-full bg-light-white py-4 px-6">
+				<div className="w-full bg-white py-4 px-6">
 					<div className="flex flex-col mb-3">
 						<div className="flex flex-row items-center mb-1">
 							<FaClock

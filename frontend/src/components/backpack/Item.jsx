@@ -26,7 +26,7 @@ export default function Item({
 
 			{/* Ihfo */}
 			<div className="w-52 h-full flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
-				<div className="w-full bg-light-white py-4 px-6">
+				<div className="w-full bg-white py-4 px-6">
 					<div className="flex flex-col mb-3">
 						<div className="flex flex-row items-center mb-1">
 							<FaSplotch
@@ -78,7 +78,16 @@ export default function Item({
 				<div className="flex flex-row items-stretch w-full p-2">
 					<button
 						className="w-full p-2 bg-Flamingo-Pink text-white font-bold rounded-full border-4 border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
-						onClick={() => onSelect()}
+						onClick={() =>
+							onSelect({
+								uid,
+								name,
+								img_name,
+								effect_property,
+								effect_value,
+								amount,
+							})
+						}
 					>
 						Use
 					</button>
