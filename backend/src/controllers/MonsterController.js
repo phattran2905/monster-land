@@ -16,6 +16,7 @@ const populateMonsterData = (monsterDoc) => ({
 	name: monsterDoc.info.name,
 	img_name: monsterDoc.info.img_name,
 	type: monsterDoc.info.monsterType.name,
+	type_uid: monsterDoc.info.type_uid,
 	status: monsterDoc.status,
 })
 
@@ -77,6 +78,27 @@ export const getAllMonster = async (req, res, next) => {
 		const monsterList = monsterListDoc.map((monster) => populateMonsterData(monster))
 
 		return res.status(200).json(monsterList)
+	} catch (error) {
+		return next(error)
+	}
+}
+
+// Get All Monster
+export const getTopMonsters = async (req, res, next) => {
+	try {
+		const topMonstersDoc = await MonsterModel.find({ status: "active" })
+			.populate({
+				path: "info",
+				populate: { path: "monsterType", select: "-_id -uid name" },
+			})
+			.sort({ level: -1 })
+			.sort({ attack: -1 })
+			.sort({ defense: -1 })
+			.limit(3)
+
+		const topMonsters = topMonstersDoc.map((monster) => populateMonsterData(monster))
+
+		return res.status(200).json(topMonsters)
 	} catch (error) {
 		return next(error)
 	}

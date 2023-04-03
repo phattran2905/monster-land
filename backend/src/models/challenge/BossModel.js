@@ -37,6 +37,13 @@ const BossSchema = new Schema(
 	{ timestamps: true }
 )
 
+BossSchema.virtual("monsterType", {
+	ref: "MonsterType",
+	localField: "type_uid",
+	foreignField: "uid",
+	justOne: true,
+})
+
 const BossModel = model("Boss", BossSchema)
 
 export default BossModel

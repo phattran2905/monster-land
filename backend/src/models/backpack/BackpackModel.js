@@ -13,11 +13,11 @@ const BackpackSchema = new Schema(
 			unique: true,
 		},
 		item_list: {
-			type: [Object], // {item_uid, amount}
+			type: [Object], // {uid, amount}
 			default: [],
 		},
 		egg_list: {
-			type: [Object], // {egg_uid, amount}
+			type: [Object], // {uid, amount}
 			default: [],
 		},
 		capacity: {

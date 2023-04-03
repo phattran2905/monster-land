@@ -93,7 +93,7 @@ function IncubatorCard({
 							<img
 								style={{ height: "32rem" }}
 								className="object-fit"
-								src={`/img/incubators/${incubator.incubator_img}`}
+								src={`/img/incubators/${incubator?.img_name}`}
 								alt={name}
 							/>
 						) : (

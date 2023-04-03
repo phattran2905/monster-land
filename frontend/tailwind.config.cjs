@@ -4,6 +4,7 @@ module.exports = {
 	theme: {
 		colors: {
 			"Indigo-Blue": "#393E7D",
+			"Light-Indigo-Blue": "#E3E4F2",
 			"Royal-Blue": "#3F4589",
 			"Flamingo-Pink": "#E5446D",
 			"Amethyst-Purple": "#D7B1FD",
@@ -67,7 +68,7 @@ module.exports = {
 						opacity: 0,
 					},
 				},
-                // Source code: https://loading.io/css/
+				// Source code: https://loading.io/css/
 				"lds-ellipsis1": {
 					"0%": {
 						transform: "scale(0)",

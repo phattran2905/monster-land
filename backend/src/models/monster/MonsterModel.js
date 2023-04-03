@@ -10,7 +10,6 @@ const MonsterSchema = new Schema(
 		info_uid: {
 			type: String,
 			required: true,
-			ref: "MonsterInfo",
 		},
 		level: {
 			type: Number,

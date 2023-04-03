@@ -2,6 +2,7 @@ import { Router } from "express"
 import {
 	getMonsterById,
 	getAllMonster,
+	getTopMonsters,
 	getMonsterCollection,
 	assignMonsterToTeam,
 	removeMonsterFromTeam,
@@ -12,6 +13,7 @@ const router = Router()
 
 router
 	.get("/monster", getAllMonster)
+	.get("/monster/top", getTopMonsters)
 	// Collection
 	.get("/monster/collection", validateJwt, getMonsterCollection)
 	// Team

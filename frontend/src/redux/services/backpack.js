@@ -13,13 +13,11 @@ export const backpackApi = createApi({
 			providesTags: ["backpack"],
 		}),
 		useItems: builder.mutation({
-			query: ({ backpackUID, wildMonsterUID, itemToUseList }) => ({
-				url: `/use?backpack=${backpackUID}&monster=${wildMonsterUID}`,
+			query: ({ jwt_token, monster_uid, items }) => ({
+				url: `/use?monster=${monster_uid}`,
 				method: "PUT",
-				headers: {
-					"Content-type": "application/json; charset=UTF-8",
-				},
-				body: itemToUseList,
+				headers: { Authorization: `Bearer ${jwt_token}` },
+				body: items, // [{item_uid, amount}]
 			}),
 			invalidatesTags: ["backpack"],
 		}),

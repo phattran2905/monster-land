@@ -6,14 +6,15 @@ import MonsterType from "../monster/MonsterType"
 
 function SelectMonsterModal({ onClose, onSelectMonster }) {
 	const authState = useSelector((state) => state.auth)
-	const { data: monsterCollection, refetch: refetchMonsterCollection } = useGetMonsterCollectionQuery({
-		jwt_token: authState.jwtToken,
-	})
+	const { data: monsterCollection, refetch: refetchMonsterCollection } =
+		useGetMonsterCollectionQuery({
+			jwt_token: authState.jwtToken,
+		})
 	const [monsters, setMonsters] = useState([])
 	const [selectedUID, setSelectedUID] = useState()
 
 	useEffect(() => {
-        refetchMonsterCollection()
+		refetchMonsterCollection()
 	}, [])
 
 	// Set Items and Eggs
@@ -125,9 +126,9 @@ function SelectMonsterModal({ onClose, onSelectMonster }) {
 							onClick={() =>
 								onSelectMonster(monsters.find((m) => m.uid === selectedUID))
 							}
-							className="bg-Flamingo-Pink py-2 px-8 rounded-full hover:bg-Indigo-Blue"
+							className="bg-Flamingo-Pink py-2 px-14 rounded-full border-4 border-Flamingo-Pink hover:text-Flamingo-Pink hover:border-Flamingo-Pink hover:bg-white text-white font-bold text-xl"
 						>
-							<span className="text-white font-bold text-xl">Select</span>
+							Fight
 						</button>
 					</div>
 				</div>

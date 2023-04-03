@@ -74,22 +74,18 @@ export const calculateDamage = (monster, enemy) => {
 	let damage = 0
 
 	switch (monster.type) {
-		case "water": {
+		case "water":
 			damage = findWithWaterType(monster, enemy)
 			break
-		}
-		case "fire": {
+		case "fire":
 			damage = findWithFireType(monster, enemy)
 			break
-		}
-		case "rock": {
+		case "rock":
 			damage = findWithRockType(monster, enemy)
 			break
-		}
-		case "electric": {
+		case "electric":
 			damage = findWithElectricType(monster, enemy)
 			break
-		}
 		default:
 			break
 	}

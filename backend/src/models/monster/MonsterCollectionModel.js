@@ -16,10 +16,10 @@ const MonsterCollectionSchema = new Schema(
 			type: [Object],
 			default: [],
 		},
-		// monster_team: {
-		// 	type: [String], // [monster_uids]
-		// 	default: [],
-		// },
+		/* monster_team: {
+			type: [String], // [monster_uids]
+			default: [],
+		}, */
 		capacity: {
 			type: Number,
 			required: true,
@@ -50,12 +50,12 @@ MonsterCollectionSchema.virtual("detailed_monster_list", {
 	foreignField: "uid",
 })
 
-// Populate with MonsterModel
-// MonsterCollectionSchema.virtual("monster_team_info", {
-// 	ref: "Monster",
-// 	localField: "monster_team",
-// 	foreignField: "uid",
-// })
+/* Populate with MonsterModel
+MonsterCollectionSchema.virtual("monster_team_info", {
+	ref: "Monster",
+	localField: "monster_team",
+	foreignField: "uid",
+}) */
 
 const MonsterCollectionModel = model("MonsterCollection", MonsterCollectionSchema)
 
