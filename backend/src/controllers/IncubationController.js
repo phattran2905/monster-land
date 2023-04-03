@@ -66,7 +66,8 @@ export const incubateAnEgg = async (req, res, next) => {
 		const incubation = await IncubationModel.find({
 			user_uid: req.user.uid,
 			status: "incubating",
-		})
+		}).sort({ createdAt: 1 })
+
 		// Can not incubate simultaneously more than two eggs.
 		if (incubation?.length >= 2) {
 			return next(

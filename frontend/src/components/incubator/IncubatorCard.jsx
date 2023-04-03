@@ -5,6 +5,8 @@ import { useState, useEffect } from "react"
 import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
+import { useDispatch } from "react-redux"
+import { updateIncubator } from "../../redux/slices/incubators"
 
 function IncubatorCard({
 	index,
@@ -19,6 +21,7 @@ function IncubatorCard({
 	const [secondsToCount, setSecondsToCount] = useState(1)
 	const [counter, setCounter] = useState(0)
 	const [hatchingTime, setHatchingTime] = useState("00:00:00")
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const intervalIndex = setInterval(() => {
@@ -41,7 +44,7 @@ function IncubatorCard({
 	}
 
 	useEffect(() => {
-		if (incubator) {
+		if (incubator?.uid) {
 			setInUse(true)
 			const now = moment()
 			const doneHatchingTime = moment(incubator?.done_hatching_time)
@@ -69,6 +72,11 @@ function IncubatorCard({
 			setDone(false)
 		}
 	}, [counter])
+
+	const onSelectIncubator = () => {
+		dispatch(updateIncubator({ incubator: { index, selected: true } }))
+		onShowSelectEggModal()
+	}
 
 	return (
 		<div
@@ -118,7 +126,7 @@ function IncubatorCard({
 								}}
 							></div>
 
-							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-xl">
+							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-md shadow-Dim-Gray">
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
 										<img
@@ -193,8 +201,8 @@ function IncubatorCard({
 								{done && (
 									<button
 										onClick={() => {
-											onDoneIncubating(incubator?.uid, index)
 											setInUse(false)
+											onDoneIncubating(incubator?.uid, index)
 										}}
 										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white border-4 border-Flamingo-Pink font-bold capitalize hover:bg-white hover:text-Flamingo-Pink"
 									>
@@ -215,7 +223,7 @@ function IncubatorCard({
 					)}
 					{!inUse && (
 						<button
-							onClick={onShowSelectEggModal}
+							onClick={onSelectIncubator}
 							className="bg-Flamingo-Pink border-Flamingo-Pink border-4 py-4 px-14 rounded-full font-bold text-lg capitalize text-white hover:bg-white hover:border-Flamingo-Pink hover:text-Flamingo-Pink"
 						>
 							Choose an egg

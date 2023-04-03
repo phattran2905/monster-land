@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import Footer from "../components/Footer"
 import Header from "../components/Header"
@@ -14,13 +14,14 @@ import {
 	useHatchEggMutation,
 	useIncubateEggMutation,
 } from "../redux/services/incubation"
+import Incubators from "../components/incubator/Incubators"
+import { updateIncubator } from "../redux/slices/incubators"
 
 function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
+	const incubatorsState = useSelector((state) => state.incubators)
 	const navigate = useNavigate()
-	const { data: incubatingEggs, refetch: refetchIncubation } = useGetIncubatingEggsQuery({
-		jwt_token: authState.jwtToken,
-	})
+	const dispatch = useDispatch()
 	const { refetch: refetchBackpack } = useGetBackpackQuery({
 		jwt_token: authState.jwtToken,
 	})
@@ -44,53 +45,34 @@ function IncubationPage() {
 		}
 	}, [authState.isLoggedIn])
 
-	useEffect(() => {
-		if (incubatingEggs?.length > 0) {
-			const incubations = incubatingEggs.slice(0, 2)
-
-			if (incubations[0]) {
-				setIncubator1(incubations[0])
-			}
-
-			if (incubations[1]) {
-				setIncubator2(incubations[1])
-			}
-		}
-	}, [incubatingEggs])
-
-	const onDoneIncubating = async (incubationUID, incubatorIndex) => {
-		if (incubationUID) {
-			const babyMonster = await hatchEgg({
-				jwt_token: authState.jwtToken,
-				incubation_uid: incubationUID,
-			})
-			// Set new monster data
-			if (babyMonster?.data) {
-				setNewMonster(babyMonster?.data)
-			}
-
-			setShowHatchModal(true)
-			if (incubatorIndex) {
-				setIncubator1()
-			} else {
-				setIncubator2()
-			}
-		}
-		refetchIncubation()
-	}
-
 	const onStartIncubating = async (eggUID) => {
 		if (eggUID) {
 			const incubationResult = await incubateEgg({
 				jwt_token: authState.jwtToken,
 				egg_uid: eggUID,
 			})
-			// Set new monster data
+
+			// Set incubator data
 			if (incubationResult?.data) {
-				refetchIncubation()
 				refetchBackpack()
 				setShowSelectEggModal(false)
+
+				if (incubatorsState.incubator1.selected) {
+					dispatch(
+						updateIncubator({
+							incubator: { index: 1, ...incubationResult?.data, selected: false },
+						})
+					)
+				} else if (incubatorsState.incubator2.selected) {
+					dispatch(
+						updateIncubator({
+							incubator: { index: 2, ...incubationResult?.data, selected: false },
+						})
+					)
+				}
 			}
+
+			// Has error
 		}
 	}
 
@@ -102,24 +84,11 @@ function IncubationPage() {
 				<MenuBar />
 
 				<div className="m-10 w-full flex flex-row justify-between items-center relative gap-x-10">
-					{/* Incubator #1 */}
-					<IncubatorCard
-						index={1}
-						name="Incubator #1"
-						incubator={incubator1}
+					<Incubators
+						setNewMonster={setNewMonster}
 						onShowBoostModal={() => setShowBoostModal(true)}
 						onShowSelectEggModal={() => setShowSelectEggModal(true)}
-						onDoneIncubating={onDoneIncubating}
-					/>
-
-					{/* Incubator #2 */}
-					<IncubatorCard
-						index={2}
-						name="Incubator #2"
-						incubator={incubator2}
-						onShowBoostModal={() => setShowBoostModal(true)}
-						onShowSelectEggModal={() => setShowSelectEggModal(true)}
-						onDoneIncubating={onDoneIncubating}
+						setShowHatchModal={setShowHatchModal}
 					/>
 
 					{/* Modals */}
@@ -135,7 +104,6 @@ function IncubationPage() {
 							monster={newMonster}
 							onClose={() => {
 								setShowHatchModal(false)
-								// refetchIncubation()
 							}}
 							onNext={() => navigate("/collection")}
 						/>

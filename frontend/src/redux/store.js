@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit"
 
 import authReducer from "./slices/auth"
 import trainerReducer from "./slices/trainer"
+import incubatorsReducer from "./slices/incubators"
 
 // Or from '@reduxjs/toolkit/query/react'
 import { setupListeners } from "@reduxjs/toolkit/query"
@@ -18,6 +19,7 @@ export const store = configureStore({
 		// Slices
 		auth: authReducer,
 		trainer: trainerReducer,
+		incubators: incubatorsReducer,
 
 		// Add the generated reducer as a specific top-level slice
 		[collectionApi.reducerPath]: collectionApi.reducer,
