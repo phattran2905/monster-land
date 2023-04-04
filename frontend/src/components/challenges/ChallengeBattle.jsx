@@ -10,7 +10,7 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 	const [winner, setWinner] = useState()
 	const [bossHealth, setBossHealth] = useState(100)
 	const [monsterHealth, setMonsterHealth] = useState(100)
-
+console.log(boss)
 	useEffect(() => {
 		setTimeout(() => {
 			setBossHealth(85)

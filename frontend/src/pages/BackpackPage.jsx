@@ -16,6 +16,7 @@ import { useIncubateEggMutation } from "../redux/services/incubation"
 import IncubationConfirmModal from "../components/modal/IncubationConfirmModal"
 import UseItemModal from "../components/modal/UseItemModal"
 import { useGetMonsterCollectionQuery } from "../redux/services/collection"
+import { updateIncubator } from "../redux/slices/incubators"
 
 export default function BackpackPage() {
 	const authState = useSelector((state) => state.auth)
@@ -78,6 +79,12 @@ export default function BackpackPage() {
 
 		// Set new monster data
 		if (incubationResult?.data) {
+            refetchBackpackIno()
+            dispatch(
+                updateIncubator({
+                    incubation: incubationResult?.data,
+                })
+            )
 			return navigate("/incubation")
 		}
 

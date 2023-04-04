@@ -36,7 +36,7 @@ function BossCard({ isWinner, health, boss }) {
 							/>
 							<span className="ml-1 capitalize">Type</span>
 						</div>
-						<MonsterType name={boss.boss_type} />
+						<MonsterType name={boss.boss_monster_type} />
 					</div>
 
 					<div className="w-2/3 flex flex-row my-2 justify-between items-center">
