@@ -83,7 +83,7 @@ function ChallengeStages({ onChallenge }) {
 								setSelectedStageIndex(index)
 								setBoss(stage)
 							}}
-							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-xl hover:shadow-Flamingo-Pink ${
+							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-lg hover:shadow-Flamingo-Pink ${
 								index === selectedStageIndex
 									? "shadow-Flamingo-Pink "
 									: "shadow-Indigo-Blue "
@@ -249,7 +249,7 @@ function ChallengeStages({ onChallenge }) {
 
 							{/* Stamina Cost */}
 							<div
-								className={`bg-Light-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
+								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
 									index === selectedStageIndex
 										? "border-Flamingo-Pink"
 										: "border-white"
@@ -260,7 +260,7 @@ function ChallengeStages({ onChallenge }) {
 									src={pickaxeIcon}
 									alt="Pickaxe icon"
 								/>
-								<span className="text-Fire-Engine-Red px-1 font-bold text-xl">
+								<span className="text-Light-Green px-1 font-bold text-xl">
 									{stage.stamina_cost}
 								</span>
 							</div>

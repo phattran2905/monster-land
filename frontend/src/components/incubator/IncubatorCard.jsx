@@ -84,7 +84,7 @@ function IncubatorCard({
 	return (
 		<div
 			className={`${
-				inUse && !done ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
+				inUse && !done ? "border-Light-Gray bg-Light-Gray" : "border-Indigo-Blue"
 			} ${inUse && done && "border-Forest-Green bg-Light-Green shadow-Forest-Green"}
             flex flex-col items-center w-1/2 h-3/4 py-10 border-4 rounded-lg shadow-lg`}
 		>
@@ -129,7 +129,7 @@ function IncubatorCard({
 								}}
 							></div>
 
-							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-md shadow-Dim-Gray">
+							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-md shadow-Dim-Gray bg-light-white">
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
 										<img

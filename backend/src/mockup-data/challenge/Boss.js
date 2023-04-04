@@ -4,9 +4,9 @@ import { findMonsterTypeUID } from "../monster/MonsterType.js"
 const bosses = [
 	{
 		uid: `B-${randomUID()}`,
-		name: "Boss #1",
+		name: "Boss #4",
 		type_uid: findMonsterTypeUID("rock"),
-		img_name: "boss-1.png",
+		img_name: "boss-4.png",
 		attack: 220,
 		defense: 220,
 	},
@@ -28,9 +28,9 @@ const bosses = [
 	},
 	{
 		uid: `B-${randomUID()}`,
-		name: "Boss #4",
+		name: "Boss #1",
 		type_uid: findMonsterTypeUID("water"),
-		img_name: "boss-4.png",
+		img_name: "boss-1.png",
 		attack: 30,
 		defense: 30,
 	},
