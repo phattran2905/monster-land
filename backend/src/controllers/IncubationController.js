@@ -8,6 +8,7 @@ import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
 import MonsterInfoModel from "../models/monster/MonsterInfoModel.js"
 import { getRandomNumber, randomUID, getRandomArrayElement } from "../util/random.js"
 import { populateItemData } from "./BackpackController.js"
+import TrainerModel from "../models/user/TrainerModel.js"
 
 const populateIncubationData = (incubationDoc) => ({
 	uid: incubationDoc.uid,
@@ -148,6 +149,7 @@ export const hatchAnEgg = async (req, res, next) => {
 			)
 		}
 
+		// Set the status to "done"
 		const updatedIncubation = await IncubationModel.findOneAndUpdate(
 			{ uid: incubationUID },
 			{ status: "done" },
@@ -158,6 +160,7 @@ export const hatchAnEgg = async (req, res, next) => {
 		const { monster_type_uid: monsterTypeUID } = updatedIncubation.egg_info
 		const { name: monsterType } = updatedIncubation.egg_info.monsterType
 
+		// Randomize monster's attributes
 		const randomAttackPts = getRandomNumber(50, 250)
 		const randomDefensePts = getRandomNumber(50, 250)
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
@@ -167,7 +170,85 @@ export const hatchAnEgg = async (req, res, next) => {
 			status: "active",
 		})
 		const randomMonsterInfo = getRandomArrayElement(monsterInfosWithSameType)
+		// Create a monster object
+		const newMonster = {
+			uid: `M-${randomUID()}`,
+			name: randomMonsterInfo.name,
+			info_uid: randomMonsterInfo.uid,
+			exp: 0,
+			level: 1,
+			level_up_exp: GameServerSetting.monster_lvl_up_exp_base,
+			attack: randomAttackPts,
+			defense: randomDefensePts,
+			img_name: randomMonsterInfo.img_name,
+		}
+		await MonsterModel.create(newMonster)
 
+		// Add new monster to monster collection
+		const monsterCollection = await MonsterCollectionModel.findOne({ user_uid: req.user.uid })
+		monsterCollection.monster_list = [...monsterCollection.monster_list, newMonster]
+		await monsterCollection.save()
+
+		return res.status(200).json({ ...newMonster, monster_type: monsterType })
+	} catch (error) {
+		return next(error)
+	}
+}
+
+export const skipHatchingTime = async (req, res, next) => {
+	try {
+		const { incubation_uid: incubationUID } = req.query
+
+		const incubation = await IncubationModel.findOne({
+			uid: incubationUID,
+			status: "incubating",
+		}).populate({ path: "egg_info", populate: { path: "monsterType" } })
+		if (!incubation) {
+			return next(new ErrorResponse(404, "Can not find your egg that are in incubation."))
+		}
+
+		// Check hatching_time
+		const now = moment()
+		const doneHatchingTime = moment(incubation.done_hatching_time)
+		// Still in incubation time
+		if (doneHatchingTime.diff(now, "seconds") <= 0) {
+			return next(
+				new ErrorResponse(400, "The incubation is ready to be hatched.")
+			)
+		}
+
+		// Update trainer's coins
+		const coinsToSkip = doneHatchingTime.diff(now, "seconds") * 100
+		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
+		if (trainer.gold < coinsToSkip) {
+			return next(
+				new ErrorResponse(400, { message: "Not enough coins.", coins_to_skip: coinsToSkip })
+			)
+		}
+
+		// Spend coins to skip the hatching time
+		trainer.gold -= coinsToSkip
+		await trainer.save()
+
+		// Set the status to "done"
+		incubation.status = "done"
+		await incubation.save()
+
+		// Randomize a monster
+		const { monster_type_uid: monsterTypeUID } = incubation.egg_info
+		const { name: monsterType } = incubation.egg_info.monsterType
+
+		// Randomize monster's attributes
+		const randomAttackPts = getRandomNumber(50, 250)
+		const randomDefensePts = getRandomNumber(50, 250)
+		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
+		// Random a monster from monster's types
+		const monsterInfosWithSameType = await MonsterInfoModel.find({
+			type: monsterTypeUID,
+			status: "active",
+		})
+		const randomMonsterInfo = getRandomArrayElement(monsterInfosWithSameType)
+		// Create a monster object
 		const newMonster = {
 			uid: `M-${randomUID()}`,
 			name: randomMonsterInfo.name,
