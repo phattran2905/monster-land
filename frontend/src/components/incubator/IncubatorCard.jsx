@@ -23,12 +23,13 @@ function IncubatorCard({
 
 	useEffect(() => {
 		if (incubator?.uid && counter >= 0) {
+            if (incubator?.status === "done") {
+                setDone(true)
+                setCounter(0)
+            }
 			// Count down every second
 			const intervalIndex = setInterval(() => {
-                if (incubator?.status === "done") {
-                    setDone(true)
-                }
-				else if (counter >= 0) {
+				if (counter >= 0) {
 					setCounter((counter) => counter - 1)
 				}
 			}, 1000)

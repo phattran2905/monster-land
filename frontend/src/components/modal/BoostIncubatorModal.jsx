@@ -4,8 +4,9 @@ import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
 import { useSkipIncubationMutation } from "../../redux/services/incubation"
 import { updateIncubator } from "../../redux/slices/incubators"
+import { updateGold } from "../../redux/slices/trainer"
 
-function BoostIncubatorModal({ onClose, setNewMonster, setShowHatchModal }) {
+function BoostIncubatorModal({ onClose }) {
 	const authState = useSelector((state) => state.auth)
 	const incubatorState = useSelector((state) => state.incubators)
 	const [fetchSkipAPI] = useSkipIncubationMutation()
@@ -40,9 +41,12 @@ function BoostIncubatorModal({ onClose, setNewMonster, setShowHatchModal }) {
 			jwt_token: authState.jwtToken,
 			incubation_uid: selectedIncubation?.uid,
 		})
-		console.log(skipResult)
+
 		if (skipResult?.data) {
 			dispatch(updateIncubator({ incubation: skipResult?.data }))
+			// Update trainer's coins
+			dispatch(updateGold(trainerState.gold - coinsToSkip))
+
 			onClose()
 		} else if (skipResult?.error) {
 			setError(skipResult?.error.data.message)

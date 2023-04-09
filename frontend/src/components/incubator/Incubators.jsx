@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHatchEggMutation, useGetIncubatingEggsQuery } from "../../redux/services/incubation"
 import IncubatorCard from "./IncubatorCard"
-import { resetIncubator, updateIncubator } from "../../redux/slices/incubators"
+import { resetIncubator, updateIncubator, selectIncubator } from "../../redux/slices/incubators"
 
 function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, setShowHatchModal }) {
 	const authState = useSelector((state) => state.auth)
@@ -47,7 +47,10 @@ function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, set
 				name="Incubator #1"
 				index={1}
 				incubator={incubatorsState.incubator1}
-				onShowBoostModal={onShowBoostModal}
+				onShowBoostModal={() => {
+					dispatch(selectIncubator(1))
+					onShowBoostModal(true)
+				}}
 				onShowSelectEggModal={onShowSelectEggModal}
 				onDoneIncubating={onDoneIncubating}
 			/>
@@ -57,7 +60,10 @@ function Incubators({ onShowBoostModal, onShowSelectEggModal, setNewMonster, set
 				name="Incubator #2"
 				index={2}
 				incubator={incubatorsState.incubator2}
-				onShowBoostModal={onShowBoostModal}
+				onShowBoostModal={() => {
+					dispatch(selectIncubator(2))
+					onShowBoostModal(true)
+				}}
 				onShowSelectEggModal={onShowSelectEggModal}
 				onDoneIncubating={onDoneIncubating}
 			/>
