@@ -26,7 +26,7 @@ const IncubationSchema = new Schema(
 		status: {
 			type: String,
 			required: true,
-			enum: ["incubating", "done"],
+			enum: ["incubating", "done", "hatched"],
 			default: "incubating",
 		},
 	},

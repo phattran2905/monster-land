@@ -28,10 +28,9 @@ export const getIncubatingEggs = async (req, res, next) => {
 	try {
 		const incubatingEggs = await IncubationModel.find({
 			user_uid: req.user.uid,
-			status: "incubating",
+			status: { $in: ["incubating", "done"] },
 		})
 			.populate({ path: "egg_info", populate: { path: "monsterType" } })
-			.sort({ createdAt: -1 })
 
 		const populatedIncubatingEggs = incubatingEggs.map((e) => populateIncubationData(e))
 
@@ -49,7 +48,7 @@ export const getIncubatingEggByUId = async (req, res, next) => {
 		const incubatingEgg = await IncubationModel.findOne({
 			user_uid: req.user.uid,
 			uid: incubationUID ?? null,
-			status: "incubating",
+			status: { $in: ["incubating", "done"] },
 		}).populate({ path: "egg_info", populate: { path: "monsterType" } })
 
 		const populatedIncubatingEgg = populateIncubationData(incubatingEgg)
@@ -67,7 +66,7 @@ export const incubateAnEgg = async (req, res, next) => {
 
 		const incubation = await IncubationModel.find({
 			user_uid: req.user.uid,
-			status: "incubating",
+			status: { $in: ["incubating", "done"] },
 		}).sort({ createdAt: 1 })
 
 		// Can not incubate simultaneously more than two eggs.
@@ -133,32 +132,31 @@ export const hatchAnEgg = async (req, res, next) => {
 
 		const incubation = await IncubationModel.findOne({
 			uid: incubationUID,
-			status: "incubating",
-		})
+			status: { $in: ["incubating", "done"] },
+		}).populate({ path: "egg_info", populate: { path: "monsterType" } })
 		if (!incubation) {
-			return next(new ErrorResponse(404, "Can not find your egg that are in incubation."))
+			return next(new ErrorResponse(404, "Can not find your egg that are ready to hatch."))
 		}
 
-		// Check hatching_time
-		const now = moment()
-		const doneHatchingTime = moment(incubation.done_hatching_time)
-		// Still in incubation time
-		if (doneHatchingTime.diff(now, "seconds") > 0) {
-			return next(
-				new ErrorResponse(400, "This egg needs more time to hatch. Come back later.")
-			)
+		if (incubation.status === "incubating") {
+			// Check hatching_time
+			const now = moment()
+			const doneHatchingTime = moment(incubation.done_hatching_time)
+			// Still in incubation time
+			if (doneHatchingTime.diff(now, "seconds") > 0) {
+				return next(
+					new ErrorResponse(400, "This egg needs more time to hatch. Come back later.")
+				)
+			}
 		}
 
-		// Set the status to "done"
-		const updatedIncubation = await IncubationModel.findOneAndUpdate(
-			{ uid: incubationUID },
-			{ status: "done" },
-			{ new: true }
-		).populate({ path: "egg_info", populate: { path: "monsterType" } })
+		// Set the status to "hatched"
+		incubation.status = "hatched"
+		await incubation.save()
 
 		// Create a new monster
-		const { monster_type_uid: monsterTypeUID } = updatedIncubation.egg_info
-		const { name: monsterType } = updatedIncubation.egg_info.monsterType
+		const { monster_type_uid: monsterTypeUID } = incubation.egg_info
+		const { name: monsterType } = incubation.egg_info.monsterType
 
 		// Randomize monster's attributes
 		const randomAttackPts = getRandomNumber(50, 250)
