@@ -52,9 +52,9 @@ export default function Item({
 						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
 							<span className="p-1 font-bold text-white tracking-widest capitalize">
 								{effect_property === "incubator" ? (
-									<>{`- ${effect_value} seconds`}</>
+									<>{`-${effect_value} seconds`}</>
 								) : (
-									<>{`+ ${effect_value}`}</>
+									<>{`+${effect_value}`}</>
 								)}
 							</span>
 						</div>

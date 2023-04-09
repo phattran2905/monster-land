@@ -5,6 +5,8 @@ import { useState, useEffect } from "react"
 import MonsterType from "../monster/MonsterType"
 import LoadingDots from "../LoadingDots"
 import ProgressBar from "../ProgressBar"
+import { useDispatch } from "react-redux"
+import { selectIncubator } from "../../redux/slices/incubators"
 
 function IncubatorCard({
 	index,
@@ -19,16 +21,20 @@ function IncubatorCard({
 	const [secondsToCount, setSecondsToCount] = useState(1)
 	const [counter, setCounter] = useState(0)
 	const [hatchingTime, setHatchingTime] = useState("00:00:00")
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		const intervalIndex = setInterval(() => {
-			if (counter >= 0) {
-				setCounter((counter) => counter - 1)
-			}
-		}, 1000)
+		if (incubator?.uid && counter >= 0) {
+			// Count down every second
+			const intervalIndex = setInterval(() => {
+				if (counter >= 0) {
+					setCounter((counter) => counter - 1)
+				}
+			}, 1000)
 
-		return () => clearInterval(intervalIndex)
-	}, [])
+			return () => clearInterval(intervalIndex)
+		}
+	}, [incubator, counter])
 
 	const displayHatchingTime = (hatching_time_in_seconds) => {
 		const duration = moment.duration(hatching_time_in_seconds, "seconds")
@@ -41,7 +47,7 @@ function IncubatorCard({
 	}
 
 	useEffect(() => {
-		if (incubator) {
+		if (incubator?.uid) {
 			setInUse(true)
 			const now = moment()
 			const doneHatchingTime = moment(incubator?.done_hatching_time)
@@ -70,12 +76,17 @@ function IncubatorCard({
 		}
 	}, [counter])
 
+	const onSelectIncubator = () => {
+		dispatch(selectIncubator(index))
+		onShowSelectEggModal()
+	}
+
 	return (
 		<div
 			className={`${
-				inUse && !done ? "border-Light-Gray bg-light-white" : "border-Indigo-Blue"
-			} ${inUse && done && "border-Forest-Green bg-Light-Green"}
-            flex flex-col items-center w-1/2 h-3/4 py-10 border-4  rounded-lg shadow-2xl`}
+				inUse && !done ? "border-Light-Gray bg-Light-Gray" : "border-Indigo-Blue"
+			} ${inUse && done && "border-Forest-Green bg-Light-Green shadow-Forest-Green"}
+            flex flex-col items-center w-1/2 h-3/4 py-10 border-4 rounded-lg shadow-lg`}
 		>
 			{/* Name */}
 			<div className=" bg-Indigo-Blue py-4 w-1/2 flex flex-row justify-center rounded-xl">
@@ -118,20 +129,7 @@ function IncubatorCard({
 								}}
 							></div>
 
-							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-xl">
-								<div className="mb-3">
-									<div className="mb-1 flex flex-row items-center">
-										<span className="mr-1 text-Fire-Engine-Red font-bold">
-											<AiOutlineNumber className="font-bold" />
-										</span>
-										<span className="font-bold text-Indigo-Blue underline">
-											UID
-										</span>
-									</div>
-									<div className="py-2 bg-Midnight-Gray flex flex-row justify-center items-center">
-										<span className="text-white px-4">{incubator?.uid}</span>
-									</div>
-								</div>
+							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-md shadow-Dim-Gray bg-light-white">
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
 										<img
@@ -164,7 +162,10 @@ function IncubatorCard({
 												percentage={
 													done
 														? 100
-														: ((secondsToCount - counter) / 60) * 100
+														: ((incubator.hatching_time_in_seconds -
+																counter) /
+																60) *
+														  100
 												}
 												bgColorClass="bg-Light-Gray"
 												currentBgColorClass={
@@ -179,15 +180,15 @@ function IncubatorCard({
 												/>
 											) : (
 												<>
-													{/* <button
-													onClick={onShowBoostModal}
-													className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
-												>
-													<FaAngleDoubleUp
-														className="text-white rotate-90 "
-														size={16}
-													/>
-												</button> */}
+													<button
+														onClick={onShowBoostModal}
+														className="ml-2 p-1 bg-Forest-Green rounded-full hover:bg-Flamingo-Pink"
+													>
+														<FaAngleDoubleUp
+															className="text-white rotate-90"
+															size={16}
+														/>
+													</button>
 												</>
 											)}
 										</div>
@@ -206,10 +207,10 @@ function IncubatorCard({
 								{done && (
 									<button
 										onClick={() => {
-											onDoneIncubating(incubator?.uid, index)
 											setInUse(false)
+											onDoneIncubating(incubator?.uid, index)
 										}}
-										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white hover:bg-Forest-Green font-bold capitalize"
+										className="mt- py-2 px-10 rounded-full bg-Flamingo-Pink text-white border-4 border-Flamingo-Pink font-bold capitalize hover:bg-white hover:text-Flamingo-Pink"
 									>
 										Hatch now
 									</button>
@@ -228,12 +229,10 @@ function IncubatorCard({
 					)}
 					{!inUse && (
 						<button
-							onClick={onShowSelectEggModal}
-							className="bg-Flamingo-Pink py-4 px-14 rounded-full hover:bg-Indigo-Blue"
+							onClick={onSelectIncubator}
+							className="bg-Flamingo-Pink border-Flamingo-Pink border-4 py-4 px-14 rounded-full font-bold text-lg capitalize text-white hover:bg-white hover:border-Flamingo-Pink hover:text-Flamingo-Pink"
 						>
-							<span className="font-bold text-lg capitalize text-white">
-								Choose an egg
-							</span>
+							Choose an egg
 						</button>
 					)}
 				</div>

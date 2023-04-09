@@ -15,6 +15,7 @@ const populateIncubationData = (incubationDoc) => ({
 	monster_type: incubationDoc.egg_info.monsterType.name,
 	egg_uid: incubationDoc.uid,
 	egg_type: incubationDoc.egg_info.name,
+	hatching_time_in_seconds: incubationDoc.egg_info.hatching_time_in_seconds,
 	done_hatching_time: incubationDoc.done_hatching_time,
 	img_name: incubationDoc.img_name,
 	status: incubationDoc.status,
@@ -66,7 +67,8 @@ export const incubateAnEgg = async (req, res, next) => {
 		const incubation = await IncubationModel.find({
 			user_uid: req.user.uid,
 			status: "incubating",
-		})
+		}).sort({ createdAt: 1 })
+
 		// Can not incubate simultaneously more than two eggs.
 		if (incubation?.length >= 2) {
 			return next(
@@ -102,6 +104,7 @@ export const incubateAnEgg = async (req, res, next) => {
 			user_uid: req.user.uid,
 			egg_uid: egg.uid,
 			egg_name: egg.name,
+			hatching_time_in_seconds: egg.hatching_time_in_seconds,
 			monster_type: egg.monster_type,
 			done_hatching_time: timeForIncubation,
 			img_name: incubatorImgName,

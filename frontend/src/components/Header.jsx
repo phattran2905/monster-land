@@ -54,33 +54,33 @@ export default function Header() {
 				</div>
 
 				<div className="game-resources h-full w-96 flex flex-row items-center justify-around ">
-					<div className="diamonds mx-2 flex flex-row items-center">
+					<div className="diamonds mx-3 flex flex-row items-center">
 						<img
 							className="p-3"
 							src={diamondIcon}
 							alt="Diamond icon"
 						/>
-						<span className="text-white font-bold text-2xl">{diamond}</span>
+						<span className="text-Gold-Sand font-bold text-2xl">{diamond}</span>
 					</div>
 
-					<div className="coins mx-2 flex flex-row items-center">
+					<div className="coins mx-3 flex flex-row items-center">
 						<img
 							className="p-3"
 							src={coinIcon}
 							alt="Coin icon"
 						/>
-						<span className="text-white font-bold text-2xl">{coins}</span>
+						<span className="text-Gold-Sand font-bold text-2xl">{coins}</span>
 					</div>
 
-					<div className="stamina mx-2 flex flex-row items-center text-white">
+					<div className="stamina mx-3 flex flex-row items-center text-white">
 						<img
 							className="p-3"
 							src={pickaxeIcon}
 							alt="Pickaxe icon"
 						/>
-						<span className="text-2xl font-bold space-x-3">
-							{stamina}/{maxStamina}
-						</span>
+						<p className="text-2xl">
+							<span className="text-Gold-Sand font-bold mr-1">{stamina}</span>/{maxStamina}
+						</p>
 					</div>
 				</div>
 			</div>

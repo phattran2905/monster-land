@@ -186,10 +186,10 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 									Amount:
 								</label>
 								<button
-									onClick={() => onIncreaseAmount()}
+									onClick={() => onDecreaseAmount()}
 									className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand"
 								>
-									<FaPlus className="font-bold " />
+									<FaMinus className="font-bold " />
 								</button>
 								<input
 									className="p-2 w-20 border-Indigo-Blue border-4 rounded-xl focus:border-Flamingo-Pink font-bold text-center text-lg outline-none m-0"
@@ -202,10 +202,10 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 									onChange={(e) => setAmount(e.target.value)}
 								/>
 								<button
-									onClick={() => onDecreaseAmount()}
+									onClick={() => onIncreaseAmount()}
 									className="mx-2 text-white bg-Flamingo-Pink flex flex-row justify-center items-center p-2 rounded-md border-4 border-Midnight-Gray hover:text-Gold-Sand"
 								>
-									<FaMinus className="font-bold " />
+									<FaPlus className="font-bold " />
 								</button>
 							</div>
 

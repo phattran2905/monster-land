@@ -46,79 +46,87 @@ function SelectMonsterModal({ onClose, onSelectMonster }) {
 				{/* Content */}
 				<div className="h-full flex flex-col justify-between rounded-2xl py-10">
 					<div className="h-full px-8 bg-light-white flex flex-row flex-wrap content-start gap-y-8 gap-x-12 overflow-auto ">
-						{monsters.map((monster) => (
-							<button
-								key={monster.uid}
-								onClick={() => setSelectedUID(monster.uid)}
-								className={`h-60 flex flex-row border-4 hover:border-Flamingo-Pink hover:border-4 
+						{monsters?.length === 0 ? (
+							<div className="h-full w-full flex flex-row justify-center items-center">
+								<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+									You have no monster
+								</span>
+							</div>
+						) : (
+							monsters.map((monster) => (
+								<button
+									key={monster.uid}
+									onClick={() => setSelectedUID(monster.uid)}
+									className={`h-60 flex flex-row border-4 hover:border-Flamingo-Pink hover:border-4 
                             ${
 								selectedUID === monster.uid
 									? "border-Flamingo-Pink"
 									: "border-Royal-Blue"
 							}`}
-							>
-								{/* Name & Image */}
-								<div className="w-52 h-full flex flex-col border-r-2 border-r-Royal-Blue">
-									<div className="w-full p-4 h-5/6">
-										<img
-											className="w-full h-full object-scale-down"
-											src={`/img/monsters/${monster.img_name}`}
-											alt={monster.name}
-										/>
-									</div>
-									<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
-										<span className="text-white font-bold text-center text-lg">
-											{monster.name}
-										</span>
-									</div>
-								</div>
-								{/* Stats */}
-								<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
-									<div className="flex flex-col mb-3 items-center">
-										<div className="flex flex-row items-center mb-1">
+								>
+									{/* Name & Image */}
+									<div className="w-52 h-full flex flex-col border-r-2 border-r-Royal-Blue">
+										<div className="w-full p-4 h-5/6">
 											<img
-												src="/img/icons/stats-icons/diamond7.png"
-												alt="Diamond icon"
+												className="w-full h-full object-scale-down"
+												src={`/img/monsters/${monster.img_name}`}
+												alt={monster.name}
 											/>
-											<span className="ml-1 font-bold capitalize">
-												Monster Type
-											</span>
 										</div>
-										<div className="flex flex-row justify-center items-stretch">
-											<MonsterType name={monster.monster_type} />
-										</div>
-									</div>
-									<div className="flex flex-col mb-3 items-center">
-										<div className="flex flex-row items-center mb-1">
-											<img
-												src="/img/icons/stats-icons/sword.png"
-												alt="Sword icon"
-											/>
-											<span className="ml-1 capitalize">Attack</span>
-										</div>
-										<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-											<span className="p-1 font-bold text-white capitalize">
-												{monster.attack}
+										<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
+											<span className="text-white font-bold text-center text-lg">
+												{monster.name}
 											</span>
 										</div>
 									</div>
-									<div className="flex flex-col mb-3 items-center">
-										<div className="flex flex-row items-center mb-1">
-											<img
-												src="/img/icons/stats-icons/shield.png"
-												alt="Shield icon"
-											/>
-											<span className="ml-1 capitalize">Defense</span>
+									{/* Stats */}
+									<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
+										<div className="flex flex-col mb-3 items-center">
+											<div className="flex flex-row items-center mb-1">
+												<img
+													src="/img/icons/stats-icons/diamond7.png"
+													alt="Diamond icon"
+												/>
+												<span className="ml-1 font-bold capitalize">
+													Monster Type
+												</span>
+											</div>
+											<div className="flex flex-row justify-center items-stretch">
+												<MonsterType name={monster.monster_type} />
+											</div>
 										</div>
-										<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
-											<span className="p-1 font-bold text-white capitalize">
-												{monster.defense}
-											</span>
+										<div className="flex flex-col mb-3 items-center">
+											<div className="flex flex-row items-center mb-1">
+												<img
+													src="/img/icons/stats-icons/sword.png"
+													alt="Sword icon"
+												/>
+												<span className="ml-1 capitalize">Attack</span>
+											</div>
+											<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+												<span className="p-1 font-bold text-white capitalize">
+													{monster.attack}
+												</span>
+											</div>
+										</div>
+										<div className="flex flex-col mb-3 items-center">
+											<div className="flex flex-row items-center mb-1">
+												<img
+													src="/img/icons/stats-icons/shield.png"
+													alt="Shield icon"
+												/>
+												<span className="ml-1 capitalize">Defense</span>
+											</div>
+											<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+												<span className="p-1 font-bold text-white capitalize">
+													{monster.defense}
+												</span>
+											</div>
 										</div>
 									</div>
-								</div>
-							</button>
-						))}
+								</button>
+							))
+						)}
 					</div>
 
 					<div className="w-full flex flex-row justify-center items-center py-4 bg-white">
