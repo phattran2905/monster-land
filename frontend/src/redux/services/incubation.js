@@ -36,6 +36,14 @@ export const incubationApi = createApi({
 			}),
 			invalidatesTags: ["incubation"],
 		}),
+		skipIncubation: builder.mutation({
+			query: ({ jwt_token, incubation_uid }) => ({
+				url: `/skip?incubation_uid=${incubation_uid}`,
+				method: "POST",
+				headers: { Authorization: `Bearer ${jwt_token}` },
+			}),
+			invalidatesTags: ["incubation"],
+		}),
 	}),
 })
 
@@ -44,4 +52,5 @@ export const {
 	useGetIncubatingEggByUIDQuery,
 	useIncubateEggMutation,
 	useHatchEggMutation,
+    useSkipIncubationMutation
 } = incubationApi
