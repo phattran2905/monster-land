@@ -25,13 +25,17 @@ function IncubatorCard({
 		if (incubator?.uid && counter >= 0) {
 			// Count down every second
 			const intervalIndex = setInterval(() => {
-				if (counter >= 0) {
+                if (incubator?.status === "done") {
+                    setDone(true)
+                }
+				else if (counter >= 0) {
 					setCounter((counter) => counter - 1)
 				}
 			}, 1000)
 
 			return () => clearInterval(intervalIndex)
 		}
+
 	}, [incubator, counter])
 
 	const displayHatchingTime = (hatching_time_in_seconds) => {
@@ -46,7 +50,7 @@ function IncubatorCard({
 
 	useEffect(() => {
 		if (incubator?.uid) {
-			setInUse(true)
+            setInUse(true)
 			const now = moment()
 			const doneHatchingTime = moment(incubator?.done_hatching_time)
 			const diffTime = doneHatchingTime.diff(now, "seconds")

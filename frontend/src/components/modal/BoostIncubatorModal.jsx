@@ -3,14 +3,14 @@ import { FaTimesCircle } from "react-icons/fa"
 import { useSelector, useDispatch } from "react-redux"
 import { useState, useEffect } from "react"
 import { useSkipIncubationMutation } from "../../redux/services/incubation"
-import { resetIncubator, updateIncubator } from "../../redux/slices/incubators"
+import { updateIncubator } from "../../redux/slices/incubators"
 
 function BoostIncubatorModal({ onClose, setNewMonster, setShowHatchModal }) {
 	const authState = useSelector((state) => state.auth)
 	const incubatorState = useSelector((state) => state.incubators)
 	const [fetchSkipAPI] = useSkipIncubationMutation()
 	const trainerState = useSelector((state) => state.trainer)
-    const dispatch = useDispatch()
+	const dispatch = useDispatch()
 	const [selectedIncubation, setSelectedIncubation] = useState(
 		() => incubatorState[`incubator${incubatorState.selectedIndex}`]
 	)
@@ -19,7 +19,6 @@ function BoostIncubatorModal({ onClose, setNewMonster, setShowHatchModal }) {
 
 	useEffect(() => {
 		if (selectedIncubation) {
-			console.log(selectedIncubation)
 			const skippingFee = 100 * selectedIncubation?.hatching_time_in_seconds
 			setCoinsToSkip(skippingFee)
 		}
@@ -41,12 +40,12 @@ function BoostIncubatorModal({ onClose, setNewMonster, setShowHatchModal }) {
 			jwt_token: authState.jwtToken,
 			incubation_uid: selectedIncubation?.uid,
 		})
-        
+		console.log(skipResult)
 		if (skipResult?.data) {
-			dispatch(resetIncubator(selectedIncubation.index))
-            onClose()
+			dispatch(updateIncubator({ incubation: skipResult?.data }))
+			onClose()
 		} else if (skipResult?.error) {
-            setError(skipResult?.error.data.message)
+			setError(skipResult?.error.data.message)
 		}
 	}
 
