@@ -4,7 +4,7 @@ import {
 	getIncubatingEggByUId,
 	incubateAnEgg,
 	hatchAnEgg,
-    skipHatchingTime
+	skipHatchingTime,
 } from "../controllers/IncubationController.js"
 import validateJwt from "../middleware/JwtTokenHandler.js"
 
