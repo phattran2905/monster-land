@@ -10,6 +10,7 @@ import { updateTrainerInfo } from "../redux/slices/trainer"
 
 export default function Header() {
 	const authState = useSelector((state) => state.auth)
+	const trainerState = useSelector((state) => state.trainer)
 	const dispatch = useDispatch()
 	const [diamond, setDiamond] = useState(0)
 	const [coins, setCoins] = useState(0)
@@ -23,13 +24,18 @@ export default function Header() {
 	useEffect(() => {
 		if (trainerData) {
 			dispatch(updateTrainerInfo(trainerData))
-			setDiamond(trainerData.diamond)
-			setCoins(trainerData.gold)
-			setStamina(trainerData.stamina)
-			setMaxStamina(trainerData.max_stamina)
-			setLevel(trainerData.level)
 		}
 	}, [trainerData])
+    
+    useEffect(() => {
+		if (trainerState) {
+			setDiamond(trainerState.diamond)
+			setCoins(trainerState.gold)
+			setStamina(trainerState.stamina)
+			setMaxStamina(trainerState.max_stamina)
+			setLevel(trainerState.level)
+		}
+	}, [trainerState])
 
 	return (
 		<header className="w-full h-24 bg-Indigo-Blue flex flex-row justify-between">
