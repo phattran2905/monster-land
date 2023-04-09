@@ -16,6 +16,7 @@ import { selectIncubator, updateIncubator } from "../redux/slices/incubators"
 
 function IncubationPage() {
 	const authState = useSelector((state) => state.auth)
+	const incubatorState = useSelector((state) => state.incubators)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const { refetch: refetchBackpack } = useGetBackpackQuery({
@@ -80,7 +81,8 @@ function IncubationPage() {
 					{showBoostModal && (
 						<BoostIncubatorModal
 							onClose={() => setShowBoostModal(false)}
-							onConfirm={() => {}}
+                            setNewMonster={setNewMonster}
+                            setShowHatchModal={setShowHatchModal}
 						/>
 					)}
 
