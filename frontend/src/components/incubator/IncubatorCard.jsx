@@ -1,5 +1,4 @@
 import { FaAngleDoubleUp, FaCheckCircle, FaClock } from "react-icons/fa"
-import { AiOutlineNumber } from "react-icons/ai"
 import moment from "moment"
 import { useState, useEffect } from "react"
 import MonsterType from "../monster/MonsterType"
@@ -18,7 +17,6 @@ function IncubatorCard({
 }) {
 	const [inUse, setInUse] = useState(false)
 	const [done, setDone] = useState(false)
-	const [secondsToCount, setSecondsToCount] = useState(1)
 	const [counter, setCounter] = useState(0)
 	const [hatchingTime, setHatchingTime] = useState("00:00:00")
 	const dispatch = useDispatch()
@@ -54,12 +52,10 @@ function IncubatorCard({
 			const diffTime = doneHatchingTime.diff(now, "seconds")
 
 			if (diffTime > 0) {
-				setSecondsToCount(diffTime)
 				setCounter(diffTime)
 				setHatchingTime(displayHatchingTime(counter))
 				setDone(false)
 			} else {
-				setSecondsToCount(1)
 				setCounter(0)
 				setHatchingTime("00:00:00")
 				setDone(true)
