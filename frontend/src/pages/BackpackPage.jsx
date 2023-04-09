@@ -127,7 +127,6 @@ export default function BackpackPage() {
 		} else {
 			setError()
 			fetchMonsterCollection.refetch()
-			console.log(result)
 		}
 	}
 

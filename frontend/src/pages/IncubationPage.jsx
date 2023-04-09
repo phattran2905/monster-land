@@ -81,8 +81,6 @@ function IncubationPage() {
 					{showBoostModal && (
 						<BoostIncubatorModal
 							onClose={() => setShowBoostModal(false)}
-                            setNewMonster={setNewMonster}
-                            setShowHatchModal={setShowHatchModal}
 						/>
 					)}
 

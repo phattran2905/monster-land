@@ -31,9 +31,12 @@ const trainerSlice = createSlice({
 
 			state.isLoading = false
 		},
+        updateGold: (state, action) => {
+            state.gold = action.payload
+        }
 	},
 })
 
-export const { updateTrainerInfo } = trainerSlice.actions
+export const { updateTrainerInfo, updateGold } = trainerSlice.actions
 
 export default trainerSlice.reducer
