@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const authenticationApi = createApi({
 	reducerPath: "authenticationApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/" }),
 	tagTypes: ["auth"],
 	endpoints: (builder) => ({
 		signUp: builder.mutation({

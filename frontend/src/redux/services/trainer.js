@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const trainerApi = createApi({
 	reducerPath: "trainerApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/trainer" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/trainer" }),
 	tagTypes: ["trainer"],
 	endpoints: (builder) => ({
 		createTrainer: builder.mutation({
