@@ -34,6 +34,10 @@ export default function HomePage() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
+		document.title = "Monster Land - Home"
+	}, [])
+
+	useEffect(() => {
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
 			return navigate("/login")

@@ -19,7 +19,7 @@ export default function CollectionPage() {
 
 	useEffect(() => {
 		refetchCollection()
-        document.title = "Monster Land - Collection"
+		document.title = "Monster Land - Collection"
 	}, [])
 
 	// Redirect to login if not logged in
@@ -50,20 +50,28 @@ export default function CollectionPage() {
 					) : (
 						<div className="h-full flex flex-col shadow-xl rounded-sm overflow-auto bg-light-white">
 							<div className="h-full p-14 flex flex-row flex-wrap content-start gap-y-16 gap-x-16 overflow-auto rounded-sm">
-								{monsters.map((monster) => (
-									<MonsterCard
-										key={monster.uid}
-										uid={monster.uid}
-										name={monster.name}
-										type={monster.monster_type}
-										level={monster.level}
-										img_name={monster.img_name}
-										attack={monster.attack}
-										defense={monster.defense}
-										exp={monster.exp}
-										level_up_exp={monster.level_up_exp}
-									/>
-								))}
+								{monsters?.length === 0 ? (
+									<div className="h-full w-full flex flex-row justify-center items-center">
+										<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+											You have no monster
+										</span>
+									</div>
+								) : (
+									monsters.map((monster) => (
+										<MonsterCard
+											key={monster.uid}
+											uid={monster.uid}
+											name={monster.name}
+											type={monster.monster_type}
+											level={monster.level}
+											img_name={monster.img_name}
+											attack={monster.attack}
+											defense={monster.defense}
+											exp={monster.exp}
+											level_up_exp={monster.level_up_exp}
+										/>
+									))
+								)}
 							</div>
 							{/* Quantity */}
 							<div className="bg-white flex flex-row justify-center mt-auto">
