@@ -12,7 +12,9 @@ config()
 connectDb()
 
 const app = Express()
-app.use(cors())
+app.use(
+	cors()
+)
 app.use(morgan("dev"))
 app.use(Express.json())
 

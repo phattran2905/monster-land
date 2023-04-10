@@ -20,11 +20,12 @@ const findWithWaterType = (monster, enemy) => {
 
 // Fight an enemy with a fire type monster
 const findWithFireType = (monster, enemy) => {
-	const monsterDamage = monster.attack
+	let monsterDamage = monster.attack
 	let enemyDamage = enemy.attack
 
 	if (enemy.type === "water") {
 		enemyDamage *= 2
+		monsterDamage /= 2
 	}
 
 	return {
@@ -36,12 +37,7 @@ const findWithFireType = (monster, enemy) => {
 // Fight an enemy with a fire type monster
 const findWithRockType = (monster, enemy) => {
 	let monsterDamage = monster.attack
-	let enemyDamage = enemy.attack
-
-	if (enemy.type === "water") {
-		enemyDamage *= 2
-		monsterDamage /= 2
-	}
+	const enemyDamage = enemy.attack
 
 	if (enemy.type === "electric") {
 		monsterDamage *= 2
