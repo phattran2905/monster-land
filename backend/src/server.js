@@ -23,7 +23,7 @@ app.get("/", (req, res) => {
 })
 
 // Create mockup data
-app.get("/create-mockup-data", async (req, res) => {
+app.get("/api/v1/create-mockup-data", async (req, res) => {
 	await dropDb()
 	createMockupData()
 	res.sendStatus(201)

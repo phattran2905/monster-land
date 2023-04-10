@@ -2,6 +2,8 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import AccountModel from "../models/user/AccountModel.js"
 import BackpackModel from "../models/backpack/BackpackModel.js"
+import EggModel from "../models/backpack/EggModel.js"
+import ItemModel from "../models/backpack/ItemModel.js"
 import { randomUID } from "../util/random.js"
 import GSSettingModel from "../models/setting/GSSettingModel.js"
 import MonsterCollectionModel from "../models/monster/MonsterCollectionModel.js"
@@ -84,14 +86,18 @@ export const signUp = async (req, res) => {
 			return res.status(400).json({ message: "Failed to sign up" })
 		}
 
+		// Add items and eggs for beginner
+		const eggs = await EggModel.find({ status: "active" })
+		const items = await ItemModel.find({ status: "active" })
+
 		// Get Game Server Setting
 		const GameServerSetting = await GSSettingModel.findOne({ status: "active" })
 		// Create Backpack
 		await BackpackModel.create({
 			uid: `Bp-${randomUID()}`,
 			user_uid: accountUID,
-			item_list: [],
-			egg_list: [],
+			item_list: items.map((i) => ({ ...i.toObject(), amount: 10 })),
+			egg_list: eggs.map((i) => ({ ...i.toObject(), amount: 5 })),
 			capacity: {
 				egg: GameServerSetting.backpack_egg_list_capacity_base,
 				item: GameServerSetting.backpack_item_list_capacity_base,
