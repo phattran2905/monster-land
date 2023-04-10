@@ -9,6 +9,7 @@ const findWithWaterType = (monster, enemy) => {
 
 	if (enemy.type === "electric") {
 		enemyDamage *= 2
+		monsterDamage /= 2
 	}
 
 	return {
@@ -39,6 +40,7 @@ const findWithRockType = (monster, enemy) => {
 
 	if (enemy.type === "water") {
 		enemyDamage *= 2
+		monsterDamage /= 2
 	}
 
 	if (enemy.type === "electric") {
@@ -62,6 +64,7 @@ export const findWithElectricType = (monster, enemy) => {
 
 	if (enemy.type === "rock") {
 		enemyDamage *= 2
+		monsterDamage /= 2
 	}
 
 	return {
