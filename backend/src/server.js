@@ -12,7 +12,11 @@ config()
 connectDb()
 
 const app = Express()
-app.use(cors())
+app.use(
+	cors({
+		origin: "https://vercel.com/phattran2905/monster-land/",
+	})
+)
 app.use(morgan("dev"))
 app.use(Express.json())
 
