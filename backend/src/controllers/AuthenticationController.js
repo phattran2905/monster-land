@@ -68,9 +68,9 @@ export const signUp = async (req, res) => {
 		}
 
 		// Duplicated Username
-		const isDuplicatedUsername = await AccountModel.findOne({ username })
+		const isDuplicatedUsername = await AccountModel.findOne({ username: username.toLowerCase() })
 		if (isDuplicatedUsername) {
-			return res.status(400).json({ message: "username is already taken." })
+			return res.status(400).json({ message: "Username is already taken." })
 		}
 
 		// Create account
