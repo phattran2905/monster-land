@@ -25,10 +25,15 @@ export const monsterApi = createApi({
 					"Content-type": "application/json; charset=UTF-8",
 				},
             })
+        }),
+        getTopMonsters: builder.query({
+            query: () => `/top`,
+            keepUnusedDataFor: 1
         })
+        
 	}),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useFindWildMonsterMutation, useCaptureWildMonsterMutation, useGetMonsterByUIDQuery } = monsterApi
+export const { useFindWildMonsterMutation, useCaptureWildMonsterMutation, useGetMonsterByUIDQuery, useGetTopMonstersQuery } = monsterApi
