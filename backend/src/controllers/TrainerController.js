@@ -32,15 +32,21 @@ export const createCharacter = async (req, res) => {
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
 
 		// Create trainer
-		await TrainerModel.create({
+		const trainer = {
 			uid: `T-${randomUID()}`,
 			user_uid: req.user.uid,
 			name,
 			avatar,
 			level_up_exp: GameServerSetting.trainer_lvl_up_exp_base,
-		})
+			exp: 0,
+			level: 1,
+			stamina: 100,
+			max_stamina: 100,
+			gold: 1000,
+		}
+		await TrainerModel.create(trainer)
 
-		return res.status(200).json({ message: "OK" })
+		return res.status(200).json(trainer)
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
 	}

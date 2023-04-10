@@ -82,7 +82,7 @@ function CharacterCreationPage() {
 
 		if (result?.data) {
             console.log(result?.data)
-			dispatch(updateTrainerInfo(characterData))
+			dispatch(updateTrainerInfo(result?.data))
 			return navigate("/home")
 		}
 	}
