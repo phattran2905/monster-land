@@ -18,7 +18,7 @@ export default function HomePage() {
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 	const [fetchLogoutApi] = useLogoutMutation()
-	const { data: trainerData } = useGetTrainerInfoQuery({
+	const { data: trainerData, error} = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const { data: topMonsters } = useGetTopMonstersQuery()
@@ -32,13 +32,18 @@ export default function HomePage() {
 			return navigate("/login")
 		}
 
+	}, [authState])
+
+    useEffect(() => {
 		// Create first character
-		if (!trainerData) {
+		if (!trainerData && error?.status === 404) {
 			return navigate("/create-trainer")
-		} else {
+		} 
+        
+        if(trainerData) {
 			dispatch(updateTrainerInfo(trainerData))
 		}
-	}, [authState.isLoggedIn])
+    }, [trainerData])
 
 	useEffect(() => {
 		if (topMonsters) {

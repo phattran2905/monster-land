@@ -6,6 +6,7 @@ import logo from "../assets/img/logo/logo-trans-bg.png"
 import { FaUserAlt, FaExclamationCircle, FaLock } from "react-icons/fa"
 import { useLoginMutation } from "../redux/services/authentication"
 import { saveJwtToken, login } from "../redux/slices/auth"
+import Loading from "../components/Loading"
 
 function LoginPage() {
 	const navigate = useNavigate()
@@ -16,6 +17,7 @@ function LoginPage() {
 	const [fetchLoginApi] = useLoginMutation()
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
+	const [isLoading, setIsLoading] = useState(false)
 
 	useEffect(() => {
 		if (authState.isLoggedIn) {
@@ -27,11 +29,21 @@ function LoginPage() {
 	const handleLogin = async (e) => {
 		e.preventDefault()
 		setError()
+		setIsLoading(true)
+
+        if (!username) {
+            return setError("Username is required.")
+        }
+
+        if (!password) {
+            return setError("Password is required.")
+        }
 
 		if (username && password) {
 			const loginResult = await fetchLoginApi({ username, password })
 			// Failed to login
 			if (loginResult.error) {
+				setIsLoading(false)
 				return setError(loginResult.error.data.message)
 			}
 
@@ -42,8 +54,9 @@ function LoginPage() {
 			}
 
 			dispatch(login(jwtToken))
+			setIsLoading(false)
 			return navigate("/home")
-		}
+		} 
 	}
 
 	return (
@@ -92,7 +105,7 @@ function LoginPage() {
 								placeholder="********"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
-								required
+								required={true}
 							/>
 						</div>
 						<div className="w-full my-2 flex flex-row items-center ">
@@ -110,6 +123,7 @@ function LoginPage() {
 									type="checkbox"
 									checked={remember && "checked"}
 									onChange={() => setRemember(!remember)}
+									required={true}
 								/>
 								<span className="block">Stay logged in</span>
 							</label>
@@ -122,14 +136,20 @@ function LoginPage() {
 								</div>
 							</div>
 						)}
-						<div className="w-full my-12 flex justify-center items-center">
-							<button
-								onClick={handleLogin}
-								className="py-4 px-20 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 "
-							>
-								Log in
-							</button>
-						</div>
+
+						{isLoading ? (
+							<Loading />
+						) : (
+							<div className="w-full my-12 flex justify-center items-center">
+								<button
+									onClick={handleLogin}
+									className="py-4 px-20 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 "
+								>
+									Log in
+								</button>
+							</div>
+						)}
+
 						<div className="w-full my-12 flex justify-center items-center">
 							<p>
 								Don't have an account?
