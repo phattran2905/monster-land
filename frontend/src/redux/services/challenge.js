@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const challengeApi = createApi({
 	reducerPath: "challengeApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/challenges" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend.vercel.app/api/v1/challenges" }),
 	tagTypes: ["challenge"],
 	endpoints: (builder) => ({
 		getChallengeList: builder.query({

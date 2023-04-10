@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const incubationApi = createApi({
 	reducerPath: "incubationApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/incubation" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend.vercel.app/api/v1/incubation" }),
 	tagTypes: ["incubation"],
 	endpoints: (builder) => ({
 		getIncubatingEggs: builder.query({

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 // Define a service using a base URL and expected endpoints
 export const monsterApi = createApi({
 	reducerPath: "monsterApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/monster" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend.vercel.app/api/v1/monster" }),
 	endpoints: (builder) => ({
         getMonsterByUID: builder.query({
             query: (monsterUID) => `/${monsterUID}`

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
 export const backpackApi = createApi({
 	reducerPath: "backpackApi",
-	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend-phattran2905.vercel.app/api/v1/backpack" }),
+	baseQuery: fetchBaseQuery({ baseUrl: "https://monster-land-backend.vercel.app/api/v1/backpack" }),
 	tagTypes: ["backpack"],
 	endpoints: (builder) => ({
 		getBackpack: builder.query({
