@@ -89,7 +89,7 @@ export default function HomePage() {
 						/>
 					</div>
 
-					<div className="mt-32 w-full flex flex-row justify-between items-center">
+					<div className="mt-32 w-full flex flex-row justify-around items-center">
 						{isLoading ? (
 							<Loading />
 						) : (
@@ -132,7 +132,7 @@ export default function HomePage() {
 													Level
 												</span>
 											</div>
-											<div className="bg-Midnight-Gray rounded-lg p-2">
+											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
 												<span className="font-bold text-white">
 													{topLevel?.level}
 												</span>
@@ -179,7 +179,7 @@ export default function HomePage() {
 													Attack
 												</span>
 											</div>
-											<div className="bg-Midnight-Gray rounded-lg p-2">
+											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
 												<span className="font-bold text-white">
 													{topAttack?.attack}
 												</span>
@@ -226,7 +226,7 @@ export default function HomePage() {
 													Defense
 												</span>
 											</div>
-											<div className="bg-Midnight-Gray rounded-lg p-2">
+											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
 												<span className="font-bold text-white">
 													{topDefense?.defense}
 												</span>
