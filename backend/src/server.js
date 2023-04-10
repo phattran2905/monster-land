@@ -14,7 +14,9 @@ connectDb()
 const app = Express()
 app.use(
 	cors({
-		origin: "https://vercel.com/phattran2905/monster-land/",
+		origin: "*",
+		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+		preflightContinue: true,
 	})
 )
 app.use(morgan("dev"))
@@ -32,6 +34,7 @@ app.get("/create-mockup-data", async (req, res) => {
 })
 
 app.use("/api/v1", apiRouter)
+// app.options("/api/v1", cors())
 app.use(handleErrors)
 
 const PORT = process.env.PORT || 5010
