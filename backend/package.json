@@ -5,7 +5,8 @@
 	"main": "server.js",
 	"scripts": {
 		"lint": "npx eslint ./src/*.js ./src/**/*.js ./src/**/**/*.js",
-		"dev": "pnpm lint && nodemon ./src/server.js"
+		"dev": "pnpm lint && nodemon ./src/server.js",
+		"start": "node src/server.js"
 	},
 	"keywords": [],
 	"author": "",
