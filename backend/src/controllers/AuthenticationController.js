@@ -13,7 +13,7 @@ export const logIn = async (req, res) => {
 		// Not found
 		const account = await AccountModel.findOne({ username: username.toLowerCase() })
 		if (!account) {
-			return res.status(404).json({ message: "Account not found." })
+			return res.status(404).json({ message: "Username or Password is incorrect." })
 		}
 
 		// Check password

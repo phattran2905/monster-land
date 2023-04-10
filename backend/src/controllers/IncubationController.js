@@ -215,7 +215,7 @@ export const skipHatchingTime = async (req, res, next) => {
 
 		// Update trainer's coins
 		// Price: 10 seconds = 100 coins
-		const coinsToSkip = Math.floor(incubation.egg_info.hatching_time_in_seconds / 10) * 100
+		const coinsToSkip = Math.floor(doneHatchingTime.diff(now, "seconds") / 10) * 100
 		const trainer = await TrainerModel.findOne({ user_uid: req.user.uid })
 		if (coinsToSkip > 0 && trainer.gold < coinsToSkip) {
 			return next(

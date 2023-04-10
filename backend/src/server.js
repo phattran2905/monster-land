@@ -33,8 +33,16 @@ app.get("/create-mockup-data", async (req, res) => {
 	res.sendStatus(201)
 })
 
+app.options(
+	"/api/v1",
+	cors({
+		origin: "*",
+		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+		preflightContinue: true,
+	})
+)
+
 app.use("/api/v1", apiRouter)
-// app.options("/api/v1", cors())
 app.use(handleErrors)
 
 const PORT = process.env.PORT || 5010
