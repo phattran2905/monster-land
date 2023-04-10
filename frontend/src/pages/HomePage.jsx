@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { GiBroadsword, GiLightningShield } from "react-icons/gi"
+import { AiOutlineNumber } from "react-icons/ai"
 import { TbAwardFilled } from "react-icons/tb"
 import { FaChessRook } from "react-icons/fa"
 import Loading from "../components/Loading"
@@ -122,20 +123,38 @@ export default function HomePage() {
 											</p>
 										</div>
 										{/* Attribute */}
-										<div className="p-8 flex flex-row justify-around items-center">
-											<div className="flex flex-row items-center">
-												<FaChessRook
-													size={22}
-													className="text-Flamingo-Pink"
-												/>
-												<span className="text-Indigo-Blue font-bold mx-2 text-lg">
-													Level
-												</span>
+										<div className="p-8 flex flex-col gap-y-4">
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<AiOutlineNumber
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														UID
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topLevel?.uid}
+													</span>
+												</div>
 											</div>
-											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-												<span className="font-bold text-white">
-													{topLevel?.level}
-												</span>
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<FaChessRook
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														Level
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topLevel?.level}
+													</span>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -169,20 +188,38 @@ export default function HomePage() {
 											</p>
 										</div>
 										{/* Attribute */}
-										<div className="p-8 flex flex-row justify-around items-center">
-											<div className="flex flex-row items-center">
-												<GiBroadsword
-													size={22}
-													className="text-Flamingo-Pink"
-												/>
-												<span className="text-Indigo-Blue font-bold mx-2 text-lg">
-													Attack
-												</span>
+										<div className="p-8 flex flex-col gap-y-4">
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<AiOutlineNumber
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														UID
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topLevel?.uid}
+													</span>
+												</div>
 											</div>
-											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-												<span className="font-bold text-white">
-													{topAttack?.attack}
-												</span>
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<GiBroadsword
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														Attack
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topAttack?.attack}
+													</span>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -216,20 +253,38 @@ export default function HomePage() {
 											</p>
 										</div>
 										{/* Attribute */}
-										<div className="p-8 flex flex-row justify-around items-center">
-											<div className="flex flex-row items-center">
-												<GiLightningShield
-													size={22}
-													className="text-Flamingo-Pink"
-												/>
-												<span className="text-Indigo-Blue font-bold mx-2 text-lg">
-													Defense
-												</span>
+										<div className="p-8 flex flex-col gap-y-4">
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<AiOutlineNumber
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														UID
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topLevel?.uid}
+													</span>
+												</div>
 											</div>
-											<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-												<span className="font-bold text-white">
-													{topDefense?.defense}
-												</span>
+											<div className="flex flex-row justify-between items-center">
+												<div className="flex flex-row items-center">
+													<GiLightningShield
+														size={22}
+														className="text-Flamingo-Pink"
+													/>
+													<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+														Defense
+													</span>
+												</div>
+												<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
+													<span className="font-bold text-white">
+														{topDefense?.defense}
+													</span>
+												</div>
 											</div>
 										</div>
 									</div>

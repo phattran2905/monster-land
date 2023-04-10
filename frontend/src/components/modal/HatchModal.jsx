@@ -1,5 +1,7 @@
-import { useState } from "react"
-import { FaTimesCircle } from "react-icons/fa"
+import { FaAngleDoubleUp, FaChessRook, FaTimesCircle } from "react-icons/fa"
+import { AiOutlineNumber } from "react-icons/ai"
+import { MdOutlineCategory } from "react-icons/md"
+import { GiBroadsword, GiLightningShield } from "react-icons/gi"
 import MonsterType from "../monster/MonsterType"
 
 function HatchModal({ monster, onClose, onNext }) {
@@ -48,13 +50,28 @@ function HatchModal({ monster, onClose, onNext }) {
 						</div>
 
 						{/* Stats */}
-						<div className="w-60 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue ">
+						<div className="w-72 px-6 flex flex-col justify-center items-stretch border-l-Royal-Blue ">
+							{/* UID */}
+							<div className="flex flex-row mb-3 justify-between items-center ">
+								<div className="flex flex-row items-center mb-1">
+									<AiOutlineNumber
+										size={20}
+										className="text-Fire-Engine-Red font-bold"
+									/>
+									<span className="ml-1 capitalize">UID</span>
+								</div>
+								<div className="bg-Midnight-Gray flex flex-row justify-center w-32 rounded-xl">
+									<span className="p-1 font-bold text-white capitalize">
+										{monster.uid}
+									</span>
+								</div>
+							</div>
 							{/* Level */}
 							<div className="flex flex-row mb-3 justify-between items-center ">
 								<div className="flex flex-row items-center mb-1">
-									<img
-										src="/img/icons/stats-icons/chess.png"
-										alt="Chess icon"
+									<FaChessRook
+										size={20}
+										className="text-Fire-Engine-Red font-bold"
 									/>
 									<span className="ml-1 capitalize">Level</span>
 								</div>
@@ -67,9 +84,9 @@ function HatchModal({ monster, onClose, onNext }) {
 							{/* Type */}
 							<div className="flex flex-row mb-3 justify-between items-center">
 								<div className="flex flex-row items-center mb-1">
-									<img
-										src="/img/icons/stats-icons/diamond7.png"
-										alt="Diamond icon"
+									<MdOutlineCategory
+										size={20}
+										className="text-Fire-Engine-Red font-bold"
 									/>
 									<span className="ml-1 capitalize">Type</span>
 								</div>
@@ -78,9 +95,9 @@ function HatchModal({ monster, onClose, onNext }) {
 
 							<div className="flex flex-row mb-3 justify-between items-center">
 								<div className="flex flex-row items-center mb-1">
-									<img
-										src="/img/icons/stats-icons/sword.png"
-										alt="Sword icon"
+									<GiBroadsword
+										size={20}
+										className="text-Fire-Engine-Red font-bold"
 									/>
 									<span className="ml-1 capitalize">Attack</span>
 								</div>
@@ -93,9 +110,9 @@ function HatchModal({ monster, onClose, onNext }) {
 							{/* Defense */}
 							<div className="flex flex-row mb-3 justify-between items-center">
 								<div className="flex flex-row items-center mb-1">
-									<img
-										src="/img/icons/stats-icons/shield.png"
-										alt="Shield icon"
+									<GiLightningShield
+										size={20}
+										className="text-Fire-Engine-Red font-bold"
 									/>
 									<span className="ml-1 capitalize">Defense</span>
 								</div>

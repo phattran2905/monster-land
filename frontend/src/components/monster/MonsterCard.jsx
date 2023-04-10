@@ -1,5 +1,8 @@
 import MonsterType from "./MonsterType"
-import { FaAngleDoubleUp } from "react-icons/fa"
+import { FaAngleDoubleUp, FaChessRook } from "react-icons/fa"
+import { AiOutlineNumber } from "react-icons/ai"
+import { MdOutlineCategory } from "react-icons/md"
+import { GiBroadsword, GiLightningShield } from "react-icons/gi"
 import ProgressBar from "../ProgressBar"
 
 export default function MonsterCard({
@@ -33,9 +36,21 @@ export default function MonsterCard({
 			<div className="w-60 h-full p-4 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
 				<div className="flex flex-row mb-3 justify-between items-center">
 					<div className="flex flex-row items-center mb-1">
-						<img
-							src="/img/icons/stats-icons/chess.png"
-							alt="Chess icon"
+						<AiOutlineNumber
+							size={20}
+							className="text-Fire-Engine-Red font-bold"
+						/>
+						<span className="ml-1 capitalize">UID</span>
+					</div>
+					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-32">
+						<span className="p-1 font-bold text-white capitalize">{uid}</span>
+					</div>
+				</div>
+				<div className="flex flex-row mb-3 justify-between items-center">
+					<div className="flex flex-row items-center mb-1">
+						<FaChessRook
+							size={20}
+							className="text-Fire-Engine-Red font-bold"
 						/>
 						<span className="ml-1 capitalize">Level</span>
 					</div>
@@ -45,9 +60,9 @@ export default function MonsterCard({
 				</div>
 				<div className="flex flex-row mb-3 justify-between items-center">
 					<div className="flex flex-row items-center mb-1">
-						<img
-							src="/img/icons/stats-icons/diamond7.png"
-							alt="Diamond icon"
+						<MdOutlineCategory
+							size={20}
+							className="text-Fire-Engine-Red font-bold"
 						/>
 						<span className="ml-1 capitalize">Type</span>
 					</div>
@@ -56,9 +71,9 @@ export default function MonsterCard({
 
 				<div className="flex flex-row mb-3 justify-between items-center">
 					<div className="flex flex-row items-center mb-1">
-						<img
-							src="/img/icons/stats-icons/sword.png"
-							alt="Sword icon"
+						<GiBroadsword
+							size={20}
+							className="text-Fire-Engine-Red font-bold"
 						/>
 						<span className="ml-1 capitalize">Attack</span>
 					</div>
@@ -69,9 +84,9 @@ export default function MonsterCard({
 
 				<div className="flex flex-row mb-3 justify-between items-center">
 					<div className="flex flex-row items-center mb-1">
-						<img
-							src="/img/icons/stats-icons/shield.png"
-							alt="Shield icon"
+						<GiLightningShield
+							size={20}
+							className="text-Fire-Engine-Red font-bold"
 						/>
 						<span className="ml-1 capitalize">Defense</span>
 					</div>
@@ -84,7 +99,7 @@ export default function MonsterCard({
 					<div className="flex flex-row items-center mb-1">
 						<FaAngleDoubleUp
 							className="text-Flamingo-Pink"
-							size={16}
+							size={20}
 						/>
 						<span className="ml-1 capitalize">Exp</span>
 					</div>

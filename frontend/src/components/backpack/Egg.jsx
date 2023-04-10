@@ -1,6 +1,7 @@
 import { useState } from "react"
 import moment from "moment"
 import { FaClock, FaShoppingBasket } from "react-icons/fa"
+import { MdOutlineCategory } from "react-icons/md"
 import MonsterType from "../monster/MonsterType"
 
 export default function Egg({
@@ -71,9 +72,9 @@ export default function Egg({
 					</div>
 					<div className="flex flex-col mb-3">
 						<div className="flex flex-row items-center mb-1">
-							<img
-								src="/img/icons/stats-icons/diamond7.png"
-								alt="Diamond icon"
+							<MdOutlineCategory
+								size={16}
+								className="text-Fire-Engine-Red font-bold"
 							/>
 							<span className="ml-1 font-bold capitalize">Monster Type</span>
 						</div>

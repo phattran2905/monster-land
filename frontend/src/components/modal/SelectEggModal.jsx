@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { FaTimesCircle, FaClock, FaShoppingBasket } from "react-icons/fa"
+import { MdOutlineCategory } from "react-icons/md"
 import { useSelector } from "react-redux"
 import { useGetBackpackQuery } from "../../redux/services/backpack"
 import Egg from "../backpack/Egg"
@@ -86,7 +87,7 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 													Hatching time
 												</span>
 											</div>
-											<div className="bg-Midnight-Gray flex flex-row justify-center">
+											<div className="bg-Midnight-Gray flex flex-row justify-center rounded-lg">
 												<span className="p-1 font-bold text-white tracking-widest">
 													{egg.hatching_time_in_seconds}
 												</span>
@@ -102,7 +103,7 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 													Amount
 												</span>
 											</div>
-											<div className="bg-Midnight-Gray flex flex-row justify-center">
+											<div className="bg-Midnight-Gray flex flex-row justify-center rounded-lg">
 												<span className="p-1 font-bold text-white capitalize">
 													{egg.amount}
 												</span>
@@ -110,12 +111,12 @@ function SelectEggModal({ onClose, onStartIncubating }) {
 										</div>
 										<div className="flex flex-col mb-3">
 											<div className="flex flex-row items-center mb-1">
-												<img
-													src="/img/icons/stats-icons/diamond7.png"
-													alt="Diamond icon"
+												<MdOutlineCategory
+													size={20}
+													className="text-Fire-Engine-Red font-bold"
 												/>
 												<span className="ml-1 font-bold capitalize">
-													Monster Type
+													Type
 												</span>
 											</div>
 											<div className="flex flex-row justify-center items-stretch">

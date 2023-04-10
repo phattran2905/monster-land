@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { FaTimesCircle, FaPlus, FaMinus } from "react-icons/fa"
+import { GiBroadsword, GiLightningShield } from "react-icons/gi"
+import { FaTimesCircle, FaPlus, FaMinus, FaChessRook, FaAngleDoubleUp } from "react-icons/fa"
 import { AiFillWarning } from "react-icons/ai"
-import MonsterType from "../monster/MonsterType"
 import { useGetMonsterCollectionQuery } from "../../redux/services/collection"
+import ProgressBar from '../ProgressBar';
 
 function UseItemModal({ onUse, onClose, itemToUse }) {
 	const authState = useSelector((state) => state.auth)
@@ -107,47 +108,72 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 									</div>
 								</div>
 								{/* Stats */}
-								<div className="w-52 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
-									<div className="flex flex-col mb-3 items-center">
+								<div className="w-60 h-full py-4 px-6 flex flex-col justify-between items-stretch border-l-2 border-l-Royal-Blue">
+									<div className="flex flex-row mb-3 items-center justify-between">
 										<div className="flex flex-row items-center mb-1">
-											<img
-												src="/img/icons/stats-icons/diamond7.png"
-												alt="Diamond icon"
+											<FaChessRook
+												size={20}
+												className="text-Fire-Engine-Red font-bold"
 											/>
-											<span className="ml-1 font-bold capitalize">
-												Monster Type
+											<span className="ml-1 capitalize">Level</span>
+										</div>
+										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
+											<span className="p-1 font-bold text-white capitalize">
+												{monster.level}
 											</span>
 										</div>
-										<div className="flex flex-row justify-center items-stretch">
-											<MonsterType name={monster.monster_type} />
-										</div>
 									</div>
-									<div className="flex flex-col mb-3 items-center">
+									<div className="flex flex-row mb-3 items-center justify-between">
 										<div className="flex flex-row items-center mb-1">
-											<img
-												src="/img/icons/stats-icons/sword.png"
-												alt="Sword icon"
+											<GiBroadsword
+												size={20}
+												className="text-Fire-Engine-Red font-bold"
 											/>
 											<span className="ml-1 capitalize">Attack</span>
 										</div>
-										<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
 											<span className="p-1 font-bold text-white capitalize">
 												{monster.attack}
 											</span>
 										</div>
 									</div>
-									<div className="flex flex-col mb-3 items-center">
+									<div className="flex flex-row mb-3 items-center justify-between">
 										<div className="flex flex-row items-center mb-1">
-											<img
-												src="/img/icons/stats-icons/shield.png"
-												alt="Shield icon"
+											<GiLightningShield
+												size={20}
+												className="text-Fire-Engine-Red font-bold"
 											/>
 											<span className="ml-1 capitalize">Defense</span>
 										</div>
-										<div className="bg-Midnight-Gray flex flex-row justify-center w-20">
+										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
 											<span className="p-1 font-bold text-white capitalize">
 												{monster.defense}
 											</span>
+										</div>
+									</div>
+									<div className="flex flex-col justify-between items-stretch">
+										<div className="flex flex-row items-center mb-1">
+											<FaAngleDoubleUp
+												className="text-Flamingo-Pink"
+												size={20}
+											/>
+											<span className="ml-1 capitalize">Exp</span>
+										</div>
+										<div className="flex flex-col justify-center w-full pt-1">
+											<ProgressBar
+												percentage={Math.floor((monster.exp / monster.level_up_exp) * 100)}
+												bgColorClass="bg-Light-Gray"
+												currentBgColorClass="bg-Forest-Green"
+											/>
+											<div className="flex flex-row justify-end items-center mt-2">
+												<p className="text-sm font-bold">
+													<span className="text-sm text-Forest-Green font-bold">
+														{monster.exp}
+													</span>
+													{" / "}
+													{monster.level_up_exp}
+												</p>
+											</div>
 										</div>
 									</div>
 								</div>

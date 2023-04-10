@@ -1,4 +1,5 @@
 import { FaAngleDoubleUp, FaCheckCircle, FaClock } from "react-icons/fa"
+import { MdOutlineCategory } from "react-icons/md"
 import moment from "moment"
 import { useState, useEffect } from "react"
 import MonsterType from "../monster/MonsterType"
@@ -23,10 +24,10 @@ function IncubatorCard({
 
 	useEffect(() => {
 		if (incubator?.uid && counter >= 0) {
-            if (incubator?.status === "done") {
-                setDone(true)
-                setCounter(0)
-            }
+			if (incubator?.status === "done") {
+				setDone(true)
+				setCounter(0)
+			}
 			// Count down every second
 			const intervalIndex = setInterval(() => {
 				if (counter >= 0) {
@@ -36,7 +37,6 @@ function IncubatorCard({
 
 			return () => clearInterval(intervalIndex)
 		}
-
 	}, [incubator, counter])
 
 	const displayHatchingTime = (hatching_time_in_seconds) => {
@@ -51,7 +51,7 @@ function IncubatorCard({
 
 	useEffect(() => {
 		if (incubator?.uid) {
-            setInUse(true)
+			setInUse(true)
 			const now = moment()
 			const doneHatchingTime = moment(incubator?.done_hatching_time)
 			const diffTime = doneHatchingTime.diff(now, "seconds")
@@ -133,13 +133,12 @@ function IncubatorCard({
 							<div className="w-60 mr-6 py-4 px-6 border-2 border-Indigo-Blue flex flex-col justify-center items-stretch rounded-2xl shadow-md shadow-Dim-Gray bg-light-white">
 								<div className="mb-3">
 									<div className="mb-1 flex flex-row items-center">
-										<img
+										<MdOutlineCategory
+											size={16}
 											className="text-Fire-Engine-Red mr-1"
-											src="/img/icons/stats-icons/diamond7.png"
-											alt="Diamond icon"
 										/>
 										<span className="font-bold text-Indigo-Blue underline">
-											Monster Type
+											Type
 										</span>
 									</div>
 									<div className="ml-4 py-1">
