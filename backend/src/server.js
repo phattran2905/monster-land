@@ -12,13 +12,7 @@ config()
 connectDb()
 
 const app = Express()
-app.use(
-	cors({
-		origin: "*",
-		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-		preflightContinue: true,
-	})
-)
+app.use(cors())
 app.use(morgan("dev"))
 app.use(Express.json())
 
@@ -33,14 +27,14 @@ app.get("/create-mockup-data", async (req, res) => {
 	res.sendStatus(201)
 })
 
-app.options(
-	"/api/v1",
-	cors({
-		origin: "*",
-		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-		preflightContinue: true,
-	})
-)
+// app.options(
+// 	"/api/v1",
+// 	cors({
+// 		origin: "*",
+// 		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+// 		preflightContinue: true,
+// 	})
+// )
 
 app.use("/api/v1", apiRouter)
 app.use(handleErrors)

@@ -164,7 +164,7 @@ export const hatchAnEgg = async (req, res, next) => {
 		const GameServerSetting = await GameServerSettingModel.findOne({ status: "active" })
 		// Random a monster from monster's types
 		const monsterInfosWithSameType = await MonsterInfoModel.find({
-			type: monsterTypeUID,
+			type_uid: monsterTypeUID,
 			status: "active",
 		})
 		const randomMonsterInfo = getRandomArrayElement(monsterInfosWithSameType)
