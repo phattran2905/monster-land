@@ -18,7 +18,11 @@ export default function HomePage() {
 	const authState = useSelector((state) => state.auth)
 	const dispatch = useDispatch()
 	const [fetchLogoutApi] = useLogoutMutation()
-	const { data: trainerData, error} = useGetTrainerInfoQuery({
+	const {
+		data: trainerData,
+		error,
+		isFetching,
+	} = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const { data: topMonsters } = useGetTopMonstersQuery()
@@ -31,19 +35,18 @@ export default function HomePage() {
 		if (!authState.isLoggedIn) {
 			return navigate("/login")
 		}
-
 	}, [authState])
 
-    useEffect(() => {
+	useEffect(() => {
 		// Create first character
 		if (!trainerData && error?.status === 404) {
 			return navigate("/create-trainer")
-		} 
-        
-        if(trainerData) {
+		}
+
+		if (trainerData) {
 			dispatch(updateTrainerInfo(trainerData))
 		}
-    }, [trainerData])
+	}, [isFetching])
 
 	useEffect(() => {
 		if (topMonsters) {
@@ -76,7 +79,10 @@ export default function HomePage() {
 						<h1 className=" font-bold text-4xl text-center uppercase text-Indigo-Blue">
 							Golden Board
 						</h1>
-						<TbAwardFilled size={40} className="text-Indigo-Blue mt-2" />
+						<TbAwardFilled
+							size={40}
+							className="text-Indigo-Blue mt-2"
+						/>
 					</div>
 
 					<div className="mt-32 w-full flex flex-row justify-between items-center">

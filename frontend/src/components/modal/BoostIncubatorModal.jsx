@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import { useSkipIncubationMutation } from "../../redux/services/incubation"
 import { updateIncubator } from "../../redux/slices/incubators"
 import { updateGold } from "../../redux/slices/trainer"
+import moment from "moment"
 
 function BoostIncubatorModal({ onClose }) {
 	const authState = useSelector((state) => state.auth)
@@ -20,7 +21,12 @@ function BoostIncubatorModal({ onClose }) {
 
 	useEffect(() => {
 		if (selectedIncubation) {
-			const skippingFee = 100 * selectedIncubation?.hatching_time_in_seconds
+			// Price: 10 seconds = 100 coins
+			const now = moment()
+			const doneHatchingTime = moment(selectedIncubation?.done_hatching_time)
+			const diffTime = doneHatchingTime.diff(now, "seconds")
+			const skippingFee = Math.floor(diffTime / 10) * 100
+
 			setCoinsToSkip(skippingFee)
 		}
 	}, [selectedIncubation])

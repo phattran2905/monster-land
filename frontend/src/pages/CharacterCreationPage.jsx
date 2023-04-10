@@ -24,21 +24,24 @@ function CharacterCreationPage() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-        document.title = "Monster Land - Challenges"
+		document.title = "Monster Land - Challenges"
 	}, [])
-    
+
 	useEffect(() => {
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
 			return navigate("/login")
 		}
-	}, [authState.isLoggedIn])
+	}, [authState])
 
 	useEffect(() => {
 		// Redirect to home if already created a trainer.
 		if (trainerData) {
+			dispatch(updateTrainerInfo(trainerData))
 			return navigate("/home")
 		}
+
+		setIsLoading(false)
 	}, [trainerData])
 
 	const selectAvatarImage = (actionType) => {
@@ -60,6 +63,7 @@ function CharacterCreationPage() {
 	}
 
 	const handleCreateCharacter = async () => {
+		setIsLoading(true)
 		const characterData = {
 			name,
 			avatar: `body-${avatarIndex}.png`,
@@ -70,9 +74,14 @@ function CharacterCreationPage() {
 			data: characterData,
 		})
 
-		if (result.error) {
+		if (result?.error) {
 			setError(result.error.data.message)
-		} else {
+			setIsLoading(false)
+			return
+		}
+
+		if (result?.data) {
+            console.log(result?.data)
 			dispatch(updateTrainerInfo(characterData))
 			return navigate("/home")
 		}
