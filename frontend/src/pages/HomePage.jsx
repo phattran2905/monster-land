@@ -84,13 +84,19 @@ export default function HomePage() {
 				{/* Golden Board */}
 				<div className="w-full px-32 py-12 flex flex-col justify-start items-center">
 					{/* Title */}
-					<div className="flex flex-col justify-center items-center mx-auto w-1/2 p-4 bg-Gold-Sand rounded-lg shadow-md">
-						<h1 className=" font-bold text-4xl text-center uppercase text-Indigo-Blue">
+					<div className="flex flex-row justify-around items-center mx-auto w-1/3 p-8  rounded-lg shadow-md bg-[#FFE74C] border-[#FFFD82] border-8">
+						<TbAwardFilled
+							size={40}
+							// className="text-[#FFBA08]"
+							// className="text-white"
+							className="text-Midnight-Gray"
+						/>
+						<h1 className=" font-bold text-4xl text-center uppercase text-Midnight-Gray">
 							Golden Board
 						</h1>
 						<TbAwardFilled
 							size={40}
-							className="text-Indigo-Blue mt-2"
+							className="text-Midnight-Gray"
 						/>
 					</div>
 
