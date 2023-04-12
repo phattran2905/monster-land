@@ -9,7 +9,7 @@ export default function LandingPage() {
 				<div>
 					<div className="w-3/4 mt-32 mb-20 mx-auto">
 						<img
-							className="rounded-full"
+							className="w-full"
 							src={logo}
 							alt="Monster Land logo"
 						/>

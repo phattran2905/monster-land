@@ -75,12 +75,6 @@ function App() {
 							index={true}
 							element={<ChallengesPage />}
 						/>
-						{/* <Route path="wild-forest">
-							<Route
-								index={true}
-								element={<WildForestPage />}
-							/>
-						</Route>*/}
 					</Route>
 					<Route
 						path="/server-error"
