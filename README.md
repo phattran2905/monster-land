@@ -29,8 +29,12 @@ Finally, run this command to start the development server:
 ```npm run dev``` or ```pnpm dev ```
 
 # Technologies used
-Frontend: React, Redux Toolkit, React Router, TailwindCSS, React Icons.
-Backend: Nodejs, Expressjs, Restful API.
-Database: MongoDB.
-Environment: Vite, Pnpm.
-Deployment: Vercel, Netlify.
+__Frontend__: React, Redux Toolkit, React Router, TailwindCSS, React Icons.
+
+__Backend__: Nodejs, Expressjs, Restful API.
+
+__Database__: MongoDB.
+
+__Environment__: Vite, Pnpm.
+
+__Deployment__: Vercel, Netlify.
