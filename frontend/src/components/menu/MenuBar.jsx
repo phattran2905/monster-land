@@ -4,7 +4,7 @@ import { useLogoutMutation } from "../../redux/services/authentication"
 import { getStoredJwtToken, logout } from "../../redux/slices/auth"
 import NavLinkItem from "./NavLinkItem"
 
-export default function MenuBar({}) {
+export default function MenuBar() {
 	const navigate = useNavigate()
 	const [fetchLogoutApi] = useLogoutMutation()
 	const auth = useSelector((state) => state.auth)
@@ -14,7 +14,7 @@ export default function MenuBar({}) {
 		e.preventDefault()
 		dispatch(getStoredJwtToken())
 
-		await fetchLogoutApi({ jwt_token: auth.jwtToken })
+		const result = await fetchLogoutApi({ jwt_token: auth.jwtToken })
 		dispatch(logout())
 		return navigate("/login", { replace: true })
 	}
