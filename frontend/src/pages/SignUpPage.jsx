@@ -40,7 +40,7 @@ function SignUpPage() {
 				return setError(signUpResult.error.data.message)
 			}
 
-			return navigate("/login")
+			// return navigate("/login")
 		}
 	}
 
