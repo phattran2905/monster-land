@@ -11,8 +11,8 @@ import Loading from "../components/Loading"
 function LoginPage() {
 	const navigate = useNavigate()
 	const [error, setError] = useState()
-	const [username, setUsername] = useState("")
-	const [password, setPassword] = useState("")
+	const [username, setUsername] = useState("test")
+	const [password, setPassword] = useState("123123")
 	const [remember, setRemember] = useState(false)
 	const [fetchLoginApi] = useLoginMutation()
 	const authState = useSelector((state) => state.auth)
