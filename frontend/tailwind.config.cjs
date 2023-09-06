@@ -104,6 +104,11 @@ module.exports = {
 				"ellipsis-4": "lds-ellipsis3 0.6s infinite",
 			},
 		},
+		screens: {
+			xs: "480px",
+			sm: "768px",
+			md: "1060px",
+		},
 	},
 	plugins: [],
-}
+};
