@@ -138,7 +138,7 @@ function LoginPage() {
 								</div>
 								{/* Error */}
 								{error && (
-									<div className="w-full  bg-Fire-Engine-Red">
+									<div className="w-full my-4 bg-Fire-Engine-Red">
 										<div className="flex flex-row items-center p-2">
 											<FaExclamationCircle className="text-white mx-2" />
 											<p className="text-white font-bold capitalize">{error}</p>
@@ -153,7 +153,7 @@ function LoginPage() {
 									<div className="w-full flex justify-center items-center">
 										<button
 											onClick={handleLogin}
-											className="py-3 px-16 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 "
+											className="py-3 px-16 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300"
 										>
 											Log in
 										</button>
@@ -176,7 +176,6 @@ function LoginPage() {
 						</div>
 					</div>
 				</div>
-				{/* <div className="basis-3/5 bg-Flamingo-Pink bg-background-img-1 bg-no-repeat bg-cover"></div> */}
 				<Footer />
 			</div>
 		</Container>
