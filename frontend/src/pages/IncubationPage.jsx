@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import MenuBar from "../components/sidebar/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import BoostIncubatorModal from "../components/modal/BoostIncubatorModal";
 import HatchModal from "../components/modal/HatchModal";
 import SelectEggModal from "../components/modal/SelectEggModal";
@@ -61,13 +61,12 @@ function IncubationPage() {
 	};
 
 	return (
-		<div className="container-xl flex flex-col h-screen justify-between">
-			<Header />
+		<div className="w-full flex flex-row items-stretch">
+			<Sidebar />
+			<div className="flex flex-col w-full">
+				<Header />
 
-			<div className="w-full h-full flex flex-row overflow-hidden">
-				<MenuBar />
-
-				<div className="my-10 mx-20 w-full flex flex-row justify-between items-center relative gap-x-20">
+				<div className="p-2 sm:p-4 md:p-16 w-full h-full flex flex-row justify-between md:items-center relative md:gap-x-12">
 					<Incubators
 						setNewMonster={setNewMonster}
 						onShowBoostModal={() => setShowBoostModal(true)}
@@ -98,8 +97,11 @@ function IncubationPage() {
 						/>
 					)}
 				</div>
+
+				<div className="mt-auto">
+					<Footer />
+				</div>
 			</div>
-			<Footer />
 		</div>
 	);
 }
