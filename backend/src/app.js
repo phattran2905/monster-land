@@ -10,7 +10,7 @@ connectDb();
 const app = Express();
 app.use(
 	cors({
-		origin: "https://monster-land.netlify.app",
+		origin: ["https://monster-land.netlify.app", "http://localhost:5173"],
 		optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 		preflightContinue: true,
 	})
