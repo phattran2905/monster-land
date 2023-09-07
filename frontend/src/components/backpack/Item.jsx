@@ -1,4 +1,4 @@
-import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa"
+import { FaSplotch, FaArrowAltCircleUp, FaShoppingBasket } from "react-icons/fa";
 
 export default function Item({
 	uid,
@@ -10,7 +10,7 @@ export default function Item({
 	onSelect,
 }) {
 	return (
-		<div className="mx-4 h-[21rem] flex flex-row border-2 border-Royal-Blue">
+		<div className="md:h-[21rem] flex flex-row border-2 border-Royal-Blue hover:shadow-lg hover:shadow-Amethyst-Purple">
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
 				<div className="w-full p-4 h-5/6">
 					<img
@@ -68,9 +68,7 @@ export default function Item({
 							<span className="ml-1 font-bold capitalize">Amount</span>
 						</div>
 						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
-							<span className="p-1 font-bold text-white tracking-widest capitalize">
-								{amount}
-							</span>
+							<span className="p-1 font-bold text-white tracking-widest capitalize">{amount}</span>
 						</div>
 					</div>
 				</div>
@@ -94,5 +92,5 @@ export default function Item({
 				</div>
 			</div>
 		</div>
-	)
+	);
 }

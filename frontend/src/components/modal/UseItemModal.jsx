@@ -1,21 +1,21 @@
-import { useState, useEffect } from "react"
-import { useSelector } from "react-redux"
-import { GiBroadsword, GiLightningShield } from "react-icons/gi"
-import { FaTimesCircle, FaPlus, FaMinus, FaChessRook, FaAngleDoubleUp } from "react-icons/fa"
-import { AiFillWarning } from "react-icons/ai"
-import { useGetMonsterCollectionQuery } from "../../redux/services/collection"
-import ProgressBar from '../ProgressBar';
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { GiBroadsword, GiLightningShield } from "react-icons/gi";
+import { FaTimesCircle, FaPlus, FaMinus, FaChessRook, FaAngleDoubleUp } from "react-icons/fa";
+import { AiFillWarning } from "react-icons/ai";
+import { useGetMonsterCollectionQuery } from "../../redux/services/collection";
+import ProgressBar from "../ProgressBar";
 
 function UseItemModal({ onUse, onClose, itemToUse }) {
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state) => state.auth);
 	const { data: monsterCollection, refetch: refetchMonsterCollection } =
 		useGetMonsterCollectionQuery({
 			jwt_token: authState.jwtToken,
-		})
-	const [monsters, setMonsters] = useState([])
-	const [selectedUID, setSelectedUID] = useState()
-	const [amount, setAmount] = useState(1)
-	const [error, setError] = useState()
+		});
+	const [monsters, setMonsters] = useState([]);
+	const [selectedUID, setSelectedUID] = useState();
+	const [amount, setAmount] = useState(1);
+	const [error, setError] = useState();
 
 	// useEffect(() => {
 	// 	refetchMonsterCollection()
@@ -24,40 +24,40 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 	// Set Items and Eggs
 	useEffect(() => {
 		if (monsterCollection) {
-			setMonsters(monsterCollection.monster_list)
+			setMonsters(monsterCollection.monster_list);
 		}
-	}, [monsterCollection])
+	}, [monsterCollection]);
 
 	const onIncreaseAmount = () => {
 		if (amount < itemToUse.amount) {
-			setAmount((prev) => prev + 1)
+			setAmount((prev) => prev + 1);
 		} else {
-			setAmount(itemToUse.amount)
+			setAmount(itemToUse.amount);
 		}
-	}
+	};
 
 	const onDecreaseAmount = () => {
 		if (amount > 1) {
-			setAmount((prev) => prev - 1)
+			setAmount((prev) => prev - 1);
 		} else {
-			setAmount(1)
+			setAmount(1);
 		}
-	}
+	};
 
 	const useButtonHandler = () => {
-		setError()
+		setError();
 
 		if (!selectedUID) {
-			setError("Please select a monster")
-			return
+			setError("Please select a monster");
+			return;
 		}
 
 		return onUse({
 			...itemToUse,
 			amountToUse: amount,
 			monster_uid: selectedUID,
-		})
-	}
+		});
+	};
 
 	return (
 		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-start bg-opacity-80">
@@ -87,10 +87,10 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 								onClick={() => setSelectedUID(monster.uid)}
 								className={`h-60 flex flex-row border-4 hover:border-Flamingo-Pink hover:border-4 
                             ${
-								selectedUID === monster.uid
-									? "border-Flamingo-Pink"
-									: "border-Royal-Blue"
-							}`}
+															selectedUID === monster.uid
+																? "border-Flamingo-Pink"
+																: "border-Royal-Blue"
+														}`}
 							>
 								{/* Name & Image */}
 								<div className="w-52 h-full flex flex-col border-r-2 border-r-Royal-Blue">
@@ -102,9 +102,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 										/>
 									</div>
 									<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
-										<span className="text-white font-bold text-center text-lg">
-											{monster.name}
-										</span>
+										<span className="text-white font-bold text-center text-lg">{monster.name}</span>
 									</div>
 								</div>
 								{/* Stats */}
@@ -118,9 +116,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 											<span className="ml-1 capitalize">Level</span>
 										</div>
 										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
-											<span className="p-1 font-bold text-white capitalize">
-												{monster.level}
-											</span>
+											<span className="p-1 font-bold text-white capitalize">{monster.level}</span>
 										</div>
 									</div>
 									<div className="flex flex-row mb-3 items-center justify-between">
@@ -132,9 +128,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 											<span className="ml-1 capitalize">Attack</span>
 										</div>
 										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
-											<span className="p-1 font-bold text-white capitalize">
-												{monster.attack}
-											</span>
+											<span className="p-1 font-bold text-white capitalize">{monster.attack}</span>
 										</div>
 									</div>
 									<div className="flex flex-row mb-3 items-center justify-between">
@@ -146,9 +140,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 											<span className="ml-1 capitalize">Defense</span>
 										</div>
 										<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-14">
-											<span className="p-1 font-bold text-white capitalize">
-												{monster.defense}
-											</span>
+											<span className="p-1 font-bold text-white capitalize">{monster.defense}</span>
 										</div>
 									</div>
 									<div className="flex flex-col justify-between items-stretch">
@@ -167,9 +159,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 											/>
 											<div className="flex flex-row justify-end items-center mt-2">
 												<p className="text-sm font-bold">
-													<span className="text-sm text-Forest-Green font-bold">
-														{monster.exp}
-													</span>
+													<span className="text-sm text-Forest-Green font-bold">{monster.exp}</span>
 													{" / "}
 													{monster.level_up_exp}
 												</p>
@@ -181,6 +171,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 						))}
 					</div>
 
+					{/* Selection */}
 					<div className="w-full flex flex-col justify-start items-center bg-white">
 						{error && (
 							<div className="w-full flex flex-row justify-center items-stretch bg-white p-4">
@@ -190,21 +181,18 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 								</p>
 							</div>
 						)}
-						<div className="w-full flex flex-row justify-center items-stretch bg-Midnight-Gray p-4">
-							<div className="mx-6 flex flex-row justify-center items-center">
-								<span className="text-white font-bold text-xl mr-2 underline">
-									Item:
-								</span>
+						{/* Selection Adjustment */}
+						<div className="w-full flex md:flex-row flex-col justify-center items-stretch bg-Midnight-Gray p-4 gap-x-6 gap-y-2">
+							<div className="flex flex-row justify-center items-center">
+								<span className="text-white font-bold text-xl mr-2 underline">Item:</span>
 								<img
 									className="w-8 h-8 object-scale-down"
 									src={`/img/items/${itemToUse.img_name}`}
 									alt={itemToUse.name}
 								/>
-								<span className="text-white font-bold text-xl mx-2">
-									{itemToUse.name}
-								</span>
+								<span className="text-white font-bold text-xl mx-2">{itemToUse.name}</span>
 							</div>
-							<div className="mx-6 flex flex-row justify-center items-center">
+							<div className="flex flex-row justify-center items-center">
 								<label
 									htmlFor="amount"
 									className="text-white font-bold text-xl underline mx-4"
@@ -236,7 +224,7 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 							</div>
 
 							{/* Use button */}
-							<div className="mx-6 flex flex-row justify-center items-center">
+							<div className="flex flex-row justify-center items-center">
 								<button
 									onClick={useButtonHandler}
 									className="bg-Flamingo-Pink ml-8 py-2 px-14 rounded-full border-4 border-Flamingo-Pink hover:text-Flamingo-Pink hover:border-Flamingo-Pink hover:bg-white text-white font-bold text-xl"
@@ -249,6 +237,6 @@ function UseItemModal({ onUse, onClose, itemToUse }) {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
-export default UseItemModal
+export default UseItemModal;

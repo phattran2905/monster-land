@@ -1,8 +1,8 @@
-import { useState } from "react"
-import moment from "moment"
-import { FaClock, FaShoppingBasket } from "react-icons/fa"
-import { MdOutlineCategory } from "react-icons/md"
-import MonsterType from "../monster/MonsterType"
+import { useState } from "react";
+import moment from "moment";
+import { FaClock, FaShoppingBasket } from "react-icons/fa";
+import { MdOutlineCategory } from "react-icons/md";
+import MonsterType from "../monster/MonsterType";
 
 export default function Egg({
 	uid,
@@ -14,17 +14,15 @@ export default function Egg({
 	onSelect,
 }) {
 	const [hatchingTime] = useState(() => {
-		const duration = moment.duration(hatching_time_in_seconds, "seconds")
-		const hours = Math.floor(duration.asHours())
-		const minutes = duration.minutes()
-		const seconds = duration.seconds()
-		return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
-			.toString()
-			.padStart(2, "0")}`
-	})
+		const duration = moment.duration(hatching_time_in_seconds, "seconds");
+		const hours = Math.floor(duration.asHours());
+		const minutes = duration.minutes();
+		const seconds = duration.seconds();
+		return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+	});
 
 	return (
-		<div className="mx-4 h-[21rem] flex flex-row border-2 border-Royal-Blue">
+		<div className="md:h-[21rem] flex flex-row border-2 border-Royal-Blue hover:shadow-lg hover:shadow-Amethyst-Purple">
 			{/* Name & Image */}
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
 				<div className="w-full p-4 h-5/6">
@@ -51,9 +49,7 @@ export default function Egg({
 							<span className="ml-1 font-bold capitalize">Hatching time</span>
 						</div>
 						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
-							<span className="p-1 font-bold text-white tracking-widest">
-								{hatchingTime}
-							</span>
+							<span className="p-1 font-bold text-white tracking-widest">{hatchingTime}</span>
 						</div>
 					</div>
 					<div className="flex flex-col mb-3">
@@ -65,9 +61,7 @@ export default function Egg({
 							<span className="ml-1 font-bold capitalize">Amount</span>
 						</div>
 						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
-							<span className="p-1 font-bold text-white tracking-widest">
-								{amount}
-							</span>
+							<span className="p-1 font-bold text-white tracking-widest">{amount}</span>
 						</div>
 					</div>
 					<div className="flex flex-col mb-3">
@@ -94,5 +88,5 @@ export default function Egg({
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
