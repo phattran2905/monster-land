@@ -7,7 +7,7 @@ export default function LandingPage() {
 	return (
 		<Container>
 			{/* Background Image */}
-			<div className="w-full h-full flex flex-col justify-between bg-background-img-2 bg-no-repeat bg-cover">
+			<div className="w-full h-screen flex flex-col justify-between bg-background-img-2 bg-no-repeat bg-cover">
 				{/* Blue Background */}
 				<div className="w-full h-full flex flex-row justify-center items-center backdrop-blur-[6px]">
 					{/* Logo & Play */}
