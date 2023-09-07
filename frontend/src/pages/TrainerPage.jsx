@@ -11,11 +11,12 @@ import moment from "moment";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import MenuBar from "../components/sidebar/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import ProgressBar from "../components/ProgressBar";
 import { useGetTrainerInfoQuery, useUpdateTrainerInfoMutation } from "../redux/services/trainer";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTrainerInfo } from "../redux/slices/trainer";
+import Container from "../components/Container";
 
 const totalAvatarImages = 4;
 
@@ -102,166 +103,179 @@ function TrainerPage() {
 	};
 
 	return (
-		<div className="container-xl flex flex-col h-screen justify-between">
-			<Header />
-			<div className="w-full h-full flex flex-row">
-				<MenuBar />
-				<div className="w-full px-32 py-12 flex flex-col justify-center items-center">
-					<div className="w-3/4 flex flex-row justify-start items-start border-2 border-Indigo-Blue rounded-md relative">
-						{/* Avatar */}
-						<div className="w-1/2 h-full p-10 bg-Indigo-Blue flex flex-col items-center">
-							<h2 className="py-2 text-4xl font-bold text-Gold-Sand border-b-4 border-Gold-Sand inline-block">
-								Avatar
-							</h2>
+		<Container>
+			<div className="w-full flex flex-row items-stretch">
+				<Sidebar />
+				<div className="flex flex-col w-full">
+					<Header />
 
-							<div className="w-full">
-								<div className="flex flex-row justify-center items-center">
-									<button onClick={() => selectAvatarImage("prev")}>
-										<FaAngleLeft
-											className={`text-4xl text-white ${
-												avatarIndex <= 1
-													? "opacity-40 hover:cursor-not-allowed"
-													: "hover:text-Flamingo-Pink"
-											}`}
-										/>
-									</button>
-									<div className="bg-white w-80 py-10 rounded-3xl mt-10 m-4">
-										<img
-											className="w-44 h-96 mx-auto object-scale-down"
-											src={`/img/avatars/body-${avatarIndex}.png`}
-											alt={trainerData?.avatar}
-										/>
-									</div>
-									<button onClick={() => selectAvatarImage("next")}>
-										<FaAngleRight
-											className={`text-4xl text-white ${
-												avatarIndex === totalAvatarImages
-													? "opacity-40 hover:cursor-not-allowed"
-													: "hover:text-Flamingo-Pink"
-											}`}
-										/>
-									</button>
-								</div>
+					<div className="flex flex-row">
+						{/* Trainer */}
+						<div className="w-full h-full p-6 md:p-10 flex flex-col justify-center items-center gap-y-8">
+							<div className="w-full md:w-10/12 flex sm:flex-row flex-col justify-start items-start border-2 border-Indigo-Blue rounded-md relative">
+								{/* Avatar Selection */}
+								<div className="w-full sm:w-1/2 h-full p-2 md:p-6 bg-Indigo-Blue flex flex-col items-center">
+									{/* Title */}
+									<h2 className="py-2 text-4xl font-bold text-Gold-Sand border-b-4 border-Gold-Sand inline-block">
+										Avatar
+									</h2>
 
-								<div className="flex flex-col justify-center py-4 px-8">
-									<p className="my-3 text-white underline font-bold text-xl">EXP:</p>
+									{/* Avatar & EXP */}
+									<div className="w-full">
+										<div className="flex flex-row justify-center items-center">
+											<button onClick={() => selectAvatarImage("prev")}>
+												<FaAngleLeft
+													className={`text-4xl text-white ${
+														avatarIndex <= 1
+															? "opacity-40 hover:cursor-not-allowed"
+															: "hover:text-Flamingo-Pink"
+													}`}
+												/>
+											</button>
+											<div className="bg-white md:w-80 w-60 py-10 rounded-3xl mt-10 m-4">
+												<img
+													className="w-44 md:h-96 h-80 mx-auto object-scale-down"
+													src={`/img/avatars/body-${avatarIndex}.png`}
+													alt={trainerData?.avatar}
+												/>
+											</div>
+											<button onClick={() => selectAvatarImage("next")}>
+												<FaAngleRight
+													className={`text-4xl text-white ${
+														avatarIndex === totalAvatarImages
+															? "opacity-40 hover:cursor-not-allowed"
+															: "hover:text-Flamingo-Pink"
+													}`}
+												/>
+											</button>
+										</div>
 
-									<div className="">
-										<ProgressBar
-											height={"h-3"}
-											percentage={Math.floor(exp / levelUpExp)}
-											bgColorClass={`bg-white`}
-											currentBgColorClass={`bg-Gold-Sand`}
-										/>
+										{/* EXP */}
+										<div className="flex flex-col justify-center p-4 md:py-4 md:px-8">
+											<p className="my-3 text-white underline font-bold text-xl">EXP:</p>
 
-										<div className="flex flex-row mt-2 justify-between items-center">
-											<span className="text-Gold-Sand font-bold text-lg inline-block">{exp}</span>
-											<span className="text-white font-bold text-lg inline-block">
-												{levelUpExp}
-											</span>
+											<div className="">
+												<ProgressBar
+													height={"h-3"}
+													percentage={Math.floor(exp / levelUpExp)}
+													bgColorClass={`bg-white`}
+													currentBgColorClass={`bg-Gold-Sand`}
+												/>
+
+												<div className="flex flex-row mt-2 justify-between items-center">
+													<span className="text-Gold-Sand font-bold text-lg inline-block">
+														{exp}
+													</span>
+													<span className="text-white font-bold text-lg inline-block">
+														{levelUpExp}
+													</span>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
+
+								{/* Info */}
+								<div className="w-full sm:w-1/2 h-full p-6 md:p-16 flex flex-col items-center">
+									<div className="w-full flex flex-col items-stretch my-4 gap-y-4">
+										<div className="flex flex-col gap-y-1">
+											<label
+												htmlFor="name"
+												className="text-Indigo-Blue font-bold flex flex-row text-xl"
+											>
+												<FaUserTag className="text-2xl mr-1" />
+												Name
+											</label>
+											<input
+												name="name"
+												id="name"
+												className="border-4 border-Indigo-Blue px-8 py-4 rounded-full focus:border-Flamingo-Pink"
+												type="text"
+												placeholder="Your Name"
+												value={name}
+												onChange={(e) => setName(e.target.value)}
+											/>
+										</div>
+										<div className="flex flex-col gap-y-1">
+											<label
+												htmlFor="email"
+												className="text-Indigo-Blue font-bold flex flex-row text-xl"
+											>
+												<AiTwotoneMail className="text-2xl mr-1" />
+												Email
+											</label>
+											<input
+												name="email"
+												id="email"
+												className="border-4 border-Indigo-Blue px-8 py-4 rounded-full focus:border-Flamingo-Pink"
+												type="email"
+												placeholder="youremail@email.com"
+												value={email}
+												onChange={(e) => setEmail(e.target.value)}
+											/>
+										</div>
+										<div className="flex flex-col gap-y-1">
+											<span className="text-Indigo-Blue font-bold flex flex-row text-xl">
+												<AiFillTag className="text-2xl mr-1" />
+												Username
+											</span>
+
+											<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
+												{trainerData?.username}
+											</span>
+										</div>
+										<div className="flex flex-col gap-y-1">
+											<span className="text-Indigo-Blue font-bold flex flex-row text-xl">
+												<AiOutlineNumber className="text-2xl mr-1" />
+												ID
+											</span>
+
+											<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
+												{trainerData?.uid}
+											</span>
+										</div>
+										<div className="flex flex-col gap-y-1">
+											<span className="text-Indigo-Blue font-bold flex flex-row text-xl">
+												<FaCalendarCheck className="text-2xl mr-1" />
+												Joined
+											</span>
+											<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
+												{joined}
+											</span>
+										</div>
+									</div>
+
+									{error && (
+										<div className="bg-Fire-Engine-Red flex flex-row justify-start items-center p-4 self-stretch">
+											<FaExclamationCircle className="mx-2 text-xl text-white" />
+											<p className="text-white p-1">{error}</p>
+										</div>
+									)}
+									{successMsg && (
+										<div className="bg-Forest-Green flex flex-row justify-start items-center p-4 self-stretch">
+											<FaExclamationCircle className="mx-2 text-xl text-white" />
+											<p className="text-white p-1">{successMsg}</p>
+										</div>
+									)}
+								</div>
 							</div>
-						</div>
-
-						{/* Info */}
-						<div className="w-1/2 h-full p-16 flex flex-col items-center">
-							<div className="w-full flex flex-col items-stretch my-4">
-								<div className="flex flex-col mb-6">
-									<label
-										htmlFor="name"
-										className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2"
-									>
-										<FaUserTag className="text-2xl mr-1" />
-										Name
-									</label>
-									<input
-										name="name"
-										id="name"
-										className="border-4 border-Indigo-Blue px-8 py-4 rounded-full focus:border-Flamingo-Pink"
-										type="text"
-										placeholder="Your Name"
-										value={name}
-										onChange={(e) => setName(e.target.value)}
-									/>
-								</div>
-								<div className="flex flex-col mb-6">
-									<label
-										htmlFor="email"
-										className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2"
-									>
-										<AiTwotoneMail className="text-2xl mr-1" />
-										Email
-									</label>
-									<input
-										name="email"
-										id="email"
-										className="border-4 border-Indigo-Blue px-8 py-4 rounded-full focus:border-Flamingo-Pink"
-										type="email"
-										placeholder="youremail@email.com"
-										value={email}
-										onChange={(e) => setEmail(e.target.value)}
-									/>
-								</div>
-								<div className="flex flex-col mb-6">
-									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
-										<AiFillTag className="text-2xl mr-1" />
-										Username
-									</span>
-
-									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerData?.username}
-									</span>
-								</div>
-								<div className="flex flex-col mb-6">
-									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
-										<AiOutlineNumber className="text-2xl mr-1" />
-										ID
-									</span>
-
-									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{trainerData?.uid}
-									</span>
-								</div>
-								<div className="flex flex-col mb-6">
-									<span className="text-Indigo-Blue font-bold flex flex-row text-xl mb-2">
-										<FaCalendarCheck className="text-2xl mr-1" />
-										Joined
-									</span>
-									<span className="border-4 border-Indigo-Blue px-8 py-4 rounded-full bg-Midnight-Gray text-white">
-										{joined}
-									</span>
-								</div>
+							{/* Save Button */}
+							<div className="w-full flex flex-row justify-center items-center">
+								<button
+									onClick={handleUpdateInfo}
+									className="bg-Flamingo-Pink px-16 py-4 text-white rounded-full font-bold text-2xl border-4 border-white hover:border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
+								>
+									Save changes
+								</button>
 							</div>
-
-							{error && (
-								<div className="bg-Fire-Engine-Red flex flex-row justify-start items-center p-4 self-stretch">
-									<FaExclamationCircle className="mx-2 text-xl text-white" />
-									<p className="text-white p-1">{error}</p>
-								</div>
-							)}
-							{successMsg && (
-								<div className="bg-Forest-Green flex flex-row justify-start items-center p-4 self-stretch">
-									<FaExclamationCircle className="mx-2 text-xl text-white" />
-									<p className="text-white p-1">{successMsg}</p>
-								</div>
-							)}
 						</div>
 					</div>
-					{/* Save Button */}
-					<div className="w-full mt-10 flex flex-row justify-center items-center">
-						<button
-							onClick={handleUpdateInfo}
-							className="bg-Flamingo-Pink px-16 py-4 text-white rounded-full font-bold text-2xl border-4 border-white hover:border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
-						>
-							Save changes
-						</button>
+					<div className="mt-auto">
+						<Footer />
 					</div>
 				</div>
 			</div>
-			<Footer />
-		</div>
+		</Container>
 	);
 }
 export default TrainerPage;
