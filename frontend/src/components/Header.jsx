@@ -38,21 +38,8 @@ export default function Header() {
 	}, [trainerState]);
 
 	return (
-		<header className="w-full h-24 bg-Indigo-Blue flex flex-row justify-between">
-			<div className="w-24 flex justify-center items-center">
-				<Link
-					to="/home"
-					className="w-full h-full p-3"
-				>
-					<img
-						className="w-full h-full"
-						src={logo}
-						alt="Monster Land logo"
-					/>
-				</Link>
-			</div>
-
-			<div className="px-6 w-full flex flex-row justify-between items-center">
+		<header className="w-full h-20 bg-Indigo-Blue flex flex-row justify-between">
+			<div className="px-8 w-full flex flex-row justify-between items-center">
 				<div className="trainer-level flex flex-col items-center justify-center">
 					<p className="text-white capitalize text-2xl">
 						Lv. <span className="font-bold text-2xl"> {level}</span>

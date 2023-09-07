@@ -1,134 +1,134 @@
-import Footer from "../components/Footer"
-import Header from "../components/Header"
-import MenuBar from "../components/menu/MenuBar"
-import Item from "../components/backpack/Item"
-import { useGetBackpackQuery, useUseItemsMutation } from "../redux/services/backpack"
-import Loading from "../components/Loading"
-import { useState } from "react"
-import { useEffect } from "react"
-import { AiFillWarning } from "react-icons/ai"
-import TabLink from "../components/backpack/TabLink"
-import { useDispatch, useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import Egg from "../components/backpack/Egg"
-import { useIncubateEggMutation } from "../redux/services/incubation"
-import IncubationConfirmModal from "../components/modal/IncubationConfirmModal"
-import UseItemModal from "../components/modal/UseItemModal"
-import { useGetMonsterCollectionQuery } from "../redux/services/collection"
-import { updateIncubator } from "../redux/slices/incubators"
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import MenuBar from "../components/sidebar/Sidebar";
+import Item from "../components/backpack/Item";
+import { useGetBackpackQuery, useUseItemsMutation } from "../redux/services/backpack";
+import Loading from "../components/Loading";
+import { useState } from "react";
+import { useEffect } from "react";
+import { AiFillWarning } from "react-icons/ai";
+import TabLink from "../components/backpack/TabLink";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Egg from "../components/backpack/Egg";
+import { useIncubateEggMutation } from "../redux/services/incubation";
+import IncubationConfirmModal from "../components/modal/IncubationConfirmModal";
+import UseItemModal from "../components/modal/UseItemModal";
+import { useGetMonsterCollectionQuery } from "../redux/services/collection";
+import { updateIncubator } from "../redux/slices/incubators";
 
 export default function BackpackPage() {
-	const authState = useSelector((state) => state.auth)
-	const dispatch = useDispatch()
-	const navigate = useNavigate()
+	const authState = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const {
 		data: backpackData,
 		isLoading,
 		refetch: refetchBackpackIno,
-	} = useGetBackpackQuery({ jwt_token: authState.jwtToken })
-	const fetchMonsterCollection = useGetMonsterCollectionQuery({ jwt_token: authState.jwtToken })
-	const [incubateEgg] = useIncubateEggMutation()
-	const [fetchUseItemAPI] = useUseItemsMutation()
-	const [eggs, setEggs] = useState([])
-	const [items, setItems] = useState([])
-	const [activeTab, setActiveTab] = useState("eggs")
-	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false)
-	const [confirmItemUseModal, setConfirmItemUseModal] = useState(false)
-	const [selectedEgg, setSelectedEgg] = useState("")
-	const [selectedItem, setSelectedItem] = useState("")
-	const [error, setError] = useState()
+	} = useGetBackpackQuery({ jwt_token: authState.jwtToken });
+	const fetchMonsterCollection = useGetMonsterCollectionQuery({ jwt_token: authState.jwtToken });
+	const [incubateEgg] = useIncubateEggMutation();
+	const [fetchUseItemAPI] = useUseItemsMutation();
+	const [eggs, setEggs] = useState([]);
+	const [items, setItems] = useState([]);
+	const [activeTab, setActiveTab] = useState("eggs");
+	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false);
+	const [confirmItemUseModal, setConfirmItemUseModal] = useState(false);
+	const [selectedEgg, setSelectedEgg] = useState("");
+	const [selectedItem, setSelectedItem] = useState("");
+	const [error, setError] = useState();
 
 	useEffect(() => {
-		refetchBackpackIno()
+		refetchBackpackIno();
 
-		document.title = "Monster Land - Backpack"
-	}, [])
+		document.title = "Monster Land - Backpack";
+	}, []);
 
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
-			return navigate("/login")
+			return navigate("/login");
 		}
-	}, [authState.isLoggedIn])
+	}, [authState.isLoggedIn]);
 
 	// Set Items and Eggs
 	useEffect(() => {
 		if (backpackData) {
-			const items = backpackData.item_list
-			const eggs = backpackData.egg_list
-			setItems(items)
-			setEggs(eggs)
+			const items = backpackData.item_list;
+			const eggs = backpackData.egg_list;
+			setItems(items);
+			setEggs(eggs);
 		}
-	}, [backpackData])
+	}, [backpackData]);
 
 	const changeTab = () => {
 		if (activeTab === "eggs") {
-			setActiveTab("items")
+			setActiveTab("items");
 		} else {
-			setActiveTab("eggs")
+			setActiveTab("eggs");
 		}
-	}
+	};
 
 	const incubateEggByUID = async (eggUID) => {
-		setError()
+		setError();
 		const incubationResult = await incubateEgg({
 			jwt_token: authState.jwtToken,
 			egg_uid: eggUID,
-		})
+		});
 
 		// Set new monster data
 		if (incubationResult?.data) {
-            refetchBackpackIno()
-            dispatch(
-                updateIncubator({
-                    incubation: incubationResult?.data,
-                })
-            )
-			return navigate("/incubation")
+			refetchBackpackIno();
+			dispatch(
+				updateIncubator({
+					incubation: incubationResult?.data,
+				})
+			);
+			return navigate("/incubation");
 		}
 
 		if (incubationResult?.error.data) {
-			setError(incubationResult?.error.data.message)
+			setError(incubationResult?.error.data.message);
 		}
 
-		setConfirmIncubateModal(false)
-	}
+		setConfirmIncubateModal(false);
+	};
 
 	const onSelectEgg = (egg) => {
-		setError()
-		setConfirmIncubateModal(true)
-		setSelectedEgg(egg)
-	}
+		setError();
+		setConfirmIncubateModal(true);
+		setSelectedEgg(egg);
+	};
 
 	const onSelectItem = (item) => {
-		setError()
-		setConfirmItemUseModal(true)
-		setSelectedItem(item)
-	}
+		setError();
+		setConfirmItemUseModal(true);
+		setSelectedItem(item);
+	};
 
 	const onUseItem = async (item) => {
-		setError()
-		setConfirmItemUseModal(false)
-		setSelectedItem(item)
+		setError();
+		setConfirmItemUseModal(false);
+		setSelectedItem(item);
 
 		if (item < 1 || item.amountToUse > item.amount) {
-			return setError("The amount is invalid.")
+			return setError("The amount is invalid.");
 		}
 
 		const result = await fetchUseItemAPI({
 			jwt_token: authState.jwtToken,
 			monster_uid: item.monster_uid,
 			items: [{ amount: item.amountToUse, uid: item.uid }],
-		})
+		});
 
 		// Has error
 		if (result?.error) {
-			setError(result?.error.data.message)
+			setError(result?.error.data.message);
 		} else {
-			setError()
-			fetchMonsterCollection.refetch()
+			setError();
+			fetchMonsterCollection.refetch();
 		}
-	}
+	};
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -206,9 +206,7 @@ export default function BackpackPage() {
 												uid={item.uid}
 												name={item.name}
 												img_name={item.img_name}
-												hatching_time_in_seconds={
-													item.hatching_time_in_seconds
-												}
+												hatching_time_in_seconds={item.hatching_time_in_seconds}
 												monster_type={item.monster_type}
 												amount={item.amount}
 												onSelect={onSelectEgg}
@@ -241,14 +239,10 @@ export default function BackpackPage() {
 							<div className="flex flex-row justify-center mt-auto">
 								<div className="bg-Midnight-Gray  inline-block rounded-full px-10 py-2 my-3">
 									{activeTab === "items" && (
-										<span className="text-Gold-Sand font-bold">
-											{items.length}
-										</span>
+										<span className="text-Gold-Sand font-bold">{items.length}</span>
 									)}
 									{activeTab === "eggs" && (
-										<span className="text-Gold-Sand font-bold">
-											{eggs.length}
-										</span>
+										<span className="text-Gold-Sand font-bold">{eggs.length}</span>
 									)}
 									<span className="text-white">
 										{" "}
@@ -265,5 +259,5 @@ export default function BackpackPage() {
 			</div>
 			<Footer />
 		</div>
-	)
+	);
 }

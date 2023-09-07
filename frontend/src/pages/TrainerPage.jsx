@@ -4,102 +4,102 @@ import {
 	FaAngleRight,
 	FaExclamationCircle,
 	FaUserTag,
-} from "react-icons/fa"
-import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from "react-icons/ai"
-import { useEffect, useState } from "react"
-import moment from "moment"
-import { useNavigate } from "react-router-dom"
-import Header from "../components/Header"
-import Footer from "../components/Footer"
-import MenuBar from "../components/menu/MenuBar"
-import ProgressBar from "../components/ProgressBar"
-import { useGetTrainerInfoQuery, useUpdateTrainerInfoMutation } from "../redux/services/trainer"
-import { useDispatch, useSelector } from "react-redux"
-import { updateTrainerInfo } from "../redux/slices/trainer"
+} from "react-icons/fa";
+import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import moment from "moment";
+import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import MenuBar from "../components/sidebar/Sidebar";
+import ProgressBar from "../components/ProgressBar";
+import { useGetTrainerInfoQuery, useUpdateTrainerInfoMutation } from "../redux/services/trainer";
+import { useDispatch, useSelector } from "react-redux";
+import { updateTrainerInfo } from "../redux/slices/trainer";
 
-const totalAvatarImages = 4
+const totalAvatarImages = 4;
 
 function TrainerPage() {
-	const navigate = useNavigate()
-	const authState = useSelector((state) => state.auth)
-	const dispatch = useDispatch()
-	const trainerState = useSelector((state) => state.trainer)
-	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
-	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: authState.jwtToken })
-	const [error, setError] = useState()
-	const [successMsg, setSuccessMsg] = useState()
-	const [name, setName] = useState("")
-	const [email, setEmail] = useState("")
-	const [joined, setJoined] = useState("MMM DD, YYYY")
-	const [exp, setExp] = useState(0)
-	const [levelUpExp, setLevelUpExp] = useState(0)
-	const [avatarIndex, setAvatarIndex] = useState(1)
+	const navigate = useNavigate();
+	const authState = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const trainerState = useSelector((state) => state.trainer);
+	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation();
+	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: authState.jwtToken });
+	const [error, setError] = useState();
+	const [successMsg, setSuccessMsg] = useState();
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [joined, setJoined] = useState("MMM DD, YYYY");
+	const [exp, setExp] = useState(0);
+	const [levelUpExp, setLevelUpExp] = useState(0);
+	const [avatarIndex, setAvatarIndex] = useState(1);
 
 	useEffect(() => {
-		document.title = "Monster Land - Trainer"
-	}, [])
+		document.title = "Monster Land - Trainer";
+	}, []);
 
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
-			return navigate("/login")
+			return navigate("/login");
 		}
-	}, [authState.isLoggedIn])
+	}, [authState.isLoggedIn]);
 
 	useEffect(() => {
 		if (trainerData) {
-			setName(trainerData.name)
-			setEmail(trainerData.email)
-			setAvatarIndex(parseInt(trainerData.avatar.split("-")[1], 10))
-			setJoined(moment(trainerData.createdAt).format("MMM DD, YYYY"))
-			setExp(trainerData.exp)
-			setLevelUpExp(trainerData.level_up_exp)
+			setName(trainerData.name);
+			setEmail(trainerData.email);
+			setAvatarIndex(parseInt(trainerData.avatar.split("-")[1], 10));
+			setJoined(moment(trainerData.createdAt).format("MMM DD, YYYY"));
+			setExp(trainerData.exp);
+			setLevelUpExp(trainerData.level_up_exp);
 		}
-	}, [trainerData])
+	}, [trainerData]);
 
 	const selectAvatarImage = (actionType) => {
 		if (actionType === "prev") {
-			const index = avatarIndex - 1
+			const index = avatarIndex - 1;
 			if (index < 1) {
-				setAvatarIndex(1)
+				setAvatarIndex(1);
 			} else {
-				setAvatarIndex(index)
+				setAvatarIndex(index);
 			}
 		} else {
-			const index = avatarIndex + 1
+			const index = avatarIndex + 1;
 			if (index > totalAvatarImages) {
-				setAvatarIndex(totalAvatarImages)
+				setAvatarIndex(totalAvatarImages);
 			} else {
-				setAvatarIndex(index)
+				setAvatarIndex(index);
 			}
 		}
-	}
+	};
 
 	const handleUpdateInfo = async () => {
-		setError()
-		setSuccessMsg()
+		setError();
+		setSuccessMsg();
 
 		if (name && email) {
 			const dataToUpdate = {
 				name,
 				email,
 				avatar: `body-${avatarIndex}.png`,
-			}
+			};
 
 			const result = await fetchUpdateInfoApi({
 				jwt_token: authState.jwtToken,
 				data: dataToUpdate,
-			})
+			});
 
 			if (result.error) {
-				setError(result.error.data.message)
+				setError(result.error.data.message);
 			} else {
-				setSuccessMsg("Successfully saved.")
-				dispatch(updateTrainerInfo(dataToUpdate))
-				return navigate("/trainer")
+				setSuccessMsg("Successfully saved.");
+				dispatch(updateTrainerInfo(dataToUpdate));
+				return navigate("/trainer");
 			}
 		}
-	}
+	};
 
 	return (
 		<div className="container-xl flex flex-col h-screen justify-between">
@@ -144,9 +144,7 @@ function TrainerPage() {
 								</div>
 
 								<div className="flex flex-col justify-center py-4 px-8">
-									<p className="my-3 text-white underline font-bold text-xl">
-										EXP:
-									</p>
+									<p className="my-3 text-white underline font-bold text-xl">EXP:</p>
 
 									<div className="">
 										<ProgressBar
@@ -157,9 +155,7 @@ function TrainerPage() {
 										/>
 
 										<div className="flex flex-row mt-2 justify-between items-center">
-											<span className="text-Gold-Sand font-bold text-lg inline-block">
-												{exp}
-											</span>
+											<span className="text-Gold-Sand font-bold text-lg inline-block">{exp}</span>
 											<span className="text-white font-bold text-lg inline-block">
 												{levelUpExp}
 											</span>
@@ -266,6 +262,6 @@ function TrainerPage() {
 			</div>
 			<Footer />
 		</div>
-	)
+	);
 }
-export default TrainerPage
+export default TrainerPage;
