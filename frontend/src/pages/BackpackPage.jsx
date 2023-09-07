@@ -192,7 +192,7 @@ export default function BackpackPage() {
 								</div>
 
 								{/* Items and Eggs */}
-								<div className="w-full h-full p-4 md:p-8 flex md:flex-row flex-col flex-wrap content-start gap-y-10 gap-x-10 overflow-auto rounded-sm bg-light-white">
+								<div className="w-full h-full p-4 md:p-8 flex md:flex-row flex-col flex-wrap content-start gap-10 overflow-auto rounded-sm bg-light-white">
 									{activeTab === "eggs" ? (
 										eggs.length === 0 ? (
 											<div className="h-full w-full flex flex-row justify-center items-center">
