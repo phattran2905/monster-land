@@ -1,58 +1,58 @@
-import { useState, useEffect } from "react"
-import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp, FaStar } from "react-icons/fa"
-import coinIcon from "../../assets/img/icon/coin_1_.png"
-import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
-import MonsterType from "../../components/monster/MonsterType"
-import { useGetChallengeListQuery } from "../../redux/services/challenge"
+import { useState, useEffect } from "react";
+import { FaAngleLeft, FaAngleRight, FaAngleDoubleUp, FaStar } from "react-icons/fa";
+import coinIcon from "../../assets/img/icon/coin_1_.png";
+import pickaxeIcon from "../../assets/img/icon/Pickaxe.png";
+import MonsterType from "../../components/monster/MonsterType";
+import { useGetChallengeListQuery } from "../../redux/services/challenge";
 
 function ChallengeStages({ onChallenge }) {
-	const { data: challengeList, refetch: refetchChallenges } = useGetChallengeListQuery()
-	const [stages, setStages] = useState([])
-	const [selectedStageIndex, setSelectedStageIndex] = useState(0)
-	const [boss, setBoss] = useState()
+	const { data: challengeList, refetch: refetchChallenges } = useGetChallengeListQuery();
+	const [stages, setStages] = useState([]);
+	const [selectedStageIndex, setSelectedStageIndex] = useState(0);
+	const [boss, setBoss] = useState();
 
 	useEffect(() => {
-		refetchChallenges()
-	}, [])
+		refetchChallenges();
+	}, []);
 
 	useEffect(() => {
 		if (challengeList) {
-			const challenge = challengeList[0]
-			setStages(challenge.stages)
-			setBoss(challenge.stages[0])
+			const challenge = challengeList[0];
+			setStages(challenge.stages);
+			setBoss(challenge.stages[0]);
 		}
-	}, [challengeList])
+	}, [challengeList]);
 
 	const selectStage = (actionType) => {
 		if (actionType === "prev") {
-			const index = selectedStageIndex - 1
+			const index = selectedStageIndex - 1;
 			if (index < 0) {
-				setSelectedStageIndex(0)
+				setSelectedStageIndex(0);
 			} else {
-				setSelectedStageIndex(index)
+				setSelectedStageIndex(index);
 			}
 		} else {
-			const index = selectedStageIndex + 1
+			const index = selectedStageIndex + 1;
 			if (index >= stages.length) {
-				setSelectedStageIndex(stages.length - 1)
+				setSelectedStageIndex(stages.length - 1);
 			} else {
-				setSelectedStageIndex(index)
+				setSelectedStageIndex(index);
 			}
 		}
-	}
+	};
 
 	const renderDifficultyLevels = (levels) => {
-		let levelComponent = []
+		let levelComponent = [];
 		for (let i = 0; i < levels; i++) {
 			levelComponent.push(
 				<li key={i}>
 					<FaStar className="text-Gold-Sand" />
 				</li>
-			)
+			);
 		}
 
-		return levelComponent
-	}
+		return levelComponent;
+	};
 
 	return (
 		<>
@@ -74,27 +74,23 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 
 				{/* Stages */}
-				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-center overflow-x-hidden gap-10">
+				<div className="w-full h-full m-4 bg-light-white flex flex-row items-center justify-center overflow-scroll md:overflow-auto gap-10">
 					{/* Stage Card */}
 					{stages.map((stage, index) => (
 						<button
 							key={stage.uid}
 							onClick={() => {
-								setSelectedStageIndex(index)
-								setBoss(stage)
+								setSelectedStageIndex(index);
+								setBoss(stage);
 							}}
-							className={`bg-white w-1/5 shadow-lg mx-4 rounded-xl  hover:shadow-lg hover:shadow-Flamingo-Pink ${
-								index === selectedStageIndex
-									? "shadow-Flamingo-Pink "
-									: "shadow-Indigo-Blue "
+							className={`bg-white md:w-1/3 w-[400px] shadow-lg rounded-xl  hover:shadow-lg hover:shadow-Flamingo-Pink ${
+								index === selectedStageIndex ? "shadow-Flamingo-Pink " : "shadow-Indigo-Blue "
 							}`}
 						>
 							{/* Name */}
 							<h3
 								className={`rounded-tl-xl rounded-tr-xl bg-Indigo-Blue py-3 text-white font-bold text-xl border-t-4 border-l-4 border-r-4 ${
-									index === selectedStageIndex
-										? "border-Flamingo-Pink"
-										: "border-white"
+									index === selectedStageIndex ? "border-Flamingo-Pink" : "border-white"
 								}`}
 							>
 								{stage.boss_name}
@@ -102,9 +98,7 @@ function ChallengeStages({ onChallenge }) {
 							{/* Boss Image */}
 							<div
 								className={`bg-light-white w-full h-96 p-4 border-r-4 border-l-4 ${
-									index === selectedStageIndex
-										? "border-Flamingo-Pink"
-										: "border-white"
+									index === selectedStageIndex ? "border-Flamingo-Pink" : "border-white"
 								}`}
 							>
 								<img
@@ -123,9 +117,7 @@ function ChallengeStages({ onChallenge }) {
 							{/* Stats */}
 							<div
 								className={`flex flex-col items-center py-2 border-r-4 border-l-4 ${
-									index === selectedStageIndex
-										? "border-Flamingo-Pink"
-										: "border-white"
+									index === selectedStageIndex ? "border-Flamingo-Pink" : "border-white"
 								}`}
 							>
 								<div className="w-2/3 flex flex-row my-2 justify-between items-center">
@@ -148,9 +140,7 @@ function ChallengeStages({ onChallenge }) {
 										<span className="ml-2 capitalize">Attack</span>
 									</div>
 									<div className="flex flex-row justify-center w-20 rounded-lg bg-Indigo-Blue shadow-sm border-2 border-Indigo-Blue">
-										<span className="p-1 font-bold text-white capitalize">
-											{stage.boss_attack}
-										</span>
+										<span className="p-1 font-bold text-white capitalize">{stage.boss_attack}</span>
 									</div>
 								</div>
 
@@ -173,9 +163,7 @@ function ChallengeStages({ onChallenge }) {
 							{/* Rewards */}
 							<div
 								className={`flex flex-col w-full border-r-4 border-l-4 ${
-									index === selectedStageIndex
-										? "border-Flamingo-Pink"
-										: "border-white"
+									index === selectedStageIndex ? "border-Flamingo-Pink" : "border-white"
 								}`}
 							>
 								<p className="bg-Midnight-Gray text-white font-bold p-2">Rewards</p>
@@ -193,9 +181,7 @@ function ChallengeStages({ onChallenge }) {
 													src={`/img/eggs/${egg.img_name}`}
 													alt={egg.name}
 												/>
-												<span className="text-Forest-Green font-bold ml-2">
-													x{egg.amount}
-												</span>
+												<span className="text-Forest-Green font-bold ml-2">x{egg.amount}</span>
 											</div>
 										))}
 										{stage.reward_items.map((item) => (
@@ -208,9 +194,7 @@ function ChallengeStages({ onChallenge }) {
 													src={`/img/items/${item.img_name}`}
 													alt={item.name}
 												/>
-												<span className="text-Forest-Green font-bold ml-2">
-													x{item.amount}
-												</span>
+												<span className="text-Forest-Green font-bold ml-2">x{item.amount}</span>
 											</div>
 										))}
 									</div>
@@ -225,9 +209,7 @@ function ChallengeStages({ onChallenge }) {
 												/>
 												<span className="font-bold ml-2">EXP</span>
 											</div>
-											<span className="text-Forest-Green font-bold ml-2">
-												+{stage.reward_exp}
-											</span>
+											<span className="text-Forest-Green font-bold ml-2">+{stage.reward_exp}</span>
 										</div>
 										{/* Reward Coins */}
 										<div className="flex flex-row items-center justify-between">
@@ -250,9 +232,7 @@ function ChallengeStages({ onChallenge }) {
 							{/* Stamina Cost */}
 							<div
 								className={`bg-Indigo-Blue p-4 w-full flex flex-row justify-center items-center rounded-bl-xl rounded-br-xl border-r-4 border-l-4 border-b-4 ${
-									index === selectedStageIndex
-										? "border-Flamingo-Pink"
-										: "border-white"
+									index === selectedStageIndex ? "border-Flamingo-Pink" : "border-white"
 								}`}
 							>
 								<img
@@ -284,7 +264,7 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 			</div>
 			{/* Challenge Button */}
-			<div className="h-1/12 w-11/12 p-6 flex flex-row justify-center items-center">
+			<div className="w-full p-6 flex flex-row justify-center items-center">
 				<button
 					onClick={() => onChallenge(boss, challengeList.uid)}
 					className="border-4 border-Flamingo-Pink bg-Flamingo-Pink px-14 py-4 rounded-full text-2xl text-white font-bold hover:bg-white hover:text-Flamingo-Pink"
@@ -293,6 +273,6 @@ function ChallengeStages({ onChallenge }) {
 				</button>
 			</div>
 		</>
-	)
+	);
 }
-export default ChallengeStages
+export default ChallengeStages;

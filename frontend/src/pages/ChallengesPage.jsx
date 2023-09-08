@@ -4,11 +4,12 @@ import ChallengeStages from "../components/challenges/ChallengeStages";
 import ChallengeRewards from "../components/challenges/ChallengeRewards";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import MenuBar from "../components/sidebar/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 import { useBattleBossMutation, useGetChallengeListQuery } from "../redux/services/challenge";
 import SelectMonsterModal from "../components/modal/SelectMonsterModal";
 import { useSelector } from "react-redux";
 import { useGetTrainerInfoQuery } from "../redux/services/trainer";
+import Container from "../components/Container";
 
 export default function ChallengesPage() {
 	const { data: challengeList } = useGetChallengeListQuery();
@@ -97,50 +98,53 @@ export default function ChallengesPage() {
 	};
 
 	return (
-		<div className="container-xl flex flex-col h-screen justify-between bg-light-white">
-			<Header />
+		<Container>
+			<div className="w-full flex flex-row items-stretch">
+				<Sidebar />
+				<div className="flex flex-col w-full">
+					<Header />
 
-			<div className="w-full h-full flex flex-row overflow-hidden">
-				<MenuBar />
+					<div className="p-2 sm:p-4 md:p-8 w-full flex flex-col items-center relative">
+						{/* Error */}
+						{error && (
+							<div className="bg-Fire-Engine-Red p-4 rounded-xl">
+								<p className="text-white font-bold">Error: {error}</p>
+							</div>
+						)}
 
-				<div className="m-10 w-full h-11/12 flex flex-col items-center relative">
-					{/* Error */}
-					{error && (
-						<div className="bg-Fire-Engine-Red p-4 rounded-xl">
-							<p className="text-white font-bold">Error: {error}</p>
-						</div>
-					)}
+						{showStages && <ChallengeStages onChallenge={onChallenge} />}
 
-					{showStages && <ChallengeStages onChallenge={onChallenge} />}
+						{showBattle && (
+							<ChallengeBattle
+								battleResult={result}
+								onReturnStages={onReturnStages}
+								onShowRewards={onShowRewards}
+								monster={selectedMonster}
+								boss={selectedBoss}
+							/>
+						)}
 
-					{showBattle && (
-						<ChallengeBattle
-							battleResult={result}
-							onReturnStages={onReturnStages}
-							onShowRewards={onShowRewards}
-							monster={selectedMonster}
-							boss={selectedBoss}
-						/>
-					)}
+						{showRewards && result === "won" && (
+							<ChallengeRewards
+								stage={selectedBoss}
+								monster={winner}
+								onReturnStages={onReturnStages}
+							/>
+						)}
 
-					{showRewards && result === "won" && (
-						<ChallengeRewards
-							stage={selectedBoss}
-							monster={winner}
-							onReturnStages={onReturnStages}
-						/>
-					)}
+						{showSelectMonsterModal && (
+							<SelectMonsterModal
+								onClose={() => setShowSelectMonsterModal(false)}
+								onSelectMonster={onSelectMonster}
+							/>
+						)}
+					</div>
 
-					{showSelectMonsterModal && (
-						<SelectMonsterModal
-							onClose={() => setShowSelectMonsterModal(false)}
-							onSelectMonster={onSelectMonster}
-						/>
-					)}
+					<div className="mt-auto">
+						<Footer />
+					</div>
 				</div>
 			</div>
-
-			<Footer />
-		</div>
+		</Container>
 	);
 }
