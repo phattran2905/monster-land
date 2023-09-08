@@ -1,9 +1,9 @@
-import MonsterType from "./MonsterType"
-import { FaAngleDoubleUp, FaChessRook } from "react-icons/fa"
-import { AiOutlineNumber } from "react-icons/ai"
-import { MdOutlineCategory } from "react-icons/md"
-import { GiBroadsword, GiLightningShield } from "react-icons/gi"
-import ProgressBar from "../ProgressBar"
+import MonsterType from "./MonsterType";
+import { FaAngleDoubleUp, FaChessRook } from "react-icons/fa";
+import { AiOutlineNumber } from "react-icons/ai";
+import { MdOutlineCategory } from "react-icons/md";
+import { GiBroadsword, GiLightningShield } from "react-icons/gi";
+import ProgressBar from "../ProgressBar";
 
 export default function MonsterCard({
 	uid,
@@ -17,7 +17,7 @@ export default function MonsterCard({
 	level_up_exp,
 }) {
 	return (
-		<div className="flex flex-row border-2 border-Royal-Blue">
+		<div className="flex flex-row border-2 border-Royal-Blue hover:shadow-lg hover:shadow-Amethyst-Purple">
 			{/* Name & Image */}
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
 				<div className="w-full p-4 h-5/6">
@@ -127,5 +127,5 @@ export default function MonsterCard({
 				</button> */}
 			</div>
 		</div>
-	)
+	);
 }

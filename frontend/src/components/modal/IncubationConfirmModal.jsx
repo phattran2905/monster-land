@@ -1,9 +1,9 @@
-import { FaTimesCircle } from "react-icons/fa"
+import { FaTimesCircle } from "react-icons/fa";
 
 function IncubationConfirmModal({ onConfirm, onClose, eggName }) {
 	return (
-		<div className="w-full h-full absolute left-0 bg-white flex flex-row justify-center items-center bg-opacity-80">
-			<div className="relative w-1/3 shadow-2xl flex flex-col bg-white rounded-2xl">
+		<div className="w-full h-full absolute left-0 bg-white flex flex-col md:flex-row md:justify-center items-center bg-opacity-80">
+			<div className="relative w-3/4 md:w-1/3 shadow-xl shadow-Dim-Gray flex flex-col bg-white rounded-2xl">
 				{/* Close button */}
 				<button
 					onClick={onClose}
@@ -23,8 +23,7 @@ function IncubationConfirmModal({ onConfirm, onClose, eggName }) {
 				{/* Content */}
 				<div className="flex flex-col justify-between py-10 items-center mx-6 my-6">
 					<p className="text-lg mb-2">
-						Do you want to incubate{" "}
-						<span className="text-Flamingo-Pink font-bold">{eggName}</span>?
+						Do you want to incubate <span className="text-Flamingo-Pink font-bold">{eggName}</span>?
 					</p>
 					{/* <p className="text-lg mb-1">Do you want to proceed?</p> */}
 
@@ -39,6 +38,6 @@ function IncubationConfirmModal({ onConfirm, onClose, eggName }) {
 				</div>
 			</div>
 		</div>
-	)
+	);
 }
-export default IncubationConfirmModal
+export default IncubationConfirmModal;

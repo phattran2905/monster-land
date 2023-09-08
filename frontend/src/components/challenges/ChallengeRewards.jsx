@@ -1,23 +1,23 @@
-import { useState } from "react"
-import { FaAngleDoubleUp, FaChessRook, FaTimesCircle } from "react-icons/fa"
-import { AiOutlineNumber } from "react-icons/ai"
-import { MdOutlineCategory } from "react-icons/md"
-import { GiBroadsword, GiLightningShield } from "react-icons/gi"
-import coinIcon from "../../assets/img/icon/coin_1_.png"
-import pickaxeIcon from "../../assets/img/icon/Pickaxe.png"
-import MonsterType from "..//monster/MonsterType"
-import ProgressBar from "../ProgressBar"
+import { useState } from "react";
+import { FaAngleDoubleUp, FaChessRook, FaTimesCircle } from "react-icons/fa";
+import { AiOutlineNumber } from "react-icons/ai";
+import { MdOutlineCategory } from "react-icons/md";
+import { GiBroadsword, GiLightningShield } from "react-icons/gi";
+import coinIcon from "../../assets/img/icon/coin_1_.png";
+import pickaxeIcon from "../../assets/img/icon/Pickaxe.png";
+import MonsterType from "..//monster/MonsterType";
+import ProgressBar from "../ProgressBar";
 
 function ChallengeRewards({ onReturnStages, stage, monster }) {
-	const [rewardEggs] = useState(() => stage?.reward_eggs ?? [])
-	const [rewardItems] = useState(() => stage?.reward_items ?? [])
+	const [rewardEggs] = useState(() => stage?.reward_eggs ?? []);
+	const [rewardItems] = useState(() => stage?.reward_items ?? []);
 
 	return (
-		<div className="w-full h-full flex flex-col p-10 gap-y-12">
-			<div className="flex flex-row w-full items-start justify-between">
+		<div className="w-full h-full flex flex-col md:p-10 p-1 gap-y-12">
+			<div className="flex md:flex-row flex-col w-full md:items-start items-center justify-between md:gap-0 gap-y-8">
 				{/* Monster Card */}
 				<div
-					className={`w-1/5 bg-white shadow-lg mx-4 rounded-xl shadow-Forest-Green relative`}
+					className={`md:w-1/5 sm:w-1/3 w-1/2 bg-white shadow-lg mx-4 rounded-xl shadow-Forest-Green relative`}
 				>
 					{/* Badge */}
 					<div className="absolute top-0 -left-6 bg-Forest-Green rounded-xl px-8 py-2 -rotate-[40deg] shadow-Fresh-Green shadow-lg">
@@ -49,9 +49,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								<span className="ml-1 capitalize">Level</span>
 							</div>
 							<div className="bg-Midnight-Gray flex flex-row justify-center w-20 rounded-xl">
-								<span className="p-1 font-bold text-white capitalize">
-									{monster?.level}
-								</span>
+								<span className="p-1 font-bold text-white capitalize">{monster?.level}</span>
 							</div>
 						</div>
 
@@ -77,9 +75,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								<span className="ml-1 capitalize">Attack</span>
 							</div>
 							<div className="bg-Midnight-Gray flex flex-row justify-center w-20 rounded-xl">
-								<span className="p-1 font-bold text-white capitalize">
-									{monster?.attack}
-								</span>
+								<span className="p-1 font-bold text-white capitalize">{monster?.attack}</span>
 							</div>
 						</div>
 
@@ -93,9 +89,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								<span className="ml-1 capitalize">Defense</span>
 							</div>
 							<div className="bg-Midnight-Gray flex flex-row justify-center w-20 rounded-xl">
-								<span className="p-1 font-bold text-white capitalize">
-									{monster?.defense}
-								</span>
+								<span className="p-1 font-bold text-white capitalize">{monster?.defense}</span>
 							</div>
 						</div>
 
@@ -109,25 +103,17 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 									/>
 									<span className="ml-1 capitalize">Exp</span>
 								</div>
-								<div className="text-Forest-Green font-bold">
-									+{stage?.reward_exp}
-								</div>
+								<div className="text-Forest-Green font-bold">+{stage?.reward_exp}</div>
 							</div>
 							<div className="flex flex-col justify-center w-full pt-1">
 								<ProgressBar
-									percentage={Math.floor(
-										(monster.exp / monster.level_up_exp) * 100
-									)}
+									percentage={Math.floor((monster.exp / monster.level_up_exp) * 100)}
 									bgColorClass="bg-Light-Gray"
 									currentBgColorClass="bg-Forest-Green"
 								/>
 								<div className="flex flex-row justify-between items-center mt-1">
-									<span className="text-sm text-Forest-Green font-bold">
-										{monster?.exp}
-									</span>
-									<span className="text-sm font-bold">
-										{monster?.level_up_exp}
-									</span>
+									<span className="text-sm text-Forest-Green font-bold">{monster?.exp}</span>
+									<span className="text-sm font-bold">{monster?.level_up_exp}</span>
 								</div>
 							</div>
 						</div>
@@ -135,17 +121,15 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 				</div>
 
 				{/* Reward list */}
-				<div className="w-3/4 flex flex-col border-4 border-Indigo-Blue rounded-lg">
-					<h3 className="bg-Indigo-Blue text-white font-bold text-2xl py-4 px-6">
-						Rewards
-					</h3>
+				<div className="md:w-3/4  flex flex-col border-4 border-Indigo-Blue rounded-lg">
+					<h3 className="bg-Indigo-Blue text-white font-bold text-2xl py-4 px-6">Rewards</h3>
 
 					{/* Items && Eggs */}
-					<div className="flex flex-row w-full flex-wrap bg-white p-6">
+					<div className="flex flex-col md:flex-row w-full flex-wrap bg-white p-6">
 						{rewardEggs.map((egg) => (
 							<div
 								key={egg.uid}
-								className="w-1/2 my-6 py-4 px-12 shadow-lg"
+								className="md:w-1/2 w-full my-6 py-4 px-12 shadow-lg"
 							>
 								<div className="flex flex-row justify-between items-center">
 									<div className="flex flex-row items-center">
@@ -158,16 +142,14 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 											{egg.name}
 										</span>
 									</div>
-									<span className="text-4xl font-bold text-Forest-Green">
-										x{egg.amount}
-									</span>
+									<span className="text-4xl font-bold text-Forest-Green">x{egg.amount}</span>
 								</div>
 							</div>
 						))}
 						{rewardItems.map((item) => (
 							<div
 								key={item.uid}
-								className="w-1/2 my-6 py-4 px-12 shadow-lg"
+								className="md:w-1/2 w-full my-6 py-4 px-12 shadow-lg"
 							>
 								<div className="flex flex-row justify-between items-center">
 									<div className="flex flex-row items-center">
@@ -180,9 +162,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 											{item.name}
 										</span>
 									</div>
-									<span className="text-4xl font-bold text-Forest-Green">
-										x{item.amount}
-									</span>
+									<span className="text-4xl font-bold text-Forest-Green">x{item.amount}</span>
 								</div>
 							</div>
 						))}
@@ -190,7 +170,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 
 					{/* Points */}
 					<div className="flex flex-col justify-center items-center p-4 w-full">
-						<div className="w-1/4 flex flex-row justify-between items-center">
+						<div className="md:w-1/3 w-1/2 flex flex-row justify-between items-center">
 							<div className="flex flex-row items-center">
 								<img
 									className="p-3"
@@ -199,11 +179,9 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								/>
 								<span className="text-4xl font-bold text-Indigo-Blue">Coins</span>
 							</div>
-							<span className="text-Forest-Green text-4xl font-bold">
-								+{stage?.reward_coins}
-							</span>
+							<span className="text-Forest-Green text-4xl font-bold">+{stage?.reward_coins}</span>
 						</div>
-						<div className="w-1/4 flex flex-row justify-between items-center">
+						<div className="md:w-1/3 w-1/2 flex flex-row justify-between items-center">
 							<div className="flex flex-row items-center">
 								<img
 									className="p-3"
@@ -212,9 +190,7 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 								/>
 								<span className="text-4xl font-bold text-Indigo-Blue">Stamina</span>
 							</div>
-							<span className="text-Fire text-4xl font-bold">
-								-{stage?.stamina_cost}
-							</span>
+							<span className="text-Fire text-4xl font-bold">-{stage?.stamina_cost}</span>
 						</div>
 					</div>
 				</div>
@@ -228,6 +204,6 @@ function ChallengeRewards({ onReturnStages, stage, monster }) {
 				</button>
 			</div>
 		</div>
-	)
+	);
 }
-export default ChallengeRewards
+export default ChallengeRewards;
