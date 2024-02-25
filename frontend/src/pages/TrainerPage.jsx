@@ -4,103 +4,108 @@ import {
 	FaAngleRight,
 	FaExclamationCircle,
 	FaUserTag,
-} from "react-icons/fa";
-import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Sidebar from "../components/sidebar/Sidebar";
-import ProgressBar from "../components/ProgressBar";
-import { useGetTrainerInfoQuery, useUpdateTrainerInfoMutation } from "../redux/services/trainer";
-import { useDispatch, useSelector } from "react-redux";
-import { updateTrainerInfo } from "../redux/slices/trainer";
-import Container from "../components/Container";
+} from 'react-icons/fa'
+import { AiOutlineNumber, AiFillTag, AiTwotoneMail } from 'react-icons/ai'
+import { useEffect, useState } from 'react'
+import moment from 'moment'
+import { useNavigate } from 'react-router-dom'
+import Header from '../components/Header'
+import Footer from '@components/Footer'
+import Sidebar from '../components/sidebar/Sidebar'
+import ProgressBar from '../components/ProgressBar'
+import {
+	useGetTrainerInfoQuery,
+	useUpdateTrainerInfoMutation,
+} from '../redux/services/trainer'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateTrainerInfo } from '../redux/slices/trainer'
+import Container from '../components/Container'
 
-const totalAvatarImages = 4;
+const totalAvatarImages = 4
 
 function TrainerPage() {
-	const navigate = useNavigate();
-	const authState = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
-	const trainerState = useSelector((state) => state.trainer);
-	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation();
-	const { data: trainerData } = useGetTrainerInfoQuery({ jwt_token: authState.jwtToken });
-	const [error, setError] = useState();
-	const [successMsg, setSuccessMsg] = useState();
-	const [name, setName] = useState("");
-	const [email, setEmail] = useState("");
-	const [joined, setJoined] = useState("MMM DD, YYYY");
-	const [exp, setExp] = useState(0);
-	const [levelUpExp, setLevelUpExp] = useState(0);
-	const [avatarIndex, setAvatarIndex] = useState(1);
+	const navigate = useNavigate()
+	const authState = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
+	const trainerState = useSelector((state) => state.trainer)
+	const [fetchUpdateInfoApi] = useUpdateTrainerInfoMutation()
+	const { data: trainerData } = useGetTrainerInfoQuery({
+		jwt_token: authState.jwtToken,
+	})
+	const [error, setError] = useState()
+	const [successMsg, setSuccessMsg] = useState()
+	const [name, setName] = useState('')
+	const [email, setEmail] = useState('')
+	const [joined, setJoined] = useState('MMM DD, YYYY')
+	const [exp, setExp] = useState(0)
+	const [levelUpExp, setLevelUpExp] = useState(0)
+	const [avatarIndex, setAvatarIndex] = useState(1)
 
 	useEffect(() => {
-		document.title = "Monster Land - Trainer";
-	}, []);
+		document.title = 'Monster Land - Trainer'
+	}, [])
 
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
-			return navigate("/login");
+			return navigate('/login')
 		}
-	}, [authState.isLoggedIn]);
+	}, [authState.isLoggedIn])
 
 	useEffect(() => {
 		if (trainerData) {
-			setName(trainerData.name);
-			setEmail(trainerData.email);
-			setAvatarIndex(parseInt(trainerData.avatar.split("-")[1], 10));
-			setJoined(moment(trainerData.createdAt).format("MMM DD, YYYY"));
-			setExp(trainerData.exp);
-			setLevelUpExp(trainerData.level_up_exp);
+			setName(trainerData.name)
+			setEmail(trainerData.email)
+			setAvatarIndex(parseInt(trainerData.avatar.split('-')[1], 10))
+			setJoined(moment(trainerData.createdAt).format('MMM DD, YYYY'))
+			setExp(trainerData.exp)
+			setLevelUpExp(trainerData.level_up_exp)
 		}
-	}, [trainerData]);
+	}, [trainerData])
 
 	const selectAvatarImage = (actionType) => {
-		if (actionType === "prev") {
-			const index = avatarIndex - 1;
+		if (actionType === 'prev') {
+			const index = avatarIndex - 1
 			if (index < 1) {
-				setAvatarIndex(1);
+				setAvatarIndex(1)
 			} else {
-				setAvatarIndex(index);
+				setAvatarIndex(index)
 			}
 		} else {
-			const index = avatarIndex + 1;
+			const index = avatarIndex + 1
 			if (index > totalAvatarImages) {
-				setAvatarIndex(totalAvatarImages);
+				setAvatarIndex(totalAvatarImages)
 			} else {
-				setAvatarIndex(index);
+				setAvatarIndex(index)
 			}
 		}
-	};
+	}
 
 	const handleUpdateInfo = async () => {
-		setError();
-		setSuccessMsg();
+		setError()
+		setSuccessMsg()
 
 		if (name && email) {
 			const dataToUpdate = {
 				name,
 				email,
 				avatar: `body-${avatarIndex}.png`,
-			};
+			}
 
 			const result = await fetchUpdateInfoApi({
 				jwt_token: authState.jwtToken,
 				data: dataToUpdate,
-			});
+			})
 
 			if (result.error) {
-				setError(result.error.data.message);
+				setError(result.error.data.message)
 			} else {
-				setSuccessMsg("Successfully saved.");
-				dispatch(updateTrainerInfo(dataToUpdate));
-				return navigate("/trainer");
+				setSuccessMsg('Successfully saved.')
+				dispatch(updateTrainerInfo(dataToUpdate))
+				return navigate('/trainer')
 			}
 		}
-	};
+	}
 
 	return (
 		<Container>
@@ -123,12 +128,12 @@ function TrainerPage() {
 									{/* Avatar & EXP */}
 									<div className="w-full">
 										<div className="flex flex-row justify-center items-center">
-											<button onClick={() => selectAvatarImage("prev")}>
+											<button onClick={() => selectAvatarImage('prev')}>
 												<FaAngleLeft
 													className={`text-4xl text-white ${
 														avatarIndex <= 1
-															? "opacity-40 hover:cursor-not-allowed"
-															: "hover:text-Flamingo-Pink"
+															? 'opacity-40 hover:cursor-not-allowed'
+															: 'hover:text-Flamingo-Pink'
 													}`}
 												/>
 											</button>
@@ -139,12 +144,12 @@ function TrainerPage() {
 													alt={trainerData?.avatar}
 												/>
 											</div>
-											<button onClick={() => selectAvatarImage("next")}>
+											<button onClick={() => selectAvatarImage('next')}>
 												<FaAngleRight
 													className={`text-4xl text-white ${
 														avatarIndex === totalAvatarImages
-															? "opacity-40 hover:cursor-not-allowed"
-															: "hover:text-Flamingo-Pink"
+															? 'opacity-40 hover:cursor-not-allowed'
+															: 'hover:text-Flamingo-Pink'
 													}`}
 												/>
 											</button>
@@ -152,11 +157,13 @@ function TrainerPage() {
 
 										{/* EXP */}
 										<div className="flex flex-col justify-center p-4 md:py-4 md:px-8">
-											<p className="my-3 text-white underline font-bold text-xl">EXP:</p>
+											<p className="my-3 text-white underline font-bold text-xl">
+												EXP:
+											</p>
 
 											<div className="">
 												<ProgressBar
-													height={"h-3"}
+													height={'h-3'}
 													percentage={Math.floor(exp / levelUpExp)}
 													bgColorClass={`bg-white`}
 													currentBgColorClass={`bg-Gold-Sand`}
@@ -276,6 +283,6 @@ function TrainerPage() {
 				</div>
 			</div>
 		</Container>
-	);
+	)
 }
-export default TrainerPage;
+export default TrainerPage

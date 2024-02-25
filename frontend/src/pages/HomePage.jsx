@@ -1,69 +1,69 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { GiBroadsword, GiLightningShield } from "react-icons/gi";
-import { AiOutlineNumber } from "react-icons/ai";
-import { TbAwardFilled } from "react-icons/tb";
-import { FaChessRook } from "react-icons/fa";
-import Loading from "../components/Loading";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import Sidebar from "../components/sidebar/Sidebar";
-import { useGetTrainerInfoQuery } from "../redux/services/trainer";
-import { updateTrainerInfo } from "../redux/slices/trainer";
-import { useGetTopMonstersQuery } from "../redux/services/monster";
-import Container from "../components/Container";
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { GiBroadsword, GiLightningShield } from 'react-icons/gi'
+import { AiOutlineNumber } from 'react-icons/ai'
+import { TbAwardFilled } from 'react-icons/tb'
+import { FaChessRook } from 'react-icons/fa'
+import Loading from '../components/Loading'
+import Footer from '@components/Footer'
+import Header from '../components/Header'
+import Sidebar from '../components/sidebar/Sidebar'
+import { useGetTrainerInfoQuery } from '../redux/services/trainer'
+import { updateTrainerInfo } from '../redux/slices/trainer'
+import { useGetTopMonstersQuery } from '../redux/services/monster'
+import Container from '../components/Container'
 
 export default function HomePage() {
-	const navigate = useNavigate();
-	const authState = useSelector((state) => state.auth);
-	const dispatch = useDispatch();
+	const navigate = useNavigate()
+	const authState = useSelector((state) => state.auth)
+	const dispatch = useDispatch()
 	const {
 		data: trainerData,
 		error,
 		isFetching,
 	} = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
-	});
-	const { data: topMonsters } = useGetTopMonstersQuery();
-	const [topLevel, setTopLevel] = useState();
-	const [topAttack, setTopAttack] = useState();
-	const [topDefense, setTopDefense] = useState();
-	const [isLoading, setIsLoading] = useState(true);
+	})
+	const { data: topMonsters } = useGetTopMonstersQuery()
+	const [topLevel, setTopLevel] = useState()
+	const [topAttack, setTopAttack] = useState()
+	const [topDefense, setTopDefense] = useState()
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		document.title = "Monster Land - Home";
-	}, []);
+		document.title = 'Monster Land - Home'
+	}, [])
 
 	useEffect(() => {
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
-			return navigate("/login");
+			return navigate('/login')
 		}
-	}, [authState]);
+	}, [authState])
 
 	useEffect(() => {
 		// Create first character
 		if (!trainerData && error?.status === 404) {
-			return navigate("/create-trainer");
+			return navigate('/create-trainer')
 		}
 
 		if (trainerData) {
-			dispatch(updateTrainerInfo(trainerData));
-			setIsLoading(false);
+			dispatch(updateTrainerInfo(trainerData))
+			setIsLoading(false)
 		}
-	}, [isFetching]);
+	}, [isFetching])
 
 	useEffect(() => {
 		if (topMonsters) {
 			// Level > Attack > Defense
-			const [level, attack, defense] = topMonsters;
-			setTopLevel(level);
-			setTopAttack(attack);
-			setTopDefense(defense);
-			setIsLoading(false);
+			const [level, attack, defense] = topMonsters
+			setTopLevel(level)
+			setTopAttack(attack)
+			setTopDefense(defense)
+			setIsLoading(false)
 		}
-	}, [topMonsters]);
+	}, [topMonsters])
 
 	return (
 		<Container>
@@ -109,7 +109,9 @@ export default function HomePage() {
 													size={24}
 													className="text-Gold-Sand"
 												/>
-												<h2 className="text-2xl font-bold text-white mx-2">No.1 Level</h2>
+												<h2 className="text-2xl font-bold text-white mx-2">
+													No.1 Level
+												</h2>
 											</div>
 											{/* Image */}
 											<div className="w-full h-96 rounded-lg shadow-lg shadow-Gold-Sand border-2 border-light-white">
@@ -135,10 +137,14 @@ export default function HomePage() {
 																size={22}
 																className="text-Flamingo-Pink"
 															/>
-															<span className="text-Indigo-Blue font-bold mx-2 text-lg">UID</span>
+															<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+																UID
+															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topLevel?.uid}</span>
+															<span className="font-bold text-white">
+																{topLevel?.uid}
+															</span>
 														</div>
 													</div>
 													{/* Level */}
@@ -148,10 +154,14 @@ export default function HomePage() {
 																size={22}
 																className="text-Flamingo-Pink"
 															/>
-															<span className="text-Indigo-Blue font-bold mx-2 text-lg">Level</span>
+															<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+																Level
+															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topLevel?.level}</span>
+															<span className="font-bold text-white">
+																{topLevel?.level}
+															</span>
 														</div>
 													</div>
 												</div>
@@ -166,7 +176,9 @@ export default function HomePage() {
 													size={24}
 													className="text-Gold-Sand"
 												/>
-												<h2 className="text-2xl font-bold text-white mx-2">No.1 Attack</h2>
+												<h2 className="text-2xl font-bold text-white mx-2">
+													No.1 Attack
+												</h2>
 											</div>
 											{/* Image */}
 											<div className="w-full h-96 rounded-lg shadow-lg shadow-Gold-Sand border-2 border-light-white">
@@ -192,10 +204,14 @@ export default function HomePage() {
 																size={22}
 																className="text-Flamingo-Pink"
 															/>
-															<span className="text-Indigo-Blue font-bold mx-2 text-lg">UID</span>
+															<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+																UID
+															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topLevel?.uid}</span>
+															<span className="font-bold text-white">
+																{topLevel?.uid}
+															</span>
 														</div>
 													</div>
 													{/* Level */}
@@ -210,7 +226,9 @@ export default function HomePage() {
 															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topAttack?.attack}</span>
+															<span className="font-bold text-white">
+																{topAttack?.attack}
+															</span>
 														</div>
 													</div>
 												</div>
@@ -225,7 +243,9 @@ export default function HomePage() {
 													size={24}
 													className="text-Gold-Sand"
 												/>
-												<h2 className="text-2xl font-bold text-white mx-2">No.1 Level</h2>
+												<h2 className="text-2xl font-bold text-white mx-2">
+													No.1 Level
+												</h2>
 											</div>
 											{/* Image */}
 											<div className="w-full h-96 rounded-lg shadow-lg shadow-Gold-Sand border-2 border-light-white">
@@ -251,10 +271,14 @@ export default function HomePage() {
 																size={22}
 																className="text-Flamingo-Pink"
 															/>
-															<span className="text-Indigo-Blue font-bold mx-2 text-lg">UID</span>
+															<span className="text-Indigo-Blue font-bold mx-2 text-lg">
+																UID
+															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topLevel?.uid}</span>
+															<span className="font-bold text-white">
+																{topLevel?.uid}
+															</span>
 														</div>
 													</div>
 													{/* Level */}
@@ -269,7 +293,9 @@ export default function HomePage() {
 															</span>
 														</div>
 														<div className="bg-Flamingo-Pink rounded-lg py-2 px-4">
-															<span className="font-bold text-white">{topDefense?.defense}</span>
+															<span className="font-bold text-white">
+																{topDefense?.defense}
+															</span>
 														</div>
 													</div>
 												</div>
@@ -287,5 +313,5 @@ export default function HomePage() {
 				</div>
 			</div>
 		</Container>
-	);
+	)
 }

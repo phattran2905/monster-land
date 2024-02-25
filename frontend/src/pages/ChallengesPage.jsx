@@ -1,74 +1,77 @@
-import { useState, useEffect } from "react";
-import ChallengeBattle from "../components/challenges/ChallengeBattle";
-import ChallengeStages from "../components/challenges/ChallengeStages";
-import ChallengeRewards from "../components/challenges/ChallengeRewards";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import Sidebar from "../components/sidebar/Sidebar";
-import { useBattleBossMutation, useGetChallengeListQuery } from "../redux/services/challenge";
-import SelectMonsterModal from "../components/modal/SelectMonsterModal";
-import { useSelector } from "react-redux";
-import { useGetTrainerInfoQuery } from "../redux/services/trainer";
-import Container from "../components/Container";
+import { useState, useEffect } from 'react'
+import ChallengeBattle from '../components/challenges/ChallengeBattle'
+import ChallengeStages from '../components/challenges/ChallengeStages'
+import ChallengeRewards from '../components/challenges/ChallengeRewards'
+import Footer from '@components/Footer'
+import Header from '../components/Header'
+import Sidebar from '../components/sidebar/Sidebar'
+import {
+	useBattleBossMutation,
+	useGetChallengeListQuery,
+} from '../redux/services/challenge'
+import SelectMonsterModal from '../components/modal/SelectMonsterModal'
+import { useSelector } from 'react-redux'
+import { useGetTrainerInfoQuery } from '../redux/services/trainer'
+import Container from '../components/Container'
 
 export default function ChallengesPage() {
-	const { data: challengeList } = useGetChallengeListQuery();
-	const authState = useSelector((state) => state.auth);
-	const [showStages, setShowStages] = useState(true);
-	const [showBattle, setShowBattle] = useState(false);
-	const [showRewards, setShowRewards] = useState(false);
-	const [showSelectMonsterModal, setShowSelectMonsterModal] = useState(false);
-	const [selectedBoss, setSelectedBoss] = useState();
-	const [winner, setWinner] = useState();
-	const [challengeUID, setChallengeUID] = useState();
-	const [selectedMonster, setSelectedMonster] = useState();
-	const [battleBoss] = useBattleBossMutation();
+	const { data: challengeList } = useGetChallengeListQuery()
+	const authState = useSelector((state) => state.auth)
+	const [showStages, setShowStages] = useState(true)
+	const [showBattle, setShowBattle] = useState(false)
+	const [showRewards, setShowRewards] = useState(false)
+	const [showSelectMonsterModal, setShowSelectMonsterModal] = useState(false)
+	const [selectedBoss, setSelectedBoss] = useState()
+	const [winner, setWinner] = useState()
+	const [challengeUID, setChallengeUID] = useState()
+	const [selectedMonster, setSelectedMonster] = useState()
+	const [battleBoss] = useBattleBossMutation()
 	const { refetch: refetchTrainerInfo } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
-	});
-	const [result, setResult] = useState();
-	const [error, setError] = useState();
+	})
+	const [result, setResult] = useState()
+	const [error, setError] = useState()
 
 	useEffect(() => {
-		document.title = "Monster Land - Challenges";
-	}, []);
+		document.title = 'Monster Land - Challenges'
+	}, [])
 
 	useEffect(() => {
-		if (showRewards && result === "won") {
-			refetchTrainerInfo();
+		if (showRewards && result === 'won') {
+			refetchTrainerInfo()
 		}
-	}, [showRewards]);
+	}, [showRewards])
 
 	const onChallenge = (boss, challenge_uid) => {
-		setError();
-		setShowSelectMonsterModal(true);
-		setSelectedBoss(boss);
-		setChallengeUID(challenge_uid);
-	};
+		setError()
+		setShowSelectMonsterModal(true)
+		setSelectedBoss(boss)
+		setChallengeUID(challenge_uid)
+	}
 
 	const onReturnStages = () => {
-		setError();
-		setShowBattle(false);
-		setShowRewards(false);
-		setShowSelectMonsterModal(false);
-		setShowStages(true);
-	};
+		setError()
+		setShowBattle(false)
+		setShowRewards(false)
+		setShowSelectMonsterModal(false)
+		setShowStages(true)
+	}
 
 	const onSelectMonster = (monster) => {
-		setError();
-		setSelectedMonster(monster);
-		setShowSelectMonsterModal(false);
+		setError()
+		setSelectedMonster(monster)
+		setShowSelectMonsterModal(false)
 
-		onBattleBoss(monster);
-	};
+		onBattleBoss(monster)
+	}
 
 	const onShowRewards = () => {
-		setShowBattle(false);
-		setShowStages(false);
-		setShowSelectMonsterModal(false);
-		setShowRewards(true);
-		setError();
-	};
+		setShowBattle(false)
+		setShowStages(false)
+		setShowSelectMonsterModal(false)
+		setShowRewards(true)
+		setError()
+	}
 
 	const onBattleBoss = async (monster) => {
 		const result = await battleBoss({
@@ -76,26 +79,26 @@ export default function ChallengesPage() {
 			stageUID: selectedBoss.uid,
 			monsterUID: monster.uid,
 			challengeUID: challengeUID,
-		});
+		})
 
 		if (result?.error) {
-			setError(result.error.data.message);
-			setShowBattle(false);
-			setShowStages(true);
+			setError(result.error.data.message)
+			setShowBattle(false)
+			setShowStages(true)
 		} else {
-			const battleResult = result?.data?.result;
-			if (result?.data.result === "won") {
-				setWinner(result?.data.winner);
+			const battleResult = result?.data?.result
+			if (result?.data.result === 'won') {
+				setWinner(result?.data.winner)
 				// setSelectedMonster(result?.data.winner)
 				// setSelectedBoss(result?.data.stage)
-			} else if (result?.data.result === "defeated") {
+			} else if (result?.data.result === 'defeated') {
 			}
 
-			setResult(battleResult);
-			setShowStages(false);
-			setShowBattle(true);
+			setResult(battleResult)
+			setShowStages(false)
+			setShowBattle(true)
 		}
-	};
+	}
 
 	return (
 		<Container>
@@ -124,7 +127,7 @@ export default function ChallengesPage() {
 							/>
 						)}
 
-						{showRewards && result === "won" && (
+						{showRewards && result === 'won' && (
 							<ChallengeRewards
 								stage={selectedBoss}
 								monster={winner}
@@ -146,5 +149,5 @@ export default function ChallengesPage() {
 				</div>
 			</div>
 		</Container>
-	);
+	)
 }

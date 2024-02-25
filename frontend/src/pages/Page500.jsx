@@ -1,12 +1,12 @@
-import { useEffect } from "react"
-import { Link } from "react-router-dom"
-import Footer from "../components/Footer"
-import code500Img from "../assets/img/error/500.png"
-import logo from "../assets/img/logo/logo-trans-bg.png"
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import Footer from '@components/Footer'
+import code500Img from '../assets/img/error/500.png'
+import logo from '../assets/img/logo/logo-trans-bg.png'
 
 export default function Page500() {
 	useEffect(() => {
-		document.title = "Monster Land - Internal Server Error"
+		document.title = 'Monster Land - Internal Server Error'
 	}, [])
 
 	return (

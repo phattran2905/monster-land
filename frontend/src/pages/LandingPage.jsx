@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import Footer from "../components/Footer";
-import logo from "../assets/img/logo/logo-trans-bg.png";
-import Container from "../components/Container";
+import { Link } from 'react-router-dom'
+import Footer from '@components/Footer'
+import logo from '../assets/img/logo/logo-trans-bg.png'
+import Container from '../components/Container'
 
 export default function LandingPage() {
 	return (
@@ -33,5 +33,5 @@ export default function LandingPage() {
 				<Footer />
 			</div>
 		</Container>
-	);
+	)
 }

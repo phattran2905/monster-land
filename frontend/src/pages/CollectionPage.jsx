@@ -1,42 +1,43 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import Loading from "../components/Loading";
-import Sidebar from "../components/sidebar/Sidebar";
-import MonsterCard from "../components/monster/MonsterCard";
-import { useGetMonsterCollectionQuery } from "../redux/services/collection";
-import Container from "../components/Container";
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import Footer from '@components/Footer'
+import Header from '../components/Header'
+import Loading from '../components/Loading'
+import Sidebar from '../components/sidebar/Sidebar'
+import MonsterCard from '../components/monster/MonsterCard'
+import { useGetMonsterCollectionQuery } from '../redux/services/collection'
+import Container from '../components/Container'
 
 export default function CollectionPage() {
-	const authState = useSelector((state) => state.auth);
-	const { data: monsterData, refetch: refetchCollection } = useGetMonsterCollectionQuery({
-		jwt_token: authState.jwtToken,
-	});
-	const navigate = useNavigate();
-	const [monsters, setMonsters] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const authState = useSelector((state) => state.auth)
+	const { data: monsterData, refetch: refetchCollection } =
+		useGetMonsterCollectionQuery({
+			jwt_token: authState.jwtToken,
+		})
+	const navigate = useNavigate()
+	const [monsters, setMonsters] = useState([])
+	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		refetchCollection();
-		document.title = "Monster Land - Collection";
-	}, []);
+		refetchCollection()
+		document.title = 'Monster Land - Collection'
+	}, [])
 
 	// Redirect to login if not logged in
 	useEffect(() => {
 		if (!authState.isLoggedIn) {
-			return navigate("/login");
+			return navigate('/login')
 		}
-	}, [authState.isLoggedIn]);
+	}, [authState.isLoggedIn])
 
 	// Set monsters
 	useEffect(() => {
 		if (monsterData) {
-			setMonsters(monsterData.monster_list);
-			setIsLoading(false);
+			setMonsters(monsterData.monster_list)
+			setIsLoading(false)
 		}
-	}, [monsterData]);
+	}, [monsterData])
 
 	return (
 		<Container>
@@ -77,7 +78,9 @@ export default function CollectionPage() {
 								{/* Quantity */}
 								<div className="bg-white flex flex-row justify-center mt-auto">
 									<div className="bg-Midnight-Gray inline-block rounded-full px-10 py-2 my-3">
-										<span className="text-Gold-Sand font-bold">{monsters.length}</span>
+										<span className="text-Gold-Sand font-bold">
+											{monsters.length}
+										</span>
 										<span className="text-white"> / 50</span>
 									</div>
 								</div>
@@ -91,5 +94,5 @@ export default function CollectionPage() {
 				</div>
 			</div>
 		</Container>
-	);
+	)
 }
