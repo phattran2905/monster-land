@@ -35,7 +35,7 @@ baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:2905/api/v1/" })
 Firstly, move to the folder with this command:
 ```cd backend```
 
-Secondly, create a file named ```.env``` based on the ```.env-template``` file inside the folder. The ```.env``` file stores all the environment variables.
+Secondly, create a file named ```.env``` based on the ```.env.example``` file inside the folder. The ```.env``` file stores all the environment variables.
 
 Next, install all the dependencies:
 ```npm install``` if you do not install pnpm. Otherwise, use ```pnpm install```.
