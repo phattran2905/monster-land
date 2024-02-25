@@ -22,7 +22,7 @@
 		},
 		"jsx": "react-jsx"
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx", "src/pages/SignUpPage.jsx"],
 	"exclude": [
 		"node_modules",
 		"build",
