@@ -1,5 +1,5 @@
 import Footer from '@components/Footer'
-import Header from '../components/Header'
+import Header from '@components/Header'
 import Sidebar from '../components/sidebar/Sidebar'
 import Item from '../components/backpack/Item'
 import {

@@ -3,7 +3,7 @@ import ChallengeBattle from '../components/challenges/ChallengeBattle'
 import ChallengeStages from '../components/challenges/ChallengeStages'
 import ChallengeRewards from '../components/challenges/ChallengeRewards'
 import Footer from '@components/Footer'
-import Header from '../components/Header'
+import Header from '@components/Header'
 import Sidebar from '../components/sidebar/Sidebar'
 import {
 	useBattleBossMutation,
