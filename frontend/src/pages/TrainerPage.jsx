@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Sidebar from '../components/sidebar/Sidebar'
-import ProgressBar from '../components/ProgressBar'
+import ProgressBar from '@components/ProgressBar'
 import {
 	useGetTrainerInfoQuery,
 	useUpdateTrainerInfoMutation,
@@ -163,10 +163,11 @@ function TrainerPage() {
 
 											<div className="">
 												<ProgressBar
-													height={'h-3'}
 													percentage={Math.floor(exp / levelUpExp)}
-													bgColorClass={`bg-white`}
-													currentBgColorClass={`bg-Gold-Sand`}
+													classNames={{
+														background: 'bg-white',
+														current: 'bg-Gold-Sand',
+													}}
 												/>
 
 												<div className="flex flex-row mt-2 justify-between items-center">

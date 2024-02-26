@@ -4,7 +4,7 @@ import moment from 'moment'
 import { useState, useEffect } from 'react'
 import MonsterType from '../monster/MonsterType'
 import Loading from '@components/Loading'
-import ProgressBar from '../ProgressBar'
+import ProgressBar from '@components/ProgressBar'
 import { useDispatch } from 'react-redux'
 import { selectIncubator } from '../../redux/slices/incubators'
 
@@ -172,10 +172,12 @@ function IncubatorCard({
 																60) *
 														  100
 												}
-												bgColorClass="bg-Light-Gray"
-												currentBgColorClass={
-													done ? 'bg-Forest-Green' : 'bg-Flamingo-Pink'
-												}
+												classNames={{
+													background: 'bg-Light-Gray',
+													current: done
+														? 'bg-Forest-Green'
+														: 'bg-Flamingo-Pink',
+												}}
 											/>
 											{/* Done icon && Boost button */}
 											{done ? (

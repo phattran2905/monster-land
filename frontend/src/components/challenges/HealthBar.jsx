@@ -1,5 +1,5 @@
-import { GiHealthNormal } from "react-icons/gi"
-import ProgressBar from "../ProgressBar"
+import { GiHealthNormal } from 'react-icons/gi'
+import ProgressBar from '@components/ProgressBar'
 
 function HealthBar({ percentage = 100 }) {
 	return (
@@ -9,15 +9,18 @@ function HealthBar({ percentage = 100 }) {
 					size={20}
 					className="text-Fire-Engine-Red"
 				/>
-				<span className="text-Fire-Engine-Red font-bold ml-2 text-xl">Health</span>
+				<span className="text-Fire-Engine-Red font-bold ml-2 text-xl">
+					Health
+				</span>
 			</div>
 			<div className="mt-2">
 				<ProgressBar
 					percentage={percentage}
-					bgColorClass="bg-Light-Gray"
-					currentBgColorClass={
-						percentage === 100 ? "bg-Forest-Green" : "bg-Flamingo-Pink"
-					}
+					classNames={{
+						background: 'bg-Light-Gray',
+						current:
+							percentage === 100 ? 'bg-Forest-Green' : 'bg-Flamingo-Pink',
+					}}
 				/>
 			</div>
 		</div>
