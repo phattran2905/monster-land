@@ -1,41 +1,41 @@
-import diamondIcon from "../assets/img/icon/diamond_1_.png";
-import coinIcon from "../assets/img/icon/coin_1_.png";
-import pickaxeIcon from "../assets/img/icon/Pickaxe.png";
-import logo from "../assets/img/logo/logo-trans-bg.png";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { useGetTrainerInfoQuery } from "../redux/services/trainer";
-import { updateTrainerInfo } from "../redux/slices/trainer";
+import diamondIcon from '@assets/img/icon/diamond_1_.png'
+import coinIcon from '@assets/img/icon/coin_1_.png'
+import pickaxeIcon from '@assets/img/icon/Pickaxe.png'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+import { useGetTrainerInfoQuery } from '@redux/services/trainer'
+import { updateTrainerInfo } from '@redux/slices/trainer'
 
-export default function Header() {
-	const authState = useSelector((state) => state.auth);
-	const trainerState = useSelector((state) => state.trainer);
-	const dispatch = useDispatch();
-	const [diamond, setDiamond] = useState(0);
-	const [coins, setCoins] = useState(0);
-	const [stamina, setStamina] = useState(0);
-	const [maxStamina, setMaxStamina] = useState(0);
-	const [level, setLevel] = useState(0);
+interface HeaderProps {}
+
+const Header = ({}: HeaderProps) => {
+	const authState = useSelector((state: any) => state.auth)
+	const trainerState = useSelector((state: any) => state.trainer)
+	const dispatch = useDispatch()
+	const [diamond, setDiamond] = useState(0)
+	const [coins, setCoins] = useState(0)
+	const [stamina, setStamina] = useState(0)
+	const [maxStamina, setMaxStamina] = useState(0)
+	const [level, setLevel] = useState(0)
 	const { data: trainerData } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
-	});
+	})
 
 	useEffect(() => {
 		if (trainerData) {
-			dispatch(updateTrainerInfo(trainerData));
+			dispatch(updateTrainerInfo(trainerData))
 		}
-	}, [trainerData]);
+	}, [trainerData])
 
 	useEffect(() => {
 		if (trainerState) {
-			setDiamond(trainerState.diamond);
-			setCoins(trainerState.gold);
-			setStamina(trainerState.stamina);
-			setMaxStamina(trainerState.max_stamina);
-			setLevel(trainerState.level);
+			setDiamond(trainerState.diamond)
+			setCoins(trainerState.gold)
+			setStamina(trainerState.stamina)
+			setMaxStamina(trainerState.max_stamina)
+			setLevel(trainerState.level)
 		}
-	}, [trainerState]);
+	}, [trainerState])
 
 	return (
 		<header className="w-full h-20 bg-Indigo-Blue flex flex-row justify-between">
@@ -79,11 +79,13 @@ export default function Header() {
 							/>
 						</div>
 						<p className="text-xl">
-							<span className="text-Gold-Sand font-bold mr-1">{stamina}</span>/{maxStamina}
+							<span className="text-Gold-Sand font-bold mr-1">{stamina}</span>/
+							{maxStamina}
 						</p>
 					</div>
 				</div>
 			</div>
 		</header>
-	);
+	)
 }
+export default Header

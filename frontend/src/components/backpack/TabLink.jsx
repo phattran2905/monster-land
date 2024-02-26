@@ -1,7 +1,7 @@
 import { FaEgg } from "react-icons/fa"
 import { RiTempColdFill } from "react-icons/ri"
 
-export default function TabLink({ isActive, title, clickHandler, icon }) {
+export default function TabLink({ isActive, title, clickHandler }) {
 	return (
 		<button
 			onClick={clickHandler}

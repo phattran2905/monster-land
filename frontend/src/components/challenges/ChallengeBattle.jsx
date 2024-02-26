@@ -1,64 +1,74 @@
-import { useEffect, useState } from "react";
-import BossCard from "./BossCard";
-import MonsterCard from "./MonsterCard";
-import LoadingDots from "../LoadingDots";
-import { useBattleBossMutation } from "../../redux/services/challenge";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from 'react'
+import BossCard from './BossCard'
+import MonsterCard from './MonsterCard'
+import Loading from '@components/Loading'
+import { useBattleBossMutation } from '../../redux/services/challenge'
+import { useSelector } from 'react-redux'
 
-function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster, boss }) {
-	const [result, setResult] = useState(false);
-	const [winner, setWinner] = useState();
-	const [bossHealth, setBossHealth] = useState(100);
-	const [monsterHealth, setMonsterHealth] = useState(100);
+function ChallengeBattle({
+	battleResult,
+	onReturnStages,
+	onShowRewards,
+	monster,
+	boss,
+}) {
+	const [result, setResult] = useState(false)
+	const [winner, setWinner] = useState()
+	const [bossHealth, setBossHealth] = useState(100)
+	const [monsterHealth, setMonsterHealth] = useState(100)
 
 	useEffect(() => {
 		setTimeout(() => {
-			setBossHealth(85);
-			setMonsterHealth(65);
-		}, 2000);
+			setBossHealth(85)
+			setMonsterHealth(65)
+		}, 2000)
 
 		setTimeout(() => {
-			setBossHealth(25);
-			setMonsterHealth(35);
-		}, 3000);
+			setBossHealth(25)
+			setMonsterHealth(35)
+		}, 3000)
 
 		setTimeout(async () => {
-			if (battleResult === "won") {
-				setResult(true);
-				setWinner("monster");
-				setBossHealth(0);
+			if (battleResult === 'won') {
+				setResult(true)
+				setWinner('monster')
+				setBossHealth(0)
 			} else {
-				setResult(true);
-				setWinner("boss");
-				setMonsterHealth(0);
+				setResult(true)
+				setWinner('boss')
+				setMonsterHealth(0)
 			}
-		}, 4000);
-	}, []);
+		}, 4000)
+	}, [])
 
 	const renderResult = () => {
-		if (winner === "monster") {
+		if (winner === 'monster') {
 			return (
 				<div className="w-28 h-28 md:w-40 md:h-40 bg-Flamingo-Pink rounded-full flex flex-row justify-center items-center shadow-lg shadow-Flamingo-Pink border-8  border-y-Flamingo-Pink border-x-white">
-					<span className="font-bold md:text-3xl rounded-full text-xl text-white">Won</span>
+					<span className="font-bold md:text-3xl rounded-full text-xl text-white">
+						Won
+					</span>
 				</div>
-			);
+			)
 		}
 
-		if (winner === "boss") {
+		if (winner === 'boss') {
 			return (
 				<div className="w-28 h-28 md:w-40 md:h-40 bg-black rounded-full flex flex-row justify-center items-center shadow-lg shadow-Midnight-Gray border-8 border-y-light-white">
-					<span className="font-bold text-3xl rounded-full text-white">Defeated</span>
+					<span className="font-bold text-3xl rounded-full text-white">
+						Defeated
+					</span>
 				</div>
-			);
+			)
 		}
-	};
+	}
 
 	return (
 		<div className="w-full h-full flex flex-col justify-center">
 			<div className="flex flex-row w-full items-center justify-around ">
-				<div className={`w-1/3 ${result && winner !== "boss" && "opacity-20"}`}>
+				<div className={`w-1/3 ${result && winner !== 'boss' && 'opacity-20'}`}>
 					<BossCard
-						isWinner={winner === "boss"}
+						isWinner={winner === 'boss'}
 						health={bossHealth}
 						boss={boss}
 					/>
@@ -71,22 +81,27 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 						<>
 							<img src="/img/challenges/cross-swords.png" />
 							<div className="ml-4">
-								<LoadingDots color="bg-Dim-Gray" />
+								<Loading
+									type="dots"
+									color="bg-Dim-Gray"
+								/>
 							</div>
 						</>
 					)}
 				</div>
 
-				<div className={`w-1/3 ${result && winner !== "monster" && "opacity-20"}`}>
+				<div
+					className={`w-1/3 ${result && winner !== 'monster' && 'opacity-20'}`}
+				>
 					<MonsterCard
-						isWinner={winner === "monster"}
+						isWinner={winner === 'monster'}
 						health={monsterHealth}
 						monster={monster}
 					/>
 				</div>
 			</div>
 
-			{winner === "monster" && (
+			{winner === 'monster' && (
 				<div className="w-full flex flex-row justify-center items-center md:mt-20 mt-12">
 					<button
 						onClick={onShowRewards}
@@ -96,7 +111,7 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 					</button>
 				</div>
 			)}
-			{winner === "boss" && (
+			{winner === 'boss' && (
 				<div className="w-full flex flex-row justify-center items-center mt-20">
 					<button
 						onClick={onReturnStages}
@@ -107,6 +122,6 @@ function ChallengeBattle({ battleResult, onReturnStages, onShowRewards, monster,
 				</div>
 			)}
 		</div>
-	);
+	)
 }
-export default ChallengeBattle;
+export default ChallengeBattle

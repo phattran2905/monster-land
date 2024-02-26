@@ -1,22 +1,25 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from "react-redux"
-import Footer from "../components/Footer"
-import logo from "../assets/img/logo/logo-trans-bg.png"
-import { FaAngleLeft, FaAngleRight, FaExclamationCircle } from "react-icons/fa"
-import { useCreateTrainerMutation, useGetTrainerInfoQuery } from "../redux/services/trainer"
-import { updateTrainerInfo } from "../redux/slices/trainer"
-import Loading from "../components/Loading"
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import Footer from '@components/Footer'
+import logo from '../assets/img/logo/logo-trans-bg.png'
+import { FaAngleLeft, FaAngleRight, FaExclamationCircle } from 'react-icons/fa'
+import {
+	useCreateTrainerMutation,
+	useGetTrainerInfoQuery,
+} from '../redux/services/trainer'
+import { updateTrainerInfo } from '../redux/slices/trainer'
+import Loading from '@components/Loading'
 
 const totalAvatarImages = 4
 
 function CharacterCreationPage() {
 	const navigate = useNavigate()
 	const [error, setError] = useState()
-	const [name, setName] = useState("")
+	const [name, setName] = useState('')
 	const [avatarIndex, setAvatarIndex] = useState(1)
 	const [fetchCreateTrainer] = useCreateTrainerMutation()
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state: any) => state.auth)
 	const dispatch = useDispatch()
 	const { data: trainerData } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
@@ -24,13 +27,13 @@ function CharacterCreationPage() {
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
-		document.title = "Monster Land - Challenges"
+		document.title = 'Monster Land - Challenges'
 	}, [])
 
 	useEffect(() => {
 		// Redirect to login if not logged in
 		if (!authState.isLoggedIn) {
-			return navigate("/login")
+			return navigate('/login')
 		}
 	}, [authState])
 
@@ -38,14 +41,14 @@ function CharacterCreationPage() {
 		// Redirect to home if already created a trainer.
 		if (trainerData) {
 			dispatch(updateTrainerInfo(trainerData))
-			return navigate("/home")
+			return navigate('/home')
 		}
 
 		setIsLoading(false)
 	}, [trainerData])
 
-	const selectAvatarImage = (actionType) => {
-		if (actionType === "prev") {
+	const selectAvatarImage = (actionType: string) => {
+		if (actionType === 'prev') {
 			const index = avatarIndex - 1
 			if (index < 1) {
 				setAvatarIndex(1)
@@ -69,7 +72,7 @@ function CharacterCreationPage() {
 			avatar: `body-${avatarIndex}.png`,
 		}
 
-		const result = await fetchCreateTrainer({
+		const result: any = await fetchCreateTrainer({
 			jwt_token: authState.jwtToken,
 			data: characterData,
 		})
@@ -81,9 +84,9 @@ function CharacterCreationPage() {
 		}
 
 		if (result?.data) {
-            console.log(result?.data)
+			console.log(result?.data)
 			dispatch(updateTrainerInfo(result?.data))
-			return navigate("/home")
+			return navigate('/home')
 		}
 	}
 
@@ -102,12 +105,12 @@ function CharacterCreationPage() {
 
 							<div className="h-full w-full">
 								<div className="flex flex-row justify-center items-center">
-									<button onClick={() => selectAvatarImage("prev")}>
+									<button onClick={() => selectAvatarImage('prev')}>
 										<FaAngleLeft
 											className={`text-4xl text-white ${
 												avatarIndex <= 1
-													? "opacity-40 hover:cursor-not-allowed"
-													: "hover:text-Flamingo-Pink"
+													? 'opacity-40 hover:cursor-not-allowed'
+													: 'hover:text-Flamingo-Pink'
 											}`}
 										/>
 									</button>
@@ -123,12 +126,12 @@ function CharacterCreationPage() {
 											</span>
 										</div>
 									</div>
-									<button onClick={() => selectAvatarImage("next")}>
+									<button onClick={() => selectAvatarImage('next')}>
 										<FaAngleRight
 											className={`text-4xl text-white ${
 												avatarIndex === totalAvatarImages
-													? "opacity-40 hover:cursor-not-allowed"
-													: "hover:text-Flamingo-Pink"
+													? 'opacity-40 hover:cursor-not-allowed'
+													: 'hover:text-Flamingo-Pink'
 											}`}
 										/>
 									</button>

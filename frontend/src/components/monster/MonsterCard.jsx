@@ -1,9 +1,9 @@
-import MonsterType from "./MonsterType";
-import { FaAngleDoubleUp, FaChessRook } from "react-icons/fa";
-import { AiOutlineNumber } from "react-icons/ai";
-import { MdOutlineCategory } from "react-icons/md";
-import { GiBroadsword, GiLightningShield } from "react-icons/gi";
-import ProgressBar from "../ProgressBar";
+import MonsterType from './MonsterType'
+import { FaAngleDoubleUp, FaChessRook } from 'react-icons/fa'
+import { AiOutlineNumber } from 'react-icons/ai'
+import { MdOutlineCategory } from 'react-icons/md'
+import { GiBroadsword, GiLightningShield } from 'react-icons/gi'
+import ProgressBar from '@components/ProgressBar'
 
 export default function MonsterCard({
 	uid,
@@ -28,7 +28,9 @@ export default function MonsterCard({
 					/>
 				</div>
 				<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
-					<span className="text-white font-bold text-center text-lg">{name}</span>
+					<span className="text-white font-bold text-center text-lg">
+						{name}
+					</span>
 				</div>
 			</div>
 
@@ -78,7 +80,9 @@ export default function MonsterCard({
 						<span className="ml-1 capitalize">Attack</span>
 					</div>
 					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-20">
-						<span className="p-1 font-bold text-white capitalize">{attack}</span>
+						<span className="p-1 font-bold text-white capitalize">
+							{attack}
+						</span>
 					</div>
 				</div>
 
@@ -91,7 +95,9 @@ export default function MonsterCard({
 						<span className="ml-1 capitalize">Defense</span>
 					</div>
 					<div className="bg-Midnight-Gray rounded-lg flex flex-row justify-center w-20">
-						<span className="p-1 font-bold text-white capitalize">{defense}</span>
+						<span className="p-1 font-bold text-white capitalize">
+							{defense}
+						</span>
 					</div>
 				</div>
 
@@ -106,13 +112,17 @@ export default function MonsterCard({
 					<div className="flex flex-col justify-center w-full pt-1">
 						<ProgressBar
 							percentage={Math.floor((exp / level_up_exp) * 100)}
-							bgColorClass="bg-Light-Gray"
-							currentBgColorClass="bg-Forest-Green"
+							classNames={{
+								background: 'bg-Light-Gray',
+								current: 'bg-Forest-Green',
+							}}
 						/>
 						<div className="flex flex-row justify-end items-center mt-2">
 							<p className="text-sm font-bold">
-								<span className="text-sm text-Forest-Green font-bold">{exp}</span>
-								{" / "}
+								<span className="text-sm text-Forest-Green font-bold">
+									{exp}
+								</span>
+								{' / '}
 								{level_up_exp}
 							</p>
 						</div>
@@ -127,5 +137,5 @@ export default function MonsterCard({
 				</button> */}
 			</div>
 		</div>
-	);
+	)
 }
