@@ -13,8 +13,8 @@ import Incubators from '../components/incubator/Incubators'
 import { selectIncubator, updateIncubator } from '../redux/slices/incubators'
 
 function IncubationPage() {
-	const authState = useSelector((state) => state.auth)
-	const incubatorState = useSelector((state) => state.incubators)
+	const authState = useSelector((state: any) => state.auth)
+	const incubatorState = useSelector((state: any) => state.incubators)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	const { refetch: refetchBackpack } = useGetBackpackQuery({
@@ -37,9 +37,9 @@ function IncubationPage() {
 		}
 	}, [authState.isLoggedIn])
 
-	const onStartIncubating = async (eggUID) => {
+	const onStartIncubating = async (eggUID: string) => {
 		if (eggUID) {
-			const incubationResult = await incubateEgg({
+			const incubationResult: any = await incubateEgg({
 				jwt_token: authState.jwtToken,
 				egg_uid: eggUID,
 			})

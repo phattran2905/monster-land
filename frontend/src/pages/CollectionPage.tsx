@@ -9,8 +9,8 @@ import MonsterCard from '../components/monster/MonsterCard'
 import { useGetMonsterCollectionQuery } from '../redux/services/collection'
 import Container from '../components/Container'
 
-export default function CollectionPage() {
-	const authState = useSelector((state) => state.auth)
+export default function CollectionPag() {
+	const authState = useSelector((state: any) => state.auth)
 	const { data: monsterData, refetch: refetchCollection } =
 		useGetMonsterCollectionQuery({
 			jwt_token: authState.jwtToken,
@@ -59,20 +59,24 @@ export default function CollectionPage() {
 											</span>
 										</div>
 									) : (
-										monsters.map((monster) => (
-											<MonsterCard
-												key={monster.uid}
-												uid={monster.uid}
-												name={monster.name}
-												type={monster.monster_type}
-												level={monster.level}
-												img_name={monster.img_name}
-												attack={monster.attack}
-												defense={monster.defense}
-												exp={monster.exp}
-												level_up_exp={monster.level_up_exp}
-											/>
-										))
+										monsters.map(
+											(
+												monster: any //TODO: Fix any
+											) => (
+												<MonsterCard
+													key={monster.uid}
+													uid={monster.uid}
+													name={monster.name}
+													type={monster.monster_type}
+													level={monster.level}
+													img_name={monster.img_name}
+													attack={monster.attack}
+													defense={monster.defense}
+													exp={monster.exp}
+													level_up_exp={monster.level_up_exp}
+												/>
+											)
+										)
 									)}
 								</div>
 								{/* Quantity */}

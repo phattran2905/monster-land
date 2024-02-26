@@ -1,28 +1,28 @@
 import Footer from '@components/Footer'
 import Header from '@components/Header'
-import Sidebar from '../components/sidebar/Sidebar'
-import Item from '../components/backpack/Item'
+import Sidebar from '@components/sidebar/Sidebar'
+import Item from '@components/backpack/Item'
 import {
 	useGetBackpackQuery,
 	useUseItemsMutation,
-} from '../redux/services/backpack'
+} from '@redux/services/backpack'
 import Loading from '@components/Loading'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { AiFillWarning } from 'react-icons/ai'
-import TabLink from '../components/backpack/TabLink'
+import TabLink from '@components/backpack/TabLink'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import Egg from '../components/backpack/Egg'
-import { useIncubateEggMutation } from '../redux/services/incubation'
-import IncubationConfirmModal from '../components/modal/IncubationConfirmModal'
-import UseItemModal from '../components/modal/UseItemModal'
+import Egg from '@components/backpack/Egg'
+import { useIncubateEggMutation } from '@redux/services/incubation'
+import IncubationConfirmModal from '@components/modal/IncubationConfirmModal'
+import UseItemModal from '@components/modal/UseItemModal'
 import { useGetMonsterCollectionQuery } from '../redux/services/collection'
-import { updateIncubator } from '../redux/slices/incubators'
-import Container from '../components/Container'
+import { updateIncubator } from '@redux/slices/incubators'
+import Container from '@components/Container'
 
 export default function BackpackPage() {
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state: any) => state.auth)
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const {
@@ -40,9 +40,9 @@ export default function BackpackPage() {
 	const [activeTab, setActiveTab] = useState('eggs')
 	const [confirmIncubateModal, setConfirmIncubateModal] = useState(false)
 	const [confirmItemUseModal, setConfirmItemUseModal] = useState(false)
-	const [selectedEgg, setSelectedEgg] = useState('')
+	const [selectedEgg, setSelectedEgg] = useState<any>('')
 	const [selectedItem, setSelectedItem] = useState('')
-	const [error, setError] = useState()
+	const [error, setError] = useState<string | undefined>()
 
 	useEffect(() => {
 		refetchBackpackIno()
@@ -75,9 +75,9 @@ export default function BackpackPage() {
 		}
 	}
 
-	const incubateEggByUID = async (eggUID) => {
-		setError()
-		const incubationResult = await incubateEgg({
+	const incubateEggByUID = async (eggUID: string) => {
+		setError(undefined)
+		const incubationResult: any = await incubateEgg({
 			jwt_token: authState.jwtToken,
 			egg_uid: eggUID,
 		})
@@ -100,20 +100,20 @@ export default function BackpackPage() {
 		setConfirmIncubateModal(false)
 	}
 
-	const onSelectEgg = (egg) => {
-		setError()
+	const onSelectEgg = (egg: any) => {
+		setError(undefined)
 		setConfirmIncubateModal(true)
 		setSelectedEgg(egg)
 	}
 
-	const onSelectItem = (item) => {
-		setError()
+	const onSelectItem = (item: any) => {
+		setError(undefined)
 		setConfirmItemUseModal(true)
 		setSelectedItem(item)
 	}
 
-	const onUseItem = async (item) => {
-		setError()
+	const onUseItem = async (item: any) => {
+		setError(undefined)
 		setConfirmItemUseModal(false)
 		setSelectedItem(item)
 
@@ -121,7 +121,7 @@ export default function BackpackPage() {
 			return setError('The amount is invalid.')
 		}
 
-		const result = await fetchUseItemAPI({
+		const result: any = await fetchUseItemAPI({
 			jwt_token: authState.jwtToken,
 			monster_uid: item.monster_uid,
 			items: [{ amount: item.amountToUse, uid: item.uid }],
@@ -131,7 +131,7 @@ export default function BackpackPage() {
 		if (result?.error) {
 			setError(result?.error.data.message)
 		} else {
-			setError()
+			setError(undefined)
 			fetchMonsterCollection.refetch()
 		}
 	}
@@ -155,7 +155,7 @@ export default function BackpackPage() {
 						{confirmItemUseModal && (
 							<UseItemModal
 								onClose={() => setConfirmItemUseModal(false)}
-								onConfirm={() => incubateEggByUID(selectedEgg?.uid)}
+								// onConfirm={() => incubateEggByUID(selectedEgg?.uid)}
 								itemToUse={selectedItem}
 								onUse={onUseItem}
 							/>
@@ -206,20 +206,24 @@ export default function BackpackPage() {
 												</span>
 											</div>
 										) : (
-											eggs.map((item) => (
-												<Egg
-													key={item.uid}
-													uid={item.uid}
-													name={item.name}
-													img_name={item.img_name}
-													hatching_time_in_seconds={
-														item.hatching_time_in_seconds
-													}
-													monster_type={item.monster_type}
-													amount={item.amount}
-													onSelect={onSelectEgg}
-												/>
-											))
+											eggs.map(
+												(
+													item: any //TODO: Fix any
+												) => (
+													<Egg
+														key={item.uid}
+														uid={item.uid}
+														name={item.name}
+														img_name={item.img_name}
+														hatching_time_in_seconds={
+															item.hatching_time_in_seconds
+														}
+														monster_type={item.monster_type}
+														amount={item.amount}
+														onSelect={onSelectEgg}
+													/>
+												)
+											)
 										)
 									) : items.length === 0 ? (
 										<div className="h-full w-full flex flex-row justify-center items-center">
@@ -228,18 +232,22 @@ export default function BackpackPage() {
 											</span>
 										</div>
 									) : (
-										items.map((item) => (
-											<Item
-												key={item.uid}
-												uid={item.uid}
-												name={item.name}
-												img_name={item.img_name}
-												effect_property={item.effect_property}
-												effect_value={item.effect_value}
-												amount={item.amount}
-												onSelect={onSelectItem}
-											/>
-										))
+										items.map(
+											(
+												item: any //TODO: Fix any
+											) => (
+												<Item
+													key={item.uid}
+													uid={item.uid}
+													name={item.name}
+													img_name={item.img_name}
+													effect_property={item.effect_property}
+													effect_value={item.effect_value}
+													amount={item.amount}
+													onSelect={onSelectItem}
+												/>
+											)
+										)
 									)}
 								</div>
 

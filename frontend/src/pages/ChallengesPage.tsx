@@ -15,22 +15,22 @@ import { useGetTrainerInfoQuery } from '../redux/services/trainer'
 import Container from '../components/Container'
 
 export default function ChallengesPage() {
-	const { data: challengeList } = useGetChallengeListQuery()
-	const authState = useSelector((state) => state.auth)
+	const { data: challengeList } = useGetChallengeListQuery('')
+	const authState = useSelector((state: any) => state.auth)
 	const [showStages, setShowStages] = useState(true)
 	const [showBattle, setShowBattle] = useState(false)
 	const [showRewards, setShowRewards] = useState(false)
 	const [showSelectMonsterModal, setShowSelectMonsterModal] = useState(false)
-	const [selectedBoss, setSelectedBoss] = useState()
+	const [selectedBoss, setSelectedBoss] = useState<any>()
 	const [winner, setWinner] = useState()
-	const [challengeUID, setChallengeUID] = useState()
+	const [challengeUID, setChallengeUID] = useState<string | undefined>()
 	const [selectedMonster, setSelectedMonster] = useState()
 	const [battleBoss] = useBattleBossMutation()
 	const { refetch: refetchTrainerInfo } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
 	const [result, setResult] = useState()
-	const [error, setError] = useState()
+	const [error, setError] = useState<string | undefined>()
 
 	useEffect(() => {
 		document.title = 'Monster Land - Challenges'
@@ -42,23 +42,23 @@ export default function ChallengesPage() {
 		}
 	}, [showRewards])
 
-	const onChallenge = (boss, challenge_uid) => {
-		setError()
+	const onChallenge = (boss: any, challenge_uid: string) => {
+		setError(undefined)
 		setShowSelectMonsterModal(true)
 		setSelectedBoss(boss)
 		setChallengeUID(challenge_uid)
 	}
 
 	const onReturnStages = () => {
-		setError()
+		setError(undefined)
 		setShowBattle(false)
 		setShowRewards(false)
 		setShowSelectMonsterModal(false)
 		setShowStages(true)
 	}
 
-	const onSelectMonster = (monster) => {
-		setError()
+	const onSelectMonster = (monster: any) => {
+		setError(undefined)
 		setSelectedMonster(monster)
 		setShowSelectMonsterModal(false)
 
@@ -70,11 +70,11 @@ export default function ChallengesPage() {
 		setShowStages(false)
 		setShowSelectMonsterModal(false)
 		setShowRewards(true)
-		setError()
+		setError(undefined)
 	}
 
-	const onBattleBoss = async (monster) => {
-		const result = await battleBoss({
+	const onBattleBoss = async (monster: any) => {
+		const result: any = await battleBoss({
 			jwt_token: authState.jwtToken,
 			stageUID: selectedBoss.uid,
 			monsterUID: monster.uid,

@@ -19,7 +19,7 @@ function CharacterCreationPage() {
 	const [name, setName] = useState('')
 	const [avatarIndex, setAvatarIndex] = useState(1)
 	const [fetchCreateTrainer] = useCreateTrainerMutation()
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state: any) => state.auth)
 	const dispatch = useDispatch()
 	const { data: trainerData } = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
@@ -47,7 +47,7 @@ function CharacterCreationPage() {
 		setIsLoading(false)
 	}, [trainerData])
 
-	const selectAvatarImage = (actionType) => {
+	const selectAvatarImage = (actionType: string) => {
 		if (actionType === 'prev') {
 			const index = avatarIndex - 1
 			if (index < 1) {
@@ -72,7 +72,7 @@ function CharacterCreationPage() {
 			avatar: `body-${avatarIndex}.png`,
 		}
 
-		const result = await fetchCreateTrainer({
+		const result: any = await fetchCreateTrainer({
 			jwt_token: authState.jwtToken,
 			data: characterData,
 		})

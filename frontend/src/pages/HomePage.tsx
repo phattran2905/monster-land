@@ -16,19 +16,19 @@ import Container from '../components/Container'
 
 export default function HomePage() {
 	const navigate = useNavigate()
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state: any) => state.auth)
 	const dispatch = useDispatch()
 	const {
 		data: trainerData,
 		error,
 		isFetching,
-	} = useGetTrainerInfoQuery({
+	}: any = useGetTrainerInfoQuery({
 		jwt_token: authState.jwtToken,
 	})
-	const { data: topMonsters } = useGetTopMonstersQuery()
-	const [topLevel, setTopLevel] = useState()
-	const [topAttack, setTopAttack] = useState()
-	const [topDefense, setTopDefense] = useState()
+	const { data: topMonsters } = useGetTopMonstersQuery('')
+	const [topLevel, setTopLevel] = useState<any>()
+	const [topAttack, setTopAttack] = useState<any>()
+	const [topDefense, setTopDefense] = useState<any>()
 	const [isLoading, setIsLoading] = useState(true)
 
 	useEffect(() => {
