@@ -36,7 +36,7 @@ const ImageIcon = ({ type }: Props) => {
 	return (
 		<img
 			src={icon}
-			alt={`${name} icon`}
+			alt={`${type} icon`}
 		/>
 	)
 }

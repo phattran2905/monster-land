@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { useState } from 'react'
 import ImageIcon from '@components/ImageIcon'
+import { IconTypes } from '@/components/ImageIcon/ImageIcon'
 
 const activeClassName =
 	'w-full h-20 p-2 flex flex-row justify-center items-center bg-Flamingo-Pink transition-colors duration-500'
@@ -8,25 +9,23 @@ const activeClassName =
 const inactiveClassName =
 	'w-full h-20 p-2 flex flex-row justify-center items-center bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500'
 
-export default function NavLinkItem({ path, handler }) {
-	const [iconName] = useState(() => {
-		switch (path) {
-			case '/backpack':
-				return 'backpack'
-			case '/trainer':
-				return 'user'
-			case '/challenges':
-				return 'challenges'
-			case '/collection':
-				return 'monster-collection'
-			case '/team':
-				return 'team'
-			case '/incubation':
-				return 'incubation'
-			case '/logout':
-				return 'power-off'
-		}
-	})
+interface NavLinkItemProps {
+	path: string
+	handler?: (e: any) => void
+}
+
+const iconNames: { [key: string]: IconTypes } = {
+	'/backpack': 'backpack',
+	'/trainer': 'user',
+	'/challenges': 'challenges',
+	'/collection': 'monster-collection',
+	'/team': 'team',
+	'/incubation': 'incubation',
+	'/logout': 'power-off',
+}
+
+export default function NavLinkItem({ path, handler }: NavLinkItemProps) {
+	const [iconName] = useState(iconNames[path] || 'backpack')
 
 	return (
 		<NavLink
