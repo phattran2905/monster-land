@@ -6,7 +6,7 @@ import {
 	useGetBackpackQuery,
 	useUseItemsMutation,
 } from '../redux/services/backpack'
-import Loading from '../components/Loading'
+import Loading from '@components/Loading'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { AiFillWarning } from 'react-icons/ai'

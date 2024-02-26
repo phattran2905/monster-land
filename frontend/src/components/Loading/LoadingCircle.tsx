@@ -1,8 +1,4 @@
-/**
- * I have implemented a Pure CSS Loaders solution that I found here:
- * https://loading.io/css/
- * */
-export default function Loading() {
+const LoadingCircle = () => {
 	return (
 		<div className="w-full h-full flex flex-row justify-center items-center">
 			<div className="lds-ripple inline-block relative w-20 h-20">
@@ -12,3 +8,4 @@ export default function Loading() {
 		</div>
 	)
 }
+export default LoadingCircle

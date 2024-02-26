@@ -5,7 +5,7 @@ import logo from '../assets/img/logo/logo-trans-bg.png'
 import { FaUserAlt, FaExclamationCircle, FaLock } from 'react-icons/fa'
 import { useLoginMutation } from '../redux/services/authentication'
 import { saveJwtToken, login } from '../redux/slices/auth'
-import Loading from '../components/Loading'
+import Loading from '@components/Loading'
 import Layout from '@layouts'
 
 function LoginPage() {

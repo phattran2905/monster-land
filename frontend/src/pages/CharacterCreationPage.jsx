@@ -9,7 +9,7 @@ import {
 	useGetTrainerInfoQuery,
 } from '../redux/services/trainer'
 import { updateTrainerInfo } from '../redux/slices/trainer'
-import Loading from '../components/Loading'
+import Loading from '@components/Loading'
 
 const totalAvatarImages = 4
 
