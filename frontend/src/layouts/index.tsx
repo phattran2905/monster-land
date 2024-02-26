@@ -1,6 +1,7 @@
 import React from 'react'
 import Page from './Page'
 import AuthPage from '@layouts/AuthPage'
+import ErrorPage from '@layouts/ErrorPage'
 
 interface LayoutProps {
 	type: 'authPage' | 'errorPage' | 'page'
@@ -12,7 +13,7 @@ const Layout = ({ type, ...props }: LayoutProps) => {
 		case 'authPage':
 			return <AuthPage {...props} />
 		case 'errorPage':
-			return <AuthPage {...props} />
+			return <ErrorPage {...props} />
 		default:
 			return <Page {...props} />
 	}

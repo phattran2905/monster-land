@@ -18,11 +18,12 @@
 			"@pages/*": ["./src/pages/*"],
 			"@redux/*": ["./src/redux/*"],
 			"@utils/*": ["./src/utils/*"],
-			"@layouts/*": ["./src/layouts/*"]
+			"@layouts/*": ["./src/layouts/*"],
+			"@assets/*": ["./src/assets/*"]
 		},
 		"jsx": "react-jsx"
 	},
-	"include": ["src/**/*.ts", "src/**/*.tsx", "src/pages/SignUpPage.jsx"],
+	"include": ["src/**/*.ts", "src/**/*.tsx"],
 	"exclude": [
 		"node_modules",
 		"build",
