@@ -6,16 +6,16 @@ import { FaUserAlt, FaExclamationCircle, FaLock } from 'react-icons/fa'
 import { useLoginMutation } from '../redux/services/authentication'
 import { saveJwtToken, login } from '../redux/slices/auth'
 import Loading from '@components/Loading'
-import Layout from '@layouts'
+import Layout from '@layouts/index'
 
 function LoginPage() {
 	const navigate = useNavigate()
-	const [error, setError] = useState()
+	const [error, setError] = useState<string | undefined>()
 	const [username, setUsername] = useState('test')
 	const [password, setPassword] = useState('123123')
 	const [remember, setRemember] = useState(false)
 	const [fetchLoginApi] = useLoginMutation()
-	const authState = useSelector((state) => state.auth)
+	const authState = useSelector((state: any) => state.auth)
 	const dispatch = useDispatch()
 	const [isLoading, setIsLoading] = useState(false)
 
@@ -26,9 +26,9 @@ function LoginPage() {
 		document.title = 'Monster Land - Login'
 	}, [])
 
-	const handleLogin = async (e) => {
+	const handleLogin = async (e: any) => {
 		e.preventDefault()
-		setError()
+		setError(undefined)
 		setIsLoading(true)
 
 		if (!username) {
@@ -42,9 +42,11 @@ function LoginPage() {
 		if (username && password) {
 			const loginResult = await fetchLoginApi({ username, password })
 			// Failed to login
-			if (loginResult.error) {
+			if ('error' in loginResult) {
 				setIsLoading(false)
-				return setError(loginResult.error.data.message)
+				// TODO: Fix this
+				// return setError(loginResult.error.data.message)
+				return setError('')
 			}
 
 			const jwtToken = loginResult.data.data.jwt_token
@@ -131,7 +133,7 @@ function LoginPage() {
 								className="w-0 h-0 opacity-0 cursor-pointer"
 								id="remember"
 								type="checkbox"
-								checked={remember && 'checked'}
+								checked={remember}
 								onChange={() => setRemember(!remember)}
 								required={true}
 							/>

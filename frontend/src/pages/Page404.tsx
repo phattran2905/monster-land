@@ -1,22 +1,22 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import code500Img from '../assets/img/error/500.png'
-import Layout from '@layouts'
+import code404Img from '../assets/img/error/404.png'
+import Layout from '@layouts/index'
 
-export default function Page500() {
+export default function Page404() {
 	useEffect(() => {
-		document.title = 'Monster Land - Internal Server Error'
+		document.title = 'Monster Land - Page not found'
 	}, [])
 
 	return (
 		<Layout type="errorPage">
 			<div className="flex flex-col justify-center items-center">
 				<img
-					src={code500Img}
-					alt="Code 500 image"
+					src={code404Img}
+					alt="Code 404 image"
 				/>
 				<p className="mb-10 text-white font-bold text-center text-6xl capitalize">
-					Internal Server Error
+					Page not found
 				</p>
 
 				<div className="m-12">
