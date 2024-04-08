@@ -12,8 +12,8 @@ module.exports = {
 		},
 		colors: {
 			'Indigo-Blue': '#393E7D',
-			'Light-Indigo-Blue': '#E3E4F2',
 			'Royal-Blue': '#3F4589',
+			'Light-Indigo-Blue': '#E3E4F2',
 			'Flamingo-Pink': '#E5446D',
 			'Amethyst-Purple': '#D7B1FD',
 			'Gold-Sand': '#ECD07C',
