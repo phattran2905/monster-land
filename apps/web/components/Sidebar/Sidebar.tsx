@@ -4,7 +4,7 @@ import Logo from '@components/Logo'
 import clsx from 'clsx'
 import Link from 'next/link'
 
-type SidebarProps = {}
+interface SidebarProps {}
 
 interface Menu {
 	href: string
@@ -12,7 +12,7 @@ interface Menu {
 }
 
 const menus: Menu[] = [
-	{ href: '/game', icon: 'logo' },
+	{ href: '/leaderboard', icon: 'logo' },
 	{ href: '/trainer', icon: 'user' },
 	{ href: '/backpack', icon: 'backpack' },
 	{ href: '/collection', icon: 'monster-collection' },
@@ -24,29 +24,29 @@ const menus: Menu[] = [
 const Sidebar = ({}: SidebarProps) => {
 	return (
 		<section className="w-24 h-full bg-Indigo-Blue">
-			<ul className="flex flex-col">
+			<div className="flex flex-col">
 				{menus?.map(({ href, icon }, index) => (
-					<li
-						className={clsx(
-							'h-20 flex flex-row justify-center items-center',
-							icon !== 'logo' &&
-								'bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500'
-						)}
+					<Link
+						className={clsx(icon === 'logo' ? 'flex' : '')}
+						href={href}
 						key={`${href}-${index}`}
 					>
-						<Link
-							className={clsx(icon === 'logo' ? 'relative flex' : '')}
-							href={href}
+						<div
+							className={clsx(
+								'h-20 flex flex-row justify-center items-center',
+								icon !== 'logo' &&
+									'bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500'
+							)}
 						>
 							{icon === 'logo' ? (
 								<Logo className="!w-full !h-full p-2" />
 							) : (
 								<GameIcon type={icon} />
 							)}
-						</Link>
-					</li>
+						</div>
+					</Link>
 				))}
-			</ul>
+			</div>
 		</section>
 	)
 }

@@ -10,9 +10,11 @@ const Layout = ({ children }: LayoutProps) => {
 	return (
 		<main className="flex flex-row h-screen">
 			<Sidebar />
-			<div className="flex flex-col justify-between w-full">
+			<div className="flex flex-col justify-between items-stretch w-full">
 				<Header />
-				<>{children}</>
+
+				<section>{children}</section>
+
 				<Footer />
 			</div>
 		</main>

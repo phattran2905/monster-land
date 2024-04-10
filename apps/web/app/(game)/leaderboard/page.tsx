@@ -19,9 +19,12 @@ interface Monster {
 }
 
 interface PageProps {
-	topAttack: Monster
-	topDefense: Monster
-	topLevel: Monster
+	params: {
+		slug: string
+	}
+	topAttack?: Monster
+	topDefense?: Monster
+	topLevel?: Monster
 }
 
 const Page = ({
@@ -51,7 +54,6 @@ const Page = ({
 	},
 }: PageProps) => {
 	const [isLoading, setIsLoading] = useState(false)
-
 	return (
 		<div className="px-12 py-5 flex flex-col items-center gap-y-14">
 			{/* H1 */}
