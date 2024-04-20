@@ -1,3 +1,4 @@
+'use client'
 import GameIcon from '@components/GameIcon'
 import { IconTypes } from '@components/GameIcon/GameIcon'
 import Logo from '@components/Logo'
@@ -22,14 +23,18 @@ const menus: Menu[] = [
 ]
 
 const Sidebar = ({}: SidebarProps) => {
+	const onLogout = () => {
+		return fetch('/logout', { method: 'POST' })
+	}
 	return (
-		<section className="w-24 h-full bg-Indigo-Blue">
+		<nav className="w-24 bg-Indigo-Blue">
 			<div className="flex flex-col">
 				{menus?.map(({ href, icon }, index) => (
 					<Link
 						className={clsx(icon === 'logo' ? 'flex' : '')}
-						href={href}
+						href={href !== '/logout' ? href : '/'}
 						key={`${href}-${index}`}
+						onClick={onLogout}
 					>
 						<div
 							className={clsx(
@@ -47,7 +52,7 @@ const Sidebar = ({}: SidebarProps) => {
 					</Link>
 				))}
 			</div>
-		</section>
+		</nav>
 	)
 }
 export default Sidebar

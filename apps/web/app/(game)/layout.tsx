@@ -1,21 +1,31 @@
 import Footer from '@components/Footer'
 import Header from '@components/Header'
 import Sidebar from '@components/Sidebar'
+import { createClient } from '@utils/supabase/server'
+import { redirect } from 'next/navigation'
 
 interface LayoutProps {
 	children: React.ReactNode
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = async ({ children }: LayoutProps) => {
+	const supabase = createClient()
+
+	const { data, error } = await supabase.auth.getUser()
+	if (error || !data?.user) {
+		redirect('/login')
+	}
+
 	return (
-		<main className="flex flex-row h-screen">
+		<main className="flex flex-row items-stretch h-full min-h-screen">
 			<Sidebar />
-			<div className="flex flex-col justify-between items-stretch w-full">
+			<div className="flex flex-col justify-between items-stretch basis-full">
 				<Header />
 
-				<section>{children}</section>
-
-				<Footer />
+				<>
+					{children}
+					<Footer />
+				</>
 			</div>
 		</main>
 	)

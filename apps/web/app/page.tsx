@@ -4,7 +4,7 @@ import Logo from '@components/Logo'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Page(): JSX.Element {
+export default async function Page(): Promise<JSX.Element> {
 	return (
 		<main className="h-screen">
 			<div className="flex flex-col h-full justify-between">

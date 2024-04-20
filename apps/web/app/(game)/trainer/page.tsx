@@ -86,9 +86,9 @@ const Page = ({
 	}
 
 	return (
-		<div className="flex flex-col ">
+		<section className="flex flex-col p-3">
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div className="flex flex-col justify-center items-center gap-y-8">
+				<div className="flex flex-col gap-y-8 justify-center items-center">
 					<div className="w-full md:w-10/12 flex sm:flex-row flex-col justify-start items-start border-2 border-Indigo-Blue rounded-md relative">
 						{/* Avatar Selection */}
 						<div className="w-full sm:w-1/2 h-full p-2 md:p-6 bg-Indigo-Blue flex flex-col items-center">
@@ -248,7 +248,7 @@ const Page = ({
 					</div>
 				</div>
 			</form>
-		</div>
+		</section>
 	)
 }
 export default Page

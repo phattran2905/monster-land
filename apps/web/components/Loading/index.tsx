@@ -1,15 +1,17 @@
+import { ClassValue } from 'clsx'
+
 import LoadingCircle from './LoadingCircle'
-import LoadingDots, { LoadingDotsProps } from './LoadingDots'
+import LoadingDots from './LoadingDots'
 
 interface LoadingProps {
-	props?: LoadingDotsProps
+	color?: ClassValue
 	type: 'circle' | 'dots'
 }
 
-const Loading = ({ props, type }: LoadingProps) => {
+const Loading = ({ color, type }: LoadingProps) => {
 	switch (type) {
 		case 'dots':
-			return <LoadingDots {...props} />
+			return <LoadingDots color={color} />
 		case 'circle':
 			return <LoadingCircle />
 		default:

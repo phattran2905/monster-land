@@ -1,7 +1,7 @@
-import clsx from 'clsx'
+import clsx, { ClassValue } from 'clsx'
 
 export interface LoadingDotsProps {
-	color?: string
+	color?: ClassValue
 }
 
 const LoadingDots = ({ color }: LoadingDotsProps) => {
