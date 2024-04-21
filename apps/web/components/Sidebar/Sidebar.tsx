@@ -1,12 +1,12 @@
 'use client'
+
 import GameIcon from '@components/GameIcon'
 import { IconTypes } from '@components/GameIcon/GameIcon'
 import Logo from '@components/Logo'
 import { createClient } from '@utils/supabase/client'
 import clsx from 'clsx'
-import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 interface SidebarProps {}
 
@@ -27,11 +27,10 @@ const menus: Menu[] = [
 const Sidebar = ({}: SidebarProps) => {
 	const router = useRouter()
 
-	const onLogout = async () => {
-		const supabase = await createClient()
+	const logOut = async () => {
+		const supabase = createClient()
 		await supabase.auth.signOut()
-
-		router.refresh()
+		router.push('/login')
 	}
 
 	return (
@@ -42,7 +41,6 @@ const Sidebar = ({}: SidebarProps) => {
 						className={clsx(icon === 'logo' ? 'flex' : '')}
 						href={href !== '/logout' ? href : '/'}
 						key={`${href}-${index}`}
-						onClick={onLogout}
 					>
 						<div
 							className={clsx(
@@ -59,7 +57,7 @@ const Sidebar = ({}: SidebarProps) => {
 						</div>
 					</Link>
 				))}
-				<button onClick={onLogout}>
+				<button onClick={logOut}>
 					<div
 						className={clsx(
 							'h-20 flex flex-row justify-center items-center',

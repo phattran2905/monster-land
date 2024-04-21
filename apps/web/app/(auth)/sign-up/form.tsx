@@ -12,23 +12,22 @@ import {
 	FaUserAlt,
 } from 'react-icons/fa'
 
-interface SignUpFormData {
+export interface SignUpFormData {
 	confirmPassword?: string
 	email: string
 	password: string
 }
 
 interface SignUpFormProps {}
-const SignUpForm = ({}: SignUpFormProps) => {
+
+const SignUpForm = () => {
 	const [isLoading, setIsLoading] = useState(false)
 	const [successMsg, setSuccessMsg] = useState<string | undefined>()
 	const {
 		formState: { errors },
-		getValues,
 		handleSubmit,
 		register,
 		setError,
-		watch,
 	} = useForm<SignUpFormData>({
 		defaultValues: {
 			confirmPassword: '',
@@ -64,7 +63,7 @@ const SignUpForm = ({}: SignUpFormProps) => {
 		}
 
 		const supabase = createClient()
-		const { data, error } = await supabase.auth.signUp({ email, password })
+		const { error } = await supabase.auth.signUp({ email, password })
 
 		if (error) {
 			setError('root.serverError', { message: error.message, type: '400' })
@@ -72,13 +71,10 @@ const SignUpForm = ({}: SignUpFormProps) => {
 			return undefined
 		}
 
-		if (data?.user) {
-			setSuccessMsg(
-				'Successfully. Please check your email to verify your account.'
-			)
-			setIsLoading(false)
-			return undefined
-		}
+		setSuccessMsg(
+			'Successfully. Please check your email to verify your account.'
+		)
+		setIsLoading(false)
 	}
 
 	return (

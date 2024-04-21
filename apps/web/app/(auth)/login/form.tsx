@@ -1,9 +1,11 @@
 'use client'
 
 import Loading from '@components/Loading'
-import { signInWithEmail } from '@utils/supabase/auth'
+import { createClient } from '@utils/supabase/client'
 import clsx from 'clsx'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
@@ -21,6 +23,7 @@ interface LoginFormData {
 
 interface LoginFormProps {}
 const LoginForm = ({}: LoginFormProps) => {
+	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
 	const [successMsg, setSuccessMsg] = useState<string | undefined>()
 	const {
@@ -51,12 +54,11 @@ const LoginForm = ({}: LoginFormProps) => {
 			return undefined
 		}
 
-		// const supabase = createClient()
-		const { data, error } =
-			(await signInWithEmail({
-				email,
-				password,
-			})) || {}
+		const supabase = createClient()
+		const { data, error } = await supabase.auth.signInWithPassword({
+			email,
+			password,
+		})
 
 		if (error) {
 			setError('root.serverError', { message: error.message, type: '400' })
@@ -66,6 +68,7 @@ const LoginForm = ({}: LoginFormProps) => {
 
 		setIsLoading(false)
 		setSuccessMsg('Successfully. Redirecting to your dashboard...')
+		router.push('/dashboard')
 	}
 
 	return (

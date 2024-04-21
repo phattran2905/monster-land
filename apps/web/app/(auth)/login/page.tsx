@@ -9,8 +9,9 @@ const Page = async () => {
 	const {
 		data: { session },
 	} = await supabase.auth.getSession()
+
 	if (session) {
-		redirect('/')
+		redirect('/dashboard')
 	}
 
 	return (
