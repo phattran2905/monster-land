@@ -11,8 +11,11 @@ interface LayoutProps {
 const Layout = async ({ children }: LayoutProps) => {
 	const supabase = createClient()
 
-	const { data, error } = await supabase.auth.getUser()
-	if (error || !data?.user) {
+	const {
+		data: { session },
+		error,
+	} = await supabase.auth.getSession()
+	if (error || !session) {
 		redirect('/login')
 	}
 

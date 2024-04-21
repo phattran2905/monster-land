@@ -1,14 +1,16 @@
 import Logo from '@components/Logo'
-import { getUser } from '@utils/supabase/user'
+import { createClient } from '@utils/supabase/server'
 import { redirect } from 'next/navigation'
 
 import LoginForm from './form'
 
 const Page = async () => {
-	const { data } = await getUser()
-	console.log(data)
-	if (data?.user) {
-		return redirect('/leaderboard')
+	const supabase = createClient()
+	const {
+		data: { session },
+	} = await supabase.auth.getSession()
+	if (session) {
+		redirect('/')
 	}
 
 	return (

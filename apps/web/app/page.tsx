@@ -1,10 +1,21 @@
 import background2 from '@assets/img/background/bg-2.png'
 import Footer from '@components/Footer'
 import Logo from '@components/Logo'
+import { createClient } from '@utils/supabase/server'
 import Image from 'next/image'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
-export default async function Page(): Promise<JSX.Element> {
+export default async function Page() {
+	const supabase = createClient()
+	const {
+		data: { session },
+	} = await supabase.auth.getSession()
+
+	if (session) {
+		redirect('/dashboard')
+	}
+
 	return (
 		<main className="h-screen">
 			<div className="flex flex-col h-full justify-between">

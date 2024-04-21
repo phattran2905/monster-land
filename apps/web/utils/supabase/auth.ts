@@ -12,16 +12,6 @@ interface userData {
 	password: string
 }
 
-export async function signUpNewUser({ email, password }: userData) {
-	return supabase.auth.signUp({
-		email,
-		options: {
-			emailRedirectTo: 'https://localhost:3000/trainer',
-		},
-		password,
-	})
-}
-
 export async function signInWithEmail({ email, password }: userData) {
 	const { data, error } = await supabase.auth.signInWithPassword({
 		email,
@@ -30,8 +20,8 @@ export async function signInWithEmail({ email, password }: userData) {
 
 	if (error) return { data: null, error }
 
-	revalidatePath('/leaderboard', 'layout')
-	redirect('/leaderboard')
+	revalidatePath('/dashboard', 'layout')
+	redirect('/dashboard')
 }
 
 export async function logOut() {

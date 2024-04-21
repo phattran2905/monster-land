@@ -2,11 +2,8 @@
 
 import Loading from '@components/Loading'
 import { signInWithEmail } from '@utils/supabase/auth'
-import { createClient } from '@utils/supabase/client'
 import clsx from 'clsx'
-import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
