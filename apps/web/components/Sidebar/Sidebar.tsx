@@ -2,8 +2,11 @@
 import GameIcon from '@components/GameIcon'
 import { IconTypes } from '@components/GameIcon/GameIcon'
 import Logo from '@components/Logo'
+import { createClient } from '@utils/supabase/client'
 import clsx from 'clsx'
+import { revalidatePath } from 'next/cache'
 import Link from 'next/link'
+import { redirect, useRouter } from 'next/navigation'
 
 interface SidebarProps {}
 
@@ -19,13 +22,18 @@ const menus: Menu[] = [
 	{ href: '/collection', icon: 'monster-collection' },
 	{ href: '/incubation', icon: 'incubation' },
 	{ href: '/challenges', icon: 'challenges' },
-	{ href: '/logout', icon: 'power-off' },
 ]
 
 const Sidebar = ({}: SidebarProps) => {
-	const onLogout = () => {
-		return fetch('/logout', { method: 'POST' })
+	const router = useRouter()
+
+	const onLogout = async () => {
+		const supabase = await createClient()
+		await supabase.auth.signOut()
+
+		router.refresh()
 	}
+
 	return (
 		<nav className="w-24 bg-Indigo-Blue">
 			<div className="flex flex-col">
@@ -51,6 +59,16 @@ const Sidebar = ({}: SidebarProps) => {
 						</div>
 					</Link>
 				))}
+				<button onClick={onLogout}>
+					<div
+						className={clsx(
+							'h-20 flex flex-row justify-center items-center',
+							'bg-Royal-Blue hover:bg-Flamingo-Pink transition-colors duration-500'
+						)}
+					>
+						<GameIcon type={'power-off'} />
+					</div>
+				</button>
 			</div>
 		</nav>
 	)

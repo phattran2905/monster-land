@@ -6,8 +6,8 @@ import LoginForm from './form'
 
 const Page = async () => {
 	const { data } = await getUser()
-
-	if (data) {
+	console.log(data)
+	if (data?.user) {
 		return redirect('/leaderboard')
 	}
 
