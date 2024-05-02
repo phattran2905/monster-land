@@ -9,11 +9,21 @@ import { redirect } from 'next/navigation'
 export default async function Page() {
 	const supabase = createClient()
 	const {
-		data: { session },
-	} = await supabase.auth.getSession()
+		data: { user },
+	} = await supabase.auth.getUser()
 
-	if (session) {
-		redirect('/dashboard')
+	if (user) {
+		const { data: profile } = await supabase
+			.from('profiles')
+			.select()
+			.eq('uid', user.id)
+			.single()
+
+		if (profile) {
+			return redirect('/dashboard')
+		} else {
+			return redirect('/create-character')
+		}
 	}
 
 	return (

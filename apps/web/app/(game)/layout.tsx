@@ -4,6 +4,8 @@ import Sidebar from '@components/Sidebar'
 import { createClient } from '@utils/supabase/server'
 import { redirect } from 'next/navigation'
 
+import CreateCharacterPage from './create-character/page'
+
 interface LayoutProps {
 	children: React.ReactNode
 }
@@ -11,11 +13,26 @@ interface LayoutProps {
 const Layout = async ({ children }: LayoutProps) => {
 	const supabase = createClient()
 	const {
-		data: { session },
-	} = await supabase.auth.getSession()
+		data: { user },
+	} = await supabase.auth.getUser()
 
-	if (!session) {
-		redirect('/login')
+	if (!user) {
+		return redirect('/login')
+	}
+
+	const { data: profile } = await supabase
+		.from('profiles')
+		.select()
+		.eq('uid', user.id)
+		.single()
+
+	if (!profile) {
+		return (
+			<main className="flex flex-col h-[100vh] justify-between">
+				<CreateCharacterPage />
+				<Footer />
+			</main>
+		)
 	}
 
 	return (
@@ -23,11 +40,8 @@ const Layout = async ({ children }: LayoutProps) => {
 			<Sidebar />
 			<div className="flex flex-col justify-between items-stretch basis-full">
 				<Header />
-
-				<>
-					{children}
-					<Footer />
-				</>
+				{children}
+				<Footer />
 			</div>
 		</main>
 	)

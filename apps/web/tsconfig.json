@@ -11,7 +11,8 @@
 			"@pages/*": ["./pages/*"],
 			"@utils/*": ["./utils/*"],
 			"@layouts/*": ["./layouts/*"],
-			"@assets/*": ["./assets/*"]
+			"@assets/*": ["./assets/*"],
+			"@type/*": ["./types/*"]
 		}
 	},
 	"include": [
