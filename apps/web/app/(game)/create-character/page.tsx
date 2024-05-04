@@ -19,7 +19,7 @@ const CreateCharacterPage = async ({}: Props) => {
 
 	return (
 		<div className="w-full h-full flex flex-col justify-center">
-			<div className="max-w-5xl mx-auto my-20 flex flex-row border-2 border-Indigo-Blue rounded-md relative shadow-xl">
+			<div className="max-w-5xl mx-auto my-20 flex flex-row">
 				<CreateCharacterForm uid={user?.id} />
 			</div>
 		</div>

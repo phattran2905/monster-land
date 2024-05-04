@@ -1,10 +1,10 @@
 'use client'
 import Avatar from '@components/Avatar'
-import { avatarImages } from '@components/Avatar/Avatar'
+import { avatarImages } from '@components/Avatar'
 import Loading from '@components/Loading'
 import Logo from '@components/Logo'
 import { createProfile } from '@utils/actions/profiles'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { FaExclamationCircle } from 'react-icons/fa'
@@ -26,6 +26,7 @@ const CreateCharacterForm = ({ uid }: CreateCharacterFormProps) => {
 		handleSubmit,
 		register,
 		setError,
+		setValue,
 	} = useForm<CreateCharacterFormData>({
 		defaultValues: {
 			avatar: avatarImages[0]?.name,
@@ -62,10 +63,13 @@ const CreateCharacterForm = ({ uid }: CreateCharacterFormProps) => {
 			{isLoading ? (
 				<Loading type="circle" />
 			) : (
-				<div className="flex flex-row">
+				<div className="flex flex-row border-2 border-Indigo-Blue rounded-md relative shadow-xl">
 					{/* Avatar */}
 					<div className="basis-1/2">
-						<Avatar register={register} />
+						<Avatar
+							register={register}
+							setValue={setValue}
+						/>
 					</div>
 					{/* Username */}
 					<div className="basis-1/2 py-10 px-4 flex flex-col justify-center items-center">
