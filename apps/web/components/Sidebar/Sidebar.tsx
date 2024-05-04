@@ -8,15 +8,13 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-interface SidebarProps {}
-
 interface Menu {
 	href: string
 	icon: 'logo' | IconTypes
 }
 
 const menus: Menu[] = [
-	{ href: '/leaderboard', icon: 'logo' },
+	{ href: '/dashboard', icon: 'logo' },
 	{ href: '/trainer', icon: 'user' },
 	{ href: '/backpack', icon: 'backpack' },
 	{ href: '/collection', icon: 'monster-collection' },
@@ -24,13 +22,15 @@ const menus: Menu[] = [
 	{ href: '/challenges', icon: 'challenges' },
 ]
 
-const Sidebar = ({}: SidebarProps) => {
+const Sidebar = () => {
 	const router = useRouter()
 
 	const logOut = async () => {
 		const supabase = createClient()
-		await supabase.auth.signOut()
-		router.push('/login')
+		const { error } = await supabase.auth.signOut()
+		if (!error) {
+			router.push('/login')
+		}
 	}
 
 	return (
@@ -38,8 +38,8 @@ const Sidebar = ({}: SidebarProps) => {
 			<div className="flex flex-col">
 				{menus?.map(({ href, icon }, index) => (
 					<Link
-						className={clsx(icon === 'logo' ? 'flex' : '')}
-						href={href !== '/logout' ? href : '/'}
+						className="flex flex-col"
+						href={href}
 						key={`${href}-${index}`}
 					>
 						<div

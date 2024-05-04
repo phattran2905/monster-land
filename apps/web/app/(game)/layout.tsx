@@ -36,9 +36,9 @@ const Layout = async ({ children }: LayoutProps) => {
 	}
 
 	return (
-		<main className="flex flex-row items-stretch h-full min-h-screen">
+		<main className="flex flex-row items-stretch h-[100vh]">
 			<Sidebar />
-			<div className="flex flex-col justify-between items-stretch basis-full">
+			<div className="flex flex-col justify-between basis-full">
 				<Header />
 				{children}
 				<Footer />
