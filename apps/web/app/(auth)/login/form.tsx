@@ -1,19 +1,14 @@
 'use client'
 
+import { useToast } from '@/components/ui/use-toast'
 import Loading from '@components/Loading'
 import { createClient } from '@utils/supabase/client'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import {
-	FaCheckCircle,
-	FaExclamationCircle,
-	FaLock,
-	FaUserAlt,
-} from 'react-icons/fa'
+import { FaExclamationCircle, FaLock, FaUserAlt } from 'react-icons/fa'
 
 interface LoginFormData {
 	email: string
@@ -25,13 +20,11 @@ interface LoginFormProps {}
 const LoginForm = ({}: LoginFormProps) => {
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
-	const [successMsg, setSuccessMsg] = useState<string | undefined>()
 	const {
 		formState: { errors },
 		getValues,
 		handleSubmit,
 		register,
-		setError,
 		watch,
 	} = useForm<LoginFormData>({
 		defaultValues: {
@@ -40,6 +33,7 @@ const LoginForm = ({}: LoginFormProps) => {
 			remember: false,
 		},
 	})
+	const { toast } = useToast()
 	watch('remember')
 
 	const onSubmit: SubmitHandler<LoginFormData> = async ({
@@ -47,7 +41,6 @@ const LoginForm = ({}: LoginFormProps) => {
 		password,
 	}) => {
 		setIsLoading(true)
-		setSuccessMsg('')
 
 		if (!email || !password) {
 			setIsLoading(false)
@@ -55,19 +48,20 @@ const LoginForm = ({}: LoginFormProps) => {
 		}
 
 		const supabase = createClient()
-		const { data, error } = await supabase.auth.signInWithPassword({
+		const { error } = await supabase.auth.signInWithPassword({
 			email,
 			password,
 		})
 
 		if (error) {
-			setError('root.serverError', { message: error.message, type: '400' })
+			toast({
+				description: error.message,
+				variant: 'destructive',
+			})
 			setIsLoading(false)
 			return undefined
 		}
 
-		setIsLoading(false)
-		setSuccessMsg('Successfully. Redirecting to your dashboard...')
 		router.push('/dashboard')
 	}
 
@@ -171,18 +165,6 @@ const LoginForm = ({}: LoginFormProps) => {
 							</p>
 						</div>
 					)}
-
-					{successMsg && (
-						<div className="flex flex-row items-center p-2 bg-Forest-Green/90 rounded gap-x-2 text-sm">
-							<FaCheckCircle
-								className="text-white"
-								size={18}
-							/>
-
-							<p className="text-white font-bold capitalize">{successMsg}</p>
-						</div>
-					)}
-
 					{/* Loading & Submit  */}
 					{isLoading ? (
 						<Loading type="circle" />

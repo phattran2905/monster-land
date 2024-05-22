@@ -7,12 +7,14 @@
 			}
 		],
 		"paths": {
+			"@/*": ["./*"],
 			"@components/*": ["./components/*"],
 			"@pages/*": ["./pages/*"],
 			"@utils/*": ["./utils/*"],
 			"@layouts/*": ["./layouts/*"],
 			"@assets/*": ["./assets/*"],
-			"@type/*": ["./types/*"]
+			"@type/*": ["./types/*"],
+			"@server/*": ["./server/*"]
 		}
 	},
 	"include": [

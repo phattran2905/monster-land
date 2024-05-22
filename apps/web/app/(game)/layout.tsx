@@ -3,8 +3,10 @@ import Header from '@components/Header'
 import Sidebar from '@components/Sidebar'
 import { createClient } from '@utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 import CreateCharacterPage from './create-character/page'
+import Loading from './loading'
 
 interface LayoutProps {
 	children: React.ReactNode
@@ -40,7 +42,7 @@ const Layout = async ({ children }: LayoutProps) => {
 			<Sidebar />
 			<div className="flex flex-col justify-between basis-full">
 				<Header />
-				{children}
+				<Suspense fallback={<Loading />}>{children}</Suspense>
 				<Footer />
 			</div>
 		</main>
