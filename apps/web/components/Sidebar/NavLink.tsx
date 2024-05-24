@@ -1,5 +1,5 @@
-import { IconTypes } from '@/components/ImageIcon/ImageIcon'
 import ImageIcon from '@components/ImageIcon'
+import { IconTypes } from '@components/ImageIcon/ImageIcon'
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 

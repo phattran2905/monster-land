@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Toaster } from '@/components/ui/toaster'
+import { Toaster } from '@components/ui/toaster'
 import { Suspense } from 'react'
 
 import { exo } from './font'

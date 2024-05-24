@@ -7,10 +7,11 @@
 			}
 		],
 		"paths": {
-			"@/*": ["./*"],
 			"@components/*": ["./components/*"],
 			"@pages/*": ["./pages/*"],
+			"@schemas/*": ["./schemas/*"],
 			"@utils/*": ["./utils/*"],
+			"@lib/*": ["./lib/*"],
 			"@layouts/*": ["./layouts/*"],
 			"@assets/*": ["./assets/*"],
 			"@type/*": ["./types/*"],

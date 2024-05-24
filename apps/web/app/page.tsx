@@ -33,25 +33,25 @@ export default async function Page() {
 		<main className="flex flex-col h-screen">
 			<div className="w-full h-full flex flex-col">
 				<div className="flex flex-row h-full relative">
-					<div className="absolute top-0 left-0 w-full h-full z-[-10] flex flex-row flex-nowrap overflow-hidden">
+					<div className="absolute top-0 left-0 h-full z-[-10] flex flex-row flex-nowrap overflow-hidden">
 						<Image
 							alt="Background 1"
-							className="flex-[1_1_25%]"
+							className="basis-1/4 flex-shrink flex-grow"
 							src={background1}
 						/>
 						<Image
-							alt="Background 2"
-							className="flex-[1_1_25%]"
-							src={background2}
-						/>
-						<Image
 							alt="Background 3"
-							className="flex-[1_1_25%]"
+							className="basis-1/4 flex-shrink"
 							src={background3}
 						/>
 						<Image
+							alt="Background 2"
+							className="basis-1/4 flex-shrink"
+							src={background2}
+						/>
+						<Image
 							alt="Background 4"
-							className="flex-[1_1_25%]"
+							className="basis-1/4 flex-shrink flex-grow"
 							src={background4}
 						/>
 					</div>

@@ -1,197 +1,147 @@
 'use client'
 
-import { useToast } from '@/components/ui/use-toast'
 import Loading from '@components/Loading'
-import { createClient } from '@utils/supabase/client'
-import clsx from 'clsx'
+import { Button } from '@components/ui/button'
+import { Checkbox } from '@components/ui/checkbox'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+} from '@components/ui/form'
+import { Input } from '@components/ui/input'
+import { useToast } from '@components/ui/use-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import LoginFormSchema, { LoginFormSchemaType } from '@schemas/login'
+import { onLogin } from '@server/auth/login'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { FaExclamationCircle, FaLock, FaUserAlt } from 'react-icons/fa'
+import { useForm } from 'react-hook-form'
+import { FaLock, FaUserAlt } from 'react-icons/fa'
 
-interface LoginFormData {
-	email: string
-	password: string
-	remember: boolean
-}
-
-interface LoginFormProps {}
-const LoginForm = ({}: LoginFormProps) => {
-	const router = useRouter()
+const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState(false)
-	const {
-		formState: { errors },
-		getValues,
-		handleSubmit,
-		register,
-		watch,
-	} = useForm<LoginFormData>({
+	const form = useForm<LoginFormSchemaType>({
 		defaultValues: {
 			email: '',
 			password: '',
 			remember: false,
 		},
+		resolver: zodResolver(LoginFormSchema),
 	})
+	const { control, handleSubmit, reset } = form
 	const { toast } = useToast()
-	watch('remember')
 
-	const onSubmit: SubmitHandler<LoginFormData> = async ({
+	const onSubmit = async ({
 		email,
 		password,
-	}) => {
+		remember,
+	}: LoginFormSchemaType) => {
 		setIsLoading(true)
 
-		if (!email || !password) {
-			setIsLoading(false)
-			return undefined
-		}
-
-		const supabase = createClient()
-		const { error } = await supabase.auth.signInWithPassword({
-			email,
-			password,
-		})
-
-		if (error) {
+		const { message, status } = await onLogin({ email, password, remember })
+		if (status === 'error') {
 			toast({
-				description: error.message,
+				description: message,
 				variant: 'destructive',
 			})
 			setIsLoading(false)
 			return undefined
 		}
 
-		router.push('/dashboard')
+		setIsLoading(false)
+		reset()
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			<div className="w-2/3 mx-auto flex flex-col">
-				<div className="flex flex-col items-stretch gap-y-4">
-					<div>
-						<label
-							className="flex flex-row justify-between items-center mb-2"
-							htmlFor="email"
-						>
-							<div className="flex flex-row items-center">
-								<FaUserAlt className="text-Royal-Blue mr-2 text-xl" />
-								<span className="text-lg text-Royal-Blue font-bold ">
-									Email
-								</span>
-							</div>
-							{errors?.email?.type && (
-								<div className="text-Fire-Engine-Red font-bold rounded flex items-center flex-row gap-x-1 px-1">
-									<FaExclamationCircle />
-									<span className="text-sm">
-										{errors.email.type === 'required'
-											? 'Required'
-											: errors.email?.message}
-									</span>
-								</div>
+		<Form {...form}>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<div className="w-2/3 mx-auto flex flex-col">
+					<div className="flex flex-col items-stretch gap-y-6">
+						<FormField
+							control={control}
+							name="email"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="flex flex-row gap-x-2 items-center">
+										<FaUserAlt />
+										<span className="block">Email</span>
+									</FormLabel>
+									<FormControl>
+										<Input
+											placeholder="name@email.com"
+											required
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
 							)}
-						</label>
-						<input
-							{...register('email', { required: true })}
-							className="border-4 border-Indigo-Blue p-4 w-full rounded-lg focus:border-Flamingo-Pink"
-							id="email"
-							placeholder="Email"
-							type="text"
 						/>
-					</div>
-					{/* Password */}
-					<div>
-						<label
-							className="flex flex-row justify-between items-center mb-2"
-							htmlFor="password"
-						>
-							<div className="flex flex-row items-center">
-								<FaLock className="text-Royal-Blue mr-2 text-xl" />
-								<span className="text-lg text-Royal-Blue font-bold ">
-									Password
-								</span>
-							</div>
-							{errors?.password?.type && (
-								<div className="text-Fire-Engine-Red font-bold rounded flex items-center flex-row gap-x-1 px-1">
-									<FaExclamationCircle />
-									<span className="text-sm">
-										{errors.password.type === 'required'
-											? 'Required'
-											: errors.password?.message}
-									</span>
-								</div>
+						<FormField
+							control={control}
+							name="password"
+							render={({ field }) => (
+								<FormItem>
+									<FormLabel className="flex flex-row gap-x-2 items-center">
+										<FaLock />
+										<span className="block">Password</span>
+									</FormLabel>
+									<FormControl>
+										<Input
+											placeholder="******"
+											required
+											type="password"
+											{...field}
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
 							)}
-						</label>
-						<input
-							{...register('password', { required: true })}
-							className="border-4 border-Indigo-Blue p-4 w-full rounded-lg focus:border-Flamingo-Pink"
-							id="password"
-							placeholder="********"
-							type="password"
 						/>
-					</div>
-					{/* Stay Logged In */}
-					<div className="flex flex-row items-center">
-						<label
-							className="text-xl text-Royal-Blue font-bold pl-10 py-2 relative flex flex-row justify-center items-center align-middle group"
-							htmlFor="remember"
-						>
-							<span
-								className={clsx(
-									'size-6 left-0 bg-white border-4 border-Royal-Blue absolute rounded block group-hover:border-4 group-hover:border-Flamingo-Pink after:content-[""] after:absolute after:w-4 after:h-8 after:border-r-4 after:border-b-4 after:border-Flamingo-Pink after:rotate-45 after:left-1 after:-top-4',
-									getValues('remember') ? 'after:block' : 'after:hidden'
-								)}
-							/>
-							<input
-								{...register('remember')}
-								checked={getValues('remember')}
-								className="w-0 h-0 opacity-0 cursor-pointer"
-								id="remember"
-								type="checkbox"
-							/>
-							<span className="block">Stay logged in</span>
-						</label>
-					</div>
-					{/* Error */}
-					{errors?.root?.serverError?.type === '400' && (
-						<div className="flex flex-row items-center p-2 bg-Fire-Engine-Red/90 rounded gap-x-2">
-							<FaExclamationCircle
-								className="text-white"
-								size={18}
-							/>
-
-							<p className="text-white font-bold capitalize text-sm">
-								{errors.root.serverError.message}
-							</p>
-						</div>
-					)}
-					{/* Loading & Submit  */}
-					{isLoading ? (
-						<Loading type="circle" />
-					) : (
-						<button
-							className="py-3 px-16 rounded-full capitalize text-2xl bg-Royal-Blue text-white font-bold hover:bg-Flamingo-Pink duration-300 mt-4"
+						<FormField
+							control={control}
+							name="remember"
+							render={({ field }) => (
+								<FormItem className="flex flex-row items-center space-x-2 space-y-0">
+									<FormControl>
+										<Checkbox
+											checked={field.value}
+											onCheckedChange={field.onChange}
+										/>
+									</FormControl>
+									<FormLabel className="mt-0">
+										<span className="block">Stay logged in</span>
+									</FormLabel>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+						<Button
+							disabled={isLoading}
 							type="submit"
 						>
-							Log in
-						</button>
-					)}
+							{isLoading ? <Loading type="circle" /> : <span>Log in</span>}
+						</Button>
 
-					{/* Link to register */}
-					<div className="w-full flex justify-center items-center">
-						<p className="p-1">
-							Don't have an account?
-							<Link
-								className="mx-2 underline font-bold text-Flamingo-Pink"
-								href="/sign-up"
-							>
-								Sign up
-							</Link>
-						</p>
+						{/* Link to register */}
+						<div className="w-full flex justify-center items-center">
+							<p className="p-1">
+								Don't have an account?
+								<Link
+									className="mx-2 underline font-bold text-Flamingo-Pink"
+									href="/sign-up"
+								>
+									Sign up
+								</Link>
+							</p>
+						</div>
 					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</Form>
 	)
 }
 export default LoginForm
