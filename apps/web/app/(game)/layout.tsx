@@ -30,7 +30,7 @@ const Layout = async ({ children }: LayoutProps) => {
 
 	if (!profile) {
 		return (
-			<main className="flex flex-col h-[100vh] justify-between">
+			<main className="flex flex-col justify-between">
 				<CreateCharacterPage />
 				<Footer />
 			</main>
@@ -38,7 +38,7 @@ const Layout = async ({ children }: LayoutProps) => {
 	}
 
 	return (
-		<main className="flex flex-row items-stretch h-[100vh]">
+		<main className="flex flex-row items-stretch">
 			<Sidebar />
 			<div className="flex flex-col justify-between basis-full">
 				<Header />

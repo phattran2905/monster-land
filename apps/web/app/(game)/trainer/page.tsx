@@ -1,16 +1,21 @@
-import { getProfile } from '@utils/actions/profiles'
-import { createClient } from '@utils/supabase/server'
+import Loading from '@components/Loading'
+import { getProfile } from '@server/trainer/profile'
+import { Suspense } from 'react'
 
 import TrainerForm from './form'
 
-interface PageProps {}
-
 const Page = async () => {
-	const profile = await getProfile()
+	const { message, result: profile, status } = await getProfile()
 
 	return (
-		<section className="flex flex-col p-3">
-			<TrainerForm {...profile} />
+		<section className="m-16">
+			<Suspense fallback={<Loading type="circle" />}>
+				{status === 'error' ? (
+					<div className="text-muted">{message}</div>
+				) : (
+					<TrainerForm {...profile} />
+				)}
+			</Suspense>
 		</section>
 	)
 }

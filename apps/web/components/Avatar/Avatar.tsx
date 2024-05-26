@@ -79,7 +79,7 @@ const Avatar = ({ avatar, register, setValue }: AvatarProps) => {
 	}, [avatar])
 
 	return (
-		<div className="w-full h-full p-10 bg-Indigo-Blue flex flex-col items-center gap-y-6">
+		<div className="w-full h-full px-10 py-6 bg-Indigo-Blue flex flex-col items-center gap-y-4">
 			<h2 className="py-2 text-4xl font-bold text-Gold-Sand border-b-4 border-Gold-Sand inline-block">
 				Choose Your Avatar
 			</h2>
@@ -98,8 +98,8 @@ const Avatar = ({ avatar, register, setValue }: AvatarProps) => {
 					/>
 				</button>
 				<div className="h-full w-full mx-6 flex flex-col items-center justify-center">
-					<div className="bg-white rounded-t-3xl w-full h-full flex flex-col items-center justify-center p-8">
-						<div className="relative h-96 w-44">
+					<div className="bg-white rounded-t-3xl w-full h-full flex flex-col items-center justify-center p-6">
+						<div className="relative h-80 w-44">
 							{avatarIndex === undefined ? (
 								<Loading type="circle" />
 							) : (
@@ -122,7 +122,7 @@ const Avatar = ({ avatar, register, setValue }: AvatarProps) => {
 							value={avatarImages[avatarIndex]?.name}
 						/>
 					</div>
-					<div className="flex flex-row w-full justify-center items-center gap-2 mt-6">
+					<div className="flex flex-row w-full justify-center items-center gap-2 mt-4">
 						{avatarImages.map(({ name }, index) => (
 							<div
 								className={clsx(
