@@ -3,11 +3,14 @@ import body2 from '@assets/img/avatars/body-2.png'
 import body3 from '@assets/img/avatars/body-3.png'
 import body4 from '@assets/img/avatars/body-4.png'
 import Loading from '@components/Loading'
+import { FormField } from '@components/ui/form'
+import { Input } from '@components/ui/input'
 import { capitalize } from '@utils/capitalize'
 import clsx from 'clsx'
 import { StaticImport } from 'next/dist/shared/lib/get-img-props'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import { useFormContext } from 'react-hook-form'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 
 interface AvatarProps {
@@ -45,7 +48,8 @@ const findAvatarIndex = (avatar: string) => {
 	return avatarImages.findIndex(({ name }) => name === avatar.toLowerCase())
 }
 
-const Avatar = ({ avatar, register, setValue }: AvatarProps) => {
+const Avatar = ({ avatar }: AvatarProps) => {
+	const { control, setValue } = useFormContext()
 	const totalAvatarImages = avatarImages.length
 	const [avatarIndex, setAvatarIndex] = useState(() => {
 		if (avatar) {
@@ -116,10 +120,16 @@ const Avatar = ({ avatar, register, setValue }: AvatarProps) => {
 						<span className="text-black font-bold text-lg">
 							{getAvatarName(avatarImages[avatarIndex]?.name)}
 						</span>
-						<input
-							{...register('avatar', { required: true })}
-							hidden
-							value={avatarImages[avatarIndex]?.name}
+						<FormField
+							control={control}
+							name="avatar"
+							render={({ field }) => (
+								<Input
+									className="hidden"
+									hidden
+									{...field}
+								/>
+							)}
 						/>
 					</div>
 					<div className="flex flex-row w-full justify-center items-center gap-2 mt-4">

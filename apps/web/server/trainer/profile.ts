@@ -1,21 +1,9 @@
 'use server'
 
+import { TrainerSchema, TrainerSchemaType } from '@schemas/profile'
 import { createClient } from '@utils/supabase/server'
 import { revalidatePath } from 'next/cache'
 import 'server-only'
-import { z } from 'zod'
-
-const TrainerSchema = z.object({
-	avatar: z.string(),
-	createdAt: z.string().datetime(),
-	email: z.string().email(),
-	exp: z.number(),
-	levelUpExp: z.number(),
-	uid: z.string(),
-	username: z.string(),
-})
-
-type TrainerSchemaType = z.infer<typeof TrainerSchema>
 
 export const getProfile = async () => {
 	const supabase = createClient()
@@ -41,7 +29,7 @@ export const getProfile = async () => {
 
 	return {
 		message: 'Profile fetched successfully',
-		result: { ...profile, createdAt: user?.created_at, email: user?.email },
+		result: { ...profile, email: user?.email },
 		status: 'success',
 	}
 }
@@ -56,9 +44,12 @@ export const createProfile = async (profileData: TrainerSchemaType) => {
 
 	const supabase = createClient()
 	const profile = {
-		...profileData,
+		avatar: profileData.avatar,
+		email: profileData.email,
+		exp: 0,
 		level_up_exp: 1000,
 		stamina: 0,
+		username: profileData.username,
 	}
 
 	const { data, error } = await supabase
@@ -74,7 +65,7 @@ export const createProfile = async (profileData: TrainerSchemaType) => {
 		}
 	}
 
-	revalidatePath('/dashboard')
+	revalidatePath('/trainer')
 	return {
 		message: 'Created profile successfully',
 		result: data,
@@ -97,7 +88,7 @@ export const updateProfile = async (profileData: TrainerSchemaType) => {
 		}
 
 	const supabase = createClient()
-	const { email, uid, ...restProfileData } = profileData || {}
+	const { avatar, email, uid, username } = profileData || {}
 
 	if (email) {
 		await supabase.auth.updateUser({
@@ -107,7 +98,10 @@ export const updateProfile = async (profileData: TrainerSchemaType) => {
 
 	const { data, error } = await supabase
 		.from('profiles')
-		.update(restProfileData)
+		.update({
+			avatar,
+			username,
+		})
 		.eq('uid', uid)
 		.select()
 		.single()
@@ -119,9 +113,9 @@ export const updateProfile = async (profileData: TrainerSchemaType) => {
 		}
 	}
 
-	revalidatePath('/dashboard')
+	revalidatePath('/trainer')
 	return {
-		message: 'Created profile successfully',
+		message: 'Updated profile successfully',
 		result: data,
 		status: 'success',
 	}

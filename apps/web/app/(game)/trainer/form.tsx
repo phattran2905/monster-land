@@ -16,31 +16,19 @@ import { Input } from '@components/ui/input'
 import { Progress } from '@components/ui/progress'
 import { useToast } from '@components/ui/use-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TrainerSchema, TrainerSchemaType } from '@schemas/profile'
 import { updateProfile } from '@server/trainer/profile'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AiOutlineNumber, AiTwotoneMail } from 'react-icons/ai'
 import { FaCalendarCheck, FaUserAlt } from 'react-icons/fa'
-import { z } from 'zod'
-
-const TrainerSchema = z.object({
-	avatar: z.string(),
-	createdAt: z.string().datetime(),
-	email: z.string().email(),
-	exp: z.number(),
-	levelUpExp: z.number(),
-	uid: z.string(),
-	username: z.string(),
-})
-
-type TrainerSchemaType = z.infer<typeof TrainerSchema>
 
 const TrainerForm = ({
 	avatar: _avatar,
-	createdAt,
+	created_at,
 	email,
 	exp = 0,
-	levelUpExp = 0,
+	level_up_exp = 0,
 	uid,
 	username,
 }: TrainerSchemaType) => {
@@ -48,10 +36,10 @@ const TrainerForm = ({
 	const form = useForm<TrainerSchemaType>({
 		defaultValues: {
 			avatar: _avatar || getAvatarName(avatarImages[0]?.name),
-			createdAt,
-			email: email,
+			created_at,
+			email,
 			uid,
-			username: username,
+			username,
 		},
 		resolver: zodResolver(TrainerSchema),
 	})
@@ -59,22 +47,23 @@ const TrainerForm = ({
 	const { toast } = useToast()
 
 	const onSubmit = async (formData: TrainerSchemaType) => {
-		console.log(123)
-		// setIsLoading(true)
-		const { avatar, createdAt, email, exp, levelUpExp, uid, username } =
-			formData
-		console.log(avatar, createdAt, email, exp, levelUpExp, uid, username)
-		// const { message, status } = await updateProfile(formData)
-		// if (status === 'error') {
-		// 	toast({
-		// 		description: message,
-		// 		variant: 'destructive',
-		// 	})
-		// 	setIsLoading(false)
-		// 	return undefined
-		// }
+		setIsLoading(true)
 
-		// setIsLoading(false)
+		const { message, status } = await updateProfile(formData)
+		if (status === 'error') {
+			toast({
+				description: message,
+				variant: 'destructive',
+			})
+			setIsLoading(false)
+			return undefined
+		}
+
+		toast({
+			description: message,
+			variant: 'success',
+		})
+		setIsLoading(false)
 	}
 
 	return (
@@ -102,13 +91,13 @@ const TrainerForm = ({
 											{exp}/
 										</span>
 										<span className="text-white font-bold text-lg inline-block">
-											{levelUpExp}
+											{level_up_exp}
 										</span>
 									</div>
 								</div>
 
 								<div className="flex flex-col flex-grow w-full">
-									<Progress value={Math.floor(exp / levelUpExp)} />
+									<Progress value={Math.floor(exp / level_up_exp)} />
 								</div>
 							</div>
 						</div>
@@ -179,7 +168,7 @@ const TrainerForm = ({
 							/>
 							<FormField
 								control={control}
-								name="createdAt"
+								name="created_at"
 								render={({ field }) => (
 									<FormItem>
 										<FormLabel className="flex flex-row gap-x-2 items-center">
