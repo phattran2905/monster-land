@@ -43,7 +43,7 @@ const TrainerForm = ({
 		},
 		resolver: zodResolver(TrainerSchema),
 	})
-	const { control, handleSubmit, register, setValue } = form
+	const { control, handleSubmit } = form
 	const { toast } = useToast()
 
 	const onSubmit = async (formData: TrainerSchemaType) => {
@@ -74,11 +74,7 @@ const TrainerForm = ({
 					<div className="flex-[1_1_50%] bg-Indigo-Blue">
 						{/* Avatar & EXP */}
 						<div className="mx-auto">
-							<Avatar
-								avatar={_avatar}
-								register={register}
-								setValue={setValue}
-							/>
+							<Avatar avatar={_avatar} />
 
 							{/* EXP */}
 							<div className="flex flex-col items-start gap-x-2 mx-10 mb-6">

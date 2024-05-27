@@ -1,117 +1,121 @@
 'use client'
 import Avatar from '@components/Avatar'
-import { avatarImages } from '@components/Avatar'
+import { avatarImages } from '@components/Avatar/Avatar'
 import Loading from '@components/Loading'
 import Logo from '@components/Logo'
-import { createProfile } from '@utils/actions/profiles'
-import { useRouter } from 'next/navigation'
+import { Button } from '@components/ui/button'
+import { Card } from '@components/ui/card'
+import {
+	Form,
+	FormControl,
+	FormField,
+	FormItem,
+	FormMessage,
+} from '@components/ui/form'
+import { Input } from '@components/ui/input'
+import { useToast } from '@components/ui/use-toast'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createProfile } from '@server/trainer/profile'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { FaExclamationCircle } from 'react-icons/fa'
-
-export interface CreateCharacterFormData {
-	avatar: string
-	username: string
-}
+import { z } from 'zod'
 
 interface CreateCharacterFormProps {
+	email?: string
 	uid?: string
 }
 
-const CreateCharacterForm = ({ uid }: CreateCharacterFormProps) => {
+const CreateCharSchema = z.object({
+	avatar: z.string(),
+	username: z.string(),
+})
+
+type CreateCharSchemaType = z.infer<typeof CreateCharSchema>
+
+const CreateCharacterForm = ({ email, uid }: CreateCharacterFormProps) => {
 	const [isLoading, setIsLoading] = useState(false)
-	const router = useRouter()
-	const {
-		formState: { errors },
-		handleSubmit,
-		register,
-		setError,
-		setValue,
-	} = useForm<CreateCharacterFormData>({
+	const form = useForm<CreateCharSchemaType>({
 		defaultValues: {
 			avatar: avatarImages[0]?.name,
 			username: '',
 		},
+		resolver: zodResolver(CreateCharSchema),
 	})
+	const { control, handleSubmit } = form
+	const { toast } = useToast()
 
-	const onSubmit: SubmitHandler<CreateCharacterFormData> = async ({
-		avatar,
-		username,
-	}) => {
+	const onSubmit: SubmitHandler<CreateCharSchemaType> = async (
+		formData: CreateCharSchemaType
+	) => {
 		setIsLoading(true)
 
-		const { data: newProfile, error: profileError } =
-			(await createProfile({
-				avatar,
-				uid,
-				username,
-			})) || {}
-
-		if (!newProfile || profileError) {
-			setError('root.serverError', {
-				message: profileError?.message,
-				type: '400',
+		const { message, status } = await createProfile({
+			...formData,
+			email: email!!,
+			uid,
+		})
+		if (status === 'error') {
+			toast({
+				description: message,
+				variant: 'destructive',
 			})
+			setIsLoading(false)
+			return undefined
 		}
 
+		toast({
+			description: message,
+			variant: 'success',
+		})
 		setIsLoading(false)
-		router.push('/')
 	}
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)}>
-			{isLoading ? (
-				<Loading type="circle" />
-			) : (
-				<div className="flex flex-row border-2 border-Indigo-Blue rounded-md relative shadow-xl">
+		<Form {...form}>
+			<form onSubmit={handleSubmit(onSubmit)}>
+				<Card className="flex flex-row">
 					{/* Avatar */}
 					<div className="basis-1/2">
-						<Avatar
-							register={register}
-							setValue={setValue}
-						/>
+						<Avatar />
 					</div>
-					{/* Username */}
 					<div className="basis-1/2 py-10 px-4 flex flex-col justify-center items-center">
 						<Logo className="!w-1/3 !m-10" />
 
 						<div className="flex flex-col justify-center items-center">
-							<div className="flex flex-col justify-center items-center">
-								<h2 className="py-2 m text-4xl font-bold text-Midnight-Gray inline-block">
+							<div className="flex flex-col justify-center items-center gap-y-4">
+								<h2 className="py-2 text-4xl font-bold text-Midnight-Gray inline-block">
 									What's Your Name
 								</h2>
-								<input
-									{...register('username', { required: true })}
-									className="py-4 px-8 my-8 border-4 border-Indigo-Blue rounded-lg focus:border-Flamingo-Pink text-center font-bold"
-									id="username"
-									placeholder="Your Name"
-									type="text"
+								<FormField
+									control={control}
+									name="username"
+									render={({ field }) => (
+										<FormItem>
+											<FormControl>
+												<Input
+													placeholder="Username"
+													required
+													{...field}
+												/>
+											</FormControl>
+											<FormMessage />
+										</FormItem>
+									)}
 								/>
-								{errors?.username?.type && (
-									<div className="text-Fire-Engine-Red font-bold rounded flex items-center flex-row gap-x-1 px-1">
-										<FaExclamationCircle />
-										<span className="text-sm">
-											{errors.username.type === 'required'
-												? 'Required'
-												: errors.username?.message}
-										</span>
-									</div>
-								)}
 							</div>
 						</div>
-					</div>
-					{/* Create button */}
-					<div className="absolute -bottom-10 w-full flex flex-row justify-center items-center">
-						<button
-							className="bg-Flamingo-Pink px-16 py-4 text-white rounded-full font-bold text-2xl border-4 border-white hover:border-x-Flamingo-Pink hover:bg-Midnight-Gray"
+						<Button
+							className="mt-8"
+							disabled={isLoading}
+							size="lg"
 							type="submit"
 						>
-							Create
-						</button>
+							{isLoading ? <Loading type="circle" /> : <span>Create</span>}
+						</Button>
 					</div>
-				</div>
-			)}
-		</form>
+				</Card>
+			</form>
+		</Form>
 	)
 }
 export default CreateCharacterForm

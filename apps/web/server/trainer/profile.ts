@@ -35,6 +35,12 @@ export const getProfile = async () => {
 }
 
 export const createProfile = async (profileData: TrainerSchemaType) => {
+	if (!profileData.uid)
+		return {
+			message: 'Invalid UID',
+			status: 'error',
+		}
+
 	const result = TrainerSchema.safeParse(profileData)
 	if (!result.success)
 		return {
@@ -45,10 +51,10 @@ export const createProfile = async (profileData: TrainerSchemaType) => {
 	const supabase = createClient()
 	const profile = {
 		avatar: profileData.avatar,
-		email: profileData.email,
 		exp: 0,
 		level_up_exp: 1000,
 		stamina: 0,
+		uid: profileData.uid,
 		username: profileData.username,
 	}
 

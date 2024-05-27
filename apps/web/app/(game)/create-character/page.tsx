@@ -1,10 +1,11 @@
+import Loading from '@components/Loading'
 import { createClient } from '@utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 import CreateCharacterForm from './form'
 
-interface Props {}
-const CreateCharacterPage = async ({}: Props) => {
+const CreateCharacterPage = async () => {
 	const supabase = createClient()
 	const {
 		data: { user },
@@ -20,7 +21,12 @@ const CreateCharacterPage = async ({}: Props) => {
 	return (
 		<div className="w-full h-full flex flex-col justify-center">
 			<div className="max-w-5xl mx-auto my-20 flex flex-row">
-				<CreateCharacterForm uid={user?.id} />
+				<Suspense fallback={<Loading type="circle" />}>
+					<CreateCharacterForm
+						email={user?.email}
+						uid={user?.id}
+					/>
+				</Suspense>
 			</div>
 		</div>
 	)

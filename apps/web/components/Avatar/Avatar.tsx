@@ -15,8 +15,6 @@ import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 
 interface AvatarProps {
 	avatar?: string
-	register: any
-	setValue: any
 }
 
 export const getAvatarName = (name?: string) => {
