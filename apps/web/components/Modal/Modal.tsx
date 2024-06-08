@@ -11,14 +11,19 @@ import {
 } from '@components/ui/dialog'
 import { Input } from '@components/ui/input'
 import { Label } from '@components/ui/label'
+import { DialogProps } from '@radix-ui/react-dialog'
 
-interface Props {}
-const Modal = (props: Props) => {
+interface Props extends DialogProps {}
+
+const Modal = ({ open, onOpenChange }: Props) => {
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
+		<Dialog
+			open={open}
+			onOpenChange={onOpenChange}
+		>
+			{/* <DialogTrigger asChild>
 				<Button variant="outline">Share</Button>
-			</DialogTrigger>
+			</DialogTrigger> */}
 			<DialogContent className="sm:max-w-md">
 				<DialogHeader>
 					<DialogTitle>Share link</DialogTitle>

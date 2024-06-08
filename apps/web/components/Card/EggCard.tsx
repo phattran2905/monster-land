@@ -1,6 +1,7 @@
 import eggImage from '@assets/img/eggs/aqua-glow-egg.png'
 import MonsterType from '@components/MonsterType'
 import Image from 'next/image'
+import { Dispatch, SetStateAction } from 'react'
 import { FaClock, FaShoppingBasket } from 'react-icons/fa'
 import { MdOutlineCategory } from 'react-icons/md'
 
@@ -10,6 +11,7 @@ interface Props {
 	img_name?: string
 	monster_type?: string
 	name?: string
+	setOpenModal: Dispatch<SetStateAction<boolean>>
 	uid?: string
 }
 const EggCard = ({
@@ -18,6 +20,7 @@ const EggCard = ({
 	img_name = '',
 	monster_type = 'electric',
 	name = '',
+	setOpenModal,
 	uid = '',
 }: Props) => {
 	return (
@@ -87,7 +90,10 @@ const EggCard = ({
 				<div className="flex flex-row items-stretch w-full p-2">
 					<button
 						className="w-full p-2 bg-Flamingo-Pink text-white font-bold rounded-full border-4 border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
-						// onClick={() => onSelect({ img_name, name, uid })}
+						onClick={() => {
+							setOpenModal(true)
+							// onSelect({ img_name, name, uid })
+						}}
 					>
 						Incubate
 					</button>
