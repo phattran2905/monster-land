@@ -4,6 +4,7 @@ import { DialogProps } from '@radix-ui/react-dialog'
 import BackpackModal from './BackpackModal'
 
 interface ModalProps extends DialogProps {
+	onOpenChange?: (open: boolean) => void
 	type: 'backpack'
 }
 

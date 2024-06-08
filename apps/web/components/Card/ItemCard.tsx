@@ -1,24 +1,32 @@
-import itemImage from '@assets/img/items/accelerating-battery.png'
-import Image from 'next/image'
+import acceleratingBattery from '@assets/img/items/accelerating-battery.png'
+import attackBoostingPotion from '@assets/img/items/attack-boosting-potion.png'
+import defenseBoostingPotion from '@assets/img/items/defense-boosting-potion.png'
+import expBoostingSerum from '@assets/img/items/exp-boosting-serum.png'
+import { Item } from '@type/item'
+import Image, { StaticImageData } from 'next/image'
+import { Dispatch, SetStateAction } from 'react'
 import { FaArrowAltCircleUp, FaShoppingBasket, FaSplotch } from 'react-icons/fa'
 
-interface Props {
-	amount?: number
-	effect_property?: string
-	effect_value?: string
-	img_name?: string
-	name?: string
-	uid?: string
+interface ItemCardProps extends Item {
+	setOpenModal: Dispatch<SetStateAction<boolean>>
+}
+
+const itemImages: { [key: string]: StaticImageData } = {
+	['accelerating-battery']: acceleratingBattery,
+	['attack-boosting-potion']: attackBoostingPotion,
+	['defense-boosting-potion']: defenseBoostingPotion,
+	['exp-boosting-serum']: expBoostingSerum,
 }
 
 const ItemCard = ({
 	amount = 0,
-	effect_property = '',
-	effect_value = '',
-	img_name = '',
-	name = '',
-	uid = '',
-}: Props) => {
+	effect_property,
+	effect_value,
+	image,
+	name,
+	setOpenModal,
+	uid,
+}: ItemCardProps) => {
 	return (
 		<div className="md:h-[21rem] flex flex-row border-2 border-Royal-Blue hover:shadow-lg hover:shadow-Amethyst-Purple">
 			<div className="w-60 h-full flex flex-col border-r-2 border-r-Royal-Blue">
@@ -27,7 +35,7 @@ const ItemCard = ({
 						alt={name || ''}
 						className="w-full h-full object-scale-down"
 						fill
-						src={itemImage}
+						src={itemImages[image] as StaticImageData}
 					/>
 				</div>
 				<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
@@ -91,16 +99,18 @@ const ItemCard = ({
 				<div className="flex flex-row items-stretch w-full p-2">
 					<button
 						className="w-full p-2 bg-Flamingo-Pink text-white font-bold rounded-full border-4 border-Flamingo-Pink hover:bg-white hover:text-Flamingo-Pink"
-						// onClick={() =>
-						// 	onSelect({
-						// 		amount,
-						// 		effect_property,
-						// 		effect_value,
-						// 		img_name,
-						// 		name,
-						// 		uid,
-						// 	})
-						// }
+						onClick={() => {
+							setOpenModal(true)
+              
+							// onSelect({
+							// 	amount,
+							// 	effect_property,
+							// 	effect_value,
+							// 	img_name,
+							// 	name,
+							// 	uid,
+							// })
+						}}
 					>
 						Use
 					</button>

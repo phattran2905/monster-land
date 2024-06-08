@@ -3,6 +3,7 @@ import { GiFire, GiPowerLightning, GiRock, GiWaterSplash } from 'react-icons/gi'
 
 interface MonsterTypeProps {
 	name?: string
+	uid?: string
 }
 
 const MonsterType = ({ name }: MonsterTypeProps) => {
@@ -22,23 +23,24 @@ const MonsterType = ({ name }: MonsterTypeProps) => {
 		water: GiWaterSplash,
 	}
 	const MonsterTypeIcon =
-		monsterTypeIcons[name as keyof typeof monsterTypeIcons] || null
+		monsterTypeIcons[name.toLowerCase() as keyof typeof monsterTypeIcons] ||
+		null
 
 	return (
 		<div
 			className={clsx(
 				`flex flex-row justify-center items-center w-20 h-full p-2 rounded-full`,
-				classNames[name]?.bg
+				classNames[name.toLowerCase()]?.bg
 			)}
 		>
 			<MonsterTypeIcon
-				className={clsx(classNames[name]?.text)}
+				className={clsx(classNames[name.toLowerCase()]?.text)}
 				size={14}
 			/>
 			<span
 				className={clsx(
 					`block ml-1 capitalize font-bold text-xs`,
-					classNames[name]?.text
+					classNames[name.toLowerCase()]?.text
 				)}
 			>
 				{name}

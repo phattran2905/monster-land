@@ -1,16 +1,15 @@
 'use client'
 
-import { EggCard } from '@components/Card'
+import { EggCard, ItemCard } from '@components/Card'
 import Modal from '@components/Modal'
 import { Card, CardContent, CardFooter } from '@components/ui/card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@components/ui/tabs'
+import { BackpackType } from '@type/backpack'
+import { Egg } from '@type/egg'
+import { Item } from '@type/item'
 import { useState } from 'react'
 import { FaEgg } from 'react-icons/fa'
 import { RiTempColdFill } from 'react-icons/ri'
-
-interface Props {
-	backpack: any
-}
 
 const Amount = ({ amount = 0, capacity = 0 }) => {
 	return (
@@ -21,9 +20,15 @@ const Amount = ({ amount = 0, capacity = 0 }) => {
 	)
 }
 
-const Backpack = ({ backpack }: Props) => {
+const Backpack = ({
+	egg_capacity,
+	eggs,
+	item_capacity,
+	items,
+	uid,
+}: BackpackType) => {
 	const [openModal, setOpenModal] = useState(false)
-	console.log(backpack)
+
 	return (
 		<>
 			<Tabs
@@ -42,27 +47,54 @@ const Backpack = ({ backpack }: Props) => {
 				</TabsList>
 				<TabsContent value="eggs">
 					<Card>
-						<CardContent className="space-y-2 flex flex-wrap ">
-							<div className="">
-								<EggCard setOpenModal={setOpenModal} />
-							</div>
+						<CardContent className="space-y-2 flex flex-wrap">
+							{eggs?.length === 0 && (
+								<div className="h-full w-full flex flex-row justify-center items-center">
+									<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+										You have no eggs
+									</span>
+								</div>
+							)}
+							{eggs?.map((egg: Egg) => (
+								<EggCard
+									key={egg.uid}
+									{...egg}
+									setOpenModal={setOpenModal}
+								/>
+							))}
 						</CardContent>
 						<CardFooter>
-							<Amount capacity={backpack?.egg_capacity} />
+							<Amount
+								amount={eggs?.length}
+								capacity={egg_capacity}
+							/>
 						</CardFooter>
 					</Card>
 				</TabsContent>
+
 				<TabsContent value="items">
 					<Card>
-						<CardContent className="space-y-2">
-							<div className="h-full w-full flex flex-row justify-center items-center">
-								<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
-									You have no items
-								</span>
-							</div>
+						<CardContent className="space-y-2 flex flex-wrap">
+							{items?.length === 0 && (
+								<div className="h-full w-full flex flex-row justify-center items-center">
+									<span className="inline-block text-Dim-Gray bg-Anti-flash-white font-bold py-2 px-10 rounded-full italic my-auto">
+										You have no items
+									</span>
+								</div>
+							)}
+							{items?.map((item: Item) => (
+								<ItemCard
+									key={item.uid}
+									{...item}
+									setOpenModal={setOpenModal}
+								/>
+							))}
 						</CardContent>
 						<CardFooter>
-							<Amount capacity={backpack?.item_capacity} />
+							<Amount
+								amount={items.length}
+								capacity={item_capacity}
+							/>
 						</CardFooter>
 					</Card>
 				</TabsContent>

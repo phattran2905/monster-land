@@ -1,6 +1,7 @@
 import { getBackpack } from '@server/trainer/backpack'
 import { FaEgg } from 'react-icons/fa'
 import { RiTempColdFill } from 'react-icons/ri'
+
 import Backpack from './Backpack'
 
 interface Props {
@@ -37,12 +38,10 @@ const BackpackPage = async ({}: Props) => {
 
 	const { message, result: backpack, status } = await getBackpack()
 
-	console.log(backpack)
-
 	return (
 		<section className="relative h-full flex items-stretch">
 			<div className="p-2 sm:p-4 md:p-8 w-full">
-				<Backpack backpack={backpack} />
+				<Backpack {...backpack} />
 				{/* 
       //TODO: Abstract this component
       {confirmIncubateModal && (

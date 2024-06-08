@@ -1,28 +1,31 @@
-import eggImage from '@assets/img/eggs/aqua-glow-egg.png'
+import aquaGlowEgg from '@assets/img/eggs/aqua-glow-egg.png'
+import infernoEgg from '@assets/img/eggs/inferno-egg.png'
+import lunarEgg from '@assets/img/eggs/lunar-egg.png'
 import MonsterType from '@components/MonsterType'
-import Image from 'next/image'
+import { Egg } from '@type/egg'
+import Image, { StaticImageData } from 'next/image'
 import { Dispatch, SetStateAction } from 'react'
 import { FaClock, FaShoppingBasket } from 'react-icons/fa'
 import { MdOutlineCategory } from 'react-icons/md'
 
-interface Props {
-	amount?: number
-	hatchingTime?: number
-	img_name?: string
-	monster_type?: string
-	name?: string
+interface EggCardProps extends Egg {
 	setOpenModal: Dispatch<SetStateAction<boolean>>
-	uid?: string
 }
+
+const eggImages: { [key: string]: StaticImageData } = {
+	['aqua-glow-egg']: aquaGlowEgg,
+	['inferno-egg']: infernoEgg,
+	['lunar-egg']: lunarEgg,
+}
+
 const EggCard = ({
 	amount = 0,
-	hatchingTime = 0,
-	img_name = '',
-	monster_type = 'electric',
-	name = '',
+	hatching_time = 0,
+	image,
+	monster_type,
+	name,
 	setOpenModal,
-	uid = '',
-}: Props) => {
+}: EggCardProps) => {
 	return (
 		<div className="md:h-[21rem] flex flex-row border-2 border-Royal-Blue hover:shadow-lg hover:shadow-Amethyst-Purple">
 			{/* Name & Image */}
@@ -32,7 +35,7 @@ const EggCard = ({
 						alt={name || ''}
 						className="w-full h-full object-scale-down"
 						fill
-						src={eggImage}
+						src={eggImages[image] as StaticImageData}
 					/>
 				</div>
 				<div className="w-full h-1/6 bg-Royal-Blue flex flex-col items-stretch justify-center">
@@ -55,7 +58,7 @@ const EggCard = ({
 						</div>
 						<div className="bg-Midnight-Gray border-2 border-Indigo-Blue rounded-lg flex flex-row justify-center">
 							<span className="p-1 font-bold text-white tracking-widest">
-								{hatchingTime}
+								{hatching_time}
 							</span>
 						</div>
 					</div>
@@ -82,7 +85,7 @@ const EggCard = ({
 							<span className="ml-1 font-bold capitalize">Monster Type</span>
 						</div>
 						<div className="flex flex-row justify-center items-stretch">
-							<MonsterType name={monster_type} />
+							<MonsterType {...monster_type} />
 						</div>
 					</div>
 				</div>
